@@ -13,14 +13,14 @@ app = Flask(__name__)
 # Enable CORS with specific options for production
 CORS(app, 
     resources={r"/api/*": {
-        "origins": ["https://sst-frontend-swart.vercel.app", "http://localhost:3000", "*"],
+        "origins": ["https://sst-frontend-swart.vercel.app", "http://localhost:3000", "https://prototype-railway-production.up.railway.app"],
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "expose_headers": ["Content-Type", "Content-Length", "Content-Disposition", "X-Frame-Options"],
         "max_age": 86400  # Cache preflight requests for 24 hours
     }},
-    send_wildcard=True  # This helps with some CORS implementations
+    send_wildcard=False  # Changed to False to prevent CORS issues
 )
 
 # Configure logging
@@ -45,17 +45,21 @@ if not os.path.exists(CACHE_DIR):
 @app.after_request
 def add_cors_headers(response):
     # Add CORS headers to all responses
-    origin = request.headers.get('Origin', '*')
+    origin = request.headers.get('Origin', '')
     
-    # Allow specific origins or use wildcard
-    if origin in ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000']:
+    # List of allowed origins
+    allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+    
+    # Allow specific origins only when credentials are involved
+    if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
-    else:
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+    elif not response.headers.get('Access-Control-Allow-Credentials'):
+        # If credentials aren't being used, we can use wildcard
         response.headers['Access-Control-Allow-Origin'] = '*'
         
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Cache-Control, X-Requested-With'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Access-Control-Max-Age'] = '86400'  # 24 hours in seconds
     
     # For iframe embedding
@@ -69,12 +73,17 @@ def add_cors_headers(response):
 @app.route('/api/statistical-area-map/<area_name>', methods=['OPTIONS'])
 def options_statistical_area_map(area_name):
     response = Response()
-    origin = request.headers.get('Origin', '*')
+    origin = request.headers.get('Origin', '')
     
-    # Allow specific origins or use wildcard
-    if origin in ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000']:
+    # List of allowed origins
+    allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+    
+    # Allow specific origins when credentials are involved
+    if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
     else:
+        # When not a trusted origin, don't support credentials
         response.headers['Access-Control-Allow-Origin'] = '*'
         
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
@@ -197,9 +206,16 @@ def get_map():
         
         # Set the appropriate headers for cross-origin iframe embedding
         response = Response(html_content, mimetype='text/html')
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['X-Frame-Options'] = 'ALLOW-FROM *'
-        response.headers['Content-Security-Policy'] = "frame-ancestors *"
+        
+        # Handle CORS for HTML content - determine appropriate origin
+        origin = request.headers.get('Origin', '')
+        allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+        
+        if origin in allowed_origins:
+            response.headers['Access-Control-Allow-Origin'] = origin
+        else:
+            response.headers['Access-Control-Allow-Origin'] = '*'
+        
         return response
     else:
         logger.warning("Map file not found")
@@ -466,14 +482,17 @@ def health_check():
         })
     
     # Set CORS headers
-    origin = request.headers.get('Origin', '*')
-    if origin in ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000']:
+    origin = request.headers.get('Origin', '')
+    allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+    
+    if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
     else:
         response.headers['Access-Control-Allow-Origin'] = '*'
         
     response.headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Cache-Control, X-Requested-With'
     response.headers['Access-Control-Max-Age'] = '86400'
     
     return response
