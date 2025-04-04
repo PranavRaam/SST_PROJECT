@@ -15,6 +15,19 @@ from branca.element import Figure, JavascriptLink, CssLink
 from shapely.geometry import shape, Point
 from functools import lru_cache
 import time
+from data_preloader import get_cached_msa_data, get_cached_county_data, get_cached_states_data, get_cached_county_msa_relationships, get_all_cached_data
+import sys
+
+# Configure logging to output to console and file
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('statistical_area_zoom.log')
+    ]
+)
+logger = logging.getLogger(__name__)
 
 # Create a subclass of MacroElement to add legend to map
 class LegendControl(MacroElement):
@@ -49,265 +62,129 @@ class LegendControl(MacroElement):
             {% endmacro %}
         """)
 
-def create_fallback_map(area_name, output_path):
-    """Create a fallback map for a specific area"""
-    logger = logging.getLogger(__name__)
-    logger.info(f"Creating fallback map for {area_name} at {output_path}")
-    
-    # Ensure the cache directory exists
-    cache_dir = os.path.dirname(output_path)
-    if not os.path.exists(cache_dir):
-        os.makedirs(cache_dir)
-        logger.info(f"Created cache directory: {cache_dir}")
-    
-    fig = Figure(width=800, height=600)
-    
-    # Default coordinates if area not recognized
-    coords = [40.7128, -74.0060]  # NYC default
-    zoom_level = 10
-    title = "New York Metro Area"
-    
-    # Special handling for some known areas
-    if "New York" in area_name or "Newark" in area_name or "Jersey City" in area_name:
-        coords = [40.7128, -74.0060]  # NYC coordinates
-        zoom_level = 10
-        title = "New York Metro Area"
-    elif "Los Angeles" in area_name or "Anaheim" in area_name or "Long Beach" in area_name:
-        coords = [34.0522, -118.2437]  # LA coordinates
-        zoom_level = 9
-        title = "Los Angeles Metro Area"
-    elif "Chicago" in area_name:
-        coords = [41.8781, -87.6298]  # Chicago coordinates
-        zoom_level = 9
-        title = "Chicago Metro Area"
-    elif "San Francisco" in area_name or "Oakland" in area_name or "San Jose" in area_name:
-        coords = [37.7749, -122.4194]  # SF coordinates
-        zoom_level = 9
-        title = "San Francisco Bay Area"
-    elif "Florida" in area_name or "Tampa" in area_name or "Orlando" in area_name or "Miami" in area_name or "Jacksonville" in area_name:
-        coords = [28.0000, -82.4800]  # Florida coordinates
-        zoom_level = 8
-        title = "Florida Metro Area"
-    elif "Lakeland" in area_name or "Winter Haven" in area_name:
-        coords = [28.0395, -81.9498]  # Lakeland coordinates
-        zoom_level = 9
-        title = "Lakeland-Winter Haven Area"
-    
-    folium_map = folium.Map(
-        location=coords,
-        zoom_start=zoom_level,
-        tiles='cartodbpositron'
-    )
-    
-    # Add marker for the center
-    folium.Marker(
-        coords,
-        popup=title,
-        icon=folium.Icon(color='blue')
-    ).add_to(folium_map)
-    
-    # Add a circle to represent the general metro area
-    circle = folium.Circle(
-        location=coords,
-        radius=20000,  # 20km radius
-        color='#4F46E5',
-        fill=True,
-        fill_color='#4F46E5',
-        fill_opacity=0.2,
-        weight=3,
-        opacity=0.9
-    ).add_to(folium_map)
-    
-    # Create mock PGs and HHAHs within the circle
-    # For fallback map, we'll create a fixed number of PGs and HHAHs
-    pg_groups = ["Group A", "Group B", "Group C", "Group D"]
-    num_pgs = 5
-    num_hhahs = 7
-    
-    # Create PG feature group
-    pg_group = folium.FeatureGroup(name="Physician Groups (PGs)")
-    
-    # Generate mock PGs
-    for i in range(num_pgs):
-        # Generate a random angle and distance within the circle radius
-        angle = random.uniform(0, 2 * np.pi)
-        # Scale distance to ensure points are within the circle
-        distance = random.uniform(2000, 18000)  # Between 2km and 18km from center
-        
-        # Calculate the coordinates (remember folium uses [lat, lng])
-        lat = coords[0] + (distance / 111000) * np.cos(angle)  # 111000 meters is roughly 1 degree of latitude
-        lng = coords[1] + (distance / (111000 * np.cos(np.radians(coords[0])))) * np.sin(angle)
-        
-        pg_data = {
-            "id": i + 1,
-            "name": f"PG-{pg_groups[i % len(pg_groups)]}-{area_name[:3]}{i+1}",
-            "location": [lat, lng],
-            "group": pg_groups[i % len(pg_groups)],
-            "physicians": random.randint(3, 15),
-            "patients": random.randint(50, 300),
-            "status": random.choice(["Active", "Onboarding", "Inactive"]),
-            "address": f"{random.randint(100, 999)} Healthcare Ave, {area_name.split(',')[0]}",
-            "contact": f"(555) {random.randint(100, 999)}-{random.randint(1000, 9999)}"
-        }
-        
-        # Create popup with PG details
-        popup_html = f"""
-        <div style="min-width: 180px;">
-            <h4 style="margin-top: 0; margin-bottom: 8px; color: #1F2937;">{pg_data['name']}</h4>
-            <p style="margin: 4px 0;"><strong>Group:</strong> {pg_data['group']}</p>
-            <p style="margin: 4px 0;"><strong>Physicians:</strong> {pg_data['physicians']}</p>
-            <p style="margin: 4px 0;"><strong>Patients:</strong> {pg_data['patients']}</p>
-            <p style="margin: 4px 0;"><strong>Status:</strong> {pg_data['status']}</p>
-            <p style="margin: 4px 0;"><strong>Address:</strong> {pg_data['address']}</p>
-            <p style="margin: 4px 0;"><strong>Contact:</strong> {pg_data['contact']}</p>
-        </div>
-        """
-        
-        # Create marker
-        folium.Marker(
-            location=pg_data['location'],
-            popup=folium.Popup(popup_html, max_width=300),
-            tooltip=f"PG: {pg_data['name']}",
-            icon=folium.Icon(color='blue', icon="user-md", prefix="fa")
-        ).add_to(pg_group)
-    
-    # Add PG group to map
-    pg_group.add_to(folium_map)
-    
-    # Create HHAH feature group
-    hhah_group = folium.FeatureGroup(name="Home Health At Home (HHAHs)")
-    
-    # HHAH name components
-    hhah_name_prefixes = ["HomeHealth", "CaringHands", "ComfortCare", "Elite", "Premier", "Wellness", "Guardian"]
-    hhah_name_suffixes = ["Services", "Agency", "Associates", "Partners", "Network", "Group", "Care"]
-    
-    # Generate mock HHAHs
-    for i in range(num_hhahs):
-        # Generate a random angle and distance within the circle radius
-        angle = random.uniform(0, 2 * np.pi)
-        # Scale distance to ensure points are within the circle
-        distance = random.uniform(2000, 18000)  # Between 2km and 18km from center
-        
-        # Calculate the coordinates (remember folium uses [lat, lng])
-        lat = coords[0] + (distance / 111000) * np.cos(angle)  # 111000 meters is roughly 1 degree of latitude
-        lng = coords[1] + (distance / (111000 * np.cos(np.radians(coords[0])))) * np.sin(angle)
-        
-        prefix = random.choice(hhah_name_prefixes)
-        suffix = random.choice(hhah_name_suffixes)
-        
-        hhah_data = {
-            "id": i + 1,
-            "name": f"{prefix} {suffix}",
-            "location": [lat, lng],
-            "services": random.randint(2, 8),
-            "patients": random.randint(20, 150),
-            "status": random.choice(["Active", "Onboarding", "Inactive"]),
-            "address": f"{random.randint(100, 999)} Medical Blvd, {area_name.split(',')[0]}",
-            "contact": f"(555) {random.randint(100, 999)}-{random.randint(1000, 9999)}"
-        }
-        
-        # Create popup with HHAH details
-        popup_html = f"""
-        <div style="min-width: 180px;">
-            <h4 style="margin-top: 0; margin-bottom: 8px; color: #1F2937;">{hhah_data['name']}</h4>
-            <p style="margin: 4px 0;"><strong>Services:</strong> {hhah_data['services']}</p>
-            <p style="margin: 4px 0;"><strong>Patients:</strong> {hhah_data['patients']}</p>
-            <p style="margin: 4px 0;"><strong>Status:</strong> {hhah_data['status']}</p>
-            <p style="margin: 4px 0;"><strong>Address:</strong> {hhah_data['address']}</p>
-            <p style="margin: 4px 0;"><strong>Contact:</strong> {hhah_data['contact']}</p>
-        </div>
-        """
-        
-        # Create marker
-        folium.Marker(
-            location=hhah_data['location'],
-            popup=folium.Popup(popup_html, max_width=300),
-            tooltip=f"HHAH: {hhah_data['name']}",
-            icon=folium.Icon(color='green', icon="home", prefix="fa")
-        ).add_to(hhah_group)
-    
-    # Add HHAH group to map
-    hhah_group.add_to(folium_map)
-    
-    # Add legend for PGs and HHAHs
-    legend_colors = {
-        "Physician Groups (PGs)": "blue",
-        "Home Health At Home (HHAHs)": "green",
-        "Metro Area": "#4F46E5"
+# Define a simple function to get coordinates for well-known cities
+def get_coordinates_for_area(area_name):
+    """Get coordinates for well-known areas"""
+    # Dictionary of known city coordinates
+    area_coordinates = {
+        "New York": [40.7128, -74.0060],
+        "Los Angeles": [34.0522, -118.2437],
+        "Chicago": [41.8781, -87.6298],
+        "Houston": [29.7604, -95.3698],
+        "Phoenix": [33.4484, -112.0740],
+        "Philadelphia": [39.9526, -75.1652],
+        "San Antonio": [29.4241, -98.4936],
+        "San Diego": [32.7157, -117.1611],
+        "Dallas": [32.7767, -96.7970],
+        "San Francisco": [37.7749, -122.4194],
+        "Austin": [30.2672, -97.7431],
+        "Seattle": [47.6062, -122.3321],
+        "Denver": [39.7392, -104.9903],
+        "Boston": [42.3601, -71.0589],
+        "Las Vegas": [36.1699, -115.1398],
+        "Portland": [45.5051, -122.6750],
+        "Miami": [25.7617, -80.1918],
+        "Atlanta": [33.7490, -84.3880],
+        "Tampa": [27.9506, -82.4572],
+        "Orlando": [28.5383, -81.3792],
+        "Gainesville": [29.6516, -82.3248],
+        "Lakeland": [28.0395, -81.9498],
+        "Fort Myers": [26.6406, -81.8723],
+        "Cape Coral": [26.5629, -81.9495],
+        "Homosassa Springs": [28.7999, -82.5773],
+        "The Villages": [28.9005, -82.0100],
+        "Villages": [28.9005, -82.0100]
     }
     
-    legend = LegendControl(
-        title="Map Legend",
-        color_dict=legend_colors,
-        position="bottomright"
-    )
-    folium_map.add_child(legend)
+    # Normalize the area name for searching
+    normalized_area = area_name.lower()
     
-    # Add description box
-    title_html = f'''
-        <div style="position: fixed; 
-                    top: 10px; left: 50px; width: 300px; height: auto;
-                    background-color: white; border-radius: 8px;
-                    border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
-                    font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-            <h4 style="margin-top: 0; color: #1F2937;">{title}</h4>
-            <p style="font-size: 12px; margin-bottom: 0;">
-                Showing approximate location of {area_name}. The highlighted region shows the general area.
-            </p>
-            <p style="font-size: 12px; margin-bottom: 0;">
-                Showing {num_pgs} PGs and {num_hhahs} HHAHs in this area.
-            </p>
-        </div>
-    '''
-    folium_map.get_root().html.add_child(folium.Element(title_html))
+    # Try to find an exact match first
+    for city, coords in area_coordinates.items():
+        if city.lower() in normalized_area:
+            return coords
     
-    # Add map controls
-    folium.plugins.Fullscreen().add_to(folium_map)
-    folium.plugins.MousePosition().add_to(folium_map)
-    folium.plugins.Draw(export=True).add_to(folium_map)
-    folium.plugins.MeasureControl(primary_length_unit='miles').add_to(folium_map)
-    folium_map.add_child(folium.LayerControl())
+    # For Florida cities, default to central Florida if not found
+    if "fl" in normalized_area or "florida" in normalized_area:
+        return [28.0000, -82.4800]  # Central Florida
     
-    # Add safe script for cross-origin communication
-    safe_script = """
-    <script>
-    // Safe cross-origin communication
-    document.addEventListener('DOMContentLoaded', function() {
-        // Wait for map to fully render
-        setTimeout(function() {
-            console.log('Fallback map fully loaded and safe for cross-origin access');
-            
-            // Add protection for Leaflet objects to prevent cross-origin issues
-            try {
-                // Safely handle resize to avoid security errors
-                window.addEventListener('resize', function() {
-                    // Find map containers without accessing unsafe properties
-                    var mapContainers = document.querySelectorAll('.leaflet-container');
-                    if (mapContainers.length > 0) {
-                        // Trigger visible resize
-                        mapContainers.forEach(function(container) {
-                            // This is a safe way to trigger a resize
-                            var evt = document.createEvent('UIEvents');
-                            evt.initUIEvent('resize', true, false, window, 0);
-                            window.dispatchEvent(evt);
-                        });
-                    }
-                });
-            } catch (e) {
-                console.log('Continuing without advanced map handling');
-            }
-        }, 1000);
-    });
-    </script>
-    """
-    folium_map.get_root().html.add_child(folium.Element(safe_script))
+    # Default to US center
+    return [39.8283, -98.5795]
+
+def create_fallback_map(area_name, output_path=None, use_alternative_loading=False):
+    """Create a fallback map for a specific area"""
+    logger = logging.getLogger(__name__)
     
-    # Save to file
-    fig.add_child(folium_map)
-    folium_map.save(output_path)
-    
-    logger.info(f"Fallback map saved to {output_path}")
-    return output_path
+    try:
+        logger.info(f"Creating fallback map for {area_name} at {output_path}")
+        title = f"Statistical Area: {area_name}"
+        
+        # Try to get coordinates for well-known cities
+        coords = get_coordinates_for_area(area_name)
+        
+        # Set appropriate zoom level
+        if coords[0] == 39.8283 and coords[1] == -98.5795:  # If using US center coordinates
+            zoom_level = 4
+            title = f"Statistical Area: {area_name} (Approximate Location)"
+        else:
+            zoom_level = 9
+        
+        # Create a simple map
+        folium_map = folium.Map(
+            location=coords,
+            zoom_start=zoom_level,
+            tiles='cartodbpositron'
+        )
+        
+        # Add marker for the center
+        folium.Marker(
+            coords,
+            popup=title,
+            icon=folium.Icon(color='blue')
+        ).add_to(folium_map)
+        
+        # Add a circle to represent the general area
+        circle = folium.Circle(
+            location=coords,
+            radius=20000,  # 20km radius
+            color='#4F46E5',
+            fill=True,
+            fill_color='#4F46E5',
+            fill_opacity=0.2,
+            weight=3,
+            opacity=0.9
+        ).add_to(folium_map)
+        
+        # Add a simple title box
+        title_html = f'''
+            <div style="position: fixed; 
+                        top: 10px; left: 50px; width: 300px; height: auto;
+                        background-color: white; border-radius: 8px;
+                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0; color: #1F2937;">{title}</h4>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    This is a simplified view of the {area_name} area.
+                </p>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    This static map is shown when the interactive map cannot be loaded.
+                </p>
+            </div>
+        '''
+        folium_map.get_root().html.add_child(folium.Element(title_html))
+        
+        # Make sure the output path exists
+        if output_path:
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            folium_map.save(output_path)
+            logger.info(f"Fallback map saved to {output_path}")
+            return output_path
+        else:
+            # If no output path, return HTML
+            return folium_map._repr_html_()
+    except Exception as e:
+        logger.error(f"Error creating fallback map: {str(e)}")
+        return None
 
 # Cache directory setup
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache")
@@ -320,32 +197,46 @@ def get_processed_data():
     """Cache the processed MSA, county, and state data"""
     logger = logging.getLogger(__name__)
     try:
-        logger.info("Loading MSA, county, and state data...")
-        msa_data = main.get_msa_data()
+        logger.info("Loading data from cache...")
+        # Use the new cached data functions
+        msa_data, county_data, states_data, county_to_msa = get_all_cached_data()
+        
+        if msa_data is None or len(msa_data) == 0:
+            logger.error("No MSA data found in cache!")
+            return None, None, None, {}
+            
         logger.info(f"Loaded MSA data with {len(msa_data)} entries")
         logger.info(f"Sample MSA names: {', '.join(msa_data['NAME'].head().tolist())}")
         
-        county_data = main.get_county_data()
-        states_data = main.get_states_data()
-        county_to_msa = main.get_county_msa_relationships()
-        
-        # Pre-process and simplify geometries
-        logger.info("Pre-processing and simplifying geometries...")
-        if 'geometry' not in msa_data.columns:
-            logger.error("No geometry column found in MSA data!")
-            return None, None, None, {}
-            
-        # Use different simplification levels based on geometry complexity
-        msa_data['geometry'] = msa_data.geometry.simplify(0.01)
-        county_data['geometry'] = county_data.geometry.simplify(0.01)
-        # Use less simplification for states to preserve coastal boundaries
-        states_data['geometry'] = states_data.geometry.simplify(0.001)
-        
         return msa_data, county_data, states_data, county_to_msa
     except Exception as e:
-        logger.error(f"Error loading data: {str(e)}")
+        logger.error(f"Error loading data from cache: {str(e)}")
         logger.error(traceback.format_exc())
-        return None, None, None, {}
+        
+        logger.info("Falling back to direct data loading...")
+        try:
+            # Fall back to main module functions as before
+            msa_data = main.get_msa_data()
+            county_data = main.get_county_data()
+            states_data = main.get_states_data()
+            county_to_msa, _ = main.get_county_msa_relationships()
+            
+            # Pre-process and simplify geometries
+            logger.info("Pre-processing and simplifying geometries...")
+            if 'geometry' not in msa_data.columns:
+                logger.error("No geometry column found in MSA data!")
+                return None, None, None, {}
+                
+            # Use different simplification levels based on geometry complexity
+            msa_data['geometry'] = msa_data.geometry.simplify(0.01)
+            county_data['geometry'] = county_data.geometry.simplify(0.01)
+            # Use less simplification for states to preserve coastal boundaries
+            states_data['geometry'] = states_data.geometry.simplify(0.001)
+            
+            return msa_data, county_data, states_data, county_to_msa
+        except Exception as nested_e:
+            logger.error(f"Error in fallback data loading: {str(nested_e)}")
+            return None, None, None, {}
 
 def generate_mock_pgs_hhahs(area_name, target_area_geometry, num_pgs=5, num_hhahs=7):
     """Generate mock PGs and HHAHs for the given statistical area"""
@@ -513,7 +404,8 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     
-    logger.info(f"Generating map for statistical area: {area_name}")
+    logger.info(f"Generating map for statistical area: {area_name} with params: zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, use_cached={use_cached}, force_regen={force_regen}, lightweight={lightweight}")
+    start_time = time.time()
     
     # Generate cache filename
     cache_file = os.path.join(CACHE_DIR, f"statistical_area_{area_name.replace(' ', '_').replace(',', '').replace('-', '_')}.html")
@@ -522,18 +414,27 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
     if lightweight:
         cache_file = cache_file.replace('.html', '_lightweight.html')
     
+    logger.info(f"Cache file path: {cache_file}")
+    
     # Check cache first if use_cached is True and force_regen is False
     if use_cached and not force_regen and os.path.exists(cache_file):
         file_age = time.time() - os.path.getmtime(cache_file)
         # Use cache if file exists and is less than 24 hours old
         if file_age < 86400:  # 24 hours in seconds
             logger.info(f"Using cached map from {cache_file} (age: {file_age/3600:.1f} hours)")
+            elapsed_time = time.time() - start_time
+            logger.info(f"Map retrieval completed in {elapsed_time:.2f} seconds (from cache)")
             return cache_file
         else:
             logger.info(f"Cached map is {file_age/3600:.1f} hours old, regenerating...")
     
     # Get pre-processed data
+    data_load_start = time.time()
+    logger.info("Loading map data...")
     msa_data, county_data, states_data, county_to_msa = get_processed_data()
+    data_load_time = time.time() - data_load_start
+    logger.info(f"Data loaded in {data_load_time:.2f} seconds")
+    
     if msa_data is None or len(msa_data) == 0:
         logger.error("Failed to load MSA data or MSA data is empty")
         return create_fallback_map(area_name, cache_file)
@@ -584,6 +485,7 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
             return fallback_file
         
         # Verify geometry
+        logger.info(f"Validating geometry...")
         if not hasattr(target_area, 'geometry') or target_area.geometry is None:
             logger.error(f"No geometry data for MSA: {target_area['NAME']}")
             fallback_file = create_fallback_map(area_name, cache_file)
@@ -612,13 +514,10 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
             center_lng, center_lat = target_area.geometry.centroid.x, target_area.geometry.centroid.y
             min_x, min_y, max_x, max_y = target_area.geometry.bounds
             
-            # Generate mock PGs and HHAHs data for this statistical area - reduce count for lightweight version
-            if lightweight:
-                num_pgs = min(3, random.randint(2, 4))  # Reduced number of PGs
-                num_hhahs = min(5, random.randint(3, 6))  # Reduced number of HHAHs
-                pgs_data, hhahs_data = generate_mock_pgs_hhahs(area_name, target_area.geometry, num_pgs=num_pgs, num_hhahs=num_hhahs)
-            else:
-                pgs_data, hhahs_data = generate_mock_pgs_hhahs(area_name, target_area.geometry)
+            # Generate mock PGs and HHAHs data for this statistical area
+            logger.info(f"Generating mock PGs and HHAHs for {area_name}")
+            pgs_data, hhahs_data = generate_mock_pgs_hhahs(area_name, target_area.geometry)
+            logger.info(f"Generated {len(pgs_data)} mock PGs and {len(hhahs_data)} mock HHAHs")
             
             logger.info(f"Center: {center_lat}, {center_lng}")
             logger.info(f"Bounds: {min_x}, {min_y}, {max_x}, {max_y}")
@@ -628,37 +527,57 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
             logger.info(f"Created fallback map at: {fallback_file}")
             return fallback_file
         
-        # Create base map
-        m = folium.Map(
-            location=[center_lat, center_lng],
-            zoom_start=zoom,
-            tiles='cartodbpositron',
-            prefer_canvas=True,
-            control_scale=True
-        )
+        # Create base map with error handling
+        try:
+            m = folium.Map(
+                location=[center_lat, center_lng],
+                zoom_start=zoom,
+                tiles='cartodbpositron',
+                prefer_canvas=True,
+                control_scale=True
+            )
+        except Exception as e:
+            logger.error(f"Error creating base map: {str(e)}")
+            return create_fallback_map(area_name, cache_file)
         
-        # Add state boundaries (only if not lightweight or if detailed is True)
-        if not lightweight or detailed:
-            states_in_view = states_data[
-                (states_data.geometry.bounds.maxx >= min_x) & 
-                (states_data.geometry.bounds.minx <= max_x) & 
-                (states_data.geometry.bounds.maxy >= min_y) & 
-                (states_data.geometry.bounds.miny <= max_y)
-            ]
+        # Add state boundaries with error handling
+        try:
+            style_function = lambda x: {
+                'fillColor': '#f5f5f5',
+                'color': '#6b7280',
+                'weight': 1,
+                'fillOpacity': 0.1
+            }
             
-            if not states_in_view.empty:
-                folium.GeoJson(
-                    states_in_view.__geo_interface__,
-                    style_function=lambda x: {
-                        'fillColor': 'transparent',
-                        'color': '#6B7280',
-                        'weight': 1.5,
-                        'opacity': 0.8,
-                        'fillOpacity': 0,
-                        'dashArray': '3,3'
-                    },
-                    name='State Boundaries'
-                ).add_to(m)
+            highlight_function = lambda x: {
+                'fillColor': '#f5f5f5',
+                'color': '#4b5563', 
+                'weight': 2,
+                'fillOpacity': 0.2
+            }
+            
+            state_popup = folium.GeoJsonPopup(
+                fields=['NAME'],
+                aliases=['State:'],
+                localize=True,
+                labels=True
+            )
+            
+            # Add the state boundaries from GeoPandas directly
+            states_layer = folium.GeoJson(
+                states_data,
+                name='State Boundaries',
+                style_function=style_function,
+                highlight_function=highlight_function,
+                tooltip=folium.GeoJsonTooltip(fields=['NAME'], aliases=['State:'], sticky=False),
+                popup=state_popup,
+                show=True
+            )
+            states_layer.add_to(m)
+            
+        except Exception as e:
+            logger.error(f"Error adding state boundaries: {str(e)}")
+            # Continue without states
         
         # Add MSA boundary (simpler style for lightweight version)
         style_params = {
@@ -679,27 +598,19 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
         if lightweight:
             # Simplified markers for lightweight version
             for i, pg in enumerate(pgs_data):
-                folium.CircleMarker(
-                    location=[pg['lat'], pg['lng']],
-                    radius=5,
-                    color='blue',
-                    fill=True,
-                    fill_color='blue',
-                    fill_opacity=0.7,
+                folium.Marker(
+                    location=pg['location'],
                     popup=f"PG: {pg['name']}",
-                    name=f"PG_{i+1}"
+                    tooltip=f"PG: {pg['name']}",
+                    icon=folium.Icon(color='blue', icon='hospital', prefix='fa')
                 ).add_to(m)
             
             for i, hhah in enumerate(hhahs_data):
-                folium.CircleMarker(
-                    location=[hhah['lat'], hhah['lng']],
-                    radius=5,
-                    color='green',
-                    fill=True,
-                    fill_color='green',
-                    fill_opacity=0.7,
+                folium.Marker(
+                    location=hhah['location'],
                     popup=f"HHAH: {hhah['name']}",
-                    name=f"HHAH_{i+1}"
+                    tooltip=f"HHAH: {hhah['name']}",
+                    icon=folium.Icon(color='green', icon='home', prefix='fa')
                 ).add_to(m)
         else:
             # Detailed markers for full version

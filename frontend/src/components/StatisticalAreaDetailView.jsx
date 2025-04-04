@@ -25,10 +25,48 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
   const [retryCount, setRetryCount] = useState(0);
   const [mapUrl, setMapUrl] = useState('');
   const [useFallbackMap, setUseFallbackMap] = useState(false);
+  const [dataStatus, setDataStatus] = useState('unknown'); // 'unknown', 'loading', 'cached', 'downloading'
   const iframeRef = useRef(null);
   const stats = statisticalAreaStatistics[statisticalArea] || {};
 
   useEffect(() => {
+    // Check data cache status first
+    const checkDataCache = async () => {
+      try {
+        const healthCheckUrl = getApiUrl('/api/health');
+        console.log(`Checking server health and data cache status: ${healthCheckUrl}`);
+        
+        const healthResponse = await fetch(healthCheckUrl, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {'Accept': 'application/json'},
+          timeout: 5000
+        });
+        
+        if (healthResponse.ok) {
+          const health = await healthResponse.json();
+          console.log('Server health check passed:', health);
+          
+          if (health.data_cache_exists && health.cached_data_files > 0) {
+            // Data is already cached
+            setDataStatus('cached');
+          } else {
+            // Need to start data preloading
+            setDataStatus('downloading');
+            console.log('Starting data preloading...');
+            await fetch(getApiUrl('/api/preload-data'), {
+              method: 'GET',
+              mode: 'cors',
+              headers: {'Accept': 'application/json'}
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('Health check error:', err);
+        // Continue anyway
+      }
+    };
+
     // Check if the API for the zoomed map is accessible
     const checkMap = async () => {
       try {
@@ -36,70 +74,43 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         setError(null);
         setUseFallbackMap(false);
         
-        // First check server health to see if we can connect at all
-        try {
-          const healthCheckUrl = getApiUrl('/api/health');
-          console.log(`Checking server health at: ${healthCheckUrl}`);
-          
-          const healthResponse = await fetch(healthCheckUrl, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {'Accept': 'application/json'},
-            timeout: 5000
-          });
-          
-          if (!healthResponse.ok) {
-            console.warn('Health check failed, server may be down or unreachable');
-            throw new Error('Backend server is not responding correctly');
-          } else {
-            const health = await healthResponse.json();
-            console.log('Server health check passed:', health);
-          }
-        } catch (healthError) {
-          console.error(`Health check failed: ${healthError.message}`);
-          // Continue anyway, but with a warning
-        }
+        // First check server health and data cache status
+        await checkDataCache();
         
         // Encode the statistical area name for URL
         const encodedArea = encodeURIComponent(statisticalArea);
         console.log(`Requesting map for ${encodedArea}`);
         
         // Optimize map loading: prefer cached maps, reduce quality for faster loading
-        // Set use_cached=true to prioritize speed
-        const apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}`) +
-          `?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=${Date.now()}`;
-        console.log(`Full request URL: ${apiUrl}`);
-        
-        // Use a timeout to abort the fetch if it takes too long
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+        const timestamp = new Date().getTime();
+        // Use a lighter weight map with less detail for faster loading
+        const apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=${timestamp}`);
         
         try {
-          // First try with CORS mode
+          // Attempt to fetch the map with a timeout
+          console.log(`Full request URL: ${apiUrl}`);
+          
+          // Set up fetch with a timeout
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+          
           const response = await fetch(apiUrl, {
             method: 'GET',
             mode: 'cors',
-            credentials: 'omit',
-            headers: {
-              'Accept': 'text/html',
-              'Cache-Control': 'max-age=3600',
-              'X-Requested-With': 'XMLHttpRequest'
-            },
+            headers: {'Accept': 'text/html'},
             signal: controller.signal
           });
           
           clearTimeout(timeoutId);
           
-          console.log(`Response status: ${response.status} ${response.statusText}`);
-          
           if (!response.ok) {
-            throw new Error(`Failed to load statistical area map: ${response.status} ${response.statusText}`);
+            throw new Error(`Map request failed with status: ${response.status}`);
           }
           
-          // Map was successfully accessed
-          console.log(`Setting map URL to: ${apiUrl}`);
+          // Set the URL directly instead of creating a blob
           setMapUrl(apiUrl);
           setIsLoading(false);
+          
         } catch (initialError) {
           console.warn(`Initial fetch attempt failed: ${initialError.message}`);
           
@@ -171,7 +182,7 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
   };
 
   const handleRetry = () => {
-    setRetryCount(prev => prev + 1);
+    setRetryCount(retryCount + 1);
   };
 
   // Get color for metric cards
@@ -191,6 +202,32 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
     physicianGroups: 'Physician Groups',
     agencies: 'Agencies',
     activeOutcomes: 'Active Outcomes'
+  };
+
+  // Render the appropriate map loading state message
+  const renderLoadingMessage = () => {
+    if (dataStatus === 'downloading') {
+      return (
+        <>
+          <p>Downloading map data for {statisticalArea}...</p>
+          <p className="map-loading-info">This is a one-time download and may take a minute. Future maps will load faster.</p>
+        </>
+      );
+    } else if (useFallbackMap) {
+      return (
+        <>
+          <p>Loading simplified map of {statisticalArea}...</p>
+          <p className="map-loading-info">Using simplified view for faster loading</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <p>Loading map of {statisticalArea}...</p>
+          <p className="map-loading-info">This may take a few seconds</p>
+        </>
+      );
+    }
   };
 
   if (error) {
@@ -299,8 +336,7 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
           {isLoading && (
             <div className="map-loading">
               <div className="spinner"></div>
-              <p>Loading map of {statisticalArea}...</p>
-              <p className="map-loading-info">This may take a few seconds</p>
+              {renderLoadingMessage()}
             </div>
           )}
           {/* Only show iframe when mapUrl is available */}
@@ -322,18 +358,9 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
           )}
         </div>
         <div className="area-map-info">
-          <p>The highlighted area shows the exact boundaries of {statisticalArea}. Use the zoom controls to explore further.</p>
+          <p>The highlighted area shows the boundaries of {statisticalArea}. Use the zoom controls to explore further.</p>
           {useFallbackMap && (
-            <div className="fallback-notice">
-              <p><strong>Note:</strong> Using simplified map view. The interactive map could not be loaded at this time.</p>
-              <button 
-                className="retry-button" 
-                onClick={() => setRetryCount(prev => prev + 1)}
-                style={{ padding: '5px 10px', marginTop: '5px' }}
-              >
-                Try Interactive Map
-              </button>
-            </div>
+            <p className="fallback-notice">Using simplified map view. For better performance, refresh the page.</p>
           )}
           {!useFallbackMap && (
             <>

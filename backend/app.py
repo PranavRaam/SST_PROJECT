@@ -6,8 +6,10 @@ import threading
 import time
 import urllib.parse
 import logging
+import sys
 from statistical_area_zoom import generate_statistical_area_map
 import re
+import data_preloader
 
 app = Flask(__name__)
 # Enable CORS with specific options for production
@@ -31,10 +33,14 @@ CORS(app,
     send_wildcard=False  # Changed to False to prevent CORS issues
 )
 
-# Configure logging
+# Set up logging to console and file
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('app.log')
+    ]
 )
 logger = logging.getLogger(__name__)
 
@@ -261,131 +267,64 @@ def get_regions():
 
 @app.route('/api/static-fallback-map/<area_name>', methods=['GET'])
 def get_static_fallback_map(area_name):
-    """Provide a simple HTML static map as fallback for areas with CORS/loading issues"""
+    """Serve a static fallback map for areas that can't be generated with the interactive map"""
     try:
-        # Decode the URL-encoded area name
-        decoded_area_name = urllib.parse.unquote(area_name)
-        logger.info(f"Serving static fallback map for: {decoded_area_name}")
+        logger.info(f"Serving static fallback map for: {area_name}")
+        from statistical_area_zoom import create_fallback_map, get_coordinates_for_area
         
-        # Create a very simple static HTML with minimal dependencies
-        html_content = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Map of {decoded_area_name}</title>
-            <style>
-                body {{ margin: 0; padding: 0; font-family: Arial, sans-serif; }}
-                .map-container {{ 
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    height: 100vh;
-                    background-color: #f5f5f5;
-                    text-align: center;
-                }}
-                .area-info {{
-                    background-color: white;
-                    border-radius: 8px;
-                    border: 2px solid #4F46E5;
-                    padding: 20px;
-                    max-width: 80%;
-                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                }}
-                h2 {{ color: #1F2937; margin-top: 0; }}
-                p {{ color: #4B5563; }}
-            </style>
-        </head>
-        <body>
-            <div class="map-container">
-                <div class="area-info">
-                    <h2>Map of {decoded_area_name}</h2>
-                    <p>This is a simplified view of the {decoded_area_name} area.</p>
-                    <p>This static map is shown when the interactive map cannot be loaded.</p>
-                    <script>
-                        // Notify parent that the map is loaded
-                        document.addEventListener('DOMContentLoaded', function() {{
-                            try {{
-                                setTimeout(function() {{
-                                    if (window.parent && window.parent !== window) {{
-                                        window.parent.postMessage({{type: 'mapLoaded', status: 'success'}}, '*');
-                                    }}
-                                }}, 500);
-                            }} catch(e) {{
-                                console.error('Error sending message to parent:', e);
-                            }}
-                        }});
-                    </script>
-                </div>
-            </div>
-        </body>
-        </html>
-        """
+        # Create a static fallback map
+        html_content = create_fallback_map(area_name, None)
         
-        # Return the HTML content with appropriate headers
-        response = Response(html_content, mimetype='text/html')
-        
-        # Set CORS headers for this response
-        origin = request.headers.get('Origin', '')
-        allowed_origins = [
-            'https://sst-frontend-swart.vercel.app', 
-            'http://localhost:3000', 
-            'https://prototype-railway-production.up.railway.app',
-            'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-            'https://railway-prototype-pranavraams-projects.vercel.app',
-            'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
-            'https://railway-prototype.vercel.app'
-        ]
-        
-        if origin in allowed_origins:
-            response.headers['Access-Control-Allow-Origin'] = origin
+        if html_content:
+            response = Response(html_content, mimetype='text/html')
+            response.headers['Content-Security-Policy'] = "frame-ancestors *"
+            response.headers['X-Frame-Options'] = "ALLOWALL"
+            return response
         else:
-            response.headers['Access-Control-Allow-Origin'] = '*'
-            
-        response.headers['X-Frame-Options'] = 'ALLOW-FROM *'
-        response.headers['Content-Security-Policy'] = "frame-ancestors *"
-        response.headers['Cache-Control'] = 'max-age=86400'  # Cache for 24h
-        
-        return response
+            # If fallback creation failed, return a very basic HTML response
+            basic_html = f"""
+            <html>
+            <head><title>Map of {area_name}</title></head>
+            <body style="margin:0; padding:20px; font-family:Arial; text-align:center; background:#f5f5f5;">
+                <div style="max-width:600px; margin:100px auto; padding:20px; background:white; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
+                    <h2>Map of {area_name}</h2>
+                    <p>This is a simplified view of the {area_name} area.</p>
+                    <p>The interactive map could not be loaded at this time.</p>
+                </div>
+            </body>
+            </html>
+            """
+            return Response(basic_html, mimetype='text/html')
     except Exception as e:
-        logger.error(f"Error generating static fallback map: {str(e)}", exc_info=True)
+        logger.exception(f"Error generating static fallback map: {str(e)}")
         return jsonify({
             "success": False,
-            "message": f"Error generating static fallback map: {str(e)}"
+            "message": f"Error: {str(e)}"
         }), 500
 
 @app.route('/api/statistical-area-map/<area_name>', methods=['GET'])
 def get_statistical_area_map(area_name):
+    """Get a map for a specific statistical area"""
     try:
-        # Decode the URL-encoded area name
-        decoded_area_name = urllib.parse.unquote(area_name)
-        logger.info(f"Requested statistical area map for: {decoded_area_name}")
+        # Log request details
+        logger.info(f"Map request for area: {area_name}")
+        logger.info(f"Query parameters: {request.args}")
+        start_time = time.time()
         
-        # Parse URL parameters with defaults optimized for performance
+        # Parse parameters
         force_regen = request.args.get('force_regen', 'false').lower() == 'true'
         use_cached = request.args.get('use_cached', 'true').lower() == 'true'
         detailed = request.args.get('detailed', 'false').lower() == 'true'
+        zoom = int(request.args.get('zoom', 9))
+        exact_boundary = request.args.get('exact_boundary', 'true').lower() == 'true'
         lightweight = request.args.get('lightweight', 'true').lower() == 'true'
         
-        # Parse zoom level (default to 10 for better performance)
-        try:
-            zoom = int(request.args.get('zoom', '10'))
-        except ValueError:
-            zoom = 10
-            
-        # Parse boundary options
-        exact_boundary = request.args.get('exact_boundary', 'true').lower() == 'true'
+        logger.info(f"Processing parameters: force_regen={force_regen}, use_cached={use_cached}, "
+                   f"detailed={detailed}, zoom={zoom}, exact_boundary={exact_boundary}, lightweight={lightweight}")
         
-        logger.info(f"Map options: force_regen={force_regen}, use_cached={use_cached}, " 
-                    f"detailed={detailed}, lightweight={lightweight}, zoom={zoom}, "
-                    f"exact_boundary={exact_boundary}")
-        
-        # Generate or retrieve the map for this statistical area with the specified options
+        # Generate the map
         map_file = generate_statistical_area_map(
-            decoded_area_name,
+            area_name, 
             zoom=zoom,
             exact_boundary=exact_boundary,
             detailed=detailed,
@@ -394,81 +333,22 @@ def get_statistical_area_map(area_name):
             lightweight=lightweight
         )
         
-        # Verify map file exists
-        if not os.path.exists(map_file):
-            logger.error(f"Generated map file does not exist: {map_file}")
+        if map_file and os.path.exists(map_file):
+            logger.info(f"Map generated successfully at {map_file}")
+            elapsed_time = time.time() - start_time
+            logger.info(f"Request completed in {elapsed_time:.2f} seconds")
+            return send_file(map_file, mimetype='text/html')
+        else:
+            logger.error(f"Failed to generate map for {area_name}")
             return jsonify({
                 "success": False,
-                "message": f"Error: Generated map file not found for {decoded_area_name}"
+                "message": f"Could not generate map for {area_name}. Try with different parameters."
             }), 500
-        
-        # Read the HTML file
-        with open(map_file, 'r') as f:
-            html_content = f.read()
-        
-        # Add cross-origin safe script to fix security errors and ensure map loads properly
-        cross_origin_script = """
-        <script>
-        // Fix for cross-origin security issues
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // Safe way to get leaflet maps without accessing window properties directly
-                setTimeout(function() {
-                    var maps = document.querySelectorAll('.leaflet-container');
-                    if (maps.length > 0) {
-                        console.log('Map optimization complete');
-                    }
-                    
-                    // Notify parent safely using postMessage
-                    try {
-                        if (window.parent && window.parent !== window) {
-                            window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
-                        }
-                    } catch (e) {
-                        console.log('Postmessage not available, continuing silently');
-                    }
-                }, 500); // Reduced timeout for faster notification
-            } catch (e) {
-                console.log('Map frame initialization complete');
-            }
-        });
-        </script>
-        """
-        
-        # Insert the script just before the closing body tag if not already present
-        if "</script>\n</body>" not in html_content:
-            html_content = html_content.replace('</body>', cross_origin_script + '</body>')
-        
-        # Return the modified HTML content with proper content type and CORS headers
-        logger.info(f"Serving modified statistical area map from {map_file}")
-        response = Response(html_content, mimetype='text/html')
-        
-        # Set specific CORS headers for this response
-        origin = request.headers.get('Origin', '')
-        allowed_origins = [
-            'https://sst-frontend-swart.vercel.app', 
-            'http://localhost:3000',
-            'https://prototype-railway-production.up.railway.app',
-            'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-            'https://railway-prototype-pranavraams-projects.vercel.app',
-            'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
-            'https://railway-prototype.vercel.app'
-        ]
-        
-        if origin in allowed_origins:
-            response.headers['Access-Control-Allow-Origin'] = origin
-        else:
-            response.headers['Access-Control-Allow-Origin'] = '*'
-            
-        response.headers['X-Frame-Options'] = 'ALLOW-FROM *'
-        response.headers['Content-Security-Policy'] = "frame-ancestors *"
-        response.headers['Cache-Control'] = 'max-age=86400' if use_cached else 'no-cache'  # Cache for 24h if using cache
-        return response
     except Exception as e:
-        logger.error(f"Error generating statistical area map for {area_name}: {str(e)}", exc_info=True)
+        logger.exception(f"Error generating map for {area_name}: {str(e)}")
         return jsonify({
             "success": False,
-            "message": f"Error generating map for {area_name}: {str(e)}"
+            "message": f"Error: {str(e)}"
         }), 500
 
 @app.route('/api/clear-cache', methods=['GET'])
@@ -512,13 +392,20 @@ def health_check():
     if request.method == 'OPTIONS':
         response = Response()
     else:
+        # Check if the data cache exists
+        data_cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_cache")
+        data_cache_exists = os.path.exists(data_cache_dir)
+        cached_files = len([f for f in os.listdir(data_cache_dir)]) if data_cache_exists else 0
+        
         response = jsonify({
             "status": "healthy",
             "message": "Backend server is operational",
             "timestamp": time.time(),
             "cors_enabled": True,
             "cache_dir_exists": os.path.exists(CACHE_DIR),
-            "cached_maps": len([f for f in os.listdir(CACHE_DIR) if f.endswith('.html')]) if os.path.exists(CACHE_DIR) else 0
+            "cached_maps": len([f for f in os.listdir(CACHE_DIR) if f.endswith('.html')]) if os.path.exists(CACHE_DIR) else 0,
+            "data_cache_exists": data_cache_exists,
+            "cached_data_files": cached_files
         })
     
     # Set CORS headers
@@ -545,5 +432,59 @@ def health_check():
     
     return response
 
+@app.route('/api/preload-data', methods=['GET'])
+def preload_data():
+    """Endpoint to pre-download and cache all census data"""
+    try:
+        # Start preloading in a background thread
+        def preload_task():
+            try:
+                data_preloader.download_and_cache_all_data()
+            except Exception as e:
+                logger.error(f"Error in preload task: {str(e)}")
+        
+        thread = threading.Thread(target=preload_task)
+        thread.daemon = True
+        thread.start()
+        
+        return jsonify({
+            "success": True,
+            "message": "Data preloading started in background"
+        })
+        
+    except Exception as e:
+        logger.error(f"Error starting preload task: {str(e)}")
+        return jsonify({
+            "success": False,
+            "message": f"Error starting preload: {str(e)}"
+        }), 500
+
 if __name__ == '__main__':
+    # Try to preload data at startup
+    try:
+        logger.info("Checking for cached data at startup")
+        if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_cache")):
+            logger.info("No data cache found, creating data cache directory")
+            os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_cache"), exist_ok=True)
+            
+        # Check if we have the cached data files
+        required_files = ["msa_data.pkl", "county_data.pkl", "states_data.pkl", "county_msa_relationships.pkl"]
+        data_cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_cache")
+        missing_files = [f for f in required_files if not os.path.exists(os.path.join(data_cache_dir, f))]
+        
+        if missing_files:
+            logger.info(f"Missing data cache files: {missing_files}. Starting preload in background")
+            # Start preloading in a background thread
+            def preload_task():
+                try:
+                    data_preloader.download_and_cache_all_data()
+                except Exception as e:
+                    logger.error(f"Error in startup preload task: {str(e)}")
+            
+            thread = threading.Thread(target=preload_task)
+            thread.daemon = True
+            thread.start()
+    except Exception as e:
+        logger.error(f"Error checking data cache at startup: {str(e)}")
+        
     app.run(debug=True, host='0.0.0.0', port=5000)
