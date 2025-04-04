@@ -1,0 +1,628 @@
+/* Value Communication Styles */
+.value-communication-section {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  margin-bottom: 25px;
+  text-align: left;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 15px;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.section-description {
+  color: #666;
+  font-size: 14px;
+}
+
+.value-comm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.value-comm-panel {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+  transition: box-shadow 0.2s ease;
+}
+
+.value-comm-panel:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.panel-header h3 {
+  font-size: 18px;
+  color: #4F46E5;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Reports Panel */
+.reports-panel {
+  grid-column: span 2;
+  background-color: #f8f9ff;
+}
+
+.reports-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+  overflow-y: auto;
+  max-height: 320px;
+  padding-right: 10px;
+}
+
+.report-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: white;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #f0f0f0;
+  min-height: 90px;
+}
+
+.report-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.document-icon {
+  font-size: 20px;
+  color: #4F46E5;
+}
+
+.report-details {
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.report-filename {
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.report-notes {
+  color: #666;
+  font-size: 13px;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.report-meta {
+  font-size: 12px;
+  color: #888;
+}
+
+.report-actions {
+  display: flex;
+  gap: 4px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-button:hover {
+  background-color: #f0f0f0;
+  color: #4F46E5;
+}
+
+.action-icon {
+  font-size: 14px;
+}
+
+/* Interactions Panel */
+.interactions-panel {
+  grid-column: 1;
+  background-color: #f9f9ff;
+}
+
+.add-interaction-form {
+  display: flex;
+  margin-bottom: 15px;
+  gap: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.interaction-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.submit-button {
+  background-color: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #4338CA;
+}
+
+.submit-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.interactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  height: 300px;
+  padding-right: 10px;
+}
+
+.interactions-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.interactions-list::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 3px;
+}
+
+.interactions-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}
+
+.interaction-card {
+  background-color: white;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid #4F46E5;
+}
+
+.interaction-text {
+  margin: 0;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.interaction-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #888;
+}
+
+.toggle-button {
+  background-color: transparent;
+  border: none;
+  color: #4F46E5;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+  text-decoration: underline;
+}
+
+.toggle-button:hover {
+  color: #4338CA;
+}
+
+/* MBR Panel */
+.mbr-panel {
+  grid-column: 2;
+  background-color: #f5f8ff;
+}
+
+.mbr-stats {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mbr-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+  overflow-y: auto;
+  max-height: 300px;
+  padding-right: 5px;
+}
+
+.task-card {
+  display: flex;
+  background-color: white;
+  border-radius: 6px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+.task-card.completed {
+  opacity: 0.7;
+  background-color: #f8f8f8;
+}
+
+.task-checkbox {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.task-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-text {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.task-card.completed .task-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #888;
+}
+
+.task-status {
+  font-weight: 500;
+}
+
+.task-status.completed {
+  color: #10B981;
+}
+
+.task-status.pending {
+  color: #F59E0B;
+}
+
+.add-task-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.task-input {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.task-date-input {
+  width: 140px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #666;
+  background-color: white;
+  cursor: pointer;
+}
+
+.task-date-input::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+.task-date-input:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .value-comm-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  
+  .reports-panel, .interactions-panel, .mbr-panel, .weekly-reports-panel {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .reports-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .add-task-form {
+    flex-direction: column;
+  }
+}
+
+/* Add these new styles for the reports sections */
+.reports-section {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 1rem;
+}
+
+.reports-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.reports-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reports-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a63c7;
+  margin-bottom: 0;
+  padding-left: 0.5rem;
+  border-left: 3px solid #4a63c7;
+  background-color: #f0f4ff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.reports-section-header .action-button {
+  margin-left: 12px;
+  white-space: nowrap;
+  background-color: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.reports-section-header .action-button:hover {
+  background-color: #4338CA;
+}
+
+/* Styles for MBR panel */
+.mbr-panel {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  border-top: 3px solid #4361ee;
+}
+
+.mbr-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9ff;
+  padding: 10px;
+  border-radius: 6px;
+  min-width: 120px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4a63c7;
+}
+
+/* Styles for Weekly Reports panel */
+.weekly-reports-panel {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  border-top: 3px solid #4cc9f0;
+}
+
+.weekly-report-stats {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f8f9ff;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.weekly-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0faff;
+  padding: 10px;
+  border-radius: 6px;
+  min-width: 120px;
+}
+
+.weekly-tasks-list {
+  margin-bottom: 1rem;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Additional styles to improve UI clarity */
+.action-button {
+  background-color: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.action-button:hover {
+  background-color: #4338CA;
+}
+
+.icon {
+  font-size: 16px;
+}
+
+/* Custom scrollbar for lists */
+.reports-list, .interactions-list, .mbr-tasks-list, .weekly-tasks-list {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.reports-list::-webkit-scrollbar, 
+.interactions-list::-webkit-scrollbar, 
+.mbr-tasks-list::-webkit-scrollbar, 
+.weekly-tasks-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reports-list::-webkit-scrollbar-track, 
+.interactions-list::-webkit-scrollbar-track, 
+.mbr-tasks-list::-webkit-scrollbar-track, 
+.weekly-tasks-list::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.reports-list::-webkit-scrollbar-thumb, 
+.interactions-list::-webkit-scrollbar-thumb, 
+.mbr-tasks-list::-webkit-scrollbar-thumb, 
+.weekly-tasks-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* Add visual hierarchy to tasks */
+.mbr-tasks-list .task-card, .weekly-tasks-list .task-card {
+  border-left: 3px solid transparent;
+}
+
+.mbr-tasks-list .task-card {
+  border-left-color: #4361ee;
+}
+
+.weekly-tasks-list .task-card {
+  border-left-color: #4cc9f0;
+}
+
+.task-card.completed {
+  border-left-color: #10B981 !important;
+} 

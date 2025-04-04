@@ -1,0 +1,186 @@
+.pg-table-container {
+    width: 100%;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+  
+.pg-table-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    letter-spacing: -0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+  
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+  
+.pg-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    color: #1a1a1a;
+    table-layout: fixed;
+}
+  
+.pg-table tbody {
+    display: block;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+  
+.pg-table thead, .pg-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+  
+.pg-table th, .pg-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e0e6ed;
+    font-size: 14px;
+    font-weight: 500;
+}
+  
+/* Set specific widths for each column */
+.pg-table th:nth-child(1), 
+.pg-table td:nth-child(1) {
+    width: 25%; /* PG Name */
+}
+
+.pg-table th:nth-child(2), 
+.pg-table td:nth-child(2) {
+    width: 25%; /* Total patients */
+}
+
+.pg-table th:nth-child(3), 
+.pg-table td:nth-child(3) {
+    width: 25%; /* Patients rem (30 CPO) */
+}
+
+.pg-table th:nth-child(4), 
+.pg-table td:nth-child(4) {
+    width: 25%; /* Active/Reactive OC */
+}
+  
+.pg-table th {
+    background: #2c3e50;
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    letter-spacing: -0.3px;
+    white-space: normal; /* Allow text wrapping in headers */
+    line-height: 1.2; /* Tighter line height for wrapped text */
+    height: auto; /* Allow height to adjust to content */
+    vertical-align: middle;
+}
+  
+.pg-table tbody tr {
+    transition: all 0.2s ease;
+}
+  
+.pg-table tbody tr:hover {
+    background: #f8f9fa;
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+  
+.pg-clickable-row {
+    transition: all 0.2s ease;
+}
+  
+.pg-clickable-row:hover {
+    background: #f1f3f5;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Scrollbar styling */
+.table-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #2c3e50;
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #34495e;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .table-container {
+        margin: 0 -1rem;
+        width: calc(100% + 2rem);
+    }
+    
+    .pg-table {
+        min-width: 600px;
+    }
+}
+
+.table-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1e293b;
+    text-align: center;
+    position: relative;
+}
+
+.table-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    margin: 8px auto 0;
+    border-radius: 3px;
+}
+
+/* Table cell content */
+.pg-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
