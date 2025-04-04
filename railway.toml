@@ -1,7 +1,10 @@
 [build]
-builder = "nixpacks"
-buildCommand = "pip install -r requirements.txt"
+builder = "DOCKERFILE"
+dockerfile = "Dockerfile"
+no-cache = true
 
 [deploy]
-startCommand = "cd backend && gunicorn app:app --bind 0.0.0.0:$PORT"
-restartPolicyType = "ON_FAILURE" 
+healthcheck.path = "/api/health"
+healthcheck.interval = "30s"
+healthcheck.timeout = "10s"
+restartPolicy = "on-failure" 

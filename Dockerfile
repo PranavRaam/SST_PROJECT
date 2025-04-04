@@ -22,11 +22,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application
 COPY . .
 
+# Make the entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+
 # Set the working directory to the backend folder
 WORKDIR /app/backend
 
 # Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the application - using shell form
-CMD gunicorn app:app --bind 0.0.0.0:${PORT:-8080} 
+# Use the entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"] 
