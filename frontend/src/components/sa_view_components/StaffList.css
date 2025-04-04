@@ -16,7 +16,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .staff-tabs {
@@ -52,21 +54,22 @@
 }
 
 .staff-search {
-  margin-bottom: 20px;
-  background: #ffffff;
-  padding: 10px 0;
+  flex: 1;
 }
 
 .staff-search-input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 0.95rem;
-  font-family: 'Inter', sans-serif;
-  color: #111827;
-  background: #ffffff;
+  font-size: 0.9rem;
   transition: all 0.2s;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.staff-search-input::placeholder {
+  color: #64748b;
 }
 
 .staff-search-input:focus {
@@ -145,16 +148,18 @@
 .add-staff-button {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 0.75rem 1.25rem;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
   background-color: #4F46E5;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .add-staff-button:hover {
@@ -345,4 +350,19 @@
 
 .office-staff-name-link:hover {
   text-decoration: underline;
+}
+
+.staff-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.staff-actions-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
 }

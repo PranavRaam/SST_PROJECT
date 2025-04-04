@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import './StaffList.css';
 import { useNavigate } from 'react-router-dom';
 
-const StaffList = ({ pgData, setPgData }) => {
+const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('physicians');
+  const [activeTab, setActiveTab] = useState(showOnlyOfficeStaff ? 'officeStaff' : 'physicians');
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [newStaffMember, setNewStaffMember] = useState({
@@ -312,41 +312,48 @@ const StaffList = ({ pgData, setPgData }) => {
     <div className="staff-list-container">
       <div className="staff-header">
         <div className="staff-tabs">
+          {!showOnlyOfficeStaff ? (
+            <>
+              <button 
+                className={`staff-tab ${activeTab === 'physicians' ? 'active' : ''}`}
+                onClick={() => setActiveTab('physicians')}
+              >
+                Physicians
+              </button>
+              <button 
+                className={`staff-tab ${activeTab === 'npp' ? 'active' : ''}`}
+                onClick={() => setActiveTab('npp')}
+              >
+                NPP
+              </button>
+              <button 
+                className={`staff-tab ${activeTab === 'officeStaff' ? 'active' : ''}`}
+                onClick={() => setActiveTab('officeStaff')}
+              >
+                Office Staff
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="staff-actions-container">
+          <div className="staff-search">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleSearch}
+              className="staff-search-input"
+            />
+          </div>
           <button 
-            className={`staff-tab ${activeTab === 'physicians' ? 'active' : ''}`}
-            onClick={() => setActiveTab('physicians')}
+            className="add-staff-button"
+            onClick={() => setShowAddForm(!showAddForm)}
           >
-            Physicians
-          </button>
-          <button 
-            className={`staff-tab ${activeTab === 'npp' ? 'active' : ''}`}
-            onClick={() => setActiveTab('npp')}
-          >
-            NPP
-          </button>
-          <button 
-            className={`staff-tab ${activeTab === 'officeStaff' ? 'active' : ''}`}
-            onClick={() => setActiveTab('officeStaff')}
-          >
-            Office Staff
+            <span className="icon">+</span> Add {activeTab === 'physicians' ? 'Physician' : activeTab === 'npp' ? 'NPP' : 'Office Staff'}
           </button>
         </div>
-        <button 
-          className="add-staff-button"
-          onClick={() => setShowAddForm(!showAddForm)}
-        >
-          <span className="icon">+</span> Add {activeTab === 'physicians' ? 'Physician' : activeTab === 'npp' ? 'NPP' : 'Office Staff'}
-        </button>
-      </div>
-
-      <div className="staff-search">
-        <input
-          type="text"
-          placeholder="Search persona..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="staff-search-input"
-        />
       </div>
 
       {renderAddForm()}

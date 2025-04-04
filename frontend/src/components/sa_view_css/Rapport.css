@@ -1,0 +1,286 @@
+/* Rapport Management Section */
+.rapport-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.rapport-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.rapport-title {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.rapport-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.rapport-search {
+  flex: 1;
+  max-width: 400px;
+}
+
+.rapport-search input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: white;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.rapport-search input:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.rapport-search input::placeholder {
+  color: #94a3b8;
+}
+
+.rapport-export-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #4F46E5;
+  color: white;
+}
+
+.rapport-export-btn:hover {
+  background: #4338ca;
+}
+
+.rapport-score {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.rapport-score-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1;
+}
+
+.rapport-score-label {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+/* Add New Rapport Record Form */
+.add-rapport-form {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rapport-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rapport-form-group label {
+  color: #1e293b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.rapport-form-group input,
+.rapport-form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.rapport-form-group input:focus,
+.rapport-form-group textarea:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.add-record-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: #4F46E5;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: fit-content;
+}
+
+.add-record-btn:hover {
+  background: #4338ca;
+}
+
+/* Rapport Records Table */
+.rapport-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.rapport-table th {
+  background: #f8fafc;
+  padding: 1rem;
+  text-align: left;
+  color: #1e293b;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.rapport-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.rapport-table tr:hover {
+  background: #f8fafc;
+}
+
+/* Score Badge */
+.rapport-score-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.rapport-score-badge.high {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.rapport-score-badge.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.rapport-score-badge.low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Rapport Action Buttons */
+.rapport-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rapport-edit-btn,
+.rapport-delete-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rapport-edit-btn {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.rapport-edit-btn:hover {
+  background: #e2e8f0;
+}
+
+.rapport-delete-btn {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.rapport-delete-btn:hover {
+  background: #fecaca;
+}
+
+/* Rapport Analytics Toggle */
+.rapport-analytics-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #4F46E5;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rapport-analytics-toggle:hover {
+  background: #f8fafc;
+  border-color: #4F46E5;
+}
+
+/* Rapport Responsive Design */
+@media (max-width: 768px) {
+  .rapport-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rapport-actions {
+    width: 100%;
+  }
+
+  .rapport-search {
+    max-width: none;
+  }
+
+  .add-rapport-form {
+    grid-template-columns: 1fr;
+  }
+
+  .rapport-action-buttons {
+    flex-direction: column;
+  }
+} 

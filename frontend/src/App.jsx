@@ -8,6 +8,7 @@ import StatisticalAreaDetailView from './components/StatisticalAreaDetailView'
 import PgServiceView from './components/PgServiceView'
 import HHAHServiceView from './components/HHAHServiceView'
 import PGView from './components/sa_view_components/PGView'
+import HHAHView from './components/sa_view_components/HHAHView'
 import PhysicianView from './components/sa_view_components/PhysicianView'
 import NPPView from './components/sa_view_components/NPPView'
 import OfficeStaffView from './components/sa_view_components/OfficeStaffView'
@@ -278,6 +279,7 @@ function App() {
               <Route path="/pg-services" element={<PgServiceView />} />
               <Route path="/hhah-services" element={<HHAHServiceView />} />
               <Route path="/pg-view/:pgName" element={<PGView />} />
+              <Route path="/hhah-view/:hhahName" element={<HHAHView />} />
               <Route path="/physician/:id" element={<PhysicianView />} />
               <Route path="/npp/:nppId" element={<NPPView />} />
               <Route path="/office-staff/:staffId" element={<OfficeStaffView />} />
