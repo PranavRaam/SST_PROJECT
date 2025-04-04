@@ -13,7 +13,13 @@ app = Flask(__name__)
 # Enable CORS with specific options for production
 CORS(app, 
     resources={r"/api/*": {
-        "origins": ["https://sst-frontend-swart.vercel.app", "http://localhost:3000", "https://prototype-railway-production.up.railway.app"],
+        "origins": [
+            "https://sst-frontend-swart.vercel.app", 
+            "http://localhost:3000", 
+            "https://prototype-railway-production.up.railway.app",
+            "https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app",
+            "https://railway-prototype-pranavraams-projects.vercel.app"
+        ],
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
@@ -48,7 +54,13 @@ def add_cors_headers(response):
     origin = request.headers.get('Origin', '')
     
     # List of allowed origins
-    allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+    allowed_origins = [
+        'https://sst-frontend-swart.vercel.app', 
+        'http://localhost:3000', 
+        'https://prototype-railway-production.up.railway.app',
+        'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
+        'https://railway-prototype-pranavraams-projects.vercel.app'
+    ]
     
     # Allow specific origins only when credentials are involved
     if origin in allowed_origins:
@@ -76,7 +88,13 @@ def options_statistical_area_map(area_name):
     origin = request.headers.get('Origin', '')
     
     # List of allowed origins
-    allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+    allowed_origins = [
+        'https://sst-frontend-swart.vercel.app', 
+        'http://localhost:3000', 
+        'https://prototype-railway-production.up.railway.app',
+        'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
+        'https://railway-prototype-pranavraams-projects.vercel.app'
+    ]
     
     # Allow specific origins when credentials are involved
     if origin in allowed_origins:
@@ -209,7 +227,13 @@ def get_map():
         
         # Handle CORS for HTML content - determine appropriate origin
         origin = request.headers.get('Origin', '')
-        allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+        allowed_origins = [
+            'https://sst-frontend-swart.vercel.app', 
+            'http://localhost:3000', 
+            'https://prototype-railway-production.up.railway.app',
+            'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
+            'https://railway-prototype-pranavraams-projects.vercel.app'
+        ]
         
         if origin in allowed_origins:
             response.headers['Access-Control-Allow-Origin'] = origin
@@ -483,7 +507,13 @@ def health_check():
     
     # Set CORS headers
     origin = request.headers.get('Origin', '')
-    allowed_origins = ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000', 'https://prototype-railway-production.up.railway.app']
+    allowed_origins = [
+        'https://sst-frontend-swart.vercel.app', 
+        'http://localhost:3000', 
+        'https://prototype-railway-production.up.railway.app',
+        'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
+        'https://railway-prototype-pranavraams-projects.vercel.app'
+    ]
     
     if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin

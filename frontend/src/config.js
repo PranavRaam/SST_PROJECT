@@ -2,7 +2,7 @@ export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const getApiUrl = (path) => {
   // For development
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.MODE === 'development') {
     return `http://localhost:5000${path}`;
   }
   
