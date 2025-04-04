@@ -6,6 +6,7 @@ const MapViewer = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const iframeRef = useRef(null);
+  const loadTimeoutRef = useRef(null);
 
   useEffect(() => {
     const checkMap = async () => {
@@ -19,8 +20,6 @@ const MapViewer = () => {
         if (!data.exists) {
           throw new Error('Map has not been generated yet');
         }
-        
-        setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
@@ -34,19 +33,50 @@ const MapViewer = () => {
       // Check if message comes from our map
       if (event.data && event.data.type === 'mapLoaded') {
         setIsLoading(false);
+        if (loadTimeoutRef.current) {
+          clearTimeout(loadTimeoutRef.current);
+        }
       }
     };
     
     window.addEventListener('message', handleIframeMessage);
-    return () => window.removeEventListener('message', handleIframeMessage);
+
+    // Set a timeout to force loading state to false if map takes too long
+    loadTimeoutRef.current = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000); // 10 second timeout
+
+    return () => {
+      window.removeEventListener('message', handleIframeMessage);
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current);
+      }
+    };
   }, []);
 
   const handleIframeLoad = () => {
+    // When iframe loads, inject necessary variables
+    try {
+      const iframe = iframeRef.current;
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({
+          type: 'MAP_INIT',
+          data: {
+            show_states: true,
+            show_counties: true,
+            show_msas: true
+          }
+        }, '*');
+      }
+    } catch (e) {
+      console.warn('Failed to initialize map:', e);
+    }
     setIsLoading(false);
   };
 
   const handleIframeError = () => {
     setError('Failed to load the map. Please try refreshing the page.');
+    setIsLoading(false);
   };
 
   if (error) {
@@ -78,14 +108,15 @@ const MapViewer = () => {
       
       <iframe
         ref={iframeRef}
-        src={`${getMapApiUrl('/api/map')}`}
+        src={`${getMapApiUrl('/api/map')}?t=${Date.now()}`}
         title="US 20-Region Classification Map"
         className="map-frame"
         onLoad={handleIframeLoad}
         onError={handleIframeError}
         allowFullScreen
-        crossOrigin="anonymous"
-        sandbox="allow-scripts allow-same-origin"
+        loading="eager"
+        importance="high"
+        sandbox="allow-scripts allow-same-origin allow-popups"
       />
     </div>
   );

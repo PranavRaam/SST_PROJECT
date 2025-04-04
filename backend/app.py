@@ -171,90 +171,78 @@ def map_status():
 def get_map():
     # Serve the generated HTML file
     if os.path.exists(MAP_FILE):
-        logger.info(f"Serving map file from {MAP_FILE}")
-        
-        # Read the HTML file
         with open(MAP_FILE, 'r') as f:
             html_content = f.read()
             
-        # Remove control elements completely instead of hiding them with CSS
-        
-        # Remove control layer HTML elements 
-        html_content = re.sub(r'<div class="leaflet-control-layers[^>]*>.*?</div>', '', html_content, flags=re.DOTALL)
-        
-        # Remove top-right control elements
-        html_content = re.sub(r'<div class="leaflet-top leaflet-right[^>]*>.*?</div>', '', html_content, flags=re.DOTALL)
-        
-        # Remove legend elements
-        html_content = re.sub(r'<div class="info legend[^>]*>.*?</div>', '', html_content, flags=re.DOTALL)
-        
-        # Add script to notify parent when map is loaded and fix cross-origin issues
-        notification_script = """
+        # Add script to handle cross-origin communication and map initialization
+        init_script = """
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Fix for cross-origin security issues
-            try {
-                // Safe way to get leaflet maps without accessing window properties directly
-                setTimeout(function() {
-                    var maps = document.querySelectorAll('.leaflet-container');
-                    if (maps.length > 0) {
-                        console.log('Map optimization complete');
-                        
-                        // Fix map display issues that might occur in iframes
+            // Initialize map variables
+            window.show_states = true;
+            window.show_counties = true;
+            window.show_msas = true;
+            window.True = true;
+            window.False = false;
+            
+            // Handle messages from parent frame
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'MAP_INIT') {
+                    // Update map variables
+                    const data = event.data.data || {};
+                    window.show_states = data.show_states ?? true;
+                    window.show_counties = data.show_counties ?? true;
+                    window.show_msas = data.show_msas ?? true;
+                    
+                    // Force map refresh
+                    try {
+                        // Find all map containers
+                        var maps = document.querySelectorAll('.leaflet-container');
                         maps.forEach(function(mapContainer) {
-                            // Force a resize event on the map container
+                            // Force a resize event
                             var evt = document.createEvent('UIEvents');
                             evt.initUIEvent('resize', true, false, window, 0);
                             window.dispatchEvent(evt);
+                            
+                            // Try to invalidate map size
+                            var mapInstance = mapContainer._leaflet;
+                            if (mapInstance && typeof mapInstance.invalidateSize === 'function') {
+                                mapInstance.invalidateSize(true);
+                            }
                         });
-                    }
-                    
-                    // Notify parent safely using postMessage
-                    try {
-                        if (window.parent && window.parent !== window) {
-                            window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
-                        }
+                        
+                        // Notify parent that map is ready
+                        window.parent.postMessage({
+                            type: 'mapLoaded',
+                            status: 'success'
+                        }, '*');
                     } catch (e) {
-                        console.log('Postmessage not available, continuing silently');
+                        console.warn('Map refresh failed:', e);
                     }
-                }, 1000);
-            } catch (e) {
-                console.log('Map frame initialization complete');
-            }
+                }
+            });
+            
+            // Initial map loaded notification
+            setTimeout(function() {
+                window.parent.postMessage({
+                    type: 'mapLoaded',
+                    status: 'success'
+                }, '*');
+            }, 2000);
         });
         </script>
         """
         
-        # Add the notification script just before the closing body tag
-        html_content = html_content.replace('</body>', notification_script + '</body>')
+        # Add the initialization script just before the closing body tag
+        html_content = html_content.replace('</body>', init_script + '</body>')
         
-        # Set the appropriate headers for cross-origin iframe embedding
+        # Set appropriate headers for cross-origin iframe embedding
         response = Response(html_content, mimetype='text/html')
-        
-        # Handle CORS for HTML content - determine appropriate origin
-        origin = request.headers.get('Origin', '')
-        allowed_origins = [
-            'https://sst-frontend-swart.vercel.app', 
-            'http://localhost:3000', 
-            'https://prototype-railway-production.up.railway.app',
-            'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-            'https://railway-prototype-pranavraams-projects.vercel.app',
-            'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
-            'https://railway-prototype.vercel.app'
-        ]
-        
-        if origin in allowed_origins:
-            response.headers['Access-Control-Allow-Origin'] = origin
-        else:
-            response.headers['Access-Control-Allow-Origin'] = '*'
-        
+        response.headers['Content-Security-Policy'] = "frame-ancestors *"
+        response.headers['X-Frame-Options'] = "ALLOWALL"
         return response
     else:
-        logger.warning("Map file not found")
-        return jsonify({
-            "success": False,
-            "message": "Map not yet generated. Call /api/generate-map first."
-        }), 404
+        return "Map not found", 404
 
 @app.route('/api/regions', methods=['GET'])
 def get_regions():
