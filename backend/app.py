@@ -18,7 +18,9 @@ CORS(app,
             "http://localhost:3000", 
             "https://prototype-railway-production.up.railway.app",
             "https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app",
-            "https://railway-prototype-pranavraams-projects.vercel.app"
+            "https://railway-prototype-pranavraams-projects.vercel.app",
+            "https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app",
+            "https://railway-prototype.vercel.app"
         ],
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
@@ -59,7 +61,9 @@ def add_cors_headers(response):
         'http://localhost:3000', 
         'https://prototype-railway-production.up.railway.app',
         'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-        'https://railway-prototype-pranavraams-projects.vercel.app'
+        'https://railway-prototype-pranavraams-projects.vercel.app',
+        'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
+        'https://railway-prototype.vercel.app'
     ]
     
     # Allow specific origins only when credentials are involved
@@ -93,7 +97,9 @@ def options_statistical_area_map(area_name):
         'http://localhost:3000', 
         'https://prototype-railway-production.up.railway.app',
         'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-        'https://railway-prototype-pranavraams-projects.vercel.app'
+        'https://railway-prototype-pranavraams-projects.vercel.app',
+        'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
+        'https://railway-prototype.vercel.app'
     ]
     
     # Allow specific origins when credentials are involved
@@ -232,7 +238,9 @@ def get_map():
             'http://localhost:3000', 
             'https://prototype-railway-production.up.railway.app',
             'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-            'https://railway-prototype-pranavraams-projects.vercel.app'
+            'https://railway-prototype-pranavraams-projects.vercel.app',
+            'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
+            'https://railway-prototype.vercel.app'
         ]
         
         if origin in allowed_origins:
@@ -333,8 +341,18 @@ def get_static_fallback_map(area_name):
         response = Response(html_content, mimetype='text/html')
         
         # Set CORS headers for this response
-        origin = request.headers.get('Origin', '*')
-        if origin in ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000']:
+        origin = request.headers.get('Origin', '')
+        allowed_origins = [
+            'https://sst-frontend-swart.vercel.app', 
+            'http://localhost:3000', 
+            'https://prototype-railway-production.up.railway.app',
+            'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
+            'https://railway-prototype-pranavraams-projects.vercel.app',
+            'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
+            'https://railway-prototype.vercel.app'
+        ]
+        
+        if origin in allowed_origins:
             response.headers['Access-Control-Allow-Origin'] = origin
         else:
             response.headers['Access-Control-Allow-Origin'] = '*'
@@ -438,8 +456,18 @@ def get_statistical_area_map(area_name):
         response = Response(html_content, mimetype='text/html')
         
         # Set specific CORS headers for this response
-        origin = request.headers.get('Origin', '*')
-        if origin in ['https://sst-frontend-swart.vercel.app', 'http://localhost:3000']:
+        origin = request.headers.get('Origin', '')
+        allowed_origins = [
+            'https://sst-frontend-swart.vercel.app', 
+            'http://localhost:3000',
+            'https://prototype-railway-production.up.railway.app',
+            'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
+            'https://railway-prototype-pranavraams-projects.vercel.app',
+            'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
+            'https://railway-prototype.vercel.app'
+        ]
+        
+        if origin in allowed_origins:
             response.headers['Access-Control-Allow-Origin'] = origin
         else:
             response.headers['Access-Control-Allow-Origin'] = '*'
@@ -512,7 +540,9 @@ def health_check():
         'http://localhost:3000', 
         'https://prototype-railway-production.up.railway.app',
         'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-        'https://railway-prototype-pranavraams-projects.vercel.app'
+        'https://railway-prototype-pranavraams-projects.vercel.app',
+        'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
+        'https://railway-prototype.vercel.app'
     ]
     
     if origin in allowed_origins:

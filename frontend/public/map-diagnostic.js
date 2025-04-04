@@ -66,11 +66,10 @@
     console.log('[Map Diagnostic] Received message from iframe:', event.data);
   });
   
-  // Environment info
+  // Environment info - Browser-safe version
   console.log('[Map Diagnostic] Environment:', {
-    nodeEnv: process.env.NODE_ENV,
-    apiUrl: import.meta.env.VITE_API_URL,
-    isProd: process.env.NODE_ENV === 'production'
+    isDev: window.location.hostname === 'localhost',
+    apiUrl: window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://prototype-railway-production.up.railway.app'
   });
   
 })(); 
