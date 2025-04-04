@@ -28,5 +28,5 @@ WORKDIR /app/backend
 # Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the application
-CMD gunicorn app:app --bind 0.0.0.0:$PORT 
+# Command to run the application - using shell form
+CMD gunicorn app:app --bind 0.0.0.0:${PORT:-8080} 
