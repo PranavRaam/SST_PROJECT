@@ -1604,3 +1604,244 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-05 02:35:38,303 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 02:35:38] "GET /api/statistical-area-map/Sebastian-Vero%20Beach,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743800737921&_show_states=true&_show_counties=true&_show_msas=true&_t=1743800738255 HTTP/1.1" 200 -
 2025-04-05 02:40:32,901 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 02:40:32] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-05 02:40:33,124 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 02:40:33] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:50:18,942 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\data_cache
+2025-04-05 19:50:18,962 - __main__ - INFO - Checking for cached data at startup
+2025-04-05 19:50:19,137 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.178:5000
+2025-04-05 19:50:19,138 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-05 19:50:19,143 - werkzeug - INFO -  * Restarting with stat
+2025-04-05 19:50:22,494 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\data_cache
+2025-04-05 19:50:22,507 - __main__ - INFO - Checking for cached data at startup
+2025-04-05 19:50:22,531 - werkzeug - WARNING -  * Debugger is active!
+2025-04-05 19:50:22,538 - werkzeug - INFO -  * Debugger PIN: 136-428-153
+2025-04-05 19:51:15,588 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:51:15,845 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:51:15,906 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:51:16,163 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:51:18,403 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:18] "GET /api/map?t=1743862875857&noCache=true&stableView=true?t%3D1743862875857&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862875865 HTTP/1.1" 200 -
+2025-04-05 19:51:20,269 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:20] "GET /api/map?t=1743862880161&noCache=true&stableView=true?t%3D1743862880161&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862880163 HTTP/1.1" 200 -
+2025-04-05 19:51:26,559 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:26] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:51:26,882 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:26,884 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862886567')])
+2025-04-05 19:51:26,886 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:26,888 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:26,889 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:26,891 - statistical_area_zoom - INFO - Loading map data...
+2025-04-05 19:51:26,893 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-05 19:51:26,896 - data_preloader - INFO - Loading all cached data...
+2025-04-05 19:51:27,259 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-05 19:51:27,264 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-05 19:51:27,265 - statistical_area_zoom - INFO - Data loaded in 0.37 seconds
+2025-04-05 19:51:27,267 - statistical_area_zoom - INFO - Normalized area name: napa, ca
+2025-04-05 19:51:27,288 - statistical_area_zoom - INFO - Found exact match: Napa, CA
+2025-04-05 19:51:27,289 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-05 19:51:27,292 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-05 19:51:27,296 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Napa, CA
+2025-04-05 19:51:27,299 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Napa, CA
+2025-04-05 19:51:27,322 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-05 19:51:27,323 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-05 19:51:27,325 - statistical_area_zoom - INFO - Center: 38.50794419581658, -122.33217288846635
+2025-04-05 19:51:27,328 - statistical_area_zoom - INFO - Bounds: -122.646616, 38.155017, -122.061732, 38.8643
+2025-04-05 19:51:28,314 - statistical_area_zoom - INFO - Map saved to C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:28,314 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:28,315 - __main__ - INFO - Request completed in 1.43 seconds
+2025-04-05 19:51:28,527 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:28] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862886567 HTTP/1.1" 200 -
+2025-04-05 19:51:28,880 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:28,881 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862886567'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862888534')])
+2025-04-05 19:51:28,881 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:28,882 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:28,883 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:28,884 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:28,884 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:51:28,885 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:28,886 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:28,888 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:28] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862886567&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862888534 HTTP/1.1" 200 -
+2025-04-05 19:51:31,618 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:31] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:51:31,953 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:31,954 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862891632')])
+2025-04-05 19:51:31,955 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:31,957 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:31,959 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:31,963 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:31,966 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-05 19:51:31,968 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:31,969 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:31,975 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:31] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862891632 HTTP/1.1" 200 -
+2025-04-05 19:51:32,090 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:32,093 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862891632'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862891989')])
+2025-04-05 19:51:32,096 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:32,097 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:32,099 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:32,102 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:32,104 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-05 19:51:32,105 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:32,108 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:32,114 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:32] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862891632&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862891989 HTTP/1.1" 200 -
+2025-04-05 19:51:35,188 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:35] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:51:35,523 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:35,525 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862895207')])
+2025-04-05 19:51:35,527 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:35,530 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:35,532 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:35,535 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:35,537 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-05 19:51:35,539 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:35,548 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-05 19:51:35,559 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:35] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862895207 HTTP/1.1" 200 -
+2025-04-05 19:51:36,023 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:36,024 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862895207'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862895596')])
+2025-04-05 19:51:36,026 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:36,027 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:36,028 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:36,029 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:36,030 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:51:36,033 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:36,033 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:36,038 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:36] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862895207&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862895596 HTTP/1.1" 200 -
+2025-04-05 19:51:40,221 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:40] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:51:40,551 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:40,553 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862900235')])
+2025-04-05 19:51:40,554 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:40,555 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:40,557 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:40,560 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:40,563 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-05 19:51:40,565 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:40,568 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:40,576 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:40] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862900235 HTTP/1.1" 200 -
+2025-04-05 19:51:40,685 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:40,688 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862900235'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862900592')])
+2025-04-05 19:51:40,689 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:40,692 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:40,694 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:40,698 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:40,700 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-05 19:51:40,701 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:40,703 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:40,710 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:40] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862900235&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862900592 HTTP/1.1" 200 -
+2025-04-05 19:51:44,232 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:44] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:51:44,545 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:44,547 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862904237')])
+2025-04-05 19:51:44,549 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:44,550 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:44,551 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:44,553 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:44,555 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:51:44,556 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:44,559 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:44,564 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:44] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862904237 HTTP/1.1" 200 -
+2025-04-05 19:51:44,981 - __main__ - INFO - Map request for area: Napa, CA
+2025-04-05 19:51:44,983 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862904237'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862904577')])
+2025-04-05 19:51:44,984 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:51:44,985 - statistical_area_zoom - INFO - Generating map for statistical area: Napa, CA with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:51:44,986 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:44,988 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html (age: 0.0 hours)
+2025-04-05 19:51:44,990 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:51:44,994 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Napa_CA_lightweight.html
+2025-04-05 19:51:44,996 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:51:45,000 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:51:45] "GET /api/statistical-area-map/Napa,%20CA?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862904237&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862904577 HTTP/1.1" 200 -
+2025-04-05 19:53:07,643 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:07] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:53:07,891 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:07] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:53:07,973 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:07] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:53:08,173 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:08] "GET /api/map?t=1743862987909&noCache=true&stableView=true?t%3D1743862987909&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862987923 HTTP/1.1" 200 -
+2025-04-05 19:53:08,205 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:53:12,324 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:12] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:53:12,667 - __main__ - INFO - Map request for area: Deltona-Daytona Beach-Ormond Beach, FL
+2025-04-05 19:53:12,669 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862992347')])
+2025-04-05 19:53:12,671 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:53:12,672 - statistical_area_zoom - INFO - Generating map for statistical area: Deltona-Daytona Beach-Ormond Beach, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:53:12,674 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:12,676 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html (age: 0.1 hours)
+2025-04-05 19:53:12,677 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:53:12,684 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:12,686 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-05 19:53:13,196 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:13] "GET /api/statistical-area-map/Deltona-Daytona%20Beach-Ormond%20Beach,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862992347 HTTP/1.1" 200 -
+2025-04-05 19:53:13,322 - __main__ - INFO - Map request for area: Deltona-Daytona Beach-Ormond Beach, FL
+2025-04-05 19:53:13,323 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862992347'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862993220')])
+2025-04-05 19:53:13,324 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:53:13,324 - statistical_area_zoom - INFO - Generating map for statistical area: Deltona-Daytona Beach-Ormond Beach, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:53:13,326 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:13,326 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html (age: 0.1 hours)
+2025-04-05 19:53:13,327 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:53:13,327 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:13,331 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:53:13,335 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:13] "GET /api/statistical-area-map/Deltona-Daytona%20Beach-Ormond%20Beach,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862992347&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862993220 HTTP/1.1" 200 -
+2025-04-05 19:53:18,829 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:18] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:53:19,209 - __main__ - INFO - Map request for area: Deltona-Daytona Beach-Ormond Beach, FL
+2025-04-05 19:53:19,210 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862998897')])
+2025-04-05 19:53:19,212 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:53:19,214 - statistical_area_zoom - INFO - Generating map for statistical area: Deltona-Daytona Beach-Ormond Beach, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:53:19,217 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:19,219 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html (age: 0.1 hours)
+2025-04-05 19:53:19,222 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-05 19:53:19,224 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:19,225 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:53:19,233 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:19] "GET /api/statistical-area-map/Deltona-Daytona%20Beach-Ormond%20Beach,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862998897 HTTP/1.1" 200 -
+2025-04-05 19:53:19,659 - __main__ - INFO - Map request for area: Deltona-Daytona Beach-Ormond Beach, FL
+2025-04-05 19:53:19,660 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743862998897'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743862999256')])
+2025-04-05 19:53:19,662 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:53:19,664 - statistical_area_zoom - INFO - Generating map for statistical area: Deltona-Daytona Beach-Ormond Beach, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:53:19,665 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:19,667 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html (age: 0.1 hours)
+2025-04-05 19:53:19,668 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:53:19,670 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Deltona_Daytona_Beach_Ormond_Beach_FL_lightweight.html
+2025-04-05 19:53:19,671 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:53:19,676 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:19] "GET /api/statistical-area-map/Deltona-Daytona%20Beach-Ormond%20Beach,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743862998897&_show_states=true&_show_counties=true&_show_msas=true&_t=1743862999256 HTTP/1.1" 200 -
+2025-04-05 19:53:24,355 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:53:24,677 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:53:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:12,057 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:12,373 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:14,056 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:14] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:14,382 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:14] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:16,255 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:16,863 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:17,188 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:17] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:19,781 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:19] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:54:20,108 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:54:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:55:16,488 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:55:16,807 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:55:17,012 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:17] "GET /api/map?t=1743863116508&noCache=true&stableView=true?t%3D1743863116508&_show_states=true&_show_counties=true&_show_msas=true&_t=1743863116510 HTTP/1.1" 200 -
+2025-04-05 19:55:17,072 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:17] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:55:17,248 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:17] "GET /api/map?t=1743863116832&noCache=true&stableView=true?t%3D1743863116833&_show_states=true&_show_counties=true&_show_msas=true&_t=1743863116847 HTTP/1.1" 200 -
+2025-04-05 19:55:17,253 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:17] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:55:22,697 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:22] "GET /api/health HTTP/1.1" 200 -
+2025-04-05 19:55:23,047 - __main__ - INFO - Map request for area: Fort Collins, CO
+2025-04-05 19:55:23,050 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743863122728')])
+2025-04-05 19:55:23,052 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:55:23,054 - statistical_area_zoom - INFO - Generating map for statistical area: Fort Collins, CO with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:55:23,055 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Fort_Collins_CO_lightweight.html
+2025-04-05 19:55:23,058 - statistical_area_zoom - INFO - Loading map data...
+2025-04-05 19:55:23,059 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-05 19:55:23,064 - statistical_area_zoom - INFO - Normalized area name: fort collins, co
+2025-04-05 19:55:23,084 - statistical_area_zoom - INFO - Trying to match city name: fort collins
+2025-04-05 19:55:23,140 - statistical_area_zoom - INFO - Found fuzzy city match: Fort Collins-Loveland, CO
+2025-04-05 19:55:23,141 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-05 19:55:23,143 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-05 19:55:23,147 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Fort Collins, CO
+2025-04-05 19:55:23,150 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Fort Collins, CO
+2025-04-05 19:55:23,157 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-05 19:55:23,158 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-05 19:55:23,160 - statistical_area_zoom - INFO - Center: 40.66712499937001, -105.46120408095223
+2025-04-05 19:55:23,163 - statistical_area_zoom - INFO - Bounds: -106.191556, 40.261793, -104.943371, 40.998213
+2025-04-05 19:55:24,034 - statistical_area_zoom - INFO - Map saved to C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Fort_Collins_CO_lightweight.html
+2025-04-05 19:55:24,036 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Fort_Collins_CO_lightweight.html
+2025-04-05 19:55:24,037 - __main__ - INFO - Request completed in 0.99 seconds
+2025-04-05 19:55:24,577 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:24] "GET /api/statistical-area-map/Fort%20Collins,%20CO?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743863122728 HTTP/1.1" 200 -
+2025-04-05 19:55:24,713 - __main__ - INFO - Map request for area: Fort Collins, CO
+2025-04-05 19:55:24,714 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1743863122728'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1743863124595')])
+2025-04-05 19:55:24,716 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-05 19:55:24,718 - statistical_area_zoom - INFO - Generating map for statistical area: Fort Collins, CO with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-05 19:55:24,719 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Fort_Collins_CO_lightweight.html
+2025-04-05 19:55:24,721 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Fort_Collins_CO_lightweight.html (age: 0.0 hours)
+2025-04-05 19:55:24,723 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-05 19:55:24,724 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Fort_Collins_CO_lightweight.html
+2025-04-05 19:55:24,726 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-05 19:55:24,733 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:24] "GET /api/statistical-area-map/Fort%20Collins,%20CO?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1743863122728&_show_states=true&_show_counties=true&_show_msas=true&_t=1743863124595 HTTP/1.1" 200 -
+2025-04-05 19:55:29,141 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:29] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:55:29,456 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:55:29] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:58:50,994 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:58:50] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:58:51,133 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:58:51] "GET /api/map?t=1743863330635&noCache=true&stableView=true?t%3D1743863330635&_show_states=true&_show_counties=true&_show_msas=true&_t=1743863330637 HTTP/1.1" 200 -
+2025-04-05 19:58:51,287 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:58:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-05 19:58:53,220 - werkzeug - INFO - 127.0.0.1 - - [05/Apr/2025 19:58:53] "GET /api/map?t=1743863333146&noCache=true&stableView=true?t%3D1743863333146&_show_states=true&_show_counties=true&_show_msas=true&_t=1743863333147 HTTP/1.1" 200 -
