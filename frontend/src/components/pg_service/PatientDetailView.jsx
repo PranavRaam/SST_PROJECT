@@ -68,6 +68,13 @@ import {
   FaExclamationCircle
 } from 'react-icons/fa';
 
+// Add these constants at the top of the file after imports
+const DOCUMENT_TYPES = {
+  CERT: 'CERT',
+  RECERT: 'RECERT',
+  CPO: 'CPO'
+};
+
 // Helper functions
 const getStatusIcon = (status) => {
   switch (status) {
@@ -1959,6 +1966,22 @@ Total documents: ${documents.length}
     return pdf;
   };
 
+  // Add this function to check for signed CERT or RECERT in a specific month
+  const hasSignedCertOrRecertInMonth = (documents, month, year) => {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
+    
+    return documents.some(doc => {
+      if (doc.status !== 'Signed') return false;
+      
+      const docDate = new Date(doc.signedDate);
+      const isInMonth = docDate >= startDate && docDate <= endDate;
+      const isCertOrRecert = doc.type === DOCUMENT_TYPES.CERT || doc.type === DOCUMENT_TYPES.RECERT;
+      
+      return isInMonth && isCertOrRecert;
+    });
+  };
+
   return (
     <div className="patient-detail-view">
       <div className="detail-header">
@@ -2697,9 +2720,9 @@ Total documents: ${documents.length}
                                 className="document-type-select"
                               >
                                 <option value="">Select Document Type</option>
-                                {documentCategories.map((category, idx) => (
-                                  <option key={idx} value={category}>{category}</option>
-                                ))}
+                                <option value={DOCUMENT_TYPES.CERT}>CERT</option>
+                                <option value={DOCUMENT_TYPES.RECERT}>RECERT</option>
+                                <option value={DOCUMENT_TYPES.CPO}>CPO</option>
                               </select>
                               <div className="document-actions">
                                 <button 

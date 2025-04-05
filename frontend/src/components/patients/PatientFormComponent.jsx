@@ -677,6 +677,21 @@ const PatientFormComponent = ({ onPatientClick }) => {
       newCpoDocsCreated: 2
     }
   ]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Add filtered patients based on search
+  const filteredPatientsBySearch = useMemo(() => {
+    if (!searchQuery) return patients;
+    const query = searchQuery.toLowerCase();
+    return patients.filter(patient => 
+      patient.patientLastName.toLowerCase().includes(query) ||
+      patient.patientFirstName.toLowerCase().includes(query) ||
+      patient.patientId.toLowerCase().includes(query) ||
+      patient.pg.toLowerCase().includes(query) ||
+      patient.hhah.toLowerCase().includes(query)
+    );
+  }, [patients, searchQuery]);
+
   const [searchTerm, setSearchTerm] = useState({
     physicianName: '',
     pg: '',
@@ -799,6 +814,8 @@ const PatientFormComponent = ({ onPatientClick }) => {
     patientEpisodeFrom: null,
     patientEpisodeTo: null
   });
+
+  const [filterType, setFilterType] = useState('cert'); // 'cert' or 'cpo'
 
   const handleDatePickerChange = (date, field) => {
     setDatePickerState(prev => ({ ...prev, [field]: date }));
@@ -943,24 +960,73 @@ const PatientFormComponent = ({ onPatientClick }) => {
   };
 
   const handleMonthYearSelect = () => {
+    console.log('Opening month picker modal');
     setShowMonthPicker(true);
   };
 
   const handleMonthYearSubmit = () => {
+    console.log('Submitting month/year selection');
+    console.log('Selected Month:', selectedMonth);
+    console.log('Selected Year:', selectedYear);
+    console.log('Filter Type:', filterType);
+    
+    if (!selectedMonth || !selectedYear) {
+      console.log('Month or Year not selected');
+      return;
+    }
+
     const startDate = new Date(selectedYear, selectedMonth - 1, 1);
     const endDate = new Date(selectedYear, selectedMonth, 0);
+    
+    console.log('Start Date:', startDate);
+    console.log('End Date:', endDate);
 
     const filtered = patients.filter(patient => {
-      // Check if cert/recert is signed in the selected month
-      const certSignedDate = patient.certStatus === 'Document Signed' || patient.certStatus === 'Document Billed' 
-        ? new Date(patient.certSignedDate) 
-        : null;
-      const recertSignedDate = patient.recertStatus === 'Document Signed' || patient.recertStatus === 'Document Billed' 
-        ? new Date(patient.recertSignedDate) 
-        : null;
+      // Parse the dates properly
+      const parseDate = (dateStr) => {
+        if (!dateStr) return null;
+        const [month, day, year] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+      };
 
-      const isSignedInMonth = (certSignedDate && certSignedDate >= startDate && certSignedDate <= endDate) ||
-                            (recertSignedDate && recertSignedDate >= startDate && recertSignedDate <= endDate);
+      let isSignedInMonth = false;
+
+      if (filterType === 'cert') {
+        // Check cert/recert dates
+        const certSignedDate = patient.certStatus === 'Document Signed' || patient.certStatus === 'Document Billed' 
+          ? parseDate(patient.certSignedDate)
+          : null;
+        const recertSignedDate = patient.recertStatus === 'Document Signed' || patient.recertStatus === 'Document Billed' 
+          ? parseDate(patient.recertSignedDate)
+          : null;
+
+        isSignedInMonth = (certSignedDate && certSignedDate >= startDate && certSignedDate <= endDate) ||
+                         (recertSignedDate && recertSignedDate >= startDate && recertSignedDate <= endDate);
+      } else {
+        // Check all CPO document dates
+        const cpoDocuments = [
+          { date: patient.insuranceSignedDate, status: patient.insuranceStatus },
+          { date: patient.paymentSignedDate, status: patient.paymentStatus },
+          // Add other CPO documents here
+        ];
+
+        // Count documents signed in the selected month
+        const signedDocsInMonth = cpoDocuments.filter(doc => {
+          const signedDate = doc.status === 'Document Signed' || doc.status === 'Document Billed'
+            ? parseDate(doc.date)
+            : null;
+          return signedDate && signedDate >= startDate && signedDate <= endDate;
+        }).length;
+
+        // Calculate CPO minutes (2 minutes per document)
+        const cpoMinutes = signedDocsInMonth * 2;
+
+        console.log('Patient:', patient.patientLastName);
+        console.log('Signed Docs in Month:', signedDocsInMonth);
+        console.log('CPO Minutes:', cpoMinutes);
+
+        isSignedInMonth = signedDocsInMonth > 0 && cpoMinutes >= 30;
+      }
 
       // Check if total ICD codes >= 3
       const totalIcdCodes = [...(patient.primaryDiagnosisCodes || []), ...(patient.secondaryDiagnosisCodes || [])].length;
@@ -969,20 +1035,81 @@ const PatientFormComponent = ({ onPatientClick }) => {
       // Check if EHR is yes
       const hasEhr = patient.patientInEHR === 'yes';
 
+      console.log('Patient:', patient.patientLastName);
+      console.log('Is Signed in Month:', isSignedInMonth);
+      console.log('Has Enough ICD Codes:', hasEnoughIcdCodes);
+      console.log('Has EHR:', hasEhr);
+
       return isSignedInMonth && hasEnoughIcdCodes && hasEhr;
     });
 
+    console.log('Filtered Patients:', filtered);
     setFilteredPatients(filtered);
     setShowMonthPicker(false);
   };
 
+  // Add useEffect to track filteredPatients changes
+  React.useEffect(() => {
+    console.log('filteredPatients updated:', filteredPatients);
+  }, [filteredPatients]);
+
+  // Add useEffect to track showMonthPicker changes
+  React.useEffect(() => {
+    console.log('showMonthPicker updated:', showMonthPicker);
+  }, [showMonthPicker]);
+
+  // Add useEffect to track selectedMonth and selectedYear changes
+  React.useEffect(() => {
+    console.log('selectedMonth updated:', selectedMonth);
+    console.log('selectedYear updated:', selectedYear);
+  }, [selectedMonth, selectedYear]);
+
   const handleDownloadExcel = () => {
+    if (!filteredPatients.length) return;
+
     const excelData = filteredPatients.map(patient => {
       const allIcdCodes = [...(patient.primaryDiagnosisCodes || []), ...(patient.secondaryDiagnosisCodes || [])];
       const startDate = new Date(selectedYear, selectedMonth - 1, 1);
       const endDate = new Date(selectedYear, selectedMonth, 0);
       const episodeFrom = new Date(patient.patientEpisodeFrom);
       const episodeTo = new Date(patient.patientEpisodeTo);
+
+      // Format date as MM-DD-YYYY
+      const formatDate = (date) => {
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${month}-${day}-${date.getFullYear()}`;
+      };
+
+      // Calculate DOS dates based on filter type
+      let dosFrom, dosTo;
+      
+      if (filterType === 'cert') {
+        // For cert/recert, both DOS dates are the episode from date
+        dosFrom = patient.patientEpisodeFrom;
+        dosTo = patient.patientEpisodeFrom;
+      } else {
+        // For CPO, use the current logic
+        if (episodeFrom > startDate) {
+          // If episode starts after month start, use episode from + 1 day
+          const nextDay = new Date(episodeFrom);
+          nextDay.setDate(nextDay.getDate() + 1);
+          dosFrom = formatDate(nextDay);
+        } else {
+          // Use month start
+          dosFrom = formatDate(startDate);
+        }
+
+        if (episodeTo < endDate) {
+          // If episode ends before month end, use episode to - 1 day
+          const prevDay = new Date(episodeTo);
+          prevDay.setDate(prevDay.getDate() - 1);
+          dosTo = formatDate(prevDay);
+        } else {
+          // Use month end
+          dosTo = formatDate(endDate);
+        }
+      }
 
       return {
         'Full Name': `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName}`,
@@ -993,8 +1120,8 @@ const PatientFormComponent = ({ onPatientClick }) => {
         'Episode From': patient.patientEpisodeFrom,
         'Episode To': patient.patientEpisodeTo,
         'Billing Code': 'G0181',
-        'Line 1 DOS FROM': episodeFrom > startDate ? patient.patientEpisodeFrom : `${selectedMonth.toString().padStart(2, '0')}-01-${selectedYear}`,
-        'Line 1 DOS TO': episodeTo < endDate ? patient.patientEpisodeTo : `${selectedMonth.toString().padStart(2, '0')}-${endDate.getDate()}-${selectedYear}`,
+        'Line 1 DOS FROM': dosFrom,
+        'Line 1 DOS TO': dosTo,
         'Line Charges': '113',
         'Line 1 Units': '1',
         'Line 1 POS': '11'
@@ -1010,6 +1137,14 @@ const PatientFormComponent = ({ onPatientClick }) => {
   return (
     <div className="patient-form-container">
       <div className="patient-form-header">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search patients by name, ID, PG, or HHAH..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <div className="patient-form-actions">
           <button 
             className="patient-form-button"
@@ -1024,7 +1159,10 @@ const PatientFormComponent = ({ onPatientClick }) => {
 
           <button 
             className="patient-form-button"
-            onClick={handleMonthYearSelect}
+            onClick={() => {
+              setFilterType('cert');
+              setShowMonthPicker(true);
+            }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -1032,7 +1170,23 @@ const PatientFormComponent = ({ onPatientClick }) => {
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            Select Month/Year
+            Filter by Cert/Recert
+          </button>
+
+          <button 
+            className="patient-form-button"
+            onClick={() => {
+              setFilterType('cpo');
+              setShowMonthPicker(true);
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Filter by CPO Documents
           </button>
         </div>
       </div>
@@ -1497,7 +1651,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
 
       {showMonthPicker && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" data-type="month-year">
             <div className="modal-header">
               <h2>Select Month and Year</h2>
               <button className="close-button" onClick={() => setShowMonthPicker(false)}>×</button>
@@ -1541,20 +1695,28 @@ const PatientFormComponent = ({ onPatientClick }) => {
         </div>
       )}
 
-      {filteredPatients.length > 0 && (
+      {selectedMonth && selectedYear && (
         <div className="filtered-results">
-          <h3>Filtered Patients: {filteredPatients.length}</h3>
-          <button 
-            className="download-button"
-            onClick={handleDownloadExcel}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Download Excel
-          </button>
+          {filteredPatients.length > 0 ? (
+            <>
+              <h3>Filtered Patients: {filteredPatients.length}</h3>
+              <button 
+                className="download-button"
+                onClick={handleDownloadExcel}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Excel
+              </button>
+            </>
+          ) : (
+            <h3 className="no-results">
+              No patients found for {filterType === 'cert' ? 'Cert/Recert' : 'CPO Documents'} in {new Date(2000, selectedMonth - 1).toLocaleString('default', { month: 'long' })} {selectedYear}
+            </h3>
+          )}
         </div>
       )}
 
@@ -1575,7 +1737,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
               </tr>
             </thead>
             <tbody>
-              {patients.map(patient => (
+              {filteredPatientsBySearch.map(patient => (
                 <tr key={patient.id}>
                   <td 
                     className="patient-name-cell"
