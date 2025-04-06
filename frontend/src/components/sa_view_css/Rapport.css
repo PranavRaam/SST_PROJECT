@@ -244,21 +244,21 @@
 
 /* Rapport Analytics Toggle */
 .rapport-analytics-toggle {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  color: #4F46E5;
-  background: white;
-  cursor: pointer;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: #6c757d;
+  font-weight: 500;
   transition: all 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: inline-block;
 }
 
 .rapport-analytics-toggle:hover {
-  background: #f8fafc;
-  border-color: #4F46E5;
+  background: #e9ecef;
+  color: #495057;
 }
 
 /* Rapport Responsive Design */
@@ -283,4 +283,70 @@
   .rapport-action-buttons {
     flex-direction: column;
   }
+}
+
+.rapport-analytics {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rapport-analytics h3 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.rapport-analytics-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  margin: 8px 0;
+  border-radius: 6px;
+  background: #f8f9fa;
+  transition: all 0.2s ease;
+}
+
+.rapport-analytics-item:hover {
+  background: #f0f2f5;
+}
+
+.rapport-analytics-label {
+  font-size: 1rem;
+  color: #444;
+}
+
+.rapport-analytics-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 15px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.rapport-analytics-high {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.rapport-analytics-medium {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.rapport-analytics-low {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.add-rapport-btn {
+  margin-top: 10px;
+  display: inline-block;
 } 

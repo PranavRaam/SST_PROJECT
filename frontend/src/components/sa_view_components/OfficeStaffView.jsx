@@ -8,6 +8,9 @@ const OfficeStaffView = () => {
   const location = useLocation();
   const [staffData, setStaffData] = useState(null);
   const [analysis, setAnalysis] = useState('');
+  const [analysisEntries, setAnalysisEntries] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
 
   useEffect(() => {
     // If we have state from navigation, use it
@@ -26,6 +29,11 @@ const OfficeStaffView = () => {
         department: staff.department || 'Not specified',
         status: staff.status || 'Active'
       });
+      // Load saved analysis entries if they exist
+      const savedEntries = localStorage.getItem(`staff_analysis_entries_${staff.id || staffId}`);
+      if (savedEntries) {
+        setAnalysisEntries(JSON.parse(savedEntries));
+      }
     } else {
       // Fetch Staff data based on ID (replace with actual API call)
       // For now, use mock data
@@ -42,8 +50,21 @@ const OfficeStaffView = () => {
         status: 'Active'
       };
       setStaffData(mockStaffData);
+      // Load saved analysis entries if they exist
+      const savedEntries = localStorage.getItem(`staff_analysis_entries_${staffId || 'SA001'}`);
+      if (savedEntries) {
+        setAnalysisEntries(JSON.parse(savedEntries));
+      }
     }
   }, [staffId, location.state]);
+
+  const showNotificationMessage = (message) => {
+    setNotificationMessage(message);
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
 
   const handleBackClick = () => {
     navigate(-1);
@@ -54,12 +75,31 @@ const OfficeStaffView = () => {
   };
 
   const saveAnalysis = () => {
-    alert('Analysis saved successfully!');
-    // Here you would typically make an API call to save the analysis
+    if (analysis.trim() === '') {
+      showNotificationMessage('Please enter some analysis before saving.');
+      return;
+    }
+
+    const newEntry = {
+      id: Date.now(),
+      text: analysis,
+      date: new Date().toLocaleString()
+    };
+
+    const updatedEntries = [newEntry, ...analysisEntries];
+    setAnalysisEntries(updatedEntries);
+    localStorage.setItem(`staff_analysis_entries_${staffData.id}`, JSON.stringify(updatedEntries));
+    setAnalysis('');
+    showNotificationMessage('Analysis saved successfully!');
   };
 
   return (
     <div className="office-staff-view-container">
+      {showNotification && (
+        <div className="notification">
+          {notificationMessage}
+        </div>
+      )}
       <div className="office-staff-header">
         <button className="back-button" onClick={handleBackClick}>
           <span className="back-arrow">←</span> Back
@@ -118,37 +158,29 @@ const OfficeStaffView = () => {
           <div className="office-staff-analysis-card">
             <h2 className="office-staff-subtitle">Office Staff Analysis</h2>
             <div className="analysis-content">
-              <ul className="analysis-checklist">
-                <li className="checklist-item">
-                  <input type="checkbox" id="checkA" />
-                  <label htmlFor="checkA">Check A</label>
-                </li>
-                <li className="checklist-item">
-                  <input type="checkbox" id="checkB" />
-                  <label htmlFor="checkB">Check B</label>
-                </li>
-                <li className="checklist-item">
-                  <input type="checkbox" id="checkC" />
-                  <label htmlFor="checkC">Check C</label>
-                </li>
-                <li className="checklist-item">
-                  <input type="checkbox" id="checkD" />
-                  <label htmlFor="checkD">Check D</label>
-                </li>
-                <li className="checklist-item">
-                  <input type="checkbox" id="checkE" />
-                  <label htmlFor="checkE">Check E</label>
-                </li>
-              </ul>
               <textarea 
                 className="analysis-textarea"
                 value={analysis}
                 onChange={updateAnalysis}
-                placeholder="Enter additional notes for this staff member..."
+                placeholder="Enter new analysis notes for this staff member..."
               />
               <button className="save-analysis-button" onClick={saveAnalysis}>
                 Save Analysis
               </button>
+              
+              {analysisEntries.length > 0 && (
+                <div className="analysis-entries">
+                  <h3>Analysis History</h3>
+                  <div className="entries-list">
+                    {analysisEntries.map(entry => (
+                      <div key={entry.id} className="analysis-entry">
+                        <div className="entry-date">{entry.date}</div>
+                        <div className="entry-text">{entry.text}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </>

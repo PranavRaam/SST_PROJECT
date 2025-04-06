@@ -99,6 +99,8 @@
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
+  overflow-x: auto;
+  margin-top: 20px;
 }
 
 /* Custom scrollbar styles */
@@ -127,85 +129,66 @@
   top: 0;
   z-index: 1;
   background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 64px; /* Match the header cell height */
 }
 
 .ro-table {
   width: 100%;
+  min-width: 1400px;  /* Ensure minimum width to prevent squishing */
   border-collapse: collapse;
   font-size: 0.95rem;
   table-layout: fixed;
 }
 
 .ro-table tr {
-  height: 70px;
+  background-color: #ffffff;
 }
 
 .ro-table th {
-  background-color: #f8fafc;
-  padding: 1rem;
+  padding: 16px 20px;
   text-align: left;
-  color: #1e293b;
-  font-weight: 600;
-  border-bottom: 2px solid #e2e8f0;
+  background-color: #ffffff;
+  border-bottom: 2px solid #dee2e6;
   white-space: nowrap;
+  font-weight: 600;
+  color: #333;
+  height: 64px; /* Increased to match content row height */
   vertical-align: middle;
+  line-height: 1.5;
 }
 
 .ro-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 20px;
+  border-bottom: 1px solid #dee2e6;
   color: #334155;
   line-height: 1.5;
   word-wrap: break-word;
   vertical-align: middle;
-  padding-top: 15px;
-  padding-bottom: 15px;
   text-align: left;
+  background-color: #ffffff;
+  height: 64px; /* Set explicit height to match header */
 }
 
-/* Set specific widths for some columns and align them properly */
-.ro-table th:nth-child(1), .ro-table td:nth-child(1) { 
-  width: 15%; 
-  text-align: left;
-} /* Number */
+/* Column specific widths */
+.ro-table th:nth-child(1), .ro-table td:nth-child(1) { width: 120px; } /* Reactive OC No */
+.ro-table th:nth-child(2), .ro-table td:nth-child(2) { width: 100px; } /* Date */
+.ro-table th:nth-child(3), .ro-table td:nth-child(3) { width: 120px; } /* Time */
+.ro-table th:nth-child(4), .ro-table td:nth-child(4) { width: 100px; } /* Status */
+.ro-table th:nth-child(5), .ro-table td:nth-child(5) { width: 250px; } /* Description */
+.ro-table th:nth-child(6), .ro-table td:nth-child(6) { width: 200px; } /* Analysis */
+.ro-table th:nth-child(7), .ro-table td:nth-child(7) { width: 200px; } /* Action Taken */
+.ro-table th:nth-child(8), .ro-table td:nth-child(8) { width: 200px; } /* Next Steps */
+.ro-table th:nth-child(9), .ro-table td:nth-child(9) { width: 110px; } /* Actions */
 
-.ro-table th:nth-child(2), .ro-table td:nth-child(2) { 
-  width: 10%; 
-  text-align: left;
-} /* Date */
-
-.ro-table th:nth-child(3), .ro-table td:nth-child(3) { 
-  width: 10%; 
-  text-align: left; 
-} /* Status */
-
-.ro-table th:nth-child(4), .ro-table td:nth-child(4) { 
-  width: 20%; 
-  text-align: left; 
-} /* Description */
-
-.ro-table th:nth-child(5), .ro-table td:nth-child(5) { 
-  width: 15%; 
-  text-align: left;
-} /* Analysis */
-
-.ro-table th:nth-child(6), .ro-table td:nth-child(6) { 
-  width: 15%; 
-  text-align: left;
-} /* Next Steps */
-
-.ro-table th:nth-child(7), .ro-table td:nth-child(7) { 
-  width: 15%; 
-  text-align: left;
-} /* Actions */
-
-/* Make sure the Description, Analysis, and Next Steps columns wrap text properly */
-.ro-table td:nth-child(4),
+/* Add text overflow handling for content cells */
 .ro-table td:nth-child(5),
-.ro-table td:nth-child(6) {
+.ro-table td:nth-child(6),
+.ro-table td:nth-child(7),
+.ro-table td:nth-child(8) {
+  max-width: 250px;
   white-space: normal;
-  overflow-wrap: break-word;
-  word-break: normal;
+  word-wrap: break-word;
 }
 
 .ro-table tr:hover {
@@ -568,9 +551,11 @@
 
 /* Action buttons styles */
 .action-buttons {
+  white-space: nowrap;
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  gap: 8px;
+  height: 32px; /* Set explicit height for action buttons */
+  align-items: center;
 }
 
 .action-icon {
@@ -581,6 +566,9 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
+  height: 32px; /* Set explicit height for buttons */
+  display: flex;
+  align-items: center;
 }
 
 .action-icon.edit {

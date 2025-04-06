@@ -11,7 +11,6 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
     name: '',
     npi: '',
     specialty: '',
-    status: 'Active',
     position: '',
     department: ''
   });
@@ -137,7 +136,6 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
       name: '',
       npi: '',
       specialty: '',
-      status: 'Active',
       position: '',
       department: ''
     });
@@ -244,20 +242,6 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
                 placeholder="Enter specialty"
               />
             </div>
-            {activeTab === 'physicians' && (
-              <div className="form-group">
-                <label>Status:</label>
-                <select 
-                  name="status" 
-                  value={newStaffMember.status || "Active"}
-                  onChange={handleInputChange}
-                >
-                  <option value="Active">Active</option>
-                  <option value="On Leave">On Leave</option>
-                  <option value="Pending">Pending</option>
-                </select>
-              </div>
-            )}
           </>
         )}
         
@@ -275,17 +259,13 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
             </div>
             <div className="form-group">
               <label>Department:</label>
-              <select 
+              <input 
+                type="text" 
                 name="department" 
                 value={newStaffMember.department}
                 onChange={handleInputChange}
-              >
-                <option value="">Select department</option>
-                <option value="Administration">Administration</option>
-                <option value="Clinical">Clinical</option>
-                <option value="Support">Support</option>
-                <option value="IT">IT</option>
-              </select>
+                placeholder="Enter department"
+              />
             </div>
           </>
         )}
@@ -299,7 +279,16 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
           </button>
           <button 
             className="cancel-button"
-            onClick={() => setShowAddForm(false)}
+            onClick={() => {
+              setShowAddForm(false);
+              setNewStaffMember({
+                name: '',
+                npi: '',
+                specialty: '',
+                position: '',
+                department: ''
+              });
+            }}
           >
             Cancel
           </button>
@@ -367,7 +356,6 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
                 <>
                   <th>NPI Number</th>
                   <th>Specialty</th>
-                  {activeTab === 'physicians' && <th>Status</th>}
                 </>
               ) : (
                 <>
@@ -409,7 +397,6 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
                   <>
                     <td>{staff.npi || "N/A"}</td>
                     <td>{staff.specialty}</td>
-                    {activeTab === 'physicians' && <td>{staff.status || 'Active'}</td>}
                   </>
                 ) : (
                   <>
@@ -419,6 +406,7 @@ const StaffList = ({ pgData, setPgData, showOnlyOfficeStaff = false }) => {
                 )}
                 <td>
                   <div className="staff-actions">
+                    <button className="edit-button">Edit</button>
                     <button 
                       className="delete-button"
                       onClick={() => handleDeleteStaffMember(staff.id)}

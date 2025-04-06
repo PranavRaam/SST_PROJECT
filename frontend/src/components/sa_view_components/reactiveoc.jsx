@@ -14,7 +14,6 @@ const ReactiveOC = () => {
     analysis: '',
     nextSteps: '',
     timestamp: '',
-    receivedOn: '',
     user: '',
     hahhMap: '',
     poc: '',
@@ -35,7 +34,6 @@ const ReactiveOC = () => {
       analysis: 'Investigating file upload module for errors',
       nextSteps: 'Review server logs and validate file size limits',
       timestamp: '09:30:45 AM',
-      receivedOn: '01/06/2025',
       user: 'User 2',
       hahhMap: 'WISE COUNTY HOME HEALTH',
       poc: 'POC1',
@@ -380,7 +378,6 @@ const ReactiveOC = () => {
       analysis: '',
       nextSteps: '',
       timestamp: '',
-      receivedOn: '',
       user: '',
       hahhMap: '',
       poc: '',
@@ -579,7 +576,7 @@ const ReactiveOC = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="hahhMap">HHAH Map</label>
+                  <label htmlFor="hahhMap">HHAH</label>
                   <input 
                     type="text" 
                     id="hahhMap" 
@@ -659,19 +656,6 @@ const ReactiveOC = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="receivedOn">Received On*</label>
-                  <input 
-                    type="text" 
-                    id="receivedOn" 
-                    name="receivedOn"
-                    value={newOutcome.receivedOn}
-                    onChange={handleInputChange}
-                    placeholder="MM/DD/YYYY"
-                    pattern="(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}"
-                    required
-                  />
-                </div>
               </div>
               <div className="form-actions">
                 <button onClick={handleAddOutcome} className="submit-button">
@@ -688,7 +672,6 @@ const ReactiveOC = () => {
                     analysis: '',
                     nextSteps: '',
                     timestamp: '',
-                    receivedOn: '',
                     user: '',
                     hahhMap: '',
                     poc: '',
@@ -707,9 +690,11 @@ const ReactiveOC = () => {
                 <tr>
                   <th>Reactive OC No</th>
                   <th>Date</th>
+                  <th>Time (CST)</th>
                   <th>Status</th>
                   <th>Description</th>
                   <th>Analysis</th>
+                  <th>Action Taken</th>
                   <th>Next Steps</th>
                   <th>Actions</th>
                 </tr>
@@ -719,6 +704,7 @@ const ReactiveOC = () => {
                   <tr key={item.id} onClick={() => handleRowClick(item.id)}>
                     <td>{item.number}</td>
                     <td>{item.date}</td>
+                    <td>{item.timestamp}</td>
                     <td>
                       <span className={`status-badge ${item.status}`}>
                         {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
@@ -726,6 +712,7 @@ const ReactiveOC = () => {
                     </td>
                     <td>{item.description}</td>
                     <td>{item.analysis}</td>
+                    <td>{item.actionTaken}</td>
                     <td>{item.nextSteps}</td>
                     <td onClick={(e) => e.stopPropagation()}>
                       <div className="action-buttons">
@@ -756,4 +743,4 @@ const ReactiveOC = () => {
   );
 };
 
-export default ReactiveOC; 
+export default ReactiveOC;

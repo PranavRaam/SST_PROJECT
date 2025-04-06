@@ -8,6 +8,9 @@ const NPPView = () => {
   const location = useLocation();
   const [nppData, setNppData] = useState(null);
   const [analysis, setAnalysis] = useState('');
+  const [analysisEntries, setAnalysisEntries] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
 
   useEffect(() => {
     // If we have state from navigation, use it
@@ -26,6 +29,11 @@ const NPPView = () => {
         certification: npp.certification || 'Not specified',
         status: npp.status || 'Active'
       });
+      // Load saved analysis entries if they exist
+      const savedEntries = localStorage.getItem(`npp_analysis_entries_${npp.id || nppId}`);
+      if (savedEntries) {
+        setAnalysisEntries(JSON.parse(savedEntries));
+      }
     } else {
       // Fetch NPP data based on ID (replace with actual API call)
       // For now, use mock data
@@ -42,8 +50,21 @@ const NPPView = () => {
         status: 'Active'
       };
       setNppData(mockNppData);
+      // Load saved analysis entries if they exist
+      const savedEntries = localStorage.getItem(`npp_analysis_entries_${nppId || 'NPP1001'}`);
+      if (savedEntries) {
+        setAnalysisEntries(JSON.parse(savedEntries));
+      }
     }
   }, [nppId, location.state]);
+
+  const showNotificationMessage = (message) => {
+    setNotificationMessage(message);
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
 
   const handleBackClick = () => {
     navigate(-1);
@@ -54,12 +75,31 @@ const NPPView = () => {
   };
 
   const saveAnalysis = () => {
-    alert('Analysis saved successfully!');
-    // Here you would typically make an API call to save the analysis
+    if (analysis.trim() === '') {
+      showNotificationMessage('Please enter some analysis before saving.');
+      return;
+    }
+
+    const newEntry = {
+      id: Date.now(),
+      text: analysis,
+      date: new Date().toLocaleString()
+    };
+
+    const updatedEntries = [newEntry, ...analysisEntries];
+    setAnalysisEntries(updatedEntries);
+    localStorage.setItem(`npp_analysis_entries_${nppData.id}`, JSON.stringify(updatedEntries));
+    setAnalysis('');
+    showNotificationMessage('Analysis saved successfully!');
   };
 
   return (
     <div className="npp-view-container">
+      {showNotification && (
+        <div className="notification">
+          {notificationMessage}
+        </div>
+      )}
       <div className="npp-header">
         <button className="back-button" onClick={handleBackClick}>
           <span className="back-arrow">←</span> Back
@@ -122,11 +162,25 @@ const NPPView = () => {
                 className="analysis-textarea"
                 value={analysis}
                 onChange={updateAnalysis}
-                placeholder="Enter analysis notes for this NPP..."
+                placeholder="Enter new analysis notes for this NPP..."
               />
               <button className="save-analysis-button" onClick={saveAnalysis}>
                 Save Analysis
               </button>
+              
+              {analysisEntries.length > 0 && (
+                <div className="analysis-entries">
+                  <h3>Analysis History</h3>
+                  <div className="entries-list">
+                    {analysisEntries.map(entry => (
+                      <div key={entry.id} className="analysis-entry">
+                        <div className="entry-date">{entry.date}</div>
+                        <div className="entry-text">{entry.text}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </>

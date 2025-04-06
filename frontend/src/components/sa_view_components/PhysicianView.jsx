@@ -13,6 +13,7 @@ const PhysicianView = () => {
   const [activeTab, setActiveTab] = useState('platform');
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateNonPlatformForm, setShowCreateNonPlatformForm] = useState(false);
+  const [editingPGId, setEditingPGId] = useState(null);
   const [newNonPlatformPG, setNewNonPlatformPG] = useState({
     name: '',
     patientsCount: 0,
@@ -145,6 +146,15 @@ const PhysicianView = () => {
         physicianName: physician.name
       } 
     });
+  };
+
+  const handleEditClick = (pgId) => {
+    setEditingPGId(pgId);
+  };
+
+  const handleStatusChange = (pgId, newStatus) => {
+    updatePGStatus(pgId, newStatus);
+    setEditingPGId(null);
   };
 
   const renderForm = () => {
@@ -348,16 +358,26 @@ const PhysicianView = () => {
                         </>
                       ) : (
                         <>
-                          <select 
-                            className="status-select"
-                            value={pg.contactStatus}
-                            onChange={(e) => updatePGStatus(pg.id, e.target.value)}
-                          >
-                            <option value="Pending">Pending</option>
-                            <option value="Contacted">Contacted</option>
-                            <option value="Interested">Interested</option>
-                            <option value="Not Interested">Not Interested</option>
-                          </select>
+                          {editingPGId === pg.id ? (
+                            <select 
+                              className="status-select"
+                              value={pg.contactStatus}
+                              onChange={(e) => handleStatusChange(pg.id, e.target.value)}
+                              onBlur={() => setEditingPGId(null)}
+                            >
+                              <option value="Pending">Pending</option>
+                              <option value="Contacted">Contacted</option>
+                              <option value="Interested">Interested</option>
+                              <option value="Not Interested">Not Interested</option>
+                            </select>
+                          ) : (
+                            <button 
+                              className="edit-button"
+                              onClick={() => handleEditClick(pg.id)}
+                            >
+                              Edit
+                            </button>
+                          )}
                           <button 
                             className="delete-button"
                             onClick={() => {

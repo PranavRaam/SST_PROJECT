@@ -363,10 +363,10 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
                   <div className="ratio-card">
                     <div className="ratio-header">
                       <span className="ratio-icon">📊</span>
-                      <span className="ratio-title">Outcomes per 100 Patients</span>
+                      <span className="ratio-title">No. of Active Reactive Outcomes</span>
                     </div>
                     <div className="ratio-value">
-                      {(areaTotals.activeOutcomes / areaTotals.patients * 100).toFixed(1)}
+                      {formatNumber(areaTotals.activeOutcomes)}
                     </div>
                     <div className="ratio-bar">
                       <div 

@@ -50,7 +50,8 @@ const PGView = () => {
     name: "",
     npi: "",
     specialty: "",
-    onboarded: false
+    onboarded: false,
+    analysis: ""
   });
   const [newHHA, setNewHHA] = useState({
     name: "",
@@ -120,14 +121,14 @@ const PGView = () => {
       }
     ],
     physicians: [
-      { id: 1, name: "Dr. Sarah Johnson", npi: "1234567890", specialty: "Primary Care", onboarded: true },
-      { id: 2, name: "Dr. Robert Chen", npi: "2345678901", specialty: "Cardiology", onboarded: false },
-      { id: 3, name: "Dr. Maria Garcia", npi: "3456789012", specialty: "Neurology", onboarded: true },
-      { id: 4, name: "Dr. James Wilson", npi: "4567890123", specialty: "Oncology", onboarded: false },
-      { id: 5, name: "Dr. Emily Brown", npi: "5678901234", specialty: "Pediatrics", onboarded: true },
-      { id: 6, name: "Dr. Michael Lee", npi: "6789012345", specialty: "Orthopedics", onboarded: false },
-      { id: 7, name: "Dr. Lisa Patel", npi: "7890123456", specialty: "Dermatology", onboarded: true },
-      { id: 8, name: "Dr. David Kim", npi: "8901234567", specialty: "Endocrinology", onboarded: false }
+      { id: 1, name: "Dr. Sarah Johnson", npi: "1234567890", specialty: "Primary Care", onboarded: true, analysis: "Excellent communication with patients. Consistently follows up on treatment plans. High patient satisfaction scores." },
+      { id: 2, name: "Dr. Robert Chen", npi: "2345678901", specialty: "Cardiology", onboarded: false, analysis: "Recently joined. Extensive experience in complex cardiac procedures. Pending completion of EMR training." },
+      { id: 3, name: "Dr. Maria Garcia", npi: "3456789012", specialty: "Neurology", onboarded: true, analysis: "Strong diagnostic skills. Pioneering new treatment protocols. Active in research programs." },
+      { id: 4, name: "Dr. James Wilson", npi: "4567890123", specialty: "Oncology", onboarded: false, analysis: "Specializes in innovative cancer treatments. Building strong rapport with long-term patients." },
+      { id: 5, name: "Dr. Emily Brown", npi: "5678901234", specialty: "Pediatrics", onboarded: true, analysis: "Great with young patients and families. Implements preventive care programs effectively." },
+      { id: 6, name: "Dr. Michael Lee", npi: "6789012345", specialty: "Orthopedics", onboarded: false, analysis: "Expert in minimally invasive procedures. Needs to improve on documentation timeliness." },
+      { id: 7, name: "Dr. Lisa Patel", npi: "7890123456", specialty: "Dermatology", onboarded: true, analysis: "High patient retention rate. Excellent at explaining treatment plans. Regular presenter at medical conferences." },
+      { id: 8, name: "Dr. David Kim", npi: "8901234567", specialty: "Endocrinology", onboarded: false, analysis: "Specializes in diabetes management. Working on implementing new patient education programs." }
     ],
     staff: [
       { id: 1, name: "John Smith", position: "Office Manager", department: "Administration" },
@@ -629,58 +630,54 @@ const PGView = () => {
           </div>
           
           {showPhysicianForm && (
-            <div className="form-container">
-              <h4>{editingPhysician ? 'Edit Physician' : 'Add New Physician'}</h4>
-              <div className="form-grid">
-                <div className="form-group">
-                  <label>Name:</label>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={newPhysician.name} 
-                    onChange={(e) => setNewPhysician(prev => ({
-                      ...prev,
-                      name: e.target.value
-                    }))} 
-                    placeholder="Enter full name"
+            <div className="add-form">
+              <h3>{editingPhysician ? 'Edit Physician' : 'Add New Physician'}</h3>
+              <div className="form-group">
+                <label>Name:</label>
+                <input
+                  type="text"
+                  value={newPhysician.name}
+                  onChange={(e) => setNewPhysician(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Enter physician name"
+                />
+              </div>
+              <div className="form-group">
+                <label>NPI:</label>
+                <input
+                  type="text"
+                  value={newPhysician.npi}
+                  onChange={(e) => setNewPhysician(prev => ({ ...prev, npi: e.target.value }))}
+                  placeholder="Enter NPI number"
+                />
+              </div>
+              <div className="form-group">
+                <label>Specialty:</label>
+                <input
+                  type="text"
+                  value={newPhysician.specialty}
+                  onChange={(e) => setNewPhysician(prev => ({ ...prev, specialty: e.target.value }))}
+                  placeholder="Enter specialty"
+                />
+              </div>
+              <div className="form-group">
+                <label>Analysis:</label>
+                <textarea
+                  value={newPhysician.analysis}
+                  onChange={(e) => setNewPhysician(prev => ({ ...prev, analysis: e.target.value }))}
+                  placeholder="Enter analysis notes"
+                  rows="3"
+                  className="analysis-textarea"
+                />
+              </div>
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={newPhysician.onboarded}
+                    onChange={(e) => setNewPhysician(prev => ({ ...prev, onboarded: e.target.checked }))}
                   />
-                </div>
-                <div className="form-group">
-                  <label>NPI Number:</label>
-                  <input 
-                    type="text" 
-                    name="npi" 
-                    value={newPhysician.npi} 
-                    onChange={(e) => setNewPhysician(prev => ({
-                      ...prev,
-                      npi: e.target.value
-                    }))} 
-                    placeholder="Enter NPI number"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Specialty:</label>
-                  <input 
-                    type="text" 
-                    name="specialty" 
-                    value={newPhysician.specialty} 
-                    onChange={(e) => setNewPhysician(prev => ({
-                      ...prev,
-                      specialty: e.target.value
-                    }))} 
-                    placeholder="Enter specialty"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Onboarded:</label>
-                  <select name="onboarded" value={newPhysician.onboarded} onChange={(e) => setNewPhysician(prev => ({
-                    ...prev,
-                    onboarded: e.target.value === 'true'
-                  }))} >
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                </div>
+                  Onboarded
+                </label>
               </div>
               <div className="form-actions">
                 <button className="submit-button" onClick={() => {
@@ -705,7 +702,8 @@ const PGView = () => {
                             name: newPhysician.name,
                             npi: newPhysician.npi,
                             specialty: newPhysician.specialty,
-                            onboarded: newPhysician.onboarded
+                            onboarded: newPhysician.onboarded,
+                            analysis: newPhysician.analysis
                           };
                         }
                         return outcome;
@@ -754,7 +752,8 @@ const PGView = () => {
                     name: "",
                     npi: "",
                     specialty: "",
-                    onboarded: false
+                    onboarded: false,
+                    analysis: ""
                   });
                   setShowPhysicianForm(false);
                 }}>{editingPhysician ? 'Update Physician' : 'Add Physician'}</button>
@@ -765,7 +764,8 @@ const PGView = () => {
                     name: "",
                     npi: "",
                     specialty: "",
-                    onboarded: false
+                    onboarded: false,
+                    analysis: ""
                   });
                 }}>Cancel</button>
               </div>
@@ -780,6 +780,7 @@ const PGView = () => {
                   <th>NPI</th>
                   <th>Specialty</th>
                   <th>Onboarded</th>
+                  <th>Analysis</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -806,13 +807,18 @@ const PGView = () => {
                           </button>
                         </td>
                         <td>
+                          <div className="analysis-content">
+                            {physicianData.analysis || '-'}
+                          </div>
+                        </td>
+                        <td>
                           <div className="row-actions">
                             <button 
                               className="action-icon edit"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setEditingPhysician(physician);
-                                setNewPhysician(physician);
+                                setEditingPhysician(physicianData);
+                                setNewPhysician(physicianData);
                                 setShowPhysicianForm(true);
                               }}
                             >
@@ -1487,19 +1493,17 @@ const PGView = () => {
         {rapportState.showAnalytics && (
           <div className="rapport-analytics">
             <h3>Rapport Analytics</h3>
-            <div className="rapport-stats">
-              <div className="rapport-stat">
-                <span className="stat-label">High Rapport (8-10):</span>
-                <span className="stat-value">{rapportState.records.filter(r => parseFloat(r.score) >= 8).length}</span>
-              </div>
-              <div className="rapport-stat">
-                <span className="stat-label">Medium Rapport (5-7):</span>
-                <span className="stat-value">{rapportState.records.filter(r => parseFloat(r.score) >= 5 && parseFloat(r.score) < 8).length}</span>
-              </div>
-              <div className="rapport-stat">
-                <span className="stat-label">Low Rapport (0-4):</span>
-                <span className="stat-value">{rapportState.records.filter(r => parseFloat(r.score) < 5).length}</span>
-              </div>
+            <div className="rapport-analytics-item">
+              <span className="rapport-analytics-label">High Rapport (8-10)</span>
+              <span className="rapport-analytics-value rapport-analytics-high">{getHighRapportCount()}</span>
+            </div>
+            <div className="rapport-analytics-item">
+              <span className="rapport-analytics-label">Medium Rapport (5-7)</span>
+              <span className="rapport-analytics-value rapport-analytics-medium">{getMediumRapportCount()}</span>
+            </div>
+            <div className="rapport-analytics-item">
+              <span className="rapport-analytics-label">Low Rapport (0-4)</span>
+              <span className="rapport-analytics-value rapport-analytics-low">{getLowRapportCount()}</span>
             </div>
           </div>
         )}
@@ -1546,9 +1550,9 @@ const PGView = () => {
               />
             </div>
             <div className="rapport-form-group">
-              <label>Understanding/Feedback</label>
+              <label>Analysis</label>
               <textarea 
-                placeholder="Enter feedback" 
+                placeholder="Enter analysis" 
                 name="understanding"
                 value={rapportState.newRecord.understanding}
                 onChange={(e) => handleNewRapportChange(e)}
@@ -1558,59 +1562,104 @@ const PGView = () => {
           </div>
         )}
 
-        <table className="rapport-table">
-          <thead>
-            <tr>
-              <th onClick={() => handleRapportSort('name')} style={{ textAlign: 'left' }}>
-                PERSONA NAME
-                {rapportState.sortConfig.key === 'name' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th onClick={() => handleRapportSort('designation')} style={{ textAlign: 'left' }}>
-                DESIGNATION
-                {rapportState.sortConfig.key === 'designation' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th onClick={() => handleRapportSort('score')} style={{ textAlign: 'left' }}>
-                SCORE
-                {rapportState.sortConfig.key === 'score' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th style={{ textAlign: 'left' }}>ANALYSIS</th>
-              <th onClick={() => handleRapportSort('date')} style={{ textAlign: 'left' }}>
-                DATE
-                {rapportState.sortConfig.key === 'date' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th style={{ textAlign: 'left' }}>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getFilteredAndSortedRapportRecords().map(record => (
-              <tr key={`rapport-${record.id}`}>
-                <td style={{ textAlign: 'left' }}>{record.name}</td>
-                <td style={{ textAlign: 'left' }}>{record.designation}</td>
-                <td style={{ textAlign: 'left' }}>
-                  <span className={`rapport-score-badge ${parseFloat(record.score) >= 8 ? 'high' : parseFloat(record.score) >= 5 ? 'medium' : 'low'}`}>
-                    {record.score}/10
-                  </span>
-                </td>
-                <td style={{ textAlign: 'left' }}>{record.understanding}</td>
-                <td style={{ textAlign: 'left' }}>{formatDate(record.date)}</td>
-                <td style={{ textAlign: 'left' }}>
-                  <div className="rapport-action-buttons">
-                    <button className="rapport-edit-btn" onClick={() => handleEditRapportRecord(record.id)}>Edit</button>
-                    <button className="rapport-delete-btn" onClick={() => handleDeleteRapportRecord(record.id)}>Delete</button>
-                  </div>
-                </td>
+        <div className="rapport-table-container">
+          <table className="rapport-table">
+            <thead>
+              <tr>
+                <th onClick={() => handleRapportSort('name')} style={{ textAlign: 'left' }}>
+                  PERSONA NAME
+                  {rapportState.sortConfig.key === 'name' && (
+                    <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
+                  )}
+                </th>
+                <th onClick={() => handleRapportSort('designation')} style={{ textAlign: 'left' }}>
+                  DESIGNATION
+                  {rapportState.sortConfig.key === 'designation' && (
+                    <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
+                  )}
+                </th>
+                <th onClick={() => handleRapportSort('score')} style={{ textAlign: 'left' }}>
+                  SCORE
+                  {rapportState.sortConfig.key === 'score' && (
+                    <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
+                  )}
+                </th>
+                <th style={{ textAlign: 'left' }}>ANALYSIS</th>
+                <th style={{ textAlign: 'left' }}>ACTIONS</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {getFilteredAndSortedRapportRecords().map(record => (
+                <tr key={`rapport-${record.id}`}>
+                  {rapportState.editingRecord?.id === record.id ? (
+                    <>
+                      <td style={{ textAlign: 'left' }}>
+                        <input
+                          type="text"
+                          name="name"
+                          value={rapportState.editingRecord.name}
+                          onChange={handleEditChange}
+                          className="rapport-edit-input"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <input
+                          type="text"
+                          name="designation"
+                          value={rapportState.editingRecord.designation}
+                          onChange={handleEditChange}
+                          className="rapport-edit-input"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <input
+                          type="number"
+                          name="score"
+                          min="0"
+                          max="10"
+                          value={rapportState.editingRecord.score}
+                          onChange={handleEditChange}
+                          className="rapport-edit-input"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <textarea
+                          name="understanding"
+                          value={rapportState.editingRecord.understanding}
+                          onChange={handleEditChange}
+                          className="rapport-edit-textarea"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <div className="rapport-action-buttons">
+                          <button className="rapport-save-btn" onClick={handleSaveEdit}>Save</button>
+                          <button className="rapport-cancel-btn" onClick={handleCancelEdit}>Cancel</button>
+                        </div>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td style={{ textAlign: 'left' }}>{record.name}</td>
+                      <td style={{ textAlign: 'left' }}>{record.designation}</td>
+                      <td style={{ textAlign: 'left' }}>
+                        <span className={`rapport-score-badge ${parseFloat(record.score) >= 8 ? 'high' : parseFloat(record.score) >= 5 ? 'medium' : 'low'}`}>
+                          {record.score}/10
+                        </span>
+                      </td>
+                      <td style={{ textAlign: 'left' }}>{record.understanding}</td>
+                      <td style={{ textAlign: 'left' }}>
+                        <div className="rapport-action-buttons">
+                          <button className="rapport-edit-btn" onClick={() => handleEditRapportRecord(record.id)}>Edit</button>
+                          <button className="rapport-delete-btn" onClick={() => handleDeleteRapportRecord(record.id)}>Delete</button>
+                        </div>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   };
@@ -1809,37 +1858,53 @@ Operations Team
       ...prev,
       editingRecord: { ...record }
     }));
+  };
+
+  const handleSaveEdit = () => {
+    if (!rapportState.editingRecord) return;
+
+    const { name, designation, score, understanding } = rapportState.editingRecord;
     
-    const name = window.prompt("Enter name:", record.name);
-    if (!name) return;
-    
-    const designation = window.prompt("Enter designation:", record.designation);
-    if (!designation) return;
-    
-    const score = window.prompt("Enter score (0-10):", record.score);
-    if (!score || !validateRapportScore(score)) {
-      alert("Score must be between 0 and 10");
+    if (!name || !designation || !score || !understanding) {
+      showNotification('Please fill in all fields', 'error');
       return;
     }
-    
-    const understanding = window.prompt("Enter understanding/feedback:", record.understanding);
-    if (!understanding) return;
-    
+
+    if (!validateRapportScore(score)) {
+      showNotification('Score must be between 0 and 10', 'error');
+      return;
+    }
+
     setRapportState(prev => ({
       ...prev,
       records: prev.records.map(r => 
-        r.id === recordId 
-          ? { ...r, name, designation, score, understanding }
+        r.id === prev.editingRecord.id 
+          ? { ...prev.editingRecord }
           : r
       ),
+      editingRecord: null,
       notification: { message: "Record updated successfully", type: "success" }
     }));
-    
-    setTimeout(() => {
-      setRapportState(prev => ({ ...prev, notification: null }));
-    }, 3000);
   };
-  
+
+  const handleCancelEdit = () => {
+    setRapportState(prev => ({
+      ...prev,
+      editingRecord: null
+    }));
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setRapportState(prev => ({
+      ...prev,
+      editingRecord: {
+        ...prev.editingRecord,
+        [name]: value
+      }
+    }));
+  };
+
   // Fix for Rapport record deletion
   const handleDeleteRapportRecord = (recordId) => {
     if (!window.confirm("Are you sure you want to delete this record?")) return;
@@ -2324,7 +2389,8 @@ Operations Team
       name: physician.name,
       npi: physician.npi,
       specialty: physician.specialty,
-      onboarded: physician.onboarded
+      onboarded: physician.onboarded,
+      analysis: physician.analysis
     });
     setShowPhysicianForm(true);
   };
@@ -2367,6 +2433,18 @@ Operations Team
     const day = String(date.getDate()).padStart(2, '0');
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
+  };
+
+  const getHighRapportCount = () => {
+    return rapportState.records.filter(record => parseFloat(record.score) >= 8).length;
+  };
+
+  const getMediumRapportCount = () => {
+    return rapportState.records.filter(record => parseFloat(record.score) >= 5 && parseFloat(record.score) < 8).length;
+  };
+
+  const getLowRapportCount = () => {
+    return rapportState.records.filter(record => parseFloat(record.score) < 5).length;
   };
 
   return (
