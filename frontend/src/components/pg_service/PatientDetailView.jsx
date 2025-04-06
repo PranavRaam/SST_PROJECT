@@ -990,7 +990,7 @@ const PatientDetailView = ({ patient, onBack }) => {
     setCpoDocs(prevDocs => [...prevDocs, newDocument]);
     
     // Show success notification
-    showNotification('success', 'CPO Document Added', `A new ${typeResponse} document has been added.`);
+    showNotification('success', 'New CPO Document Added', `A new ${typeResponse} document has been added.`);
   };
 
   // Function to update CPO document status
@@ -3377,7 +3377,7 @@ Total documents: ${documents.length}
                 onClick={addCpoDocument}
               >
                 <span className="icon-wrapper"><FaPlus /></span>
-                Add CPO Document
+                Add new CPO document
               </button>
             </div>
             
@@ -3404,7 +3404,7 @@ Total documents: ${documents.length}
               <div className="cpo-documents-card">
                 <div className="card-header">
                   <FaFileAlt className="header-icon" />
-                  <h4>CPO Documents</h4>
+                  <h4>New CPO documents</h4>
                 </div>
                 
                 <div className="documents-table-container">

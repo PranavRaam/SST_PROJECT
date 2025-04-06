@@ -176,7 +176,7 @@
 
 /* Interactions Panel */
 .interactions-panel {
-  grid-column: 1;
+  grid-column: 2;
   background-color: #f9f9ff;
 }
 
@@ -281,8 +281,9 @@
 
 /* MBR Panel */
 .mbr-panel {
-  grid-column: 2;
-  background-color: #f5f8ff;
+  grid-column: 1;
+  background-color: #fff;
+  border-top: 3px solid #4361ee;
 }
 
 .mbr-stats {

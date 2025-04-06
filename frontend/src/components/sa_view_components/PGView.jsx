@@ -1552,45 +1552,25 @@ const PGView = () => {
             </div>
             <div className="reports-list">
               {valueCommunicationState.reports
-                .filter(report => report.fileName.toLowerCase().includes('communication') || report.fileName.toLowerCase().includes('feedback') || report.fileName.toLowerCase().includes('mbr'))
+                .filter(report => report.fileName.toLowerCase().includes('communication') || report.fileName.toLowerCase().includes('mbr'))
                 .map(report => (
                   <div key={report.id} className="report-card">
                     <div className="report-icon">
-                      <span className="document-icon">📄</span>
+                      <span className="document-icon">📊</span>
                     </div>
                     <div className="report-details">
                       <h4 className="report-filename">{report.fileName}</h4>
-                      {valueCommunicationState.isEditingReport && valueCommunicationState.selectedReport?.id === report.id ? (
-                        <div className="edit-report">
-                          <input
-                            type="text"
-                            value={valueCommunicationState.newReportNote}
-                            onChange={(e) => setValueCommunicationState(prev => ({
-                              ...prev,
-                              newReportNote: e.target.value
-                            }))}
-                            className="interaction-input"
-                          />
-                          <button onClick={handleSaveReport} className="submit-button">
-                            Save
-                          </button>
-                        </div>
-                      ) : (
-                        <p className="report-notes">{report.notes}</p>
-                      )}
+                      <p className="report-notes">{report.notes}</p>
                       <div className="report-meta">
-                        <span className="report-date">{report.date}</span>
+                        {report.date}
                       </div>
                     </div>
                     <div className="report-actions">
-                      <button className="icon-button edit" title="Edit Report" onClick={() => handleEditReport(report)}>
-                        <span className="action-icon">✏️</span>
+                      <button className="icon-button" onClick={() => handleViewReport(report)}>
+                        <span className="action-icon">👁️</span>
                       </button>
-                      <button className="icon-button download" title="Download Report" onClick={() => handleDownloadReport(report)}>
+                      <button className="icon-button" onClick={() => handleDownloadReport(report)}>
                         <span className="action-icon">⬇️</span>
-                      </button>
-                      <button className="icon-button delete" title="Delete Report" onClick={() => handleDeleteReport(report.id)}>
-                        <span className="action-icon">🗑️</span>
                       </button>
                     </div>
                   </div>
@@ -1625,45 +1605,25 @@ const PGView = () => {
             </div>
             <div className="reports-list">
               {valueCommunicationState.reports
-                .filter(report => report.fileName.toLowerCase().includes('weekly') || report.fileName.toLowerCase().includes('update'))
+                .filter(report => report.fileName.toLowerCase().includes('weekly'))
                 .map(report => (
                   <div key={report.id} className="report-card">
                     <div className="report-icon">
-                      <span className="document-icon">📄</span>
+                      <span className="document-icon">📝</span>
                     </div>
                     <div className="report-details">
                       <h4 className="report-filename">{report.fileName}</h4>
-                      {valueCommunicationState.isEditingReport && valueCommunicationState.selectedReport?.id === report.id ? (
-                        <div className="edit-report">
-                          <input
-                            type="text"
-                            value={valueCommunicationState.newReportNote}
-                            onChange={(e) => setValueCommunicationState(prev => ({
-                              ...prev,
-                              newReportNote: e.target.value
-                            }))}
-                            className="interaction-input"
-                          />
-                          <button onClick={handleSaveReport} className="submit-button">
-                            Save
-                          </button>
-                        </div>
-                      ) : (
-                        <p className="report-notes">{report.notes}</p>
-                      )}
+                      <p className="report-notes">{report.notes}</p>
                       <div className="report-meta">
-                        <span className="report-date">{report.date}</span>
+                        {report.date}
                       </div>
                     </div>
                     <div className="report-actions">
-                      <button className="icon-button edit" title="Edit Report" onClick={() => handleEditReport(report)}>
-                        <span className="action-icon">✏️</span>
+                      <button className="icon-button" onClick={() => handleViewReport(report)}>
+                        <span className="action-icon">👁️</span>
                       </button>
-                      <button className="icon-button download" title="Download Report" onClick={() => handleDownloadReport(report)}>
+                      <button className="icon-button" onClick={() => handleDownloadReport(report)}>
                         <span className="action-icon">⬇️</span>
-                      </button>
-                      <button className="icon-button delete" title="Delete Report" onClick={() => handleDeleteReport(report.id)}>
-                        <span className="action-icon">🗑️</span>
                       </button>
                     </div>
                   </div>
@@ -1671,8 +1631,95 @@ const PGView = () => {
             </div>
           </div>
         </div>
+        
+        {/* MBR Tasks and Weekly Reports in the same row */}
+        <div className="value-comm-panel mbr-panel">
+          <div className="panel-header">
+            <h3>MBR Tasks</h3>
+          </div>
 
-        {/* Interaction Summaries Panel */}
+          <div className="mbr-stats">
+            <div className="mbr-stat-item">
+              <span className="stat-label">MBRs Done:</span>
+              <span className="stat-value">{valueCommunicationState.mbrsDone}</span>
+            </div>
+            <div className="mbr-stat-item">
+              <span className="stat-label">MBRs Upcoming:</span>
+              <span className="stat-value">{valueCommunicationState.mbrsUpcoming}</span>
+            </div>
+          </div>
+
+          <div className="mbr-tasks-list">
+            {valueCommunicationState.mdrTasks
+              .filter(task => task.task.toLowerCase().includes('data') || task.task.toLowerCase().includes('metrics'))
+              .map(task => (
+                <div key={task.id} className={`task-card ${task.completed ? 'completed' : ''}`}>
+                  <div className="task-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={task.completed}
+                      onChange={() => handleToggleMDRTask(task.id)}
+                      id={`task-${task.id}`}
+                    />
+                    <label htmlFor={`task-${task.id}`}></label>
+                  </div>
+                  <div className="task-content">
+                    <p className="task-text">{task.task}</p>
+                    <div className="task-meta">
+                      <span className="task-due-date">Due: {task.dueDate}</span>
+                      <span className={`task-status ${task.completed ? 'completed' : 'pending'}`}>
+                        {task.completed ? 'Completed' : 'Pending'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <div className="add-task-form">
+            <input
+              type="text"
+              placeholder="Add new MBR task..."
+              value={valueCommunicationState.newMBRTask}
+              onChange={(e) => setValueCommunicationState(prev => ({
+                ...prev,
+                newMBRTask: e.target.value
+              }))}
+              className="task-input"
+            />
+            <input
+              type="date"
+              value={valueCommunicationState.newMBRTaskDate}
+              onChange={(e) => setValueCommunicationState(prev => ({
+                ...prev,
+                newMBRTaskDate: e.target.value
+              }))}
+              className="task-date-input"
+            />
+            <button 
+              className="submit-button"
+              onClick={() => {
+                if (valueCommunicationState.newMBRTask && valueCommunicationState.newMBRTaskDate) {
+                  handleAddMDRTask(
+                    valueCommunicationState.newMBRTask,
+                    valueCommunicationState.newMBRTaskDate
+                  );
+                  setValueCommunicationState(prev => ({
+                    ...prev,
+                    newMBRTask: "",
+                    newMBRTaskDate: ""
+                  }));
+                } else {
+                  alert("Please fill in both the task description and due date");
+                }
+              }}
+            >
+              Add MBR Task
+            </button>
+          </div>
+        </div>
+
+        {/* Weekly Reports Panel converted to Interaction Summaries Panel */}
         <div className="value-comm-panel interactions-panel">
           <div className="panel-header">
             <h3>Interaction Summaries</h3>
@@ -1724,116 +1771,6 @@ const PGView = () => {
               </button>
             )}
           </div>
-        </div>
-
-        {/* MBR Tasks Panel - Now separate from Weekly Reports */}
-        <div className="value-comm-panel mbr-panel">
-          <div className="panel-header">
-            <h3>MBR Tasks</h3>
-          </div>
-
-          <div className="mbr-stats">
-            <div className="mbr-stat-item">
-              <span className="stat-label">MBRs Done:</span>
-              <span className="stat-value">{valueCommunicationState.mbrsDone}</span>
-            </div>
-            <div className="mbr-stat-item">
-              <span className="stat-label">MBRs Upcoming:</span>
-              <span className="stat-value">{valueCommunicationState.mbrsUpcoming}</span>
-            </div>
-          </div>
-
-          <div className="mbr-tasks-list">
-            {valueCommunicationState.mdrTasks
-              .filter(task => task.task.toLowerCase().includes('data') || task.task.toLowerCase().includes('metrics'))
-              .map(task => (
-                <div key={task.id} className={`task-card ${task.completed ? 'completed' : ''}`}>
-                  <div className="task-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() => handleToggleMDRTask(task.id)}
-                      id={`task-${task.id}`}
-                    />
-                    <label htmlFor={`task-${task.id}`}></label>
-                  </div>
-                  <div className="task-content">
-                    <p className="task-text">{task.task}</p>
-                    <div className="task-meta">
-                      <span className="task-due-date">Due: {task.dueDate}</span>
-                      <span className={`task-status ${task.completed ? 'completed' : 'pending'}`}>
-                        {task.completed ? 'Completed' : 'Pending'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-
-          <div className="add-task-form">
-            <input
-              type="text"
-              placeholder="Add new MBR task..."
-              className="task-input"
-              value={valueCommunicationState.newMBRTask || ''}
-              onChange={(e) => setValueCommunicationState(prev => ({
-                ...prev,
-                newMBRTask: e.target.value
-              }))}
-            />
-            <input
-              type="text"
-              className="task-date-input"
-              value={valueCommunicationState.newMBRTaskDate || ''}
-              onChange={(e) => setValueCommunicationState(prev => ({
-                ...prev,
-                newMBRTaskDate: e.target.value
-              }))}
-              placeholder="MM/DD/YYYY"
-              onFocus={(e) => {
-                const dateInput = document.createElement('input');
-                dateInput.type = 'date';
-                dateInput.style.display = 'none';
-                document.body.appendChild(dateInput);
-                dateInput.click();
-                dateInput.addEventListener('change', (event) => {
-                  setValueCommunicationState(prev => ({
-                    ...prev,
-                    newMBRTaskDate: event.target.value
-                  }));
-                  document.body.removeChild(dateInput);
-                });
-                e.preventDefault();
-              }}
-            />
-            <button 
-              className="submit-button"
-              onClick={() => {
-                if (valueCommunicationState.newMBRTask && valueCommunicationState.newMBRTaskDate) {
-                  handleAddMDRTask(
-                    valueCommunicationState.newMBRTask,
-                    valueCommunicationState.newMBRTaskDate
-                  );
-                  setValueCommunicationState(prev => ({
-                    ...prev,
-                    newMBRTask: "",
-                    newMBRTaskDate: ""
-                  }));
-                } else {
-                  alert("Please fill in both the task description and due date");
-                }
-              }}
-            >
-              Add MBR Task
-            </button>
-          </div>
-        </div>
-
-        {/* Weekly Reports Panel - Separated from MBR */}
-        <div className="value-comm-panel weekly-reports-panel">
-          <div className="panel-header">
-            <h3>Weekly Reports</h3>
-          </div>
 
           <div className="weekly-report-stats">
             <div className="weekly-stat-item">
@@ -1844,91 +1781,6 @@ const PGView = () => {
               <span className="stat-label">Reports Upcoming:</span>
               <span className="stat-value">{valueCommunicationState.weeklyReportsUpcoming}</span>
             </div>
-          </div>
-
-          <div className="weekly-tasks-list">
-            {valueCommunicationState.mdrTasks
-              .filter(task => task.task.toLowerCase().includes('feedback') || task.task.toLowerCase().includes('collect'))
-              .map(task => (
-                <div key={task.id} className={`task-card ${task.completed ? 'completed' : ''}`}>
-                  <div className="task-checkbox">
-                    <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() => handleToggleMDRTask(task.id)}
-                      id={`weekly-task-${task.id}`}
-                    />
-                    <label htmlFor={`weekly-task-${task.id}`}></label>
-                  </div>
-                  <div className="task-content">
-                    <p className="task-text">{task.task}</p>
-                    <div className="task-meta">
-                      <span className="task-due-date">Due: {task.dueDate}</span>
-                      <span className={`task-status ${task.completed ? 'completed' : 'pending'}`}>
-                        {task.completed ? 'Completed' : 'Pending'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-
-          <div className="add-task-form">
-            <input
-              type="text"
-              placeholder="Add new weekly report task..."
-              className="task-input"
-              value={valueCommunicationState.newWeeklyTask || ''}
-              onChange={(e) => setValueCommunicationState(prev => ({
-                ...prev,
-                newWeeklyTask: e.target.value
-              }))}
-            />
-            <input
-              type="text"
-              className="task-date-input"
-              value={valueCommunicationState.newWeeklyTaskDate || ''}
-              onChange={(e) => setValueCommunicationState(prev => ({
-                ...prev,
-                newWeeklyTaskDate: e.target.value
-              }))}
-              placeholder="MM/DD/YYYY"
-              onFocus={(e) => {
-                const dateInput = document.createElement('input');
-                dateInput.type = 'date';
-                dateInput.style.display = 'none';
-                document.body.appendChild(dateInput);
-                dateInput.click();
-                dateInput.addEventListener('change', (event) => {
-                  setValueCommunicationState(prev => ({
-                    ...prev,
-                    newWeeklyTaskDate: event.target.value
-                  }));
-                  document.body.removeChild(dateInput);
-                });
-                e.preventDefault();
-              }}
-            />
-            <button 
-              className="submit-button"
-              onClick={() => {
-                if (valueCommunicationState.newWeeklyTask && valueCommunicationState.newWeeklyTaskDate) {
-                  handleAddMDRTask(
-                    valueCommunicationState.newWeeklyTask, 
-                    valueCommunicationState.newWeeklyTaskDate
-                  );
-                  setValueCommunicationState(prev => ({
-                    ...prev,
-                    newWeeklyTask: "",
-                    newWeeklyTaskDate: ""
-                  }));
-                } else {
-                  alert("Please fill in both the task description and due date");
-                }
-              }}
-            >
-              Add Weekly Task
-            </button>
           </div>
         </div>
       </div>
