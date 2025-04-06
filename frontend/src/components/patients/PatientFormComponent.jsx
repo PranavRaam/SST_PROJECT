@@ -692,6 +692,18 @@ const PatientFormComponent = ({ onPatientClick }) => {
     );
   }, [patients, searchQuery]);
 
+  // Sort patients - New CPO Docs in ascending order and New Docs in descending order
+  const sortedPatients = useMemo(() => {
+    return [...filteredPatientsBySearch].sort((a, b) => {
+      // First sort by newCpoDocsCreated in ascending order
+      if (a.newCpoDocsCreated !== b.newCpoDocsCreated) {
+        return a.newCpoDocsCreated - b.newCpoDocsCreated;
+      }
+      // If newCpoDocsCreated is equal, sort by newDocs in descending order
+      return b.newDocs - a.newDocs;
+    });
+  }, [filteredPatientsBySearch]);
+
   const [searchTerm, setSearchTerm] = useState({
     physicianName: '',
     pg: '',
@@ -891,7 +903,6 @@ const PatientFormComponent = ({ onPatientClick }) => {
     if (!formData.physicianName.trim()) newErrors.physicianName = 'Required';
     if (!formData.pg.trim()) newErrors.pg = 'Required';
     if (!formData.hhah.trim()) newErrors.hhah = 'Required';
-    if (!formData.patientInsurance.trim()) newErrors.patientInsurance = 'Required';
     if (!formData.patientInEHR.trim()) newErrors.patientInEHR = 'Required';
     
     setErrors(newErrors);
@@ -1172,387 +1183,384 @@ const PatientFormComponent = ({ onPatientClick }) => {
             
             <form onSubmit={editingPatient ? handleEditSubmit : handleSubmit}>
               <div className="form-grid">
-                <div className="form-column">
-                  {/* Mandatory Fields */}
-                  <div className="form-group">
-                    <label>Patient ID <span className="required">*</span></label>
+                {/* Column 1 */}
+                <div className="form-group">
+                  <label>Patient ID <span className="required">*</span></label>
+                  <input
+                    type="text"
+                    name="patientId"
+                    value={editingPatient ? editingPatient.patientId : formData.patientId}
+                    onChange={handleChange}
+                    className={errors.patientId ? 'error' : ''}
+                  />
+                  {errors.patientId && <span className="error-text">{errors.patientId}</span>}
+                </div>
+
+                <div className="form-group">
+                  <label>Contact Number</label>
+                  <input
+                    type="text"
+                    name="contactNumber"
+                    value={editingPatient ? editingPatient.contactNumber : formData.contactNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Last Name <span className="required">*</span></label>
+                  <input
+                    type="text"
+                    name="patientLastName"
+                    value={editingPatient ? editingPatient.patientLastName : formData.patientLastName}
+                    onChange={handleChange}
+                    className={errors.patientLastName ? 'error' : ''}
+                  />
+                  {errors.patientLastName && <span className="error-text">{errors.patientLastName}</span>}
+                </div>
+
+                <div className="form-group">
+                  <label>Patient SOC</label>
+                  <DatePicker
+                    selected={datePickerState.patientSOC}
+                    onChange={(date) => handleDatePickerChange(date, 'patientSOC')}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="MM-DD-YYYY"
+                    className="form-control"
+                    isClearable
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>First Name <span className="required">*</span></label>
+                  <input
+                    type="text"
+                    name="patientFirstName"
+                    value={editingPatient ? editingPatient.patientFirstName : formData.patientFirstName}
+                    onChange={handleChange}
+                    className={errors.patientFirstName ? 'error' : ''}
+                  />
+                  {errors.patientFirstName && <span className="error-text">{errors.patientFirstName}</span>}
+                </div>
+
+                <div className="form-group">
+                  <label>Patient Episode From</label>
+                  <DatePicker
+                    selected={datePickerState.patientEpisodeFrom}
+                    onChange={(date) => handleDatePickerChange(date, 'patientEpisodeFrom')}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="MM-DD-YYYY"
+                    className="form-control"
+                    isClearable
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Middle Name</label>
+                  <input
+                    type="text"
+                    name="patientMiddleName"
+                    value={editingPatient ? editingPatient.patientMiddleName : formData.patientMiddleName}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Patient Episode To</label>
+                  <DatePicker
+                    selected={datePickerState.patientEpisodeTo}
+                    onChange={(date) => handleDatePickerChange(date, 'patientEpisodeTo')}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="MM-DD-YYYY"
+                    className="form-control"
+                    isClearable
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Date of Birth <span className="required">*</span></label>
+                  <DatePicker
+                    selected={datePickerState.patientDOB}
+                    onChange={(date) => handleDatePickerChange(date, 'patientDOB')}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="MM-DD-YYYY"
+                    className={`form-control ${errors.patientDOB ? 'error' : ''}`}
+                    isClearable
+                  />
+                  {errors.patientDOB && <span className="error-text">{errors.patientDOB}</span>}
+                </div>
+
+                {/* Column 2 */}
+                <div className="form-group">
+                  <label>Rendering Practitioner</label>
+                  <div className="searchable-dropdown">
                     <input
                       type="text"
-                      name="patientId"
-                      value={editingPatient ? editingPatient.patientId : formData.patientId}
-                      onChange={handleChange}
-                      className={errors.patientId ? 'error' : ''}
+                      value={editingPatient ? editingPatient.renderingPractitioner : formData.renderingPractitioner}
+                      onChange={(e) => handleSearchChange('renderingPractitioner', e.target.value)}
+                      onFocus={(e) => setSearchTerm(prev => ({ ...prev, renderingPractitioner: e.target.value }))}
+                      placeholder="Search or type practitioner name..."
                     />
-                    {errors.patientId && <span className="error-text">{errors.patientId}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>Last Name <span className="required">*</span></label>
-                    <input
-                      type="text"
-                      name="patientLastName"
-                      value={editingPatient ? editingPatient.patientLastName : formData.patientLastName}
-                      onChange={handleChange}
-                      className={errors.patientLastName ? 'error' : ''}
-                    />
-                    {errors.patientLastName && <span className="error-text">{errors.patientLastName}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>First Name <span className="required">*</span></label>
-                    <input
-                      type="text"
-                      name="patientFirstName"
-                      value={editingPatient ? editingPatient.patientFirstName : formData.patientFirstName}
-                      onChange={handleChange}
-                      className={errors.patientFirstName ? 'error' : ''}
-                    />
-                    {errors.patientFirstName && <span className="error-text">{errors.patientFirstName}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>Middle Name</label>
-                    <input
-                      type="text"
-                      name="patientMiddleName"
-                      value={editingPatient ? editingPatient.patientMiddleName : formData.patientMiddleName}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Date of Birth <span className="required">*</span></label>
-                    <DatePicker
-                      selected={datePickerState.patientDOB}
-                      onChange={(date) => handleDatePickerChange(date, 'patientDOB')}
-                      dateFormat="MM-dd-yyyy"
-                      placeholderText="MM-DD-YYYY"
-                      className={`form-control ${errors.patientDOB ? 'error' : ''}`}
-                      isClearable
-                    />
-                    {errors.patientDOB && <span className="error-text">{errors.patientDOB}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>Physician Name <span className="required">*</span></label>
-                    <div className="searchable-dropdown">
-                      <input
-                        type="text"
-                        value={editingPatient ? editingPatient.physicianName : formData.physicianName}
-                        onChange={(e) => handleSearchChange('physicianName', e.target.value)}
-                        onFocus={(e) => setSearchTerm(prev => ({ ...prev, physicianName: e.target.value }))}
-                        placeholder="Search or type physician name..."
-                        className={errors.physicianName ? 'error' : ''}
-                      />
-                      {searchTerm.physicianName && filteredPhysicianOptions.length > 0 && (
-                        <div className="dropdown-options">
-                          {filteredPhysicianOptions.map(option => (
-                            <div
-                              key={option}
-                              className="dropdown-option"
-                              onClick={() => handleSelectOption('physicianName', option)}
-                            >
-                              {option}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    {errors.physicianName && <span className="error-text">{errors.physicianName}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>PG <span className="required">*</span></label>
-                    <div className="searchable-dropdown">
-                      <input
-                        type="text"
-                        value={editingPatient ? editingPatient.pg : formData.pg}
-                        onChange={(e) => handleSearchChange('pg', e.target.value)}
-                        onFocus={(e) => setSearchTerm(prev => ({ ...prev, pg: e.target.value }))}
-                        placeholder="Search or type PG name..."
-                        className={errors.pg ? 'error' : ''}
-                      />
-                      {searchTerm.pg && filteredPgOptions.length > 0 && (
-                        <div className="dropdown-options">
-                          {filteredPgOptions.map(option => (
-                            <div
-                              key={option}
-                              className="dropdown-option"
-                              onClick={() => handleSelectOption('pg', option)}
-                            >
-                              {option}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    {errors.pg && <span className="error-text">{errors.pg}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>HHAH <span className="required">*</span></label>
-                    <div className="searchable-dropdown">
-                      <input
-                        type="text"
-                        value={editingPatient ? editingPatient.hhah : formData.hhah}
-                        onChange={(e) => handleSearchChange('hhah', e.target.value)}
-                        onFocus={(e) => setSearchTerm(prev => ({ ...prev, hhah: e.target.value }))}
-                        placeholder="Search or type HHAH name..."
-                        className={errors.hhah ? 'error' : ''}
-                      />
-                      {searchTerm.hhah && filteredHhahOptions.length > 0 && (
-                        <div className="dropdown-options">
-                          {filteredHhahOptions.map(option => (
-                            <div
-                              key={option}
-                              className="dropdown-option"
-                              onClick={() => handleSelectOption('hhah', option)}
-                            >
-                              {option}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    {errors.hhah && <span className="error-text">{errors.hhah}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>Patient Insurance <span className="required">*</span></label>
-                    <input
-                      type="text"
-                      name="patientInsurance"
-                      value={editingPatient ? editingPatient.patientInsurance : formData.patientInsurance}
-                      onChange={handleChange}
-                      className={errors.patientInsurance ? 'error' : ''}
-                    />
-                    {errors.patientInsurance && <span className="error-text">{errors.patientInsurance}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label>Patient Present in EHR <span className="required">*</span></label>
-                    <select
-                      name="patientInEHR"
-                      value={editingPatient ? editingPatient.patientInEHR : formData.patientInEHR}
-                      onChange={handleChange}
-                      className={errors.patientInEHR ? 'error' : ''}
-                    >
-                      <option value="">Select</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                    {errors.patientInEHR && <span className="error-text">{errors.patientInEHR}</span>}
+                    {searchTerm.renderingPractitioner && filteredPractitionerOptions.length > 0 && (
+                      <div className="dropdown-options">
+                        {filteredPractitionerOptions.map(option => (
+                          <div
+                            key={option}
+                            className="dropdown-option"
+                            onClick={() => handleSelectOption('renderingPractitioner', option)}
+                          >
+                            {option}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                <div className="form-column">
-                  {/* Optional Fields */}
-                  <div className="form-group">
-                    <label>Contact Number</label>
+                <div className="form-group">
+                  <label>Physician Name <span className="required">*</span></label>
+                  <div className="searchable-dropdown">
                     <input
                       type="text"
-                      name="contactNumber"
-                      value={editingPatient ? editingPatient.contactNumber : formData.contactNumber}
-                      onChange={handleChange}
+                      value={editingPatient ? editingPatient.physicianName : formData.physicianName}
+                      onChange={(e) => handleSearchChange('physicianName', e.target.value)}
+                      onFocus={(e) => setSearchTerm(prev => ({ ...prev, physicianName: e.target.value }))}
+                      placeholder="Search or type physician name..."
+                      className={errors.physicianName ? 'error' : ''}
                     />
+                    {searchTerm.physicianName && filteredPhysicianOptions.length > 0 && (
+                      <div className="dropdown-options">
+                        {filteredPhysicianOptions.map(option => (
+                          <div
+                            key={option}
+                            className="dropdown-option"
+                            onClick={() => handleSelectOption('physicianName', option)}
+                          >
+                            {option}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
+                  {errors.physicianName && <span className="error-text">{errors.physicianName}</span>}
+                </div>
 
-                  <div className="form-group">
-                    <label>Patient SOC</label>
-                    <DatePicker
-                      selected={datePickerState.patientSOC}
-                      onChange={(date) => handleDatePickerChange(date, 'patientSOC')}
-                      dateFormat="MM-dd-yyyy"
-                      placeholderText="MM-DD-YYYY"
-                      className="form-control"
-                      isClearable
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Patient Episode From</label>
-                    <DatePicker
-                      selected={datePickerState.patientEpisodeFrom}
-                      onChange={(date) => handleDatePickerChange(date, 'patientEpisodeFrom')}
-                      dateFormat="MM-dd-yyyy"
-                      placeholderText="MM-DD-YYYY"
-                      className="form-control"
-                      isClearable
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Patient Episode To</label>
-                    <DatePicker
-                      selected={datePickerState.patientEpisodeTo}
-                      onChange={(date) => handleDatePickerChange(date, 'patientEpisodeTo')}
-                      dateFormat="MM-dd-yyyy"
-                      placeholderText="MM-DD-YYYY"
-                      className="form-control"
-                      isClearable
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Rendering Practitioner</label>
-                    <div className="searchable-dropdown">
+                <div className="form-group">
+                  <label>Primary Diagnosis Codes</label>
+                  <div className="code-input-container">
+                    <div className="code-input-row">
                       <input
                         type="text"
-                        value={editingPatient ? editingPatient.renderingPractitioner : formData.renderingPractitioner}
-                        onChange={(e) => handleSearchChange('renderingPractitioner', e.target.value)}
-                        onFocus={(e) => setSearchTerm(prev => ({ ...prev, renderingPractitioner: e.target.value }))}
-                        placeholder="Search or type practitioner name..."
+                        value={newPrimaryCode}
+                        onChange={(e) => setNewPrimaryCode(e.target.value)}
+                        placeholder="Enter ICD code"
                       />
-                      {searchTerm.renderingPractitioner && filteredPractitionerOptions.length > 0 && (
-                        <div className="dropdown-options">
-                          {filteredPractitionerOptions.map(option => (
-                            <div
-                              key={option}
-                              className="dropdown-option"
-                              onClick={() => handleSelectOption('renderingPractitioner', option)}
-                            >
-                              {option}
-                            </div>
-                          ))}
+                      <button
+                        type="button"
+                        className="add-code-button"
+                        onClick={handleAddPrimaryCode}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="code-list">
+                      {editingPatient ? editingPatient.primaryDiagnosisCodes.map((code, index) => (
+                        <div key={index} className="code-item">
+                          <span>{code}</span>
+                          <button
+                            type="button"
+                            className="remove-code-button"
+                            onClick={() => handleRemovePrimaryCode(index)}
+                          >
+                            ×
+                          </button>
                         </div>
-                      )}
+                      )) : formData.primaryDiagnosisCodes.map((code, index) => (
+                        <div key={index} className="code-item">
+                          <span>{code}</span>
+                          <button
+                            type="button"
+                            className="remove-code-button"
+                            onClick={() => handleRemovePrimaryCode(index)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   </div>
+                </div>
 
-                  <div className="form-group">
-                    <label>Primary Diagnosis Codes</label>
-                    <div className="code-input-container">
-                      <div className="code-input-row">
-                        <input
-                          type="text"
-                          value={newPrimaryCode}
-                          onChange={(e) => setNewPrimaryCode(e.target.value)}
-                          placeholder="Enter ICD code"
-                        />
-                        <button
-                          type="button"
-                          className="add-code-button"
-                          onClick={handleAddPrimaryCode}
-                        >
-                          +
-                        </button>
-                      </div>
-                      <div className="code-list">
-                        {editingPatient ? editingPatient.primaryDiagnosisCodes.map((code, index) => (
-                          <div key={index} className="code-item">
-                            <span>{code}</span>
-                            <button
-                              type="button"
-                              className="remove-code-button"
-                              onClick={() => handleRemovePrimaryCode(index)}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        )) : formData.primaryDiagnosisCodes.map((code, index) => (
-                          <div key={index} className="code-item">
-                            <span>{code}</span>
-                            <button
-                              type="button"
-                              className="remove-code-button"
-                              onClick={() => handleRemovePrimaryCode(index)}
-                            >
-                              ×
-                            </button>
+                {/* Column 3 */}
+                <div className="form-group">
+                  <label>PG <span className="required">*</span></label>
+                  <div className="searchable-dropdown">
+                    <input
+                      type="text"
+                      value={editingPatient ? editingPatient.pg : formData.pg}
+                      onChange={(e) => handleSearchChange('pg', e.target.value)}
+                      onFocus={(e) => setSearchTerm(prev => ({ ...prev, pg: e.target.value }))}
+                      placeholder="Search or type PG name..."
+                      className={errors.pg ? 'error' : ''}
+                    />
+                    {searchTerm.pg && filteredPgOptions.length > 0 && (
+                      <div className="dropdown-options">
+                        {filteredPgOptions.map(option => (
+                          <div
+                            key={option}
+                            className="dropdown-option"
+                            onClick={() => handleSelectOption('pg', option)}
+                          >
+                            {option}
                           </div>
                         ))}
                       </div>
-                    </div>
+                    )}
                   </div>
+                  {errors.pg && <span className="error-text">{errors.pg}</span>}
+                </div>
 
-                  <div className="form-group">
-                    <label>Secondary Diagnosis Codes</label>
-                    <div className="code-input-container">
-                      <div className="code-input-row">
-                        <input
-                          type="text"
-                          value={newSecondaryCode}
-                          onChange={(e) => setNewSecondaryCode(e.target.value)}
-                          placeholder="Enter ICD code"
-                        />
-                        <button
-                          type="button"
-                          className="add-code-button"
-                          onClick={handleAddSecondaryCode}
-                        >
-                          +
-                        </button>
-                      </div>
-                      <div className="code-list">
-                        {editingPatient ? editingPatient.secondaryDiagnosisCodes.map((code, index) => (
-                          <div key={index} className="code-item">
-                            <span>{code}</span>
-                            <button
-                              type="button"
-                              className="remove-code-button"
-                              onClick={() => handleRemoveSecondaryCode(index)}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        )) : formData.secondaryDiagnosisCodes.map((code, index) => (
-                          <div key={index} className="code-item">
-                            <span>{code}</span>
-                            <button
-                              type="button"
-                              className="remove-code-button"
-                              onClick={() => handleRemoveSecondaryCode(index)}
-                            >
-                              ×
-                            </button>
+                <div className="form-group">
+                  <label>HHAH <span className="required">*</span></label>
+                  <div className="searchable-dropdown">
+                    <input
+                      type="text"
+                      value={editingPatient ? editingPatient.hhah : formData.hhah}
+                      onChange={(e) => handleSearchChange('hhah', e.target.value)}
+                      onFocus={(e) => setSearchTerm(prev => ({ ...prev, hhah: e.target.value }))}
+                      placeholder="Search or type HHAH name..."
+                      className={errors.hhah ? 'error' : ''}
+                    />
+                    {searchTerm.hhah && filteredHhahOptions.length > 0 && (
+                      <div className="dropdown-options">
+                        {filteredHhahOptions.map(option => (
+                          <div
+                            key={option}
+                            className="dropdown-option"
+                            onClick={() => handleSelectOption('hhah', option)}
+                          >
+                            {option}
                           </div>
                         ))}
                       </div>
+                    )}
+                  </div>
+                  {errors.hhah && <span className="error-text">{errors.hhah}</span>}
+                </div>
+
+                <div className="form-group">
+                  <label>Secondary Diagnosis Codes</label>
+                  <div className="code-input-container">
+                    <div className="code-input-row">
+                      <input
+                        type="text"
+                        value={newSecondaryCode}
+                        onChange={(e) => setNewSecondaryCode(e.target.value)}
+                        placeholder="Enter ICD code"
+                      />
+                      <button
+                        type="button"
+                        className="add-code-button"
+                        onClick={handleAddSecondaryCode}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="code-list">
+                      {editingPatient ? editingPatient.secondaryDiagnosisCodes.map((code, index) => (
+                        <div key={index} className="code-item">
+                          <span>{code}</span>
+                          <button
+                            type="button"
+                            className="remove-code-button"
+                            onClick={() => handleRemoveSecondaryCode(index)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )) : formData.secondaryDiagnosisCodes.map((code, index) => (
+                        <div key={index} className="code-item">
+                          <span>{code}</span>
+                          <button
+                            type="button"
+                            className="remove-code-button"
+                            onClick={() => handleRemoveSecondaryCode(index)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   </div>
+                </div>
 
-                  <div className="form-group">
-                    <label>485 Cert Status</label>
-                    <select
-                      name="certStatus"
-                      value={editingPatient ? editingPatient.certStatus : formData.certStatus}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select Status</option>
-                      <option value="Document not received">Document not received</option>
-                      <option value="Document Prepared">Document Prepared</option>
-                      <option value="Document Signed">Document Signed</option>
-                      <option value="Document Billed">Document Billed</option>
-                    </select>
-                  </div>
+                <div className="form-group">
+                  <label>Patient Insurance</label>
+                  <input
+                    type="text"
+                    name="patientInsurance"
+                    value={editingPatient ? editingPatient.patientInsurance : formData.patientInsurance}
+                    onChange={handleChange}
+                    className={errors.patientInsurance ? 'error' : ''}
+                  />
+                  {errors.patientInsurance && <span className="error-text">{errors.patientInsurance}</span>}
+                </div>
 
-                  <div className="form-group">
-                    <label>485 Recert Status</label>
-                    <select
-                      name="recertStatus"
-                      value={editingPatient ? editingPatient.recertStatus : formData.recertStatus}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select Status</option>
-                      <option value="Document not received">Document not received</option>
-                      <option value="Document Prepared">Document Prepared</option>
-                      <option value="Document Signed">Document Signed</option>
-                      <option value="Document Billed">Document Billed</option>
-                    </select>
-                  </div>
+                <div className="form-group">
+                  <label>485 Cert Status</label>
+                  <select
+                    name="certStatus"
+                    value={editingPatient ? editingPatient.certStatus : formData.certStatus}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="Document not received">Document not received</option>
+                    <option value="Document Prepared">Document Prepared</option>
+                    <option value="Document Signed">Document Signed</option>
+                    <option value="Document Billed">Document Billed</option>
+                  </select>
+                </div>
 
-                  <div className="form-group">
-                    <label>F2F Eligibility</label>
-                    <select
-                      name="f2fEligibility"
-                      value={editingPatient ? editingPatient.f2fEligibility : formData.f2fEligibility}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
+                <div className="form-group">
+                  <label>Patient Present in EHR <span className="required">*</span></label>
+                  <select
+                    name="patientInEHR"
+                    value={editingPatient ? editingPatient.patientInEHR : formData.patientInEHR}
+                    onChange={handleChange}
+                    className={errors.patientInEHR ? 'error' : ''}
+                  >
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                  {errors.patientInEHR && <span className="error-text">{errors.patientInEHR}</span>}
+                </div>
+
+                <div className="form-group">
+                  <label>485 Recert Status</label>
+                  <select
+                    name="recertStatus"
+                    value={editingPatient ? editingPatient.recertStatus : formData.recertStatus}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="Document not received">Document not received</option>
+                    <option value="Document Prepared">Document Prepared</option>
+                    <option value="Document Signed">Document Signed</option>
+                    <option value="Document Billed">Document Billed</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>F2F Eligibility</label>
+                  <select
+                    name="f2fEligibility"
+                    value={editingPatient ? editingPatient.f2fEligibility : formData.f2fEligibility}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
                 </div>
               </div>
 
@@ -1568,7 +1576,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
               </div>
 
               {editingPatient && (
-                <>
+                <div className="form-grid">
                   <div className="form-group">
                     <label>CPO Mins Captured</label>
                     <input
@@ -1604,7 +1612,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                       })}
                     />
                   </div>
-                </>
+                </div>
               )}
 
               <div className="form-actions">
@@ -1705,7 +1713,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
               </tr>
             </thead>
             <tbody>
-              {filteredPatientsBySearch.map(patient => (
+              {sortedPatients.map(patient => (
                 <tr key={patient.id}>
                   <td 
                     className="patient-name-cell"

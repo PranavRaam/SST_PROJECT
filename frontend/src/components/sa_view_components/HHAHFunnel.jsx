@@ -20,39 +20,61 @@ const hhahNames = [
   "HHAH Lambda", "HHAH Mu", "HHAH Nu", "HHAH Xi", "HHAH Omicron"
 ];
 
-// Custom shape renderer for the trapezoid
-const renderCustomizedShape = (props) => {
-  const { x, y, width, height, fill } = props;
-  
-  return (
-    <rect
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      fill={fill}
-      rx={2}
-      ry={2}
-      className="custom-funnel-block"
-    />
-  );
-};
-
 const HHAHFunnel = () => {
   const { hhahFunnelData, hhahAssignments, moveHhahToStage } = useContext(FunnelDataContext) || {};
   const [expandedStage, setExpandedStage] = useState(null);
   const [showMoveOptions, setShowMoveOptions] = useState(false);
   const [selectedHHAH, setSelectedHHAH] = useState(null);
 
-  if (!hhahFunnelData || !hhahAssignments) {
-    return <div className="hhah-funnel-container">Loading HHAH funnel data...</div>;
-  }
-
-  // Transform the funnel data to show HHAH counts instead of patient values
-  const transformedFunnelData = hhahFunnelData.map(stage => ({
+  // Always use initialData for display, merge with context data if available
+  const transformedFunnelData = initialData.map(stage => ({
     ...stage,
-    value: hhahAssignments[stage.name]?.length || 0
+    value: hhahAssignments?.[stage.name]?.length || stage.value
   }));
+
+  const renderCustomizedShape = (props) => {
+    const { x, y, width, height, payload } = props;
+    const widthRatio = 0.8; // Visual width ratio
+    const minWidth = width * 0.4; // Minimum width for the bottom of visual shape
+    
+    // Calculate visual shape dimensions
+    const visualTopWidth = width * widthRatio;
+    const visualBottomWidth = Math.max(minWidth, width * 0.6);
+    const xOffsetTop = (width - visualTopWidth) / 2;
+    const xOffsetBottom = (width - visualBottomWidth) / 2;
+
+    return (
+      <g>
+        {/* Invisible clickable rectangle that covers a wider area */}
+        <rect
+          x={x + width * 0.1} // 10% margin from left
+          y={y}
+          width={width * 0.8} // 80% of total width
+          height={height}
+          fill="transparent"
+          className="clickable-area"
+          style={{ cursor: 'pointer' }}
+        />
+        {/* Visual funnel shape */}
+        <path
+          d={`
+            M ${x + xOffsetTop},${y}
+            L ${x + xOffsetTop + visualTopWidth},${y}
+            L ${x + xOffsetBottom + visualBottomWidth},${y + height}
+            L ${x + xOffsetBottom},${y + height}
+            Z
+          `}
+          fill={payload.fill}
+          className="custom-funnel-block"
+          style={{
+            filter: 'drop-shadow(0px 2px 3px rgba(0,0,0,0.2))',
+            transition: 'all 0.3s ease',
+            pointerEvents: 'none' // Ensure the path doesn't interfere with clicks
+          }}
+        />
+      </g>
+    );
+  };
 
   const handleFunnelClick = (entry) => {
     if (entry.value === 0) return;
@@ -82,7 +104,7 @@ const HHAHFunnel = () => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const stageName = payload[0].payload.name;
-      const hhahCount = hhahAssignments[stageName]?.length || 0;
+      const hhahCount = hhahAssignments?.[stageName]?.length || 0;
       
       return (
         <div className="custom-tooltip">
@@ -97,7 +119,6 @@ const HHAHFunnel = () => {
   return (
     <div className="hhah-funnel-container">
       <h3 className="funnel-title">HHAH Funnel</h3>
-
       {expandedStage ? (
         <div className="expanded-list">
           <div className="expanded-header">
@@ -106,7 +127,7 @@ const HHAHFunnel = () => {
               ← Back to Funnel
             </button>
           </div>
-          {hhahAssignments[expandedStage]?.map((hhah, index) => (
+          {(hhahAssignments?.[expandedStage] || hhahNames.slice(0, 5)).map((hhah, index) => (
             <div key={index} className="hhah-entry">
               {hhah}
               {!showMoveOptions && (
@@ -123,6 +144,7 @@ const HHAHFunnel = () => {
                   <button
                     key={index}
                     onClick={() => handleMoveToStage(stage.name)}
+                    className="move-option-button"
                   >
                     {stage.name}
                   </button>
@@ -132,24 +154,24 @@ const HHAHFunnel = () => {
         </div>
       ) : (
         <div className="funnel-chart-wrapper">
-          <FunnelChart width={600} height={500}>
+          <FunnelChart width={400} height={600}>
             <Tooltip content={<CustomTooltip />} />
             <Funnel
               dataKey="value"
               data={transformedFunnelData}
-              isAnimationActive={false}
+              isAnimationActive={true}
               onClick={handleFunnelClick}
-              width={520}
+              width={300}
               shape={renderCustomizedShape}
-              trapezoidHeight={45}
-              trapezoidsSpace={15}
+              trapezoidHeight={50}
+              trapezoidsSpace={5}
             >
               <LabelList 
                 dataKey="value" 
-                position="center" 
+                position="center"
                 fill="#fff" 
                 stroke="none" 
-                fontSize={20} 
+                fontSize={16} 
                 fontWeight="bold"
               />
             </Funnel>

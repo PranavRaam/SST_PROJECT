@@ -399,7 +399,7 @@ const generateEpisodeData = () => {
     {
       id: 1,
       startDate: '2023-04-01',
-      socDate: '2023-04-03',
+      socDate: '2023-03-28',  // SOC date should be a few days before the start date
       endDate: '2023-06-30',
       status: 'complete',
       diagnosis: 'Hypertension',
@@ -410,7 +410,7 @@ const generateEpisodeData = () => {
     {
       id: 2,
       startDate: '2023-07-01',
-      socDate: '2023-07-05',
+      socDate: '2023-06-28',  // SOC date should be a few days before the start date
       endDate: '2023-09-30',
       status: 'active',
       diagnosis: 'Type 2 Diabetes',
@@ -440,6 +440,7 @@ const PatientDetailView = ({ patient, onBack }) => {
   const [dateRange, setDateRange] = useState({ from: '', to: '' });
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   
   // Create refs
   const fileInputRef = useRef(null);
@@ -454,7 +455,7 @@ const PatientDetailView = ({ patient, onBack }) => {
     status: patient?.status || 'active',
     phone: patient?.contactNumber || '',
     email: patient?.email || '',
-    address: patient?.address || '',
+    address: patient?.address || generateDummyAddress(),
     insurance: patient?.patientInsurance || '',
     insuranceId: patient?.insuranceId || '',
     pg: patient?.pg || '',
@@ -677,33 +678,39 @@ const PatientDetailView = ({ patient, onBack }) => {
   const uploadFiles = useCallback(async (files) => {
     if (!files || files.length === 0) return;
     
+    // Show uploading notification
+    showNotification('info', 'Uploading Files', 'Your files are being uploaded...');
+    
     const newFiles = Array.from(files).map(file => ({
-      id: Math.random().toString(36).substr(2, 9),
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      uploadDate: new Date().toISOString(),
-      status: 'uploading'
+      id: `DOC-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
+      type: '',
+      status: 'New',
+      receivedDate: new Date().toISOString().split('T')[0],
+      fileName: file.name,
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+      uploadedBy: 'Current User',
+      file: file // Store the actual file for potential preview
     }));
-
-    setUploadedFiles(prev => [...prev, ...newFiles]);
 
     // Simulate file upload
     for (const file of newFiles) {
       try {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        setUploadedFiles(prev => 
-          prev.map(f => f.id === file.id ? { ...f, status: 'completed' } : f)
-        );
-        showNotification('success', 'File uploaded successfully');
+        
+        // Add the file to the newPreparedDocs list
+        setNewPreparedDocs(prev => [...prev, file]);
+        
+        showNotification('success', 'File Uploaded', `${file.fileName} uploaded successfully`);
       } catch (error) {
-        setUploadedFiles(prev => 
-          prev.map(f => f.id === file.id ? { ...f, status: 'error' } : f)
-        );
-        showNotification('error', 'Failed to upload file');
+        showNotification('error', 'Upload Failed', `Failed to upload ${file.fileName}`);
       }
     }
-  }, []);
+    
+    // Clear file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [showNotification]);
 
   const handleFileInputChange = useCallback((event) => {
     const files = event.target.files;
@@ -1061,12 +1068,29 @@ const PatientDetailView = ({ patient, onBack }) => {
 
   // Function to open document viewer
   const openDocumentViewer = (doc) => {
-    setSelectedDocument(doc);
+    // Create a URL for the file preview if the actual file is available
+    let enhancedDoc = { ...doc };
+    
+    if (doc.file) {
+      // If we have the actual file object (from an upload), create a URL for preview
+      enhancedDoc.fileUrl = URL.createObjectURL(doc.file);
+      enhancedDoc.hasFilePreview = true;
+    } else {
+      // For demo files without actual file content
+      enhancedDoc.hasFilePreview = false;
+    }
+    
+    setSelectedDocument(enhancedDoc);
     setViewerOpen(true);
   };
 
   // Function to close document viewer
   const closeDocumentViewer = () => {
+    // Clean up any object URLs created for previews
+    if (selectedDocument && selectedDocument.fileUrl) {
+      URL.revokeObjectURL(selectedDocument.fileUrl);
+    }
+    
     setViewerOpen(false);
     setSelectedDocument(null);
   };
@@ -1736,39 +1760,58 @@ Total documents: ${documents.length}
   const handleDownloadDocument = useCallback((doc) => {
     showNotification('info', 'Downloading Document', `Preparing ${doc.fileName} for download...`);
     
-    // Simulate file download delay
+    // If we have the actual file object from an upload, download it directly
+    if (doc.file) {
+      const url = URL.createObjectURL(doc.file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = doc.fileName;
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showNotification('success', 'Download Complete', `${doc.fileName} has been downloaded.`);
+      }, 100);
+      return;
+    }
+    
+    // Simulate file download delay for demo files
     setTimeout(() => {
-      // In a real app, this would use a Blob URL or a direct link to the document
-      // Create a mock download process
-      try {
-        // Create dummy content based on document type
-        const content = generateMockDocumentContent(doc);
-        
-        // Create a Blob with the content
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        
-        // Create a temporary anchor element for download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = doc.fileName || `document-${doc.id}.txt`;
-        document.body.appendChild(a);
-        
-        // Trigger click to download
-        a.click();
-        
-        // Clean up
-        document.body.removeChild(a);
+      // Create sample content based on document type
+      const docContent = generateMockDocumentContent(doc);
+      
+      // Create a Blob with the content
+      let mimeType = 'text/plain';
+      if (doc.fileName.endsWith('.pdf')) {
+        mimeType = 'application/pdf';
+      } else if (doc.fileName.endsWith('.docx')) {
+        mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      }
+      
+      const blob = new Blob([docContent], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      
+      // Create a temporary download link
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = doc.fileName;
+      document.body.appendChild(link);
+      
+      // Click the link to trigger download
+      link.click();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(link);
         URL.revokeObjectURL(url);
         
-        // Show success notification
-        showNotification('success', 'Download Complete', `${doc.fileName} downloaded successfully`);
-      } catch (error) {
-        console.error('Error downloading document:', error);
-        showNotification('error', 'Download Failed', 'There was an error preparing your document for download');
-      }
+        showNotification('success', 'Download Complete', `${doc.fileName} has been downloaded.`);
+      }, 100);
     }, 1500);
-  }, [showNotification, generateMockDocumentContent, patientInfo]);
+  }, [showNotification]);
 
   // Add this function to handle signed document uploads
   const handleSignedDocumentUpload = (e) => {
@@ -2061,10 +2104,7 @@ Total documents: ${documents.length}
                   </button>
                 </div>
               ) : (
-                <button className="action-button edit" onClick={() => setIsEditing(true)}>
-                  <FaEdit className="action-icon" />
-                  Edit Patient Info
-                </button>
+                <></>
               )}
             </div>
           </div>
@@ -2294,6 +2334,42 @@ Total documents: ${documents.length}
                 
                 <div className="info-item">
                   <label>
+                    <FaUserMd className="field-icon" />
+                    Physician:
+                  </label>
+                  {isEditing ? (
+                    <input 
+                      type="text" 
+                      value={patientInfo.primaryPhysician} 
+                      onChange={(e) => handleInfoChange('primaryPhysician', e.target.value)}
+                      className="info-input"
+                      placeholder="Enter physician name"
+                    />
+                  ) : (
+                    <span>{patientInfo.primaryPhysician}</span>
+                  )}
+                </div>
+                
+                <div className="info-item">
+                  <label>
+                    <FaHospital className="field-icon" />
+                    HHAH:
+                  </label>
+                  {isEditing ? (
+                    <input 
+                      type="text" 
+                      value={patientInfo.hhah} 
+                      onChange={(e) => handleInfoChange('hhah', e.target.value)}
+                      className="info-input"
+                      placeholder="Enter HHAH"
+                    />
+                  ) : (
+                    <span>{patientInfo.hhah}</span>
+                  )}
+                </div>
+                
+                <div className="info-item">
+                  <label>
                     <FaClock className="field-icon" />
                     CPO Minutes:
                   </label>
@@ -2469,7 +2545,7 @@ Total documents: ${documents.length}
                           <div className="episode-info-grid">
                             <div className="episode-info-item">
                               <label>Duration:</label>
-                              <span>{calculateDuration(episode.startDate, episode.endDate)} days</span>
+                              <span>{calculateDuration(episode.startDate, episode.endDate)}</span>
                       </div>
                             <div className="episode-info-item">
                               <label>Primary Diagnosis:</label>
@@ -2655,17 +2731,17 @@ Total documents: ${documents.length}
                                   title="View Document"
                                   onClick={() => openDocumentViewer(doc)}
                                 >
-                                <FaEye className="action-icon" />
+                                  <span className="material-icons">visibility</span>
                                 </button>
                                 <button 
                                   className="document-action-button"
                                   title="Download Document"
                                   onClick={() => handleDownloadDocument(doc)}
                                 >
-                                  <FaDownload className="action-icon" />
-                              </button>
+                                  <span className="material-icons">download</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
                             <div className="document-date">Signed on: {formatDate(doc.signedDate)}</div>
                             <div className="document-meta">
                               <span className="document-id">{doc.id}</span>
@@ -2682,7 +2758,24 @@ Total documents: ${documents.length}
                 </div>
                 
                   <div className="document-status-container">
-                    <h5>New & Prepared Documents</h5>
+                    <h5>
+                      New & Prepared Documents
+                      <button 
+                        className="action-button primary upload-button"
+                        onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                        style={{ marginLeft: '1rem', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                      >
+                        <span className="material-icons" style={{ marginRight: '0.5rem', fontSize: '1.1rem' }}>upload_file</span>
+                        Upload Documents
+                      </button>
+                      <input 
+                        type="file" 
+                        ref={fileInputRef}
+                        className="hidden-file-input"
+                        onChange={handleFileInputChange}
+                        multiple
+                      />
+                    </h5>
                     {newPreparedDocs.length > 0 ? (
                       newPreparedDocs.map((doc, index) => (
                         <div key={index} className="document-status-item unsigned">
@@ -2707,21 +2800,21 @@ Total documents: ${documents.length}
                                   title="View Document"
                                   onClick={() => openDocumentViewer(doc)}
                                 >
-                                <FaEye className="action-icon" />
+                                  <span className="material-icons">visibility</span>
                                 </button>
                                 <button 
                                   className="document-action-button"
                                   title="Download Document"
                                   onClick={() => handleDownloadDocument(doc)}
                                 >
-                                  <FaDownload className="action-icon" />
+                                  <span className="material-icons">download</span>
                                 </button>
                                 <button 
                                   className="document-action-button"
                                   title="Sign Document"
                                   onClick={() => handleSignDocument(doc.id)}
                                 >
-                                  <FaSignature className="action-icon" />
+                                  <span className="material-icons">edit</span>
                                 </button>
                                 <button 
                                   className="document-action-button"
@@ -2732,10 +2825,10 @@ Total documents: ${documents.length}
                                     }
                                   }}
                                 >
-                                  <FaTrash className="action-icon" />
-                              </button>
+                                  <span className="material-icons">delete</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
                             <div className="document-date">Received on: {formatDate(doc.receivedDate)}</div>
                             <div className="document-meta">
                               <span className="document-status">{doc.status}</span>
@@ -2792,23 +2885,6 @@ Total documents: ${documents.length}
                   </span>
                   Filters {fileTypes.length > 0 || dateRange.from ? `(${fileTypes.length + (dateRange.from ? 1 : 0)})` : ''}
                 </button>
-                
-                <button 
-                  className="action-button primary upload-button"
-                  onClick={() => fileInputRef.current && fileInputRef.current.click()}
-                >
-                  <span className="icon-wrapper">
-                    <FaFileUpload className="action-icon" />
-                  </span>
-                  Upload Documents
-                </button>
-                <input 
-                  type="file" 
-                  ref={fileInputRef}
-                  className="hidden-file-input"
-                  onChange={handleFileInputChange}
-                  multiple
-                />
               </div>
             </div>
             
@@ -2998,113 +3074,131 @@ Total documents: ${documents.length}
             
             <div className="document-table-container">
               {activeDocumentTab === 'newPrepared' ? (
-                filteredNewPreparedDocs.length === 0 ? (
-                  <div className="empty-state">
-                    <FaFileAlt className="empty-icon" />
-                    <h4>No Documents Found</h4>
-                    <p>There are no new or prepared documents matching your current filters.</p>
+                <>
+                  <div className="upload-section">
                     <button 
-                      className="action-button secondary"
-                      onClick={resetFilters}
+                      className="action-button primary upload-button"
+                      onClick={() => fileInputRef.current && fileInputRef.current.click()}
                     >
-                      Reset Filters
+                      <span className="material-icons" style={{ marginRight: '0.5rem', fontSize: '1.1rem' }}>upload_file</span>
+                      Upload Documents
                     </button>
+                    <input 
+                      type="file" 
+                      ref={fileInputRef}
+                      className="hidden-file-input"
+                      onChange={handleFileInputChange}
+                      multiple
+                    />
                   </div>
-                ) : (
-                  <table className="document-table">
-                    <thead>
-                      <tr>
-                        <th>Document Type</th>
-                        <th>Document ID</th>
-                        <th>File Name</th>
-                        <th>Date Received</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredNewPreparedDocs.map(doc => (
-                        <tr key={doc.id} className={`status-${doc.status.toLowerCase()}`}>
-                          <td>
-                            <div className="select-wrapper">
-                              <FaFileAlt className="select-icon" />
-                              <select 
-                                value={doc.type} 
-                                onChange={(e) => updateDocType(doc.id, e.target.value)}
-                                className="doc-type-select"
-                              >
-                                <option value="">Select Type</option>
-                                {documentTypes.map(type => (
-                                  <option key={type} value={type}>{type}</option>
-                                ))}
-                              </select>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="cell-with-icon">
-                              <DocIdInput docId={doc.id} onUpdate={updateDocId} />
-                            </div>
-                          </td>
-                          <td>
-                            <div className="cell-with-icon">
-                              {getFileIconByName(doc.fileName)}
-                              <span 
-                                className="file-name" 
-                                onClick={() => openDocumentViewer(doc)} 
-                                style={{ cursor: 'pointer' }}
-                              >
-                                {doc.fileName || 'Document File'}
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="cell-with-icon">
-                              <FaCalendar className="cell-icon" />
-                              {formatDate(doc.receivedDate)}
-                            </div>
-                          </td>
-                          <td>
-                            <button 
-                              className={`status-toggle-button ${doc.status.toLowerCase()}`}
-                              onClick={() => toggleDocPrepared(doc.id)}
-                              title={doc.status === 'New' ? 'Mark as Prepared' : 'Mark as New'}
-                            >
-                              {doc.status === 'New' ? (
-                                <>
-                                  <FaCheckCircle className="toggle-icon" />
-                                  New
-                                </>
-                              ) : (
-                                <>
-                                  <FaClipboardCheck className="toggle-icon" />
-                                  Prepared
-                                </>
-                              )}
-                            </button>
-                          </td>
-                          <td>
-                            <div className="actions-cell">
-                              <button 
-                                className="action-icon-button"
-                                title="View Document"
-                                onClick={() => openDocumentViewer(doc)}
-                              >
-                                <FaEye />
-                              </button>
-                              <button 
-                                className="action-icon-button" 
-                                title="Download Document"
-                                onClick={() => handleDownloadDocument(doc)}
-                              >
-                                <FaDownload />
-                              </button>
-                            </div>
-                          </td>
+                  {filteredNewPreparedDocs.length === 0 ? (
+                    <div className="empty-state">
+                      <FaFileAlt className="empty-icon" />
+                      <h4>No Documents Found</h4>
+                      <p>There are no new or prepared documents matching your current filters.</p>
+                      <button 
+                        className="action-button secondary"
+                        onClick={resetFilters}
+                      >
+                        Reset Filters
+                      </button>
+                    </div>
+                  ) : (
+                    <table className="document-table">
+                      <thead>
+                        <tr>
+                          <th>Document Type</th>
+                          <th>Document ID</th>
+                          <th>File Name</th>
+                          <th>Date Received</th>
+                          <th>Status</th>
+                          <th>Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )
+                      </thead>
+                      <tbody>
+                        {filteredNewPreparedDocs.map(doc => (
+                          <tr key={doc.id} className={`status-${doc.status.toLowerCase()}`}>
+                            <td>
+                              <div className="select-wrapper">
+                                <FaFileAlt className="select-icon" />
+                                <select 
+                                  value={doc.type} 
+                                  onChange={(e) => updateDocType(doc.id, e.target.value)}
+                                  className="doc-type-select"
+                                >
+                                  <option value="">Select Type</option>
+                                  {documentTypes.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                  ))}
+                                </select>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="cell-with-icon">
+                                <DocIdInput docId={doc.id} onUpdate={updateDocId} />
+                              </div>
+                            </td>
+                            <td>
+                              <div className="cell-with-icon">
+                                {getFileIconByName(doc.fileName)}
+                                <span 
+                                  className="file-name" 
+                                  onClick={() => openDocumentViewer(doc)} 
+                                  style={{ cursor: 'pointer' }}
+                                >
+                                  {doc.fileName || 'Document File'}
+                                </span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="cell-with-icon">
+                                <FaCalendar className="cell-icon" />
+                                {formatDate(doc.receivedDate)}
+                              </div>
+                            </td>
+                            <td>
+                              <button 
+                                className={`status-toggle-button ${doc.status.toLowerCase()}`}
+                                onClick={() => toggleDocPrepared(doc.id)}
+                                title={doc.status === 'New' ? 'Mark as Prepared' : 'Mark as New'}
+                              >
+                                {doc.status === 'New' ? (
+                                  <>
+                                    <FaCheckCircle className="toggle-icon" />
+                                    New
+                                  </>
+                                ) : (
+                                  <>
+                                    <FaClipboardCheck className="toggle-icon" />
+                                    Prepared
+                                  </>
+                                )}
+                              </button>
+                            </td>
+                            <td>
+                              <div className="actions-cell">
+                                <button 
+                                  className="action-icon-button"
+                                  title="View Document"
+                                  onClick={() => openDocumentViewer(doc)}
+                                >
+                                  <FaEye />
+                                </button>
+                                <button 
+                                  className="action-icon-button" 
+                                  title="Download Document"
+                                  onClick={() => handleDownloadDocument(doc)}
+                                >
+                                  <FaDownload />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </>
               ) : (
                 filteredSignedDocs.length === 0 ? (
                   <div className="empty-state">
@@ -3525,7 +3619,46 @@ Total documents: ${documents.length}
               </div>
             </div>
             <div className="document-viewer-content">
-              {selectedDocument.fileName && selectedDocument.fileName.endsWith('pdf') ? (
+              {selectedDocument.hasFilePreview && selectedDocument.fileUrl ? (
+                // Real file preview for uploaded files
+                <div className="real-file-preview">
+                  {selectedDocument.fileName.match(/\.(jpg|jpeg|png|gif)$/i) ? (
+                    // Image preview
+                    <img 
+                      src={selectedDocument.fileUrl} 
+                      alt={selectedDocument.fileName} 
+                      className="image-preview" 
+                    />
+                  ) : selectedDocument.fileName.match(/\.(pdf)$/i) ? (
+                    // PDF preview - iframe for PDFs
+                    <iframe 
+                      src={selectedDocument.fileUrl} 
+                      title={selectedDocument.fileName}
+                      className="pdf-iframe-preview"
+                    />
+                  ) : (
+                    // Generic preview with download link for other file types
+                    <div className="generic-file-preview">
+                      <div className="preview-icon">
+                        <FaFile className="large-file-icon" />
+                      </div>
+                      <div className="preview-info">
+                        <h3>{selectedDocument.fileName}</h3>
+                        <p>File type: {selectedDocument.fileName.split('.').pop().toUpperCase()}</p>
+                        <p>Size: {selectedDocument.size}</p>
+                        <a 
+                          href={selectedDocument.fileUrl} 
+                          download={selectedDocument.fileName}
+                          className="download-link"
+                        >
+                          <FaDownload /> Download File
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : selectedDocument.fileName && selectedDocument.fileName.endsWith('pdf') ? (
+                // Mock PDF preview for demo files
                 <div className="pdf-preview">
                   <div className="pdf-page">
                     <div className="pdf-header">
@@ -3857,18 +3990,19 @@ Total documents: ${documents.length}
 };
 
 // Add these utility functions
-function calculateDuration(startDate, endDate) {
-  if (!startDate || !endDate) return 0;
+const calculateDuration = (startDate, endDate) => {
+  if (!startDate || !endDate) return 'Duration not available';
   
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  
-  // Calculate the difference in days
-  const diffTime = Math.abs(end - start);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-  return diffDays;
-}
+  try {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const durationMs = end - start;
+    const days = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+    return `${days} days`;
+  } catch (error) {
+    return 'Invalid date format';
+  }
+};
 
 function generateMonthlyCPOData() {
   // Generate sample data for monthly CPO minutes
@@ -3894,5 +4028,17 @@ function generateMonthlyCPOData() {
   
   return months;
 }
+
+// Generate a random dummy address
+const generateDummyAddress = () => {
+  const streetNumbers = [123, 456, 789, 1024, 2048, 555, 777, 999, 1111, 8888];
+  const streetNames = ['Main St', 'Oak Avenue', 'Maple Drive', 'Washington Blvd', 'Park Lane', 'Cedar Road', 'Pine Street', 'Elm Court', 'Highland Ave', 'Sunset Drive'];
+  const cities = ['Springfield', 'Riverside', 'Fairview', 'Georgetown', 'Franklin', 'Greenville', 'Bristol', 'Clinton', 'Madison', 'Salem'];
+  const states = ['CA', 'NY', 'TX', 'FL', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'];
+  const zipCodes = ['90210', '10001', '75001', '33101', '60601', '19101', '44101', '30301', '27601', '48201'];
+  
+  const randomIndex = Math.floor(Math.random() * 10);
+  return `${streetNumbers[randomIndex]} ${streetNames[randomIndex]}, ${cities[randomIndex]}, ${states[randomIndex]} ${zipCodes[randomIndex]}`;
+};
 
 export default React.memo(PatientDetailView); 

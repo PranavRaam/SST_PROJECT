@@ -95,11 +95,11 @@
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 600px;
-  max-width: 90%;
+  width: 85%;
+  max-width: 1000px;
   position: relative;
   z-index: 1001;
   max-height: 90vh;
@@ -224,8 +224,17 @@
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* For specialized fields that might need more space */
+.form-grid .full-width {
+  grid-column: span 3;
+}
+
+.form-grid .double-width {
+  grid-column: span 2;
 }
 
 .form-group input,

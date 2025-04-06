@@ -2,9 +2,11 @@ import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import "../sa_view_css/PieChart.css"; // Importing CSS
 
+// Based on average patient counts from the regions
+const totalPatients = 165750; // Sum of all regions' patients from regionStatistics
 const data = [
-  { name: "Remaining Patients", value: 90, color: "#e0e6ed" },
-  { name: "Patients Acquired", value: 10, color: "#2c3e50" }
+  { name: "Remaining Patients", value: 82, exactCount: 135915, color: "#e0e6ed" },
+  { name: "Patients Acquired", value: 18, exactCount: 29835, color: "#2c3e50" }
 ];
 
 const CustomPieChart = () => {
@@ -20,7 +22,7 @@ const CustomPieChart = () => {
       return (
         <div className="custom-tooltip" style={style}>
           <p>{payload[0].name}</p>
-          <p className="tooltip-value">{payload[0].value}%</p>
+          <p className="tooltip-value">{payload[0].value}% ({payload[0].payload.exactCount.toLocaleString()})</p>
         </div>
       );
     }
@@ -57,7 +59,11 @@ const CustomPieChart = () => {
         <Legend 
           verticalAlign="bottom" 
           height={36}
-          formatter={(value) => <span className="legend-text">{value}</span>}
+          formatter={(value, entry) => (
+            <span className="legend-text">
+              {value} ({entry.payload.value}% - {entry.payload.exactCount.toLocaleString()})
+            </span>
+          )}
         />
       </PieChart>
     </div>

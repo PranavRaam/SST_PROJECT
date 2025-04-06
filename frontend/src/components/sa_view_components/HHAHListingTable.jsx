@@ -19,7 +19,7 @@ const HHAHListingTable = () => {
             <th>HHAH Name</th>
             <th>Total Patients</th>
             <th>Unbilled Episodes</th>
-            <th>Active/Reactive Outcomes</th>
+            <th>Active Reactive Outcomes</th>
           </tr>
         </thead>
         <tbody>
