@@ -1998,4 +1998,39 @@
 
 .add-rapport-btn:hover {
   background-color: #4338ca;
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.filter-button:hover {
+  background-color: #f3f4f6;
+  border-color: #4F46E5;
+  color: #4F46E5;
+}
+
+.filter-button.active {
+  background-color: #4F46E5;
+  color: white;
+  border-color: #4F46E5;
+}
+
+.filter-button.active:hover {
+  background-color: #4338ca;
+}
+
+.filter-button svg {
+  flex-shrink: 0;
 } 

@@ -100,7 +100,13 @@ const ServicesTable = ({ data, onSort }) => {
               <td>{row.dob}</td>
               <td>{row.soc}</td>
               <td>{row.fromToDate}</td>
-              <td>{row.is485Signed ? '✓' : '✗'}</td>
+              <td>
+                <button 
+                  className={`status-toggle ${row.is485Signed ? 'signed' : 'unsigned'}`}
+                >
+                  {row.is485Signed ? '✓' : '✗'}
+                </button>
+              </td>
               <td>{row.docsToBeSignedCount}</td>
               <td className={row.daysLeftForBilling <= 7 ? 'urgent' : ''}>{row.daysLeftForBilling}</td>
               <td>{row.pg}</td>

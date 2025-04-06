@@ -11,11 +11,24 @@ const Patients = ({ data, setData }) => {
   const [newPatient, setNewPatient] = useState({
     name: '',
     socDate: '',
+    episodeFrom: '',
+    episodeTo: '',
     billed: false
   });
 
+  // Add date formatting function
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    });
+  };
+
   const handleAddPatient = () => {
-    if (!newPatient.name || !newPatient.socDate) {
+    if (!newPatient.name || !newPatient.socDate || !newPatient.episodeFrom || !newPatient.episodeTo) {
       alert('Please fill in all required fields');
       return;
     }
@@ -32,6 +45,8 @@ const Patients = ({ data, setData }) => {
     setNewPatient({
       name: '',
       socDate: '',
+      episodeFrom: '',
+      episodeTo: '',
       billed: false
     });
     setShowAddForm(false);
@@ -123,6 +138,24 @@ const Patients = ({ data, setData }) => {
             onChange={handleInputChange}
           />
         </div>
+        <div className="form-group">
+          <label>Episode From:</label>
+          <input
+            type="date"
+            name="episodeFrom"
+            value={patient.episodeFrom}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Episode To:</label>
+          <input
+            type="date"
+            name="episodeTo"
+            value={patient.episodeTo}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className="form-group checkbox">
           <label>
             <input
@@ -189,32 +222,19 @@ const Patients = ({ data, setData }) => {
             <tr>
               <th>Name</th>
               <th>SOC Date</th>
+              <th>Episode From</th>
+              <th>Episode To</th>
               <th>Billed</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredPatients.map(patient => (
               <tr key={patient.id}>
                 <td>{patient.name}</td>
-                <td>{patient.socDate}</td>
+                <td>{formatDate(patient.socDate)}</td>
+                <td>{formatDate(patient.episodeFrom)}</td>
+                <td>{formatDate(patient.episodeTo)}</td>
                 <td>{patient.billed ? 'Yes' : 'No'}</td>
-                <td>
-                  <div className="patient-actions">
-                    <button 
-                      className="edit-button"
-                      onClick={() => handleEditPatient(patient)}
-                    >
-                      Edit
-                    </button>
-                    <button 
-                      className="delete-button"
-                      onClick={() => handleDeletePatient(patient.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
               </tr>
             ))}
           </tbody>

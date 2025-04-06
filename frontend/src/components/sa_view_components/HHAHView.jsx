@@ -72,24 +72,32 @@ const HHAHView = () => {
         id: 1,
         name: "John Smith",
         socDate: "2024-03-01",
+        episodeFrom: "2024-03-05",
+        episodeTo: "2024-04-05",
         billed: true
       },
       {
         id: 2,
         name: "Jane Doe",
         socDate: "2024-03-05",
+        episodeFrom: "2024-03-10",
+        episodeTo: "2024-05-10",
         billed: false
       },
       {
         id: 3,
         name: "Robert Johnson",
         socDate: "2024-03-10",
+        episodeFrom: "2024-03-15",
+        episodeTo: "2024-04-15",
         billed: true
       },
       {
         id: 4,
         name: "Emily Davis",
         socDate: "2024-03-15",
+        episodeFrom: "2024-03-20",
+        episodeTo: "2024-05-20",
         billed: false
       }
     ],
@@ -277,35 +285,50 @@ const HHAHView = () => {
         name: "Dr. Sarah Johnson",
         designation: "Chief Medical Officer",
         score: "8.5",
-        understanding: "Strong understanding of operational needs and patient care requirements",
-        date: "2024-03-15"
+        understanding: "Strong understanding of operational needs and patient care requirements"
       },
       {
         id: 2,
         name: "Michael Chen",
         designation: "Clinical Director",
         score: "7.2",
-        understanding: "Good grasp of clinical protocols and staff management",
-        date: "2024-03-10"
+        understanding: "Good grasp of clinical protocols and staff management"
       },
       {
         id: 3,
         name: "Emily Rodriguez",
         designation: "Quality Assurance Manager",
         score: "9.0",
-        understanding: "Excellent understanding of quality metrics and improvement strategies",
-        date: "2024-03-05"
+        understanding: "Excellent understanding of quality metrics and improvement strategies"
+      },
+      {
+        id: 4,
+        name: "David Wilson",
+        designation: "Patient Care Coordinator",
+        score: "6.8",
+        understanding: "Strong focus on patient satisfaction and care coordination"
+      },
+      {
+        id: 5,
+        name: "Lisa Anderson",
+        designation: "Administrative Assistant",
+        score: "5.5",
+        understanding: "Basic understanding of office procedures and documentation"
       }
     ],
     searchTerm: '',
-    sortConfig: { key: 'date', direction: 'desc' },
-    showForm: false,
     showAnalytics: false,
+    showForm: false,
     newRecord: {
       name: '',
       designation: '',
       score: '',
       understanding: ''
+    },
+    editingRecord: null,
+    sortConfig: {
+      key: 'name',
+      direction: 'asc'
     },
     notification: null
   });
@@ -689,9 +712,8 @@ const HHAHView = () => {
     </div>
   );
 
-  const renderRapportManagement = () => (
-    <div className="section-container">
-      <h2 className="section-title">Rapport</h2>
+  const renderRapportManagement = () => {
+    return (
       <div className="rapport-section">
         <div className="rapport-header">
           <h2 className="rapport-title">Rapport Summary</h2>
@@ -701,7 +723,10 @@ const HHAHView = () => {
                 type="text"
                 placeholder="Search by name or designation..."
                 className="rapport-search-input"
-                onChange={(e) => setRapportState(prev => ({ ...prev, searchTerm: e.target.value }))}
+                onChange={(e) => setRapportState(prev => ({
+                  ...prev,
+                  searchTerm: e.target.value
+                }))}
                 value={rapportState.searchTerm || ''}
               />
             </div>
@@ -725,19 +750,17 @@ const HHAHView = () => {
         {rapportState.showAnalytics && (
           <div className="rapport-analytics">
             <h3>Rapport Analytics</h3>
-            <div className="rapport-stats">
-              <div className="rapport-stat">
-                <span className="stat-label">High Rapport (8-10):</span>
-                <span className="stat-value">{rapportState.records.filter(r => parseFloat(r.score) >= 8).length}</span>
-              </div>
-              <div className="rapport-stat">
-                <span className="stat-label">Medium Rapport (5-7):</span>
-                <span className="stat-value">{rapportState.records.filter(r => parseFloat(r.score) >= 5 && parseFloat(r.score) < 8).length}</span>
-              </div>
-              <div className="rapport-stat">
-                <span className="stat-label">Low Rapport (0-4):</span>
-                <span className="stat-value">{rapportState.records.filter(r => parseFloat(r.score) < 5).length}</span>
-              </div>
+            <div className="rapport-analytics-item">
+              <span className="rapport-analytics-label">High Rapport (8-10)</span>
+              <span className="rapport-analytics-value rapport-analytics-high">{getHighRapportCount()}</span>
+            </div>
+            <div className="rapport-analytics-item">
+              <span className="rapport-analytics-label">Medium Rapport (5-7)</span>
+              <span className="rapport-analytics-value rapport-analytics-medium">{getMediumRapportCount()}</span>
+            </div>
+            <div className="rapport-analytics-item">
+              <span className="rapport-analytics-label">Low Rapport (0-4)</span>
+              <span className="rapport-analytics-value rapport-analytics-low">{getLowRapportCount()}</span>
             </div>
           </div>
         )}
@@ -793,9 +816,9 @@ const HHAHView = () => {
               />
             </div>
             <div className="rapport-form-group">
-              <label>Understanding/Feedback</label>
+              <label>Analysis</label>
               <textarea 
-                placeholder="Enter feedback" 
+                placeholder="Enter analysis" 
                 name="understanding"
                 value={rapportState.newRecord.understanding}
                 onChange={(e) => setRapportState(prev => ({
@@ -808,98 +831,153 @@ const HHAHView = () => {
           </div>
         )}
 
-        <table className="rapport-table">
-          <thead>
-            <tr>
-              <th onClick={() => handleRapportSort('name')} style={{ textAlign: 'left' }}>
-                PERSONA NAME
-                {rapportState.sortConfig.key === 'name' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th onClick={() => handleRapportSort('designation')} style={{ textAlign: 'left' }}>
-                DESIGNATION
-                {rapportState.sortConfig.key === 'designation' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th onClick={() => handleRapportSort('score')} style={{ textAlign: 'left' }}>
-                SCORE
-                {rapportState.sortConfig.key === 'score' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th style={{ textAlign: 'left' }}>ANALYSIS</th>
-              <th onClick={() => handleRapportSort('date')} style={{ textAlign: 'left' }}>
-                DATE
-                {rapportState.sortConfig.key === 'date' && (
-                  <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
-                )}
-              </th>
-              <th style={{ textAlign: 'left' }}>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getFilteredAndSortedRapportRecords().map(record => (
-              <tr key={`rapport-${record.id}`}>
-                <td style={{ textAlign: 'left' }}>{record.name}</td>
-                <td style={{ textAlign: 'left' }}>{record.designation}</td>
-                <td style={{ textAlign: 'left' }}>
-                  <span className={`rapport-score-badge ${parseFloat(record.score) >= 8 ? 'high' : parseFloat(record.score) >= 5 ? 'medium' : 'low'}`}>
-                    {record.score}/10
-                  </span>
-                </td>
-                <td style={{ textAlign: 'left' }}>{record.understanding}</td>
-                <td style={{ textAlign: 'left' }}>{record.date}</td>
-                <td style={{ textAlign: 'left' }}>
-                  <div className="rapport-action-buttons">
-                    <button className="rapport-edit-btn" onClick={() => handleEditRapportRecord(record.id)}>Edit</button>
-                    <button className="rapport-delete-btn" onClick={() => handleDeleteRapportRecord(record.id)}>Delete</button>
-                  </div>
-                </td>
+        <div className="rapport-table-container">
+          <table className="rapport-table">
+            <thead>
+              <tr>
+                <th onClick={() => handleRapportSort('name')} style={{ textAlign: 'left' }}>
+                  PERSONA NAME
+                  {rapportState.sortConfig.key === 'name' && (
+                    <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
+                  )}
+                </th>
+                <th onClick={() => handleRapportSort('designation')} style={{ textAlign: 'left' }}>
+                  DESIGNATION
+                  {rapportState.sortConfig.key === 'designation' && (
+                    <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
+                  )}
+                </th>
+                <th onClick={() => handleRapportSort('score')} style={{ textAlign: 'left' }}>
+                  SCORE
+                  {rapportState.sortConfig.key === 'score' && (
+                    <span>{rapportState.sortConfig.direction === 'asc' ? ' ↑' : ' ↓'}</span>
+                  )}
+                </th>
+                <th style={{ textAlign: 'left' }}>ANALYSIS</th>
+                <th style={{ textAlign: 'left' }}>ACTIONS</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {getFilteredAndSortedRapportRecords().map(record => (
+                <tr key={`rapport-${record.id}`}>
+                  {rapportState.editingRecord?.id === record.id ? (
+                    <>
+                      <td style={{ textAlign: 'left' }}>
+                        <input
+                          type="text"
+                          name="name"
+                          value={rapportState.editingRecord.name}
+                          onChange={handleEditChange}
+                          className="rapport-edit-input"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <input
+                          type="text"
+                          name="designation"
+                          value={rapportState.editingRecord.designation}
+                          onChange={handleEditChange}
+                          className="rapport-edit-input"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <input
+                          type="number"
+                          name="score"
+                          min="0"
+                          max="10"
+                          value={rapportState.editingRecord.score}
+                          onChange={handleEditChange}
+                          className="rapport-edit-input"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <textarea
+                          name="understanding"
+                          value={rapportState.editingRecord.understanding}
+                          onChange={handleEditChange}
+                          className="rapport-edit-textarea"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'left' }}>
+                        <div className="rapport-action-buttons">
+                          <button className="rapport-save-btn" onClick={handleSaveEdit}>Save</button>
+                          <button className="rapport-cancel-btn" onClick={handleCancelEdit}>Cancel</button>
+                        </div>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td style={{ textAlign: 'left' }}>{record.name}</td>
+                      <td style={{ textAlign: 'left' }}>{record.designation}</td>
+                      <td style={{ textAlign: 'left' }}>
+                        <span className={`rapport-score-badge ${parseFloat(record.score) >= 8 ? 'high' : parseFloat(record.score) >= 5 ? 'medium' : 'low'}`}>
+                          {record.score}/10
+                        </span>
+                      </td>
+                      <td style={{ textAlign: 'left' }}>{record.understanding}</td>
+                      <td style={{ textAlign: 'left' }}>
+                        <div className="rapport-action-buttons">
+                          <button className="rapport-edit-btn" onClick={() => handleEditRapportRecord(record.id)}>Edit</button>
+                          <button className="rapport-delete-btn" onClick={() => handleDeleteRapportRecord(record.id)}>Delete</button>
+                        </div>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const calculateAverageScore = () => {
-    const scores = rapportState.records.map(record => parseFloat(record.score));
-    const average = scores.reduce((a, b) => a + b, 0) / scores.length;
-    return average.toFixed(1);
+    if (rapportState.records.length === 0) return '0.0';
+    const total = rapportState.records.reduce((sum, record) => sum + parseFloat(record.score), 0);
+    return (total / rapportState.records.length).toFixed(1);
+  };
+
+  const getHighRapportCount = () => {
+    return rapportState.records.filter(record => parseFloat(record.score) >= 8).length;
+  };
+
+  const getMediumRapportCount = () => {
+    return rapportState.records.filter(record => parseFloat(record.score) >= 5 && parseFloat(record.score) < 8).length;
+  };
+
+  const getLowRapportCount = () => {
+    return rapportState.records.filter(record => parseFloat(record.score) < 5).length;
   };
 
   const getFilteredAndSortedRapportRecords = () => {
     let filteredRecords = [...rapportState.records];
     
-    // Filter by search term
     if (rapportState.searchTerm) {
       const searchTerm = rapportState.searchTerm.toLowerCase();
-      filteredRecords = filteredRecords.filter(record => 
+      filteredRecords = filteredRecords.filter(record =>
         record.name.toLowerCase().includes(searchTerm) ||
         record.designation.toLowerCase().includes(searchTerm)
       );
     }
-    
-    // Sort records
+
     filteredRecords.sort((a, b) => {
       const aValue = a[rapportState.sortConfig.key];
       const bValue = b[rapportState.sortConfig.key];
-      
+
       if (rapportState.sortConfig.key === 'score') {
         return rapportState.sortConfig.direction === 'asc'
           ? parseFloat(aValue) - parseFloat(bValue)
           : parseFloat(bValue) - parseFloat(aValue);
       }
-      
+
       if (rapportState.sortConfig.direction === 'asc') {
         return aValue.localeCompare(bValue);
       }
       return bValue.localeCompare(aValue);
     });
-    
+
     return filteredRecords;
   };
 
@@ -908,52 +986,133 @@ const HHAHView = () => {
       ...prev,
       sortConfig: {
         key,
-        direction: prev.sortConfig.key === key ? (prev.sortConfig.direction === 'asc' ? 'desc' : 'asc') : 'asc'
+        direction: prev.sortConfig.key === key && prev.sortConfig.direction === 'asc' ? 'desc' : 'asc'
       }
     }));
   };
 
   const handleSubmitRapport = () => {
-    if (rapportState.newRecord.name && rapportState.newRecord.designation && rapportState.newRecord.score) {
+    const { name, designation, score, understanding } = rapportState.newRecord;
+    
+    if (!name || !designation || !score || !understanding) {
       setRapportState(prev => ({
         ...prev,
-        records: [
-          ...prev.records,
-          {
-            id: prev.records.length + 1,
-            ...prev.newRecord,
-            date: new Date().toISOString().split('T')[0]
-          }
-        ],
-        newRecord: {
-          name: '',
-          designation: '',
-          score: '',
-          understanding: ''
-        },
-        showForm: false
+        notification: { message: 'Please fill in all fields', type: 'error' }
       }));
+      return;
     }
+
+    if (parseFloat(score) < 0 || parseFloat(score) > 10) {
+      setRapportState(prev => ({
+        ...prev,
+        notification: { message: 'Score must be between 0 and 10', type: 'error' }
+      }));
+      return;
+    }
+
+    const newRecord = {
+      id: Date.now(),
+      name,
+      designation,
+      score,
+      understanding
+    };
+
+    setRapportState(prev => ({
+      ...prev,
+      records: [...prev.records, newRecord],
+      newRecord: {
+        name: '',
+        designation: '',
+        score: '',
+        understanding: ''
+      },
+      showForm: false,
+      notification: { message: "Record added successfully", type: "success" }
+    }));
+
+    setTimeout(() => {
+      setRapportState(prev => ({ ...prev, notification: null }));
+    }, 3000);
   };
 
   const handleEditRapportRecord = (recordId) => {
     const record = rapportState.records.find(r => r.id === recordId);
-    if (record) {
+    if (!record) return;
+    
+    setRapportState(prev => ({
+      ...prev,
+      editingRecord: { ...record }
+    }));
+  };
+
+  const handleSaveEdit = () => {
+    if (!rapportState.editingRecord) return;
+
+    const { name, designation, score, understanding } = rapportState.editingRecord;
+    
+    if (!name || !designation || !score || !understanding) {
       setRapportState(prev => ({
         ...prev,
-        newRecord: { ...record },
-        showForm: true
+        notification: { message: 'Please fill in all fields', type: 'error' }
       }));
+      return;
     }
+
+    if (parseFloat(score) < 0 || parseFloat(score) > 10) {
+      setRapportState(prev => ({
+        ...prev,
+        notification: { message: 'Score must be between 0 and 10', type: 'error' }
+      }));
+      return;
+    }
+
+    setRapportState(prev => ({
+      ...prev,
+      records: prev.records.map(r => 
+        r.id === prev.editingRecord.id 
+          ? { ...prev.editingRecord }
+          : r
+      ),
+      editingRecord: null,
+      notification: { message: "Record updated successfully", type: "success" }
+    }));
+
+    setTimeout(() => {
+      setRapportState(prev => ({ ...prev, notification: null }));
+    }, 3000);
+  };
+
+  const handleCancelEdit = () => {
+    setRapportState(prev => ({
+      ...prev,
+      editingRecord: null
+    }));
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setRapportState(prev => ({
+      ...prev,
+      editingRecord: {
+        ...prev.editingRecord,
+        [name]: value
+      }
+    }));
   };
 
   const handleDeleteRapportRecord = (recordId) => {
-    if (window.confirm("Are you sure you want to delete this record?")) {
-      setRapportState(prev => ({
-        ...prev,
-        records: prev.records.filter(record => record.id !== recordId)
-      }));
-    }
+    if (!window.confirm("Are you sure you want to delete this record?")) return;
+    
+    setRapportState(prev => ({
+      ...prev,
+      records: prev.records.filter(r => r.id !== recordId),
+      notification: { message: "Record deleted successfully", type: "success" }
+    }));
+    
+    setTimeout(() => {
+      setRapportState(prev => ({ ...prev, notification: null }));
+    }, 3000);
   };
 
   const handleExportRapport = (format) => {
