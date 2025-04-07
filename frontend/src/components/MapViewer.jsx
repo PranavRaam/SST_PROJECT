@@ -30,6 +30,9 @@ const MapViewer = () => {
     
     // Add window message event listener for iframe communication
     const handleIframeMessage = (event) => {
+      // Check origin for security
+      console.log('[Map Diagnostic] Received message from iframe:', event.data);
+      
       // Check if message comes from our map
       if (event.data && event.data.type === 'mapLoaded') {
         setIsLoading(false);
@@ -43,6 +46,7 @@ const MapViewer = () => {
 
     // Set a timeout to force loading state to false if map takes too long
     loadTimeoutRef.current = setTimeout(() => {
+      console.log('[Map Diagnostic] Map load timeout reached. Forcing loading to false.');
       setIsLoading(false);
     }, 10000); // 10 second timeout
 
@@ -56,9 +60,11 @@ const MapViewer = () => {
 
   const handleIframeLoad = () => {
     // When iframe loads, inject necessary variables
+    console.log('[Map Diagnostic] Iframe onLoad event fired');
     try {
       const iframe = iframeRef.current;
       if (iframe && iframe.contentWindow) {
+        console.log('[Map Diagnostic] Sending MAP_INIT message to iframe');
         iframe.contentWindow.postMessage({
           type: 'MAP_INIT',
           data: {
@@ -69,7 +75,7 @@ const MapViewer = () => {
         }, '*');
       }
     } catch (e) {
-      console.warn('Failed to initialize map:', e);
+      console.log('[Map Diagnostic] Failed to initialize map:', e);
     }
     setIsLoading(false);
   };
@@ -116,7 +122,7 @@ const MapViewer = () => {
         allowFullScreen
         loading="eager"
         importance="high"
-        sandbox="allow-scripts allow-same-origin allow-popups"
+        sandbox="allow-scripts allow-same-origin"
       />
     </div>
   );

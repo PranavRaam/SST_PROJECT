@@ -65,7 +65,10 @@ import {
   FaFileSignature,
   FaCheck,
   FaArrowCircleRight,
-  FaExclamationCircle
+  FaExclamationCircle,
+  FaSearchPlus,
+  FaSearchMinus,
+  FaRedo
 } from 'react-icons/fa';
 
 // Helper functions
@@ -1521,6 +1524,7 @@ Total documents: ${documents.length}
     provider: '',
     notes: ''
   });
+  const [timelineZoomLevel, setTimelineZoomLevel] = useState(1); // Default zoom level
   
   // Initialize filtered episodes
   useEffect(() => {
@@ -2001,6 +2005,49 @@ Total documents: ${documents.length}
     
     return pdf;
   };
+
+  // Function to calculate duration between two dates
+  const calculateDuration = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+  };
+
+  // Function to calculate days between SOC and start date
+  const calculateDaysBetween = (socDate, startDate) => {
+    if (!socDate || !startDate) return 0;
+    const startDateObj = new Date(startDate);
+    const socDateObj = new Date(socDate);
+    const diffTime = Math.abs(startDateObj - socDateObj);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  // Handle timeline zoom functionality
+  const handleTimelineZoom = (action) => {
+    switch (action) {
+      case 'in':
+        setTimelineZoomLevel(prev => Math.min(prev + 0.25, 2.5));
+        document.documentElement.style.setProperty('--timeline-zoom', timelineZoomLevel + 0.25);
+        break;
+      case 'out':
+        setTimelineZoomLevel(prev => Math.max(prev - 0.25, 0.5));
+        document.documentElement.style.setProperty('--timeline-zoom', timelineZoomLevel - 0.25);
+        break;
+      case 'reset':
+        setTimelineZoomLevel(1);
+        document.documentElement.style.setProperty('--timeline-zoom', 1);
+        break;
+      default:
+        break;
+    }
+  };
+
+  // Apply zoom level when it changes
+  useEffect(() => {
+    document.documentElement.style.setProperty('--timeline-zoom', timelineZoomLevel);
+  }, [timelineZoomLevel]);
 
   return (
     <div className="patient-detail-view">
@@ -2493,9 +2540,33 @@ Total documents: ${documents.length}
                   <FaPlus className="action-icon" />
                   Add Episode
                 </button>
-                    </div>
+              </div>
                     
               <div className="episode-timeline">
+                <div className="timeline-zoom-controls">
+                  <button 
+                    className="zoom-button" 
+                    onClick={() => handleTimelineZoom('in')}
+                    title="Zoom in to see more details"
+                  >
+                    <FaSearchPlus /> Zoom In
+                  </button>
+                  <button 
+                    className="zoom-button" 
+                    onClick={() => handleTimelineZoom('out')}
+                    title="Zoom out to see the big picture"
+                  >
+                    <FaSearchMinus /> Zoom Out
+                  </button>
+                  <button 
+                    className="zoom-button" 
+                    onClick={() => handleTimelineZoom('reset')}
+                    title="Reset to default zoom level"
+                  >
+                    <FaRedo /> Reset
+                  </button>
+                </div>
+                
                 {filteredEpisodes.length > 0 ? (
                   filteredEpisodes.map((episode) => (
                     <div 
@@ -2507,37 +2578,46 @@ Total documents: ${documents.length}
                         <div className="episode-title">
                           <h5>Episode {episode.id}</h5>
                           <span className={`episode-status ${episode.status}`}>{episode.status}</span>
-                      </div>
+                        </div>
                         <div className="episode-expand-icon">
                           {expandedEpisode === episode.id ? 
                             <FaChevronDown className="expand-icon" /> : 
                             <FaChevronRight className="expand-icon" />
                           }
+                        </div>
                       </div>
-                    </div>
                     
                       <div className="episode-date">
-                        <div className="episode-marker start">
-                          <FaCircle className="marker-icon" />
-                          <div className="marker-label">Start</div>
-                      </div>
-                        <div className="episode-line"></div>
                         <div className="episode-marker soc">
-                          <FaCircle className="marker-icon soc" />
+                          <span className="marker-tooltip">
+                            SOC Date: {formatDate(episode.socDate)}
+                          </span>
+                          <FaCircle className="marker-icon" />
                           <div className="marker-label">SOC</div>
+                        </div>
+                        <div className="episode-line soc-to-from"></div>
+                        <div className="episode-marker start">
+                          <span className="marker-tooltip">
+                            From Date: {formatDate(episode.startDate)}
+                          </span>
+                          <FaCircle className="marker-icon" />
+                          <div className="marker-label">From</div>
                         </div>
                         <div className="episode-line"></div>
                         <div className="episode-marker end">
+                          <span className="marker-tooltip">
+                            End Date: {formatDate(episode.endDate)}
+                          </span>
                           <FaCircle className="marker-icon" />
                           <div className="marker-label">End</div>
+                        </div>
                       </div>
-                    </div>
                     
                       <div className="episode-details">
-                        <div className="episode-date-label">{formatDate(episode.startDate)}</div>
-                        <div className="episode-date-label">{formatDate(episode.socDate)}</div>
-                        <div className="episode-date-label">{formatDate(episode.endDate)}</div>
-                    </div>
+                        <div className="episode-date-label soc">{formatDate(episode.socDate)}</div>
+                        <div className="episode-date-label start">{formatDate(episode.startDate)}</div>
+                        <div className="episode-date-label end">{formatDate(episode.endDate)}</div>
+                      </div>
                     
                       {/* Additional episode details visible when expanded */}
                       {expandedEpisode === episode.id && (
@@ -2546,26 +2626,30 @@ Total documents: ${documents.length}
                             <div className="episode-info-item">
                               <label>Duration:</label>
                               <span>{calculateDuration(episode.startDate, episode.endDate)}</span>
-                      </div>
+                            </div>
+                            <div className="episode-info-item">
+                              <label>Days Before Episode Start:</label>
+                              <span>{calculateDaysBetween(episode.socDate, episode.startDate)} days</span>
+                            </div>
                             <div className="episode-info-item">
                               <label>Primary Diagnosis:</label>
                               <span>{episode.diagnosis}</span>
-                      </div>
+                            </div>
                             <div className="episode-info-item">
                               <label>Provider:</label>
                               <span>{episode.provider}</span>
-                    </div>
+                            </div>
                             {episode.notes && (
                               <div className="episode-info-item full-width">
                                 <label>Notes:</label>
                                 <span>{episode.notes}</span>
-                  </div>
+                              </div>
                             )}
                             <div className="episode-info-item">
                               <label>Documents:</label>
                               <span>{episode.documents ? episode.documents.length : 0} document(s)</span>
-                  </div>
-                </div>
+                            </div>
+                          </div>
                 
                           <div className="episode-actions">
                             <button 
@@ -2577,7 +2661,7 @@ Total documents: ${documents.length}
                             >
                               <FaEdit className="action-icon" />
                               Edit Episode
-                  </button>
+                            </button>
                             <button 
                               className="episode-action-button"
                               onClick={(e) => {
@@ -2600,11 +2684,11 @@ Total documents: ${documents.length}
                             >
                               <FaPlus className="action-icon" />
                               Add Document
-                  </button>
-                </div>
-              </div>
-                      )}
+                            </button>
                           </div>
+                        </div>
+                      )}
+                    </div>
                   ))
                 ) : (
                   <div className="no-episodes">
@@ -2615,10 +2699,10 @@ Total documents: ${documents.length}
                     >
                       Reset Filters
                     </button>
-                            </div>
+                  </div>
                 )}
-                              </div>
-                              </div>
+              </div>
+            </div>
             
             {/* PG Services Timeline Section with editable CPO minutes */}
             <div className="timeline-section">
@@ -2738,7 +2822,7 @@ Total documents: ${documents.length}
                                   title="Download Document"
                                   onClick={() => handleDownloadDocument(doc)}
                                 >
-                                  <span className="material-icons">download</span>
+                                  <span className="material-icons">file_download</span>
                                 </button>
                               </div>
                             </div>
@@ -2807,7 +2891,7 @@ Total documents: ${documents.length}
                                   title="Download Document"
                                   onClick={() => handleDownloadDocument(doc)}
                                 >
-                                  <span className="material-icons">download</span>
+                                  <span className="material-icons">file_download</span>
                                 </button>
                                 <button 
                                   className="document-action-button"
@@ -3339,7 +3423,7 @@ Total documents: ${documents.length}
                   onClick={exportDocuments}
                 >
                   <span className="icon-wrapper">
-                    <FaDownload className="action-icon" />
+                    <span className="material-icons">file_download</span>
                   </span>
                   Export Documents
                 </button>
@@ -3348,12 +3432,14 @@ Total documents: ${documents.length}
                   onClick={generateDocumentReport}
                 >
                   <span className="icon-wrapper">
-                    <FaFileAlt className="action-icon" />
+                    <span className="material-icons">description</span>
                   </span>
                   Generate Report
                 </button>
                 <button className="action-button secondary" onClick={exportCPOReport}>
-                  <span className="icon-wrapper"><FaDownload /></span>
+                  <span className="icon-wrapper">
+                    <span className="material-icons">summarize</span>
+                  </span>
                   Export CPO Report
                 </button>
               </div>
@@ -3471,7 +3557,9 @@ Total documents: ${documents.length}
                     Total Documents: <span className="count">{cpoDocs.length}</span>
                   </div>
                   <button className="action-button secondary" onClick={exportCPOReport}>
-                    <span className="icon-wrapper"><FaDownload /></span>
+                    <span className="icon-wrapper">
+                      <span className="material-icons">summarize</span>
+                    </span>
                     Export CPO Report
                   </button>
                 </div>
@@ -3651,7 +3739,7 @@ Total documents: ${documents.length}
                           download={selectedDocument.fileName}
                           className="download-link"
                         >
-                          <FaDownload /> Download File
+                          <span className="material-icons">file_download</span> Download File
                         </a>
                       </div>
                     </div>
@@ -3777,7 +3865,7 @@ Total documents: ${documents.length}
                 </div>
               ) : (
                 <div className="no-preview">
-                  <FaFileAlt className="no-preview-icon" />
+                  <span className="material-icons" style={{ fontSize: '64px' }}>description</span>
                   <p>Preview not available for this file type</p>
                   <p className="no-preview-filename">{selectedDocument.fileName}</p>
                 </div>
@@ -3987,21 +4075,6 @@ Total documents: ${documents.length}
       )}
     </div>
   );
-};
-
-// Add these utility functions
-const calculateDuration = (startDate, endDate) => {
-  if (!startDate || !endDate) return 'Duration not available';
-  
-  try {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const durationMs = end - start;
-    const days = Math.floor(durationMs / (1000 * 60 * 60 * 24));
-    return `${days} days`;
-  } catch (error) {
-    return 'Invalid date format';
-  }
 };
 
 function generateMonthlyCPOData() {

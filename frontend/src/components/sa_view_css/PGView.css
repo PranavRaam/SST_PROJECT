@@ -1548,6 +1548,25 @@
   gap: 0.5rem;
 }
 
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  color: #4b5563;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+  border-color: #4F46E5;
+  color: #4F46E5;
+}
+
 .period-select,
 .status-select,
 .year-select,
@@ -1597,6 +1616,34 @@
   outline: none;
   border-color: #4F46E5;
   box-shadow: 0 0 0 1px #4F46E5;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.period-button {
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.period-button:hover {
+  border-color: #4F46E5;
+  color: #4F46E5;
+}
+
+.period-button.active {
+  background-color: #4F46E5;
+  color: #ffffff;
+  border-color: #4F46E5;
 }
 
 .export-buttons {

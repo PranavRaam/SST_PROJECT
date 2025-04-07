@@ -139,3 +139,82 @@
     white-space: nowrap;
   }
 }
+
+.highlight-cell {
+  background-color: rgba(240, 247, 255, 0.3);
+  font-weight: 500;
+}
+
+/* Make the fixed sort columns more noticeable */
+.pg-docs-table-header-cell.fixed-sort {
+  background-color: rgba(230, 242, 255, 0.8);
+  cursor: default;
+  position: relative;
+}
+
+.pg-docs-table-header-cell.fixed-sort:hover {
+  background-color: rgba(230, 242, 255, 0.8);
+}
+
+.permanent-sort-icon {
+  margin-left: 5px;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.fixed-sort-cell {
+  background-color: rgba(240, 247, 255, 0.3);
+}
+
+/* Override the previous auto-sorted styles */
+.pg-docs-table-header-cell[data-auto-sorted="primary"],
+.pg-docs-table-header-cell[data-auto-sorted="secondary"] {
+  background-color: transparent;
+}
+
+.pg-docs-table-header-cell[data-auto-sorted="primary"]:after,
+.pg-docs-table-header-cell[data-auto-sorted="secondary"]:after {
+  content: none;
+}
+
+/* Style the specific columns to ensure consistent widths */
+.pg-docs-table-header-cell:nth-child(7), /* New Docs column */
+.pg-docs-table-data-cell:nth-child(7) {
+  background-color: rgba(255, 249, 230, 0.2);
+}
+
+.pg-docs-table-header-cell:nth-child(8), /* New CPO Docs column */
+.pg-docs-table-data-cell:nth-child(8) {
+  background-color: rgba(240, 255, 240, 0.2);
+}
+
+.sorting-info-box {
+  background-color: rgb(229, 246, 253, 0.6);
+  border: 1px solid rgba(100, 180, 255, 0.4);
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
+
+.sorting-info-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #0277bd;
+  display: flex;
+  align-items: center;
+}
+
+.sort-info-icon {
+  margin-right: 6px;
+  font-size: 1rem;
+}
+
+.sorting-info-list {
+  margin: 0;
+  padding-left: 24px;
+}
+
+.sorting-info-list li {
+  margin-bottom: 2px;
+}

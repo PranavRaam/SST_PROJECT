@@ -34,6 +34,10 @@
   --radius-xl: 1rem;
   --radius-full: 9999px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --timeline-zoom: 1;
+  --soc-marker-color: #9c27b0;
+  --from-marker-color: #2196f3;
+  --end-marker-color: #f44336;
 }
 
 .patient-detail-view {
@@ -3628,18 +3632,57 @@
 /* Episode Timeline */
 .episode-timeline {
   padding: 15px 0;
+  position: relative;
+}
+
+.timeline-zoom-controls {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.zoom-button {
+  background: #f5f7fa;
+  border: 1px solid #e0e7f1;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  color: #4a6fa5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zoom-button:hover {
+  background: #e9edf5;
+  color: #2a4e7f;
 }
 
 .timeline-episode {
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.timeline-episode.active {
+  border-color: #4a6fa5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-episode.expanded {
+  background-color: #f8f9fa;
 }
 
 .episode-date {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin: 20px 10px 15px;
   position: relative;
 }
 
@@ -3649,6 +3692,44 @@
   align-items: center;
   position: relative;
   z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.episode-marker:hover {
+  transform: scale(1.1);
+}
+
+.marker-tooltip {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4a6fa5;
+  color: white;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 10;
+}
+
+.marker-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #4a6fa5 transparent transparent transparent;
+}
+
+.episode-marker:hover .marker-tooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
 .episode-marker .marker-icon {
@@ -3663,12 +3744,39 @@
 .episode-marker.soc .marker-icon {
   color: #28a745;
   border-color: #28a745;
+  font-size: 15px; /* Make SOC marker slightly larger */
+}
+
+.episode-marker.start .marker-icon {
+  color: #1a75ff;
+  border-color: #1a75ff;
+}
+
+.episode-marker.end .marker-icon {
+  color: #dc3545;
+  border-color: #dc3545;
 }
 
 .episode-marker .marker-label {
   font-size: 0.8rem;
   margin-top: 5px;
   color: #666;
+  font-weight: 500;
+}
+
+.episode-marker.soc .marker-label {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.episode-marker.start .marker-label {
+  color: #1a75ff;
+  font-weight: 600;
+}
+
+.episode-marker.end .marker-label {
+  color: #dc3545;
+  font-weight: 600;
 }
 
 .episode-line {
@@ -3678,6 +3786,11 @@
   margin: 0 5px;
   position: relative;
   z-index: 1;
+}
+
+.episode-line.soc-to-from {
+  background: linear-gradient(to right, #28a745, #1a75ff);
+  height: 3px;
 }
 
 .episode-details {
@@ -3695,20 +3808,19 @@
   width: 33%;
 }
 
-.episode-info {
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  padding: 10px 15px;
+.episode-date-label.soc {
+  color: #28a745;
+  font-weight: 500;
 }
 
-.episode-info h5 {
-  margin: 0 0 8px 0;
-  color: #333;
+.episode-date-label.start {
+  color: #1a75ff;
+  font-weight: 500;
 }
 
-.episode-duration {
-  font-size: 0.9rem;
-  color: #666;
+.episode-date-label.end {
+  color: #dc3545;
+  font-weight: 500;
 }
 
 /* PG Services Timeline */
@@ -5331,4 +5443,448 @@
 
 .download-link svg {
   margin-right: 0.5rem;
+}
+
+/* Timeline section styles */
+:root {
+  --timeline-zoom: 1;
+  --soc-marker-color: #9c27b0;
+  --from-marker-color: #2196f3;
+  --end-marker-color: #f44336;
+}
+
+.timeline-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.timeline-section-title {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.timeline-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.timeline-section .section-icon {
+  margin-right: 10px;
+  color: #2196f3;
+}
+
+.episode-timeline {
+  padding: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.timeline-zoom-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.zoom-button {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zoom-button:hover {
+  background-color: #e0e0e0;
+}
+
+.zoom-button svg {
+  font-size: 1rem;
+}
+
+.timeline-episode {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 0;
+}
+
+.timeline-episode:hover {
+  border-color: #bbdefb;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
+}
+
+.timeline-episode.active {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 1px #2196f3;
+}
+
+.timeline-episode.expanded {
+  padding-bottom: 15px;
+}
+
+.episode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.episode-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.episode-title h5 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.episode-status {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.episode-status.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.episode-status.discharged {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.episode-status.on-hold {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+.episode-status.pending {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.episode-expand-icon {
+  display: flex;
+  align-items: center;
+}
+
+.expand-icon {
+  font-size: 0.9rem;
+  color: #757575;
+}
+
+.episode-date {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  position: relative;
+  min-height: 50px;
+  transform: scale(var(--timeline-zoom));
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.episode-line {
+  flex: 1;
+  height: 3px;
+  background-color: #e0e0e0;
+  position: relative;
+}
+
+.episode-line.soc-to-from {
+  background-color: rgba(156, 39, 176, 0.4);
+  height: 2px;
+  flex: 0 0 calc(15% * var(--timeline-zoom));
+}
+
+.episode-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+  z-index: 2;
+}
+
+.episode-marker .marker-icon {
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+  transition: all 0.2s ease;
+}
+
+.episode-marker.soc .marker-icon {
+  color: var(--soc-marker-color);
+  font-size: 1.1rem;
+}
+
+.episode-marker.start .marker-icon {
+  color: var(--from-marker-color);
+}
+
+.episode-marker.end .marker-icon {
+  color: var(--end-marker-color);
+}
+
+.episode-marker .marker-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #616161;
+  white-space: nowrap;
+}
+
+.episode-marker.soc .marker-label {
+  color: var(--soc-marker-color);
+  font-weight: 600;
+}
+
+.episode-marker.start .marker-label {
+  color: var(--from-marker-color);
+}
+
+.episode-marker.end .marker-label {
+  color: var(--end-marker-color);
+}
+
+.marker-tooltip {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.marker-tooltip:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent;
+}
+
+.episode-marker:hover .marker-tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: -35px;
+}
+
+.episode-marker:hover .marker-icon {
+  transform: scale(1.3);
+}
+
+.episode-details {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin-top: 5px;
+  transform: scale(var(--timeline-zoom));
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.episode-date-label {
+  font-size: 0.75rem;
+  color: #757575;
+  white-space: nowrap;
+}
+
+.episode-date-label.soc {
+  color: var(--soc-marker-color);
+  font-weight: 500;
+}
+
+.episode-date-label.start {
+  color: var(--from-marker-color);
+  text-align: center;
+}
+
+.episode-date-label.end {
+  color: var(--end-marker-color);
+  text-align: right;
+}
+
+.episode-expanded-info {
+  padding: 15px 20px;
+  border-top: 1px dashed #e0e0e0;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.episode-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.episode-info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.episode-info-item label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #757575;
+  margin-bottom: 5px;
+}
+
+.episode-info-item span {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.episode-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.episode-action-button {
+  padding: 6px 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.episode-action-button:hover {
+  background-color: #e0e0e0;
+}
+
+.episode-action-button.edit {
+  color: #2196f3;
+  border-color: #bbdefb;
+  background-color: #e3f2fd;
+}
+
+.episode-action-button.edit:hover {
+  background-color: #bbdefb;
+}
+
+.no-episodes {
+  text-align: center;
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.no-episodes p {
+  margin-bottom: 15px;
+  color: #757575;
+}
+
+/* Add styling for Material Icons in action buttons */
+.action-button .icon-wrapper .material-icons {
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.action-button:hover .icon-wrapper .material-icons {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Add styling for Material Icons in document action buttons */
+.document-action-button .material-icons {
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.document-action-button:hover .material-icons {
+  transform: scale(1.1);
+}
+
+/* Add styling for Material Icons in action icon buttons */
+.action-icon-button .material-icons {
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.action-icon-button:hover .material-icons {
+  transform: scale(1.1);
+}
+
+/* Style the download link with Material Icons */
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.download-link:hover {
+  color: var(--primary-dark);
+}
+
+.download-link .material-icons {
+  font-size: 18px;
 }

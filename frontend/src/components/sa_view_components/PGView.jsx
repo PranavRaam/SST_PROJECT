@@ -8,6 +8,8 @@ import './ValueCommunication.css';
 import StaffList from './StaffList';
 import ReactiveOutcomes from './reactiveoc';
 import InteractionLog from './InteractionLog';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const PGView = () => {
   const navigate = useNavigate();
@@ -399,6 +401,7 @@ const PGView = () => {
   const [filteredClaims, setFilteredClaims] = useState([]);
   const [filterType, setFilterType] = useState(null);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [showDateRangeFilter, setShowDateRangeFilter] = useState(false);
 
   // Dummy claims data from PatientFormComponent
   const [dummyClaims, setDummyClaims] = useState([
@@ -809,6 +812,30 @@ const PGView = () => {
     }
   ]);
 
+  const getFilteredClaims = () => {
+    // If there are no filtered claims yet, use the dummy claims
+    if (filteredClaims.length === 0) {
+      return dummyClaims;
+    }
+    return filteredClaims;
+  };
+
+  const filterClaimsByDateRange = () => {
+    const startDate = new Date(selectedDateRange.start);
+    const endDate = new Date(selectedDateRange.end);
+    
+    // Set end date to end of day
+    endDate.setHours(23, 59, 59, 999);
+    
+    const filtered = dummyClaims.filter(claim => {
+      const socDate = new Date(claim.patientSOC);
+      return socDate >= startDate && socDate <= endDate;
+    });
+    
+    setFilteredClaims(filtered);
+    setShowDateRangeFilter(false);
+  };
+
   const handleMonthYearSubmit = () => {
     if (!selectedMonth || !selectedYear) return;
 
@@ -871,32 +898,81 @@ const PGView = () => {
   };
 
   const handleDownloadClaims = (format) => {
-    const filteredClaims = getFilteredClaims();
+    const claimsToDownload = getFilteredClaims();
     
     if (format === 'csv') {
       const csvContent = [
-        ["Patient Name", "Claim ID", "Amount", "Status", "Date Filed"],
-        ...filteredClaims.map(claim => [
+        ["Patient Name", "Patient ID", "Insurance", "Cert Status", "SOC Date", "Cert Date", "Recert Date", "CPO Status"],
+        ...claimsToDownload.map(claim => [
           claim.patientName,
-          claim.claimId,
-          `$${claim.amount}`,
-          claim.status,
-          claim.date
+          claim.patientId,
+          claim.patientInsurance,
+          claim.certStatus,
+          claim.patientSOC ? new Date(claim.patientSOC).toLocaleDateString() : '-',
+          claim.certSignedDate ? new Date(claim.certSignedDate).toLocaleDateString() : '-',
+          claim.recertSignedDate ? new Date(claim.recertSignedDate).toLocaleDateString() : '-',
+          claim.cpoMinsCaptured > 0 ? 'Active' : 'Inactive'
         ])
-      ].map(row => row.join(",")).join("\\n");
+      ].map(row => row.join(",")).join("\n");
 
       const blob = new Blob([csvContent], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `claims-${pgData.name}-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `claims-${new Date().toISOString().split('T')[0]}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } else if (format === 'pdf') {
-      // In a real application, you would use a library like jsPDF to generate the PDF
-      alert('PDF export functionality would be implemented here with jsPDF or similar library');
+      const doc = new jsPDF();
+      
+      // Add title to the PDF
+      doc.setFontSize(16);
+      doc.setTextColor(40, 40, 40);
+      doc.text("Claims Report", 14, 22);
+      
+      // Add generation date
+      doc.setFontSize(10);
+      doc.setTextColor(80, 80, 80);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+      
+      // Table data
+      const tableColumn = ["Patient Name", "Patient ID", "Insurance", "Cert Status", "SOC Date", "Cert Date", "Recert Date", "CPO Status"];
+      const tableRows = claimsToDownload.map(claim => [
+        claim.patientName,
+        claim.patientId,
+        claim.patientInsurance,
+        claim.certStatus,
+        claim.patientSOC ? new Date(claim.patientSOC).toLocaleDateString() : '-',
+        claim.certSignedDate ? new Date(claim.certSignedDate).toLocaleDateString() : '-',
+        claim.recertSignedDate ? new Date(claim.recertSignedDate).toLocaleDateString() : '-',
+        claim.cpoMinsCaptured > 0 ? 'Active' : 'Inactive'
+      ]);
+
+      // Generate the table
+      autoTable(doc, {
+        head: [tableColumn],
+        body: tableRows,
+        startY: 35,
+        styles: {
+          fontSize: 8,
+          cellPadding: 3,
+          lineWidth: 0.5,
+          lineColor: [220, 220, 220]
+        },
+        headStyles: {
+          fillColor: [79, 70, 229],
+          textColor: [255, 255, 255],
+          fontStyle: 'bold'
+        },
+        alternateRowStyles: {
+          fillColor: [240, 240, 250]
+        }
+      });
+      
+      // Save the PDF
+      doc.save(`claims-${new Date().toISOString().split('T')[0]}.pdf`);
     }
   };
 
@@ -952,6 +1028,84 @@ const PGView = () => {
               Filter by CPO Documents
             </button>
           </div>
+          
+          <div className="filter-group">
+            <button 
+              className="filter-button"
+              onClick={() => setShowDateRangeFilter(true)}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              Date Range Filter
+            </button>
+          </div>
+
+          {showDateRangeFilter && (
+            <div className="modal-overlay">
+              <div className="modal-content" data-type="date-range">
+                <div className="modal-header">
+                  <h2>Select Date Range</h2>
+                  <button className="close-button" onClick={() => setShowDateRangeFilter(false)}>×</button>
+                </div>
+                <div className="form-group">
+                  <label>Start Date</label>
+                  <input
+                    type="date"
+                    className="date-input"
+                    name="start"
+                    value={selectedDateRange.start}
+                    onChange={handleDateRangeChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>End Date</label>
+                  <input
+                    type="date"
+                    className="date-input"
+                    name="end"
+                    value={selectedDateRange.end}
+                    onChange={handleDateRangeChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Predefined Periods</label>
+                  <div className="button-group">
+                    <button 
+                      className={`period-button ${selectedPeriod === 'month' ? 'active' : ''}`}
+                      onClick={() => handlePeriodChange('month')}
+                    >
+                      Last Month
+                    </button>
+                    <button 
+                      className={`period-button ${selectedPeriod === 'year' ? 'active' : ''}`}
+                      onClick={() => handlePeriodChange('year')}
+                    >
+                      Last Year
+                    </button>
+                    <button 
+                      className={`period-button ${selectedPeriod === 'all' ? 'active' : ''}`}
+                      onClick={() => handlePeriodChange('all')}
+                    >
+                      All Time
+                    </button>
+                  </div>
+                </div>
+                <div className="form-actions">
+                  <button 
+                    className="submit-button"
+                    onClick={filterClaimsByDateRange}
+                    disabled={!selectedDateRange.start || !selectedDateRange.end}
+                  >
+                    Apply Filter
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {showMonthPicker && (
             <div className="modal-overlay">
@@ -999,19 +1153,29 @@ const PGView = () => {
             </div>
           )}
 
-          {selectedMonth && selectedYear && (
+          {(selectedMonth && selectedYear) || filteredClaims.length > 0 ? (
             <div className="filtered-results" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
               {filteredClaims.length > 0 ? (
                 <>
                   <h3 style={{ margin: 0 }}>Filtered Claims: {filteredClaims.length}</h3>
                   <div className="export-buttons" style={{ display: 'flex', gap: '10px' }}>
-            <button className="download-button" onClick={() => handleDownloadClaims('csv')}>
-              Download CSV
-            </button>
-            <button className="download-button" onClick={() => handleDownloadClaims('pdf')}>
-              Download PDF
-            </button>
-          </div>
+                    <button className="download-button" onClick={() => handleDownloadClaims('csv')}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      Download CSV
+                    </button>
+                    <button className="download-button" onClick={() => handleDownloadClaims('pdf')}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      Download PDF
+                    </button>
+                  </div>
                 </>
               ) : (
                 <h3 className="no-results">
@@ -1019,7 +1183,7 @@ const PGView = () => {
                 </h3>
               )}
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 

@@ -86,8 +86,9 @@ def add_cors_headers(response):
     
     # For iframe embedding
     if response.mimetype == 'text/html':
-        response.headers['X-Frame-Options'] = 'ALLOW-FROM *'
-        response.headers['Content-Security-Policy'] = "frame-ancestors *"
+        response.headers['X-Frame-Options'] = 'ALLOW-FROM http://localhost:3000'
+        response.headers['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:3000 https://sst-frontend-swart.vercel.app https://prototype-railway-production.up.railway.app https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app https://railway-prototype-pranavraams-projects.vercel.app https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app https://railway-prototype.vercel.app"
+        response.headers['Access-Control-Allow-Origin'] = origin if origin in allowed_origins else '*'
     
     return response
 
@@ -191,8 +192,23 @@ def get_map():
             window.True = true;
             window.False = false;
             
-            // Handle messages from parent frame
+            // Safe post message function that handles cross-origin communication
+            function safePostMessage(message) {
+                try {
+                    window.parent.postMessage(message, '*');
+                    console.log('[Map Diagnostic] Message sent to parent:', message);
+                } catch (err) {
+                    console.log('[Map Diagnostic] Error sending message to parent:', err);
+                }
+            }
+            
+            // Log diagnostics
+            console.log('[Map Diagnostic] Map iframe loaded and ready for messages');
+            
+            // Handle messages from parent frame safely
             window.addEventListener('message', function(event) {
+                console.log('[Map Diagnostic] Received message from parent:', event.data);
+                
                 if (event.data && event.data.type === 'MAP_INIT') {
                     // Update map variables
                     const data = event.data.data || {};
@@ -200,41 +216,54 @@ def get_map():
                     window.show_counties = data.show_counties ?? true;
                     window.show_msas = data.show_msas ?? true;
                     
-                    // Force map refresh
+                    // Force map refresh - safely without direct property access
                     try {
                         // Find all map containers
                         var maps = document.querySelectorAll('.leaflet-container');
-                        maps.forEach(function(mapContainer) {
-                            // Force a resize event
-                            var evt = document.createEvent('UIEvents');
-                            evt.initUIEvent('resize', true, false, window, 0);
-                            window.dispatchEvent(evt);
-                            
-                            // Try to invalidate map size
-                            var mapInstance = mapContainer._leaflet;
-                            if (mapInstance && typeof mapInstance.invalidateSize === 'function') {
-                                mapInstance.invalidateSize(true);
-                            }
-                        });
+                        console.log('[Map Diagnostic] Found', maps.length, 'map containers');
+                        
+                        // Force a resize event on the window to trigger map recalculation
+                        var evt = document.createEvent('UIEvents');
+                        evt.initUIEvent('resize', true, false, window, 0);
+                        window.dispatchEvent(evt);
+                        console.log('[Map Diagnostic] Dispatched resize event to window');
+                        
+                        // Use Leaflet's global map collection instead of accessing _leaflet_id directly
+                        // This avoids the cross-origin issue
+                        if (window.L && window.L.map && typeof window.L.map.invalidateSize === 'function') {
+                            // If we can access the map instance from a global variable
+                            window.L.map.invalidateSize(true);
+                            console.log('[Map Diagnostic] Invalidated map size using global L.map');
+                        } else {
+                            // Otherwise, we'll rely on the resize event we dispatched
+                            console.log('[Map Diagnostic] Using resize event for map refresh');
+                        }
                         
                         // Notify parent that map is ready
-                        window.parent.postMessage({
+                        safePostMessage({
                             type: 'mapLoaded',
                             status: 'success'
-                        }, '*');
+                        });
                     } catch (e) {
-                        console.warn('Map refresh failed:', e);
+                        console.log('[Map Diagnostic] Map refresh failed:', e);
+                        // Still try to notify parent even if refresh failed
+                        safePostMessage({
+                            type: 'mapLoaded',
+                            status: 'error',
+                            error: e.toString()
+                        });
                     }
                 }
             });
             
             // Initial map loaded notification
             setTimeout(function() {
-                window.parent.postMessage({
+                console.log('[Map Diagnostic] Map loaded, sending message to parent');
+                safePostMessage({
                     type: 'mapLoaded',
                     status: 'success'
-                }, '*');
-            }, 2000);
+                });
+            }, 1000);
         });
         </script>
         """

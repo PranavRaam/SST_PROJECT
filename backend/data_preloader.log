@@ -2326,3 +2326,410 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-06 22:45:42,455 - werkzeug - INFO - 127.0.0.1 - - [06/Apr/2025 22:45:42] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-06 22:48:02,375 - werkzeug - INFO - 127.0.0.1 - - [06/Apr/2025 22:48:02] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-06 22:48:02,380 - werkzeug - INFO - 127.0.0.1 - - [06/Apr/2025 22:48:02] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 02:35:07,042 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 02:35:07,046 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 02:35:07,060 - werkzeug - WARNING -  * Debugger is active!
+2025-04-07 02:35:07,061 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-07 19:13:33,741 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 19:13:33,744 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 19:13:33,757 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-07 19:13:33,757 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-07 19:13:33,758 - werkzeug - INFO -  * Restarting with stat
+2025-04-07 19:13:34,308 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 19:13:34,311 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 19:13:34,322 - werkzeug - WARNING -  * Debugger is active!
+2025-04-07 19:13:34,322 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-07 19:13:47,220 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:13:47,224 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:13:47,249 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map?t=1744033427227&noCache=true&stableView=true?t%3D1744033427227&_show_states=true&_show_counties=true&_show_msas=true&_t=1744033427228 HTTP/1.1" 200 -
+2025-04-07 19:13:47,269 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:13:47,273 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:13:47,333 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map?t=1744033427289&noCache=true&stableView=true?t%3D1744033427289&_show_states=true&_show_counties=true&_show_msas=true&_t=1744033427291 HTTP/1.1" 200 -
+2025-04-07 19:13:47,958 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:47] "GET /api/map?t=1744033427944&noCache=true&stableView=true?t%3D1744033427944&_show_states=true&_show_counties=true&_show_msas=true&_t=1744033427944 HTTP/1.1" 200 -
+2025-04-07 19:13:54,615 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:54] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 19:13:54,622 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 19:13:54,622 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744033434619')])
+2025-04-07 19:13:54,622 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 19:13:54,622 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 19:13:54,622 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:13:54,622 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 21.4 hours)
+2025-04-07 19:13:54,622 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 19:13:54,622 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:13:54,622 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 19:13:54,623 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:54] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744033434619 HTTP/1.1" 200 -
+2025-04-07 19:13:54,691 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 19:13:54,691 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744033434619'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744033434668')])
+2025-04-07 19:13:54,692 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 19:13:54,692 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 19:13:54,692 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:13:54,692 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 21.4 hours)
+2025-04-07 19:13:54,692 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 19:13:54,692 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:13:54,692 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 19:13:54,693 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:13:54] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744033434619&_show_states=true&_show_counties=true&_show_msas=true&_t=1744033434668 HTTP/1.1" 200 -
+2025-04-07 19:16:33,424 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:16:33] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 19:16:33,429 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 19:16:33,429 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744033593427')])
+2025-04-07 19:16:33,429 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 19:16:33,430 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 19:16:33,430 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:16:33,430 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 21.5 hours)
+2025-04-07 19:16:33,430 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 19:16:33,430 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:16:33,430 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 19:16:33,431 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:16:33] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744033593427 HTTP/1.1" 200 -
+2025-04-07 19:16:33,487 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 19:16:33,487 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744033593427'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744033593462')])
+2025-04-07 19:16:33,488 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 19:16:33,488 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 19:16:33,488 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:16:33,488 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 21.5 hours)
+2025-04-07 19:16:33,488 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 19:16:33,488 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 19:16:33,488 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 19:16:33,488 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:16:33] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744033593427&_show_states=true&_show_counties=true&_show_msas=true&_t=1744033593462 HTTP/1.1" 200 -
+2025-04-07 19:22:22,015 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:22:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:22:22,023 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:22:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:23:52,374 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:23:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:23:52,382 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:23:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:26:33,752 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:33] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:26:33,761 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:33] "GET /api/map?t=1744034193741&noCache=true&stableView=true?t%3D1744034193741&_show_states=true&_show_counties=true&_show_msas=true&_t=1744034193741 HTTP/1.1" 200 -
+2025-04-07 19:26:33,762 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:33] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 19:26:34,509 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:34] "GET /api/map?t=1744034194496&noCache=true&stableView=true?t%3D1744034194496&_show_states=true&_show_counties=true&_show_msas=true&_t=1744034194496 HTTP/1.1" 200 -
+2025-04-07 19:26:37,434 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:37] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 19:26:37,441 - __main__ - INFO - Map request for area: North Port-Sarasota-Bradenton, FL
+2025-04-07 19:26:37,441 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744034197439')])
+2025-04-07 19:26:37,441 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 19:26:37,441 - statistical_area_zoom - INFO - Generating map for statistical area: North Port-Sarasota-Bradenton, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 19:26:37,441 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_North_Port_Sarasota_Bradenton_FL_lightweight.html
+2025-04-07 19:26:37,441 - statistical_area_zoom - INFO - Loading map data...
+2025-04-07 19:26:37,441 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-07 19:26:37,441 - data_preloader - INFO - Loading all cached data...
+2025-04-07 19:26:37,458 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-07 19:26:37,459 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-07 19:26:37,459 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-07 19:26:37,459 - statistical_area_zoom - INFO - Normalized area name: north port-sarasota-bradenton, fl
+2025-04-07 19:26:37,462 - statistical_area_zoom - INFO - Trying to match city name: north port
+2025-04-07 19:26:37,466 - statistical_area_zoom - INFO - Found fuzzy city match: North Port-Bradenton-Sarasota, FL
+2025-04-07 19:26:37,466 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 19:26:37,466 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 19:26:37,466 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for North Port-Sarasota-Bradenton, FL
+2025-04-07 19:26:37,466 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for North Port-Sarasota-Bradenton, FL
+2025-04-07 19:26:37,467 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 19:26:37,467 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 19:26:37,467 - statistical_area_zoom - INFO - Center: 27.3279736259712, -82.41381765806368
+2025-04-07 19:26:37,467 - statistical_area_zoom - INFO - Bounds: -82.92417, 26.945264, -82.054349, 27.646382
+2025-04-07 19:26:37,667 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_North_Port_Sarasota_Bradenton_FL_lightweight.html
+2025-04-07 19:26:37,667 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_North_Port_Sarasota_Bradenton_FL_lightweight.html
+2025-04-07 19:26:37,667 - __main__ - INFO - Request completed in 0.23 seconds
+2025-04-07 19:26:37,668 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:37] "GET /api/statistical-area-map/North%20Port-Sarasota-Bradenton,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744034197439 HTTP/1.1" 200 -
+2025-04-07 19:26:37,705 - __main__ - INFO - Map request for area: North Port-Sarasota-Bradenton, FL
+2025-04-07 19:26:37,705 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744034197439'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744034197675')])
+2025-04-07 19:26:37,705 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 19:26:37,705 - statistical_area_zoom - INFO - Generating map for statistical area: North Port-Sarasota-Bradenton, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 19:26:37,705 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_North_Port_Sarasota_Bradenton_FL_lightweight.html
+2025-04-07 19:26:37,705 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_North_Port_Sarasota_Bradenton_FL_lightweight.html (age: 0.0 hours)
+2025-04-07 19:26:37,705 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 19:26:37,705 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_North_Port_Sarasota_Bradenton_FL_lightweight.html
+2025-04-07 19:26:37,705 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 19:26:37,706 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 19:26:37] "GET /api/statistical-area-map/North%20Port-Sarasota-Bradenton,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744034197439&_show_states=true&_show_counties=true&_show_msas=true&_t=1744034197675 HTTP/1.1" 200 -
+2025-04-07 20:08:41,130 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:41,135 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:41,182 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:41] "GET /api/map?t=1744036721159&noCache=true&stableView=true?t%3D1744036721159&_show_states=true&_show_counties=true&_show_msas=true&_t=1744036721160 HTTP/1.1" 200 -
+2025-04-07 20:08:41,209 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:41,214 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:41,977 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:41] "GET /api/map?t=1744036721957&noCache=true&stableView=true?t%3D1744036721957&_show_states=true&_show_counties=true&_show_msas=true&_t=1744036721958 HTTP/1.1" 200 -
+2025-04-07 20:08:51,683 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:51,687 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:51,711 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:51,717 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:51] "GET /api/map?t=1744036731696&noCache=true&stableView=true?t%3D1744036731696&_show_states=true&_show_counties=true&_show_msas=true&_t=1744036731697 HTTP/1.1" 200 -
+2025-04-07 20:08:51,730 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:51] "GET /api/map?t=1744036731707&noCache=true&stableView=true?t%3D1744036731707&_show_states=true&_show_counties=true&_show_msas=true&_t=1744036731710 HTTP/1.1" 200 -
+2025-04-07 20:08:51,731 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:08:52,518 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:52] "GET /api/map?t=1744036732505&noCache=true&stableView=true?t%3D1744036732505&_show_states=true&_show_counties=true&_show_msas=true&_t=1744036732506 HTTP/1.1" 200 -
+2025-04-07 20:08:56,647 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:56] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 20:08:56,657 - __main__ - INFO - Map request for area: Daphne-Fairhope-Foley, AL
+2025-04-07 20:08:56,658 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744036736655')])
+2025-04-07 20:08:56,658 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 20:08:56,658 - statistical_area_zoom - INFO - Generating map for statistical area: Daphne-Fairhope-Foley, AL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 20:08:56,658 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Daphne_Fairhope_Foley_AL_lightweight.html
+2025-04-07 20:08:56,658 - statistical_area_zoom - INFO - Loading map data...
+2025-04-07 20:08:56,658 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-07 20:08:56,658 - statistical_area_zoom - INFO - Normalized area name: daphne-fairhope-foley, al
+2025-04-07 20:08:56,660 - statistical_area_zoom - INFO - Found exact match: Daphne-Fairhope-Foley, AL
+2025-04-07 20:08:56,661 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 20:08:56,661 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 20:08:56,661 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Daphne-Fairhope-Foley, AL
+2025-04-07 20:08:56,661 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Daphne-Fairhope-Foley, AL
+2025-04-07 20:08:56,662 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 20:08:56,662 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 20:08:56,662 - statistical_area_zoom - INFO - Center: 30.66371386259956, -87.7499834924039
+2025-04-07 20:08:56,662 - statistical_area_zoom - INFO - Bounds: -88.037309, 30.146561, -87.366939, 31.318695
+2025-04-07 20:08:56,823 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Daphne_Fairhope_Foley_AL_lightweight.html
+2025-04-07 20:08:56,823 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Daphne_Fairhope_Foley_AL_lightweight.html
+2025-04-07 20:08:56,823 - __main__ - INFO - Request completed in 0.17 seconds
+2025-04-07 20:08:56,824 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:56] "GET /api/statistical-area-map/Daphne-Fairhope-Foley,%20AL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744036736655 HTTP/1.1" 200 -
+2025-04-07 20:08:56,857 - __main__ - INFO - Map request for area: Daphne-Fairhope-Foley, AL
+2025-04-07 20:08:56,857 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744036736655'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744036736830')])
+2025-04-07 20:08:56,857 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 20:08:56,857 - statistical_area_zoom - INFO - Generating map for statistical area: Daphne-Fairhope-Foley, AL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 20:08:56,857 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Daphne_Fairhope_Foley_AL_lightweight.html
+2025-04-07 20:08:56,857 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Daphne_Fairhope_Foley_AL_lightweight.html (age: 0.0 hours)
+2025-04-07 20:08:56,857 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 20:08:56,857 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Daphne_Fairhope_Foley_AL_lightweight.html
+2025-04-07 20:08:56,857 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 20:08:56,858 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:08:56] "GET /api/statistical-area-map/Daphne-Fairhope-Foley,%20AL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744036736655&_show_states=true&_show_counties=true&_show_msas=true&_t=1744036736830 HTTP/1.1" 200 -
+2025-04-07 20:53:45,625 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:45] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:45,629 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:45] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:48,070 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:48,074 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:48,793 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:48,796 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:49,895 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 20:53:49,907 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 20:53:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:05:21,863 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:05:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:05:21,867 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:05:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:05:24,417 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:05:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:05:24,422 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:05:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:15:43,731 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:15:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:15:43,735 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:15:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:17:13,506 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:17:13] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:17:13,509 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:17:13] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:17:13,591 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:17:13] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:17:13,594 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:17:13] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:19:57,895 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:19:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:19:57,899 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:19:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:20:06,801 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:06] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:20:06,812 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:06] "GET /api/map?t=1744041006783&noCache=true&stableView=true?t%3D1744041006783&_show_states=true&_show_counties=true&_show_msas=true&_t=1744041006784 HTTP/1.1" 200 -
+2025-04-07 21:20:06,813 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:06] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:20:07,810 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:07] "GET /api/map?t=1744041007793&noCache=true&stableView=true?t%3D1744041007793&_show_states=true&_show_counties=true&_show_msas=true&_t=1744041007794 HTTP/1.1" 200 -
+2025-04-07 21:20:10,293 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:10] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 21:20:10,300 - __main__ - INFO - Map request for area: Gainesville, FL
+2025-04-07 21:20:10,300 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744041010297')])
+2025-04-07 21:20:10,300 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 21:20:10,300 - statistical_area_zoom - INFO - Generating map for statistical area: Gainesville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 21:20:10,300 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Gainesville_FL_lightweight.html
+2025-04-07 21:20:10,300 - statistical_area_zoom - INFO - Cached map is 24.1 hours old, regenerating...
+2025-04-07 21:20:10,300 - statistical_area_zoom - INFO - Loading map data...
+2025-04-07 21:20:10,300 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-07 21:20:10,300 - statistical_area_zoom - INFO - Normalized area name: gainesville, fl
+2025-04-07 21:20:10,304 - statistical_area_zoom - INFO - Found exact match: Gainesville, FL
+2025-04-07 21:20:10,305 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 21:20:10,305 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 21:20:10,305 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Gainesville, FL
+2025-04-07 21:20:10,305 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Gainesville, FL
+2025-04-07 21:20:10,306 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 21:20:10,306 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 21:20:10,306 - statistical_area_zoom - INFO - Center: 29.45687294553455, -82.66762618283728
+2025-04-07 21:20:10,306 - statistical_area_zoom - INFO - Bounds: -83.346176, 28.986573, -82.050291, 29.945048
+2025-04-07 21:20:10,493 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Gainesville_FL_lightweight.html
+2025-04-07 21:20:10,493 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Gainesville_FL_lightweight.html
+2025-04-07 21:20:10,493 - __main__ - INFO - Request completed in 0.19 seconds
+2025-04-07 21:20:10,494 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:10] "GET /api/statistical-area-map/Gainesville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744041010297 HTTP/1.1" 200 -
+2025-04-07 21:20:10,535 - __main__ - INFO - Map request for area: Gainesville, FL
+2025-04-07 21:20:10,536 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744041010297'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744041010504')])
+2025-04-07 21:20:10,536 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 21:20:10,536 - statistical_area_zoom - INFO - Generating map for statistical area: Gainesville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 21:20:10,536 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Gainesville_FL_lightweight.html
+2025-04-07 21:20:10,536 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Gainesville_FL_lightweight.html (age: 0.0 hours)
+2025-04-07 21:20:10,536 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 21:20:10,536 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Gainesville_FL_lightweight.html
+2025-04-07 21:20:10,536 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 21:20:10,537 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:20:10] "GET /api/statistical-area-map/Gainesville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744041010297&_show_states=true&_show_counties=true&_show_msas=true&_t=1744041010504 HTTP/1.1" 200 -
+2025-04-07 21:22:53,986 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:22:53] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:22:53,990 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:22:53] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:23:24,306 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:23:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:23:24,310 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:23:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:27:11,236 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:27:11] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:27:11,241 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:27:11] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:30:06,011 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:30:06] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:30:06,015 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:30:06] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:37:47,117 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:37:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:37:47,121 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:37:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:40:55,026 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:40:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:40:55,030 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:40:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:43:37,597 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:43:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:43:37,600 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:43:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:43:56,045 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:43:56] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:43:56,049 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:43:56] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:26,305 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:26] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:26,309 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:26] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:27,200 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:27,205 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:32,409 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:32,419 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:32] "GET /api/map?t=1744042652395&noCache=true&stableView=true?t%3D1744042652395&_show_states=true&_show_counties=true&_show_msas=true&_t=1744042652397 HTTP/1.1" 200 -
+2025-04-07 21:47:32,421 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:47:33,419 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:47:33] "GET /api/map?t=1744042653394&noCache=true&stableView=true?t%3D1744042653394&_show_states=true&_show_counties=true&_show_msas=true&_t=1744042653395 HTTP/1.1" 200 -
+2025-04-07 21:48:29,118 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:48:29] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 21:48:29,156 - __main__ - INFO - Map request for area: Anchorage, AK
+2025-04-07 21:48:29,156 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744042709150')])
+2025-04-07 21:48:29,156 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 21:48:29,156 - statistical_area_zoom - INFO - Generating map for statistical area: Anchorage, AK with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 21:48:29,156 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_AK_lightweight.html
+2025-04-07 21:48:29,156 - statistical_area_zoom - INFO - Loading map data...
+2025-04-07 21:48:29,156 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-07 21:48:29,156 - statistical_area_zoom - INFO - Normalized area name: anchorage, ak
+2025-04-07 21:48:29,159 - statistical_area_zoom - INFO - Found exact match: Anchorage, AK
+2025-04-07 21:48:29,159 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 21:48:29,159 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 21:48:29,160 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anchorage, AK
+2025-04-07 21:48:29,160 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anchorage, AK
+2025-04-07 21:48:29,161 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 21:48:29,161 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 21:48:29,161 - statistical_area_zoom - INFO - Center: 62.223817936287546, -149.55378677182418
+2025-04-07 21:48:29,161 - statistical_area_zoom - INFO - Bounds: -153.001881, 60.732987, -146.423984, 63.477639
+2025-04-07 21:48:29,449 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_AK_lightweight.html
+2025-04-07 21:48:29,450 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_AK_lightweight.html
+2025-04-07 21:48:29,450 - __main__ - INFO - Request completed in 0.29 seconds
+2025-04-07 21:48:29,451 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:48:29] "GET /api/statistical-area-map/Anchorage,%20AK?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744042709150 HTTP/1.1" 200 -
+2025-04-07 21:48:29,518 - __main__ - INFO - Map request for area: Anchorage, AK
+2025-04-07 21:48:29,518 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744042709150'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744042709461')])
+2025-04-07 21:48:29,519 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 21:48:29,519 - statistical_area_zoom - INFO - Generating map for statistical area: Anchorage, AK with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 21:48:29,519 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_AK_lightweight.html
+2025-04-07 21:48:29,519 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_AK_lightweight.html (age: 0.0 hours)
+2025-04-07 21:48:29,519 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 21:48:29,519 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_AK_lightweight.html
+2025-04-07 21:48:29,519 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 21:48:29,520 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:48:29] "GET /api/statistical-area-map/Anchorage,%20AK?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744042709150&_show_states=true&_show_counties=true&_show_msas=true&_t=1744042709461 HTTP/1.1" 200 -
+2025-04-07 21:49:48,457 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:49:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:49:48,461 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:49:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:50:50,628 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-07 21:50:50,816 - werkzeug - INFO -  * Restarting with stat
+2025-04-07 21:50:51,965 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 21:50:51,972 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 21:50:51,990 - werkzeug - WARNING -  * Debugger is active!
+2025-04-07 21:50:51,991 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-07 21:51:16,064 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-07 21:51:16,550 - werkzeug - INFO -  * Restarting with stat
+2025-04-07 21:51:17,986 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 21:51:17,994 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 21:51:18,032 - werkzeug - WARNING -  * Debugger is active!
+2025-04-07 21:51:18,033 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-07 21:51:19,045 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-07 21:51:19,527 - werkzeug - INFO -  * Restarting with stat
+2025-04-07 21:51:20,592 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 21:51:20,599 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 21:51:20,618 - werkzeug - WARNING -  * Debugger is active!
+2025-04-07 21:51:20,618 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-07 21:52:04,237 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:52:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:52:04,242 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:52:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:53:27,502 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:53:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:53:27,507 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:53:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:54:01,817 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:01] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:54:01,824 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:01] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:54:31,687 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:31] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:54:31,696 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:31] "GET /api/map?t=1744043071673&noCache=true&stableView=true?t%3D1744043071673&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043071673 HTTP/1.1" 200 -
+2025-04-07 21:54:31,698 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:31] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:54:32,583 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:32] "GET /api/map?t=1744043072565&noCache=true&stableView=true?t%3D1744043072565&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043072566 HTTP/1.1" 200 -
+2025-04-07 21:54:36,117 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:36] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 21:54:36,125 - __main__ - INFO - Map request for area: Tuscaloosa, AL
+2025-04-07 21:54:36,125 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744043076120')])
+2025-04-07 21:54:36,125 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 21:54:36,125 - statistical_area_zoom - INFO - Generating map for statistical area: Tuscaloosa, AL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 21:54:36,126 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Tuscaloosa_AL_lightweight.html
+2025-04-07 21:54:36,126 - statistical_area_zoom - INFO - Loading map data...
+2025-04-07 21:54:36,126 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-07 21:54:36,126 - data_preloader - INFO - Loading all cached data...
+2025-04-07 21:54:36,145 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-07 21:54:36,145 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-07 21:54:36,145 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-07 21:54:36,145 - statistical_area_zoom - INFO - Normalized area name: tuscaloosa, al
+2025-04-07 21:54:36,150 - statistical_area_zoom - INFO - Found exact match: Tuscaloosa, AL
+2025-04-07 21:54:36,150 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 21:54:36,150 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 21:54:36,151 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Tuscaloosa, AL
+2025-04-07 21:54:36,151 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Tuscaloosa, AL
+2025-04-07 21:54:36,154 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 21:54:36,154 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 21:54:36,154 - statistical_area_zoom - INFO - Center: 33.11028337436263, -87.76447537115774
+2025-04-07 21:54:36,154 - statistical_area_zoom - INFO - Bounds: -88.340432, 32.480918, -87.065738, 33.609833
+2025-04-07 21:54:36,471 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Tuscaloosa_AL_lightweight.html
+2025-04-07 21:54:36,471 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Tuscaloosa_AL_lightweight.html
+2025-04-07 21:54:36,472 - __main__ - INFO - Request completed in 0.35 seconds
+2025-04-07 21:54:36,473 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:36] "GET /api/statistical-area-map/Tuscaloosa,%20AL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043076120 HTTP/1.1" 200 -
+2025-04-07 21:54:36,529 - __main__ - INFO - Map request for area: Tuscaloosa, AL
+2025-04-07 21:54:36,529 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744043076120'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744043076484')])
+2025-04-07 21:54:36,529 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 21:54:36,529 - statistical_area_zoom - INFO - Generating map for statistical area: Tuscaloosa, AL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 21:54:36,529 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Tuscaloosa_AL_lightweight.html
+2025-04-07 21:54:36,530 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Tuscaloosa_AL_lightweight.html (age: 0.0 hours)
+2025-04-07 21:54:36,530 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 21:54:36,530 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Tuscaloosa_AL_lightweight.html
+2025-04-07 21:54:36,530 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 21:54:36,530 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:54:36] "GET /api/statistical-area-map/Tuscaloosa,%20AL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043076120&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043076484 HTTP/1.1" 200 -
+2025-04-07 21:56:01,413 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-07 21:56:01,768 - werkzeug - INFO -  * Restarting with stat
+2025-04-07 21:56:03,051 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-07 21:56:03,057 - __main__ - INFO - Checking for cached data at startup
+2025-04-07 21:56:03,075 - werkzeug - WARNING -  * Debugger is active!
+2025-04-07 21:56:03,075 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-07 21:56:36,656 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:56:36] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 21:56:36,663 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 21:56:36] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 22:04:17,309 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:04:17] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 22:04:17,313 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:04:17] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 22:05:58,506 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:05:58] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 22:05:58,520 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:05:58] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-07 22:05:58,520 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:05:58] "GET /api/map?t=1744043758490&noCache=true&stableView=true?t%3D1744043758490&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043758490 HTTP/1.1" 200 -
+2025-04-07 22:05:59,834 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:05:59] "GET /api/map?t=1744043759804&noCache=true&stableView=true?t%3D1744043759804&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043759805 HTTP/1.1" 200 -
+2025-04-07 22:06:03,458 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:03] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 22:06:03,513 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 22:06:03,513 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744043763507')])
+2025-04-07 22:06:03,513 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 22:06:03,514 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 22:06:03,514 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:03,514 - statistical_area_zoom - INFO - Cached map is 24.3 hours old, regenerating...
+2025-04-07 22:06:03,514 - statistical_area_zoom - INFO - Loading map data...
+2025-04-07 22:06:03,514 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-07 22:06:03,514 - data_preloader - INFO - Loading all cached data...
+2025-04-07 22:06:03,557 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-07 22:06:03,558 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-07 22:06:03,559 - statistical_area_zoom - INFO - Data loaded in 0.04 seconds
+2025-04-07 22:06:03,559 - statistical_area_zoom - INFO - Normalized area name: phoenix-mesa-scottsdale, az
+2025-04-07 22:06:03,566 - statistical_area_zoom - INFO - Trying to match city name: phoenix
+2025-04-07 22:06:03,574 - statistical_area_zoom - INFO - Found fuzzy city match: Phoenix-Mesa-Chandler, AZ
+2025-04-07 22:06:03,575 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 22:06:03,575 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-07 22:06:03,576 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 22:06:03,576 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 22:06:03,577 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 22:06:03,577 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-07 22:06:03,577 - statistical_area_zoom - INFO - Center: 33.1844453569537, -112.0695631098796
+2025-04-07 22:06:03,578 - statistical_area_zoom - INFO - Bounds: -113.333894, 32.501624, -110.449021, 34.04817
+2025-04-07 22:06:03,814 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:03,814 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:03,815 - __main__ - INFO - Request completed in 0.30 seconds
+2025-04-07 22:06:03,817 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:03] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043763507 HTTP/1.1" 200 -
+2025-04-07 22:06:03,886 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 22:06:03,887 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744043763507'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744043763830')])
+2025-04-07 22:06:03,887 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 22:06:03,887 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 22:06:03,887 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:03,887 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 0.0 hours)
+2025-04-07 22:06:03,888 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 22:06:03,888 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:03,888 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 22:06:03,889 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:03] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043763507&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043763830 HTTP/1.1" 200 -
+2025-04-07 22:06:17,769 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:17] "GET /api/health HTTP/1.1" 200 -
+2025-04-07 22:06:17,894 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 22:06:17,895 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744043777887')])
+2025-04-07 22:06:17,895 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 22:06:17,895 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 22:06:17,895 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:17,895 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 0.0 hours)
+2025-04-07 22:06:17,895 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 22:06:17,895 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:17,895 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 22:06:17,896 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:17] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043777887 HTTP/1.1" 200 -
+2025-04-07 22:06:18,018 - __main__ - INFO - Map request for area: Phoenix-Mesa-Scottsdale, AZ
+2025-04-07 22:06:18,018 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744043777887'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744043777972')])
+2025-04-07 22:06:18,018 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-07 22:06:18,019 - statistical_area_zoom - INFO - Generating map for statistical area: Phoenix-Mesa-Scottsdale, AZ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-07 22:06:18,019 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:18,019 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html (age: 0.0 hours)
+2025-04-07 22:06:18,019 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-07 22:06:18,019 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
+2025-04-07 22:06:18,019 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-07 22:06:18,020 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:18] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043777887&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043777972 HTTP/1.1" 200 -

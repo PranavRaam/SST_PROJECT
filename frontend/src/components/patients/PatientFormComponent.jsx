@@ -34,8 +34,8 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "f2fEligibility": "yes",
         "patientRemarks": "Regular follow-up required",
         "cpoMinsCaptured": 120,
-        "newDocs": 2,
-        "newCpoDocsCreated": 1
+        "newDocs": 7,
+        "newCpoDocsCreated": 2
       },
       {
         "id": 2,
@@ -63,8 +63,8 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "f2fEligibility": "yes",
         "patientRemarks": "Patient has mobility issues",
         "cpoMinsCaptured": 95,
-        "newDocs": 3,
-        "newCpoDocsCreated": 2
+        "newDocs": 8,
+        "newCpoDocsCreated": 3
       },
       {
         "id": 3,
@@ -121,7 +121,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "f2fEligibility": "yes",
         "patientRemarks": "Post-surgical care needed",
         "cpoMinsCaptured": 150,
-        "newDocs": 4,
+        "newDocs": 8,
         "newCpoDocsCreated": 2
       },
       {
@@ -150,7 +150,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "f2fEligibility": "yes",
         "patientRemarks": "Weekly mental health check-ins",
         "cpoMinsCaptured": 20,
-        "newDocs": 2,
+        "newDocs": 5,
         "newCpoDocsCreated": 1
       },
       {
@@ -179,7 +179,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "f2fEligibility": "yes",
         "patientRemarks": "Physical therapy 3x weekly",
         "cpoMinsCaptured": 85,
-        "newDocs": 3,
+        "newDocs": 6,
         "newCpoDocsCreated": 2
       },
       {
@@ -199,45 +199,45 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "patientEpisodeFrom": "08-28-2024",
         "patientEpisodeTo": "10-26-2024",
         "renderingPractitioner": "Dr. Richard Taylor",
-        "primaryDiagnosisCodes": ["I50.9", "I48.91"],
-        "secondaryDiagnosisCodes": ["E78.5", "N18.3"],
-        "certStatus": "Document Billed",
+        "primaryDiagnosisCodes": ["I25.10", "E11.9"],
+        "secondaryDiagnosisCodes": ["I10", "Z95.1"],
+        "certStatus": "Document Signed",
         "certSignedDate": "09-10-2024",
         "recertStatus": "Document not received",
         "recertSignedDate": "",
         "f2fEligibility": "yes",
-        "patientRemarks": "Cardiac monitoring required",
-        "cpoMinsCaptured": 110,
-        "newDocs": 4,
-        "newCpoDocsCreated": 2
+        "patientRemarks": "Cardiovascular monitoring required",
+        "cpoMinsCaptured": 60,
+        "newDocs": 7,
+        "newCpoDocsCreated": 1
       },
       {
         "id": 8,
         "patientId": "P008",
         "patientLastName": "Moore",
         "patientFirstName": "James",
-        "patientMiddleName": "H",
+        "patientMiddleName": "L",
         "patientDOB": "06-25-1958",
         "contactNumber": "555-890-1234",
-        "physicianName": "Dr. Olivia Green",
+        "physicianName": "Dr. Daniel Lewis",
         "pg": "Advanced Medical Care",
         "hhah": "Quality Home Health",
-        "patientInsurance": "TRICARE",
-        "patientInEHR": "no",
-        "patientSOC": "08-15-2024",
-        "patientEpisodeFrom": "08-15-2024",
-        "patientEpisodeTo": "10-13-2024",
-        "renderingPractitioner": "Dr. William Adams",
-        "primaryDiagnosisCodes": ["G20", "R26.2"],
-        "secondaryDiagnosisCodes": ["I10", "E03.9"],
+        "patientInsurance": "Medicare",
+        "patientInEHR": "yes",
+        "patientSOC": "09-15-2024",
+        "patientEpisodeFrom": "09-15-2024",
+        "patientEpisodeTo": "11-14-2024",
+        "renderingPractitioner": "Dr. Susan Clark",
+        "primaryDiagnosisCodes": ["M54.5", "M17.0"],
+        "secondaryDiagnosisCodes": ["I10", "E11.9"],
         "certStatus": "Document Signed",
-        "certSignedDate": "08-30-2024",
-        "recertStatus": "Document Prepared",
+        "certSignedDate": "09-20-2024",
+        "recertStatus": "Document not received",
         "recertSignedDate": "",
         "f2fEligibility": "yes",
         "patientRemarks": "Needs assistance with daily activities",
         "cpoMinsCaptured": 95,
-        "newDocs": 2,
+        "newDocs": 4,
         "newCpoDocsCreated": 1
       },
       {
@@ -324,8 +324,8 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "f2fEligibility": "yes",
         "patientRemarks": "Post-chemotherapy care",
         "cpoMinsCaptured": 140,
-        "newDocs": 5,
-        "newCpoDocsCreated": 3
+        "newDocs": 7,
+        "newCpoDocsCreated": 2
       },
       {
         "id": 12,
@@ -587,97 +587,519 @@ const PatientFormComponent = ({ onPatientClick }) => {
         "cpoMinsCaptured": 120,
         "newDocs": 4,
         "newCpoDocsCreated": 2
+      },
+      {
+        "id": 21,
+        "patientId": 'P001',
+        "patientLastName": 'Smith',
+        "patientFirstName": 'John',
+        "patientMiddleName": 'A',
+        "patientDOB": '05-15-1980',
+        "contactNumber": '555-123-4567',
+        "physicianName": 'Dr. Sarah Johnson',
+        "pg": 'ABC Medical Group',
+        "hhah": 'Home Health Care Plus',
+        "patientInsurance": 'Medicare',
+        "patientInEHR": 'yes',
+        "patientSOC": '01-01-2024',
+        "patientEpisodeFrom": '01-01-2024',
+        "patientEpisodeTo": '03-31-2024',
+        "renderingPractitioner": 'Dr. Michael Chen',
+        "primaryDiagnosisCodes": ['E11.9', 'I10'],
+        "secondaryDiagnosisCodes": ['M17.9', 'E78.5'],
+        "certStatus": 'Document Signed',
+        "certSignedDate": '01-15-2024',
+        "recertStatus": 'Document Prepared',
+        "recertSignedDate": '',
+        "f2fEligibility": 'yes',
+        "patientRemarks": 'Regular follow-up required',
+        "cpoMinsCaptured": 120,
+        "newDocs": 2,
+        "newCpoDocsCreated": 1
+      },
+      {
+        "id": 22,
+        "patientId": "P002",
+        "patientLastName": "Johnson",
+        "patientFirstName": "Mary",
+        "patientMiddleName": "L",
+        "patientDOB": "08-22-1975",
+        "contactNumber": "555-987-6543",
+        "physicianName": "Dr. James Wilson",
+        "pg": "XYZ Healthcare",
+        "hhah": "Comfort Care Home Health",
+        "patientInsurance": "Blue Cross",
+        "patientInEHR": "yes",
+        "patientSOC": "02-01-2024",
+        "patientEpisodeFrom": "02-01-2024",
+        "patientEpisodeTo": "04-30-2024",
+        "renderingPractitioner": "Dr. Emily Rodriguez",
+        "primaryDiagnosisCodes": ["I25.10", "E11.65"],
+        "secondaryDiagnosisCodes": ["I10", "M17.9"],
+        "certStatus": "Document Billed",
+        "certSignedDate": "02-10-2024",
+        "recertStatus": "Document Signed",
+        "recertSignedDate": "03-15-2024",
+        "f2fEligibility": "yes",
+        "patientRemarks": "Needs physical therapy",
+        "cpoMinsCaptured": 90,
+        "newDocs": 8,
+        "newCpoDocsCreated": 1
+      },
+      {
+        "id": 23,
+        "patientId": "P003",
+        "patientLastName": "Williams",
+        "patientFirstName": "Robert",
+        "patientMiddleName": "T",
+        "patientDOB": "03-10-1965",
+        "contactNumber": "555-456-7890",
+        "physicianName": "Dr. Lisa Thompson",
+        "pg": "Sunrise Medical",
+        "hhah": "Elite Home Health",
+        "patientInsurance": "Aetna",
+        "patientInEHR": "no",
+        "patientSOC": "03-01-2024",
+        "patientEpisodeFrom": "03-01-2024",
+        "patientEpisodeTo": "05-31-2024",
+        "renderingPractitioner": "Dr. David Brown",
+        "primaryDiagnosisCodes": ["J44.9", "E11.9"],
+        "secondaryDiagnosisCodes": ["I10", "E78.5"],
+        "certStatus": "Document Prepared",
+        "certSignedDate": "",
+        "recertStatus": "Document not received",
+        "recertSignedDate": "",
+        "f2fEligibility": "no",
+        "patientRemarks": "High risk patient",
+        "cpoMinsCaptured": 60,
+        "newDocs": 7,
+        "newCpoDocsCreated": 3
       }
-    
-    ,{
-      id: 21,
-      patientId: 'P001',
-      patientLastName: 'Smith',
-      patientFirstName: 'John',
-      patientMiddleName: 'A',
-      patientDOB: '05-15-1980',
-      contactNumber: '555-123-4567',
-      physicianName: 'Dr. Sarah Johnson',
-      pg: 'ABC Medical Group',
-      hhah: 'Home Health Care Plus',
-      patientInsurance: 'Medicare',
-      patientInEHR: 'yes',
-      patientSOC: '01-01-2024',
-      patientEpisodeFrom: '01-01-2024',
-      patientEpisodeTo: '03-31-2024',
-      renderingPractitioner: 'Dr. Michael Chen',
-      primaryDiagnosisCodes: ['E11.9', 'I10'],
-      secondaryDiagnosisCodes: ['M17.9', 'E78.5'],
-      certStatus: 'Document Signed',
-      certSignedDate: '01-15-2024',
-      recertStatus: 'Document Prepared',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Regular follow-up required',
-      cpoMinsCaptured: 120,
-      newDocs: 2,
-      newCpoDocsCreated: 1
-    },
-    {
-      id: 22,
-      patientId: 'P002',
-      patientLastName: 'Johnson',
-      patientFirstName: 'Mary',
-      patientMiddleName: 'L',
-      patientDOB: '08-22-1975',
-      contactNumber: '555-987-6543',
-      physicianName: 'Dr. James Wilson',
-      pg: 'XYZ Healthcare',
-      hhah: 'Comfort Care Home Health',
-      patientInsurance: 'Blue Cross',
-      patientInEHR: 'yes',
-      patientSOC: '02-01-2024',
-      patientEpisodeFrom: '02-01-2024',
-      patientEpisodeTo: '04-30-2024',
-      renderingPractitioner: 'Dr. Emily Rodriguez',
-      primaryDiagnosisCodes: ['I25.10', 'E11.65'],
-      secondaryDiagnosisCodes: ['I10', 'M17.9'],
-      certStatus: 'Document Billed',
-      certSignedDate: '02-10-2024',
-      recertStatus: 'Document Signed',
-      recertSignedDate: '03-15-2024',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Needs physical therapy',
-      cpoMinsCaptured: 90,
-      newDocs: 0,
-      newCpoDocsCreated: 3
-    },
-    {
-      id: 23,
-      patientId: 'P003',
-      patientLastName: 'Williams',
-      patientFirstName: 'Robert',
-      patientMiddleName: 'T',
-      patientDOB: '03-10-1965',
-      contactNumber: '555-456-7890',
-      physicianName: 'Dr. Lisa Thompson',
-      pg: 'Sunrise Medical',
-      hhah: 'Elite Home Health',
-      patientInsurance: 'Aetna',
-      patientInEHR: 'no',
-      patientSOC: '03-01-2024',
-      patientEpisodeFrom: '03-01-2024',
-      patientEpisodeTo: '05-31-2024',
-      renderingPractitioner: 'Dr. David Brown',
-      primaryDiagnosisCodes: ['J44.9', 'E11.9'],
-      secondaryDiagnosisCodes: ['I10', 'E78.5'],
-      certStatus: 'Document Prepared',
-      certSignedDate: '',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'no',
-      patientRemarks: 'High risk patient',
-      cpoMinsCaptured: 60,
-      newDocs: 1,
-      newCpoDocsCreated: 2
-    }
-  ]);
+    ]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [searchTerm, setSearchTerm] = useState({
+    physicianName: '',
+    pg: '',
+    hhah: '',
+    renderingPractitioner: ''
+  });
+  const [formData, setFormData] = useState({
+    patientId: '',
+    patientLastName: '',
+    patientFirstName: '',
+    patientMiddleName: '',
+    patientDOB: '',
+    contactNumber: '',
+    physicianName: '',
+    pg: '',
+    hhah: '',
+    patientInsurance: '',
+    patientInEHR: '',
+    patientSOC: '',
+    patientEpisodeFrom: '',
+    patientEpisodeTo: '',
+    renderingPractitioner: '',
+    primaryDiagnosisCodes: [],
+    secondaryDiagnosisCodes: [],
+    certStatus: '',
+    certSignedDate: '',
+    recertStatus: '',
+    recertSignedDate: '',
+    f2fEligibility: '',
+    patientRemarks: '',
+    cpoMinsCaptured: 0,
+    newDocs: 0,
+    newCpoDocsCreated: 0
+  });
+  const [errors, setErrors] = useState({});
+  const [datePickerState, setDatePickerState] = useState({
+    patientDOB: null,
+    patientSOC: null,
+    patientEpisodeFrom: null,
+    patientEpisodeTo: null
+  });
+  const [newPrimaryCode, setNewPrimaryCode] = useState('');
+  const [newSecondaryCode, setNewSecondaryCode] = useState('');
+  const [filterType, setFilterType] = useState('cert');
+
+  // Options for searchable dropdowns
+  const physicianOptions = useMemo(() => [...new Set(patients.map(p => p.physicianName).filter(Boolean))], [patients]);
+  const pgOptions = useMemo(() => [...new Set(patients.map(p => p.pg).filter(Boolean))], [patients]);
+  const hhahOptions = useMemo(() => [...new Set(patients.map(p => p.hhah).filter(Boolean))], [patients]);
+  const practitionerOptions = useMemo(() => [...new Set(patients.map(p => p.renderingPractitioner).filter(Boolean))], [patients]);
+
+  // Filtered options for searchable dropdowns
+  const filteredPhysicianOptions = useMemo(() => 
+    physicianOptions.filter(option => 
+      option.toLowerCase().includes(searchTerm.physicianName.toLowerCase())
+    ), [physicianOptions, searchTerm.physicianName]);
+
+  const filteredPgOptions = useMemo(() => 
+    pgOptions.filter(option => 
+      option.toLowerCase().includes(searchTerm.pg.toLowerCase())
+    ), [pgOptions, searchTerm.pg]);
+
+  const filteredHhahOptions = useMemo(() => 
+    hhahOptions.filter(option => 
+      option.toLowerCase().includes(searchTerm.hhah.toLowerCase())
+    ), [hhahOptions, searchTerm.hhah]);
+
+  const filteredPractitionerOptions = useMemo(() => 
+    practitionerOptions.filter(option => 
+      option.toLowerCase().includes(searchTerm.renderingPractitioner.toLowerCase())
+    ), [practitionerOptions, searchTerm.renderingPractitioner]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (editingPatient) {
+      setEditingPatient({
+        ...editingPatient,
+        [name]: value
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
+  };
+
+  const handleDatePickerChange = (date, field) => {
+    setDatePickerState({
+      ...datePickerState,
+      [field]: date
+    });
+    
+    if (date) {
+      const formattedDate = date.toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric'
+      }).replace(/\//g, '-');
+      
+      if (editingPatient) {
+        setEditingPatient({
+          ...editingPatient,
+          [field]: formattedDate
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [field]: formattedDate
+        });
+      }
+    } else {
+      if (editingPatient) {
+        setEditingPatient({
+          ...editingPatient,
+          [field]: ''
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [field]: ''
+        });
+      }
+    }
+  };
+
+  const handleAddPrimaryCode = () => {
+    if (!newPrimaryCode.trim()) return;
+    
+    if (editingPatient) {
+      setEditingPatient({
+        ...editingPatient,
+        primaryDiagnosisCodes: [...editingPatient.primaryDiagnosisCodes, newPrimaryCode.trim()]
+      });
+    } else {
+      setFormData({
+        ...formData,
+        primaryDiagnosisCodes: [...formData.primaryDiagnosisCodes, newPrimaryCode.trim()]
+      });
+    }
+    
+    setNewPrimaryCode('');
+  };
+
+  const handleRemovePrimaryCode = (index) => {
+    if (editingPatient) {
+      const updatedCodes = [...editingPatient.primaryDiagnosisCodes];
+      updatedCodes.splice(index, 1);
+      setEditingPatient({
+        ...editingPatient,
+        primaryDiagnosisCodes: updatedCodes
+      });
+    } else {
+      const updatedCodes = [...formData.primaryDiagnosisCodes];
+      updatedCodes.splice(index, 1);
+      setFormData({
+        ...formData,
+        primaryDiagnosisCodes: updatedCodes
+      });
+    }
+  };
+
+  const handleAddSecondaryCode = () => {
+    if (!newSecondaryCode.trim()) return;
+    
+    if (editingPatient) {
+      setEditingPatient({
+        ...editingPatient,
+        secondaryDiagnosisCodes: [...editingPatient.secondaryDiagnosisCodes, newSecondaryCode.trim()]
+      });
+    } else {
+      setFormData({
+        ...formData,
+        secondaryDiagnosisCodes: [...formData.secondaryDiagnosisCodes, newSecondaryCode.trim()]
+      });
+    }
+    
+    setNewSecondaryCode('');
+  };
+
+  const handleRemoveSecondaryCode = (index) => {
+    if (editingPatient) {
+      const updatedCodes = [...editingPatient.secondaryDiagnosisCodes];
+      updatedCodes.splice(index, 1);
+      setEditingPatient({
+        ...editingPatient,
+        secondaryDiagnosisCodes: updatedCodes
+      });
+    } else {
+      const updatedCodes = [...formData.secondaryDiagnosisCodes];
+      updatedCodes.splice(index, 1);
+      setFormData({
+        ...formData,
+        secondaryDiagnosisCodes: updatedCodes
+      });
+    }
+  };
+
+  const handleSearchChange = (field, value) => {
+    setSearchTerm({
+      ...searchTerm,
+      [field]: value
+    });
+    
+    if (editingPatient) {
+      setEditingPatient({
+        ...editingPatient,
+        [field]: value
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [field]: value
+      });
+    }
+  };
+
+  const handleSelectOption = (field, value) => {
+    if (editingPatient) {
+      setEditingPatient({
+        ...editingPatient,
+        [field]: value
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [field]: value
+      });
+    }
+    
+    setSearchTerm({
+      ...searchTerm,
+      [field]: ''
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Required fields validation
+    if (!formData.patientId.trim()) newErrors.patientId = 'Patient ID is required';
+    if (!formData.patientLastName.trim()) newErrors.patientLastName = 'Last name is required';
+    if (!formData.patientFirstName.trim()) newErrors.patientFirstName = 'First name is required';
+    if (!formData.patientDOB) newErrors.patientDOB = 'Date of birth is required';
+    if (!formData.physicianName) newErrors.physicianName = 'Physician name is required';
+    if (!formData.pg) newErrors.pg = 'PG is required';
+    if (!formData.hhah) newErrors.hhah = 'HHAH is required';
+    if (!formData.patientInEHR) newErrors.patientInEHR = 'EHR status is required';
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    const newPatient = {
+      id: patients.length > 0 ? Math.max(...patients.map(p => p.id)) + 1 : 1,
+      ...formData,
+      cpoMinsCaptured: 0,
+      newDocs: 0,
+      newCpoDocsCreated: 0
+    };
+    
+    setPatients([...patients, newPatient]);
+    
+    // Reset form state
+    setFormData({
+      patientId: '',
+      patientLastName: '',
+      patientFirstName: '',
+      patientMiddleName: '',
+      patientDOB: '',
+      contactNumber: '',
+      physicianName: '',
+      pg: '',
+      hhah: '',
+      patientInsurance: '',
+      patientInEHR: '',
+      patientSOC: '',
+      patientEpisodeFrom: '',
+      patientEpisodeTo: '',
+      renderingPractitioner: '',
+      primaryDiagnosisCodes: [],
+      secondaryDiagnosisCodes: [],
+      certStatus: '',
+      certSignedDate: '',
+      recertStatus: '',
+      recertSignedDate: '',
+      f2fEligibility: '',
+      patientRemarks: '',
+      cpoMinsCaptured: 0,
+      newDocs: 0,
+      newCpoDocsCreated: 0
+    });
+    
+    setDatePickerState({
+      patientDOB: null,
+      patientSOC: null,
+      patientEpisodeFrom: null,
+      patientEpisodeTo: null
+    });
+    
+    setShowModal(false);
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    
+    const updatedPatients = patients.map(patient => 
+      patient.id === editingPatient.id ? editingPatient : patient
+    );
+    
+    setPatients(updatedPatients);
+    setEditingPatient(null);
+    setShowModal(false);
+  };
+
+  const handleEditPatient = (patientId) => {
+    const patient = patients.find(p => p.id === patientId);
+    if (patient) {
+      setEditingPatient(patient);
+      
+      // Set date picker states
+      setDatePickerState({
+        patientDOB: patient.patientDOB ? new Date(patient.patientDOB.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val))) : null,
+        patientSOC: patient.patientSOC ? new Date(patient.patientSOC.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val))) : null,
+        patientEpisodeFrom: patient.patientEpisodeFrom ? new Date(patient.patientEpisodeFrom.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val))) : null,
+        patientEpisodeTo: patient.patientEpisodeTo ? new Date(patient.patientEpisodeTo.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val))) : null
+      });
+      
+      setShowModal(true);
+    }
+  };
+
+  const handleMonthYearSubmit = () => {
+    if (!selectedMonth || !selectedYear) return;
+    
+    const startDate = new Date(selectedYear, selectedMonth - 1, 1);
+    const endDate = new Date(selectedYear, selectedMonth, 0);
+    
+    let filtered = [];
+    
+    if (filterType === 'cert') {
+      // Filter patients based on cert/recert signed date
+      filtered = patients.filter(patient => {
+        if (patient.certSignedDate) {
+          const certDate = new Date(patient.certSignedDate.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val)));
+          return certDate >= startDate && certDate <= endDate;
+        }
+        if (patient.recertSignedDate) {
+          const recertDate = new Date(patient.recertSignedDate.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val)));
+          return recertDate >= startDate && recertDate <= endDate;
+        }
+        return false;
+      });
+    } else {
+      // Filter patients based on episode date range
+      filtered = patients.filter(patient => {
+        if (patient.patientEpisodeFrom && patient.patientEpisodeTo) {
+          const episodeFrom = new Date(patient.patientEpisodeFrom.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val)));
+          const episodeTo = new Date(patient.patientEpisodeTo.split('-').map((val, idx) => idx === 2 ? parseInt(val) + 2000 : parseInt(val)));
+          
+          return (
+            (episodeFrom >= startDate && episodeFrom <= endDate) ||
+            (episodeTo >= startDate && episodeTo <= endDate) ||
+            (episodeFrom <= startDate && episodeTo >= endDate)
+          );
+        }
+        return false;
+      });
+    }
+    
+    setFilteredPatients(filtered);
+    setShowMonthPicker(false);
+  };
+
+  const handleDownloadExcel = () => {
+    const workbook = XLSX.utils.book_new();
+    
+    // Format the data for Excel
+    const excelData = filteredPatients.map(patient => ({
+      "Patient ID": patient.patientId,
+      "Last Name": patient.patientLastName,
+      "First Name": patient.patientFirstName,
+      "Middle Name": patient.patientMiddleName,
+      "DOB": patient.patientDOB,
+      "Contact": patient.contactNumber,
+      "Physician": patient.physicianName,
+      "PG": patient.pg,
+      "HHAH": patient.hhah,
+      "Insurance": patient.patientInsurance,
+      "In EHR": patient.patientInEHR,
+      "SOC Date": patient.patientSOC,
+      "Episode From": patient.patientEpisodeFrom,
+      "Episode To": patient.patientEpisodeTo,
+      "Rendering Practitioner": patient.renderingPractitioner,
+      "Primary Diagnosis": patient.primaryDiagnosisCodes.join(", "),
+      "Secondary Diagnosis": patient.secondaryDiagnosisCodes.join(", "),
+      "Cert Status": patient.certStatus,
+      "Cert Signed Date": patient.certSignedDate,
+      "Recert Status": patient.recertStatus,
+      "Recert Signed Date": patient.recertSignedDate,
+      "F2F Eligibility": patient.f2fEligibility,
+      "Remarks": patient.patientRemarks,
+      "CPO Mins": patient.cpoMinsCaptured,
+      "New Docs": patient.newDocs,
+      "New CPO Docs": patient.newCpoDocsCreated
+    }));
+    
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Patients");
+    
+    // Generate Excel file
+    const monthName = new Date(2000, selectedMonth - 1).toLocaleString('default', { month: 'long' });
+    XLSX.writeFile(workbook, `Patients_${monthName}_${selectedYear}.xlsx`);
+  };
 
   // Add filtered patients based on search
   const filteredPatientsBySearch = useMemo(() => {
@@ -692,458 +1114,30 @@ const PatientFormComponent = ({ onPatientClick }) => {
     );
   }, [patients, searchQuery]);
 
-  // Sort patients - New CPO Docs in ascending order and New Docs in descending order
+  // Sort patients - New Docs in descending order and New CPO Docs in ascending order
   const sortedPatients = useMemo(() => {
-    return [...filteredPatientsBySearch].sort((a, b) => {
-      // First sort by newCpoDocsCreated in ascending order
-      if (a.newCpoDocsCreated !== b.newCpoDocsCreated) {
-        return a.newCpoDocsCreated - b.newCpoDocsCreated;
+    // First normalize the data to ensure consistent types
+    const normalizedData = filteredPatientsBySearch.map(patient => ({
+      ...patient,
+      newDocs: parseInt(patient.newDocs, 10) || 0,
+      newCpoDocsCreated: parseInt(patient.newCpoDocsCreated, 10) || 0
+    }));
+    
+    return [...normalizedData].sort((a, b) => {
+      // Primary sort: New Docs (descending)
+      if (a.newDocs !== b.newDocs) {
+        return b.newDocs - a.newDocs; // Descending order
       }
-      // If newCpoDocsCreated is equal, sort by newDocs in descending order
-      return b.newDocs - a.newDocs;
+      
+      // Secondary sort: New CPO Docs (ascending)
+      if (a.newCpoDocsCreated !== b.newCpoDocsCreated) {
+        return a.newCpoDocsCreated - b.newCpoDocsCreated; // Ascending order
+      }
+      
+      // Tertiary sort: Patient ID (ascending) for consistent ordering
+      return a.patientId.localeCompare(b.patientId);
     });
   }, [filteredPatientsBySearch]);
-
-  const [searchTerm, setSearchTerm] = useState({
-    physicianName: '',
-    pg: '',
-    hhah: '',
-    renderingPractitioner: ''
-  });
-
-  // Sample data for dropdowns
-  const physicianOptions = [
-    'Dr. Sarah Johnson',
-    'Dr. Michael Chen',
-    'Dr. Emily Rodriguez',
-    'Dr. James Wilson',
-    'Dr. Lisa Thompson',
-    'Dr. Robert Martinez',
-    'Dr. Jennifer Lee',
-    'Dr. David Brown',
-    'Dr. Patricia Davis',
-    'Dr. William Taylor'
-  ];
-
-  const pgOptions = [
-    'ABC Medical Group',
-    'XYZ Healthcare',
-    'Sunrise Medical',
-    'Pacific Health',
-    'Coastal Medical',
-    'Metro Health Group',
-    'Valley Medical',
-    'Mountain View Healthcare',
-    'City Medical Group',
-    'Regional Health Services'
-  ];
-
-  const hhahOptions = [
-    'Home Health Care Plus',
-    'Comfort Care Home Health',
-    'Elite Home Health',
-    'CareFirst Home Health',
-    'Sunshine Home Health',
-    'Quality Care Home Health',
-    'Family First Home Health',
-    'HealthBridge Home Care',
-    'CarePlus Home Health',
-    'Wellness Home Health'
-  ];
-
-  const practitionerOptions = [
-    'Dr. Sarah Johnson',
-    'Dr. Michael Chen',
-    'Dr. Emily Rodriguez',
-    'Dr. James Wilson',
-    'Dr. Lisa Thompson',
-    'Dr. Robert Martinez',
-    'Dr. Jennifer Lee',
-    'Dr. David Brown',
-    'Dr. Patricia Davis',
-    'Dr. William Taylor'
-  ];
-
-  // Filtered options based on search term
-  const filteredPhysicianOptions = useMemo(() => 
-    physicianOptions.filter(option => 
-      option.toLowerCase().includes(searchTerm.physicianName.toLowerCase())
-    ), [searchTerm.physicianName]);
-
-  const filteredPgOptions = useMemo(() => 
-    pgOptions.filter(option => 
-      option.toLowerCase().includes(searchTerm.pg.toLowerCase())
-    ), [searchTerm.pg]);
-
-  const filteredHhahOptions = useMemo(() => 
-    hhahOptions.filter(option => 
-      option.toLowerCase().includes(searchTerm.hhah.toLowerCase())
-    ), [searchTerm.hhah]);
-
-  const filteredPractitionerOptions = useMemo(() => 
-    practitionerOptions.filter(option => 
-      option.toLowerCase().includes(searchTerm.renderingPractitioner.toLowerCase())
-    ), [searchTerm.renderingPractitioner]);
-
-  const [formData, setFormData] = useState({
-    // Mandatory fields
-    patientId: '',
-    patientLastName: '',
-    patientFirstName: '',
-    patientMiddleName: '',
-    patientDOB: '',
-    physicianName: '',
-    pg: '',
-    hhah: '',
-    patientInsurance: '',
-    patientInEHR: '',
-    
-    // Optional fields
-    contactNumber: '',
-    patientSOC: '',
-    patientEpisodeFrom: '',
-    patientEpisodeTo: '',
-    renderingPractitioner: '',
-    primaryDiagnosisCodes: [],
-    secondaryDiagnosisCodes: [],
-    certStatus: '',
-    recertStatus: '',
-    f2fEligibility: '',
-    patientRemarks: ''
-  });
-
-  const [errors, setErrors] = useState({});
-  const [newPrimaryCode, setNewPrimaryCode] = useState('');
-  const [newSecondaryCode, setNewSecondaryCode] = useState('');
-  const [showMonthPicker, setShowMonthPicker] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState('');
-  const [selectedYear, setSelectedYear] = useState('');
-  const [filteredPatients, setFilteredPatients] = useState([]);
-
-  const [datePickerState, setDatePickerState] = useState({
-    patientDOB: null,
-    patientSOC: null,
-    patientEpisodeFrom: null,
-    patientEpisodeTo: null
-  });
-
-  const [filterType, setFilterType] = useState('cert'); // 'cert' or 'cpo'
-
-  const handleDatePickerChange = (date, field) => {
-    setDatePickerState(prev => ({ ...prev, [field]: date }));
-    if (date) {
-      const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}-${date.getFullYear()}`;
-      setFormData(prev => ({ ...prev, [field]: formattedDate }));
-    } else {
-      setFormData(prev => ({ ...prev, [field]: '' }));
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSearchChange = (field, value) => {
-    setSearchTerm(prev => ({ ...prev, [field]: value }));
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSelectOption = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    setSearchTerm(prev => ({ ...prev, [field]: '' }));
-  };
-
-  const handleClearOption = (field) => {
-    setFormData(prev => ({ ...prev, [field]: '' }));
-    setSearchTerm(prev => ({ ...prev, [field]: '' }));
-  };
-
-  const handleAddPrimaryCode = () => {
-    if (newPrimaryCode.trim()) {
-      setFormData(prev => ({
-        ...prev,
-        primaryDiagnosisCodes: [...prev.primaryDiagnosisCodes, newPrimaryCode.trim()]
-      }));
-      setNewPrimaryCode('');
-    }
-  };
-
-  const handleAddSecondaryCode = () => {
-    if (newSecondaryCode.trim()) {
-      setFormData(prev => ({
-        ...prev,
-        secondaryDiagnosisCodes: [...prev.secondaryDiagnosisCodes, newSecondaryCode.trim()]
-      }));
-      setNewSecondaryCode('');
-    }
-  };
-
-  const handleRemovePrimaryCode = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      primaryDiagnosisCodes: prev.primaryDiagnosisCodes.filter((_, i) => i !== index)
-    }));
-  };
-
-  const handleRemoveSecondaryCode = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      secondaryDiagnosisCodes: prev.secondaryDiagnosisCodes.filter((_, i) => i !== index)
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    // Required fields validation
-    if (!formData.patientId.trim()) newErrors.patientId = 'Required';
-    if (!formData.patientLastName.trim()) newErrors.patientLastName = 'Required';
-    if (!formData.patientFirstName.trim()) newErrors.patientFirstName = 'Required';
-    if (!formData.patientDOB.trim()) newErrors.patientDOB = 'Required';
-    if (!formData.physicianName.trim()) newErrors.physicianName = 'Required';
-    if (!formData.pg.trim()) newErrors.pg = 'Required';
-    if (!formData.hhah.trim()) newErrors.hhah = 'Required';
-    if (!formData.patientInEHR.trim()) newErrors.patientInEHR = 'Required';
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      const newPatient = {
-        ...formData,
-        id: Date.now(),
-        cpoMinsCaptured: 0,
-        newDocs: 0,
-        newCpoDocsCreated: 0
-      };
-      setPatients([...patients, newPatient]);
-      setShowModal(false);
-      setFormData({
-        patientId: '',
-        patientLastName: '',
-        patientFirstName: '',
-        patientMiddleName: '',
-        patientDOB: '',
-        physicianName: '',
-        pg: '',
-        hhah: '',
-        patientInsurance: '',
-        patientInEHR: '',
-        contactNumber: '',
-        patientSOC: '',
-        patientEpisodeFrom: '',
-        patientEpisodeTo: '',
-        renderingPractitioner: '',
-        primaryDiagnosisCodes: [],
-        secondaryDiagnosisCodes: [],
-        certStatus: '',
-        recertStatus: '',
-        f2fEligibility: '',
-        patientRemarks: ''
-      });
-      setNewPrimaryCode('');
-      setNewSecondaryCode('');
-    }
-  };
-
-  const handleViewPatient = (patient) => {
-    if (onPatientClick) {
-      onPatientClick(patient);
-    }
-  };
-
-  const handleEditPatient = (id) => {
-    const patientToEdit = patients.find(p => p.id === id);
-    setEditingPatient(patientToEdit);
-    setShowModal(true);
-  };
-
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    setPatients(patients.map(patient => 
-      patient.id === editingPatient.id ? editingPatient : patient
-    ));
-    setShowModal(false);
-    setEditingPatient(null);
-  };
-
-  const handleMonthYearSelect = () => {
-    console.log('Opening month picker modal');
-    setShowMonthPicker(true);
-  };
-
-  const handleMonthYearSubmit = () => {
-    console.log('Submitting month/year selection');
-    console.log('Selected Month:', selectedMonth);
-    console.log('Selected Year:', selectedYear);
-    console.log('Filter Type:', filterType);
-    
-    if (!selectedMonth || !selectedYear) {
-      console.log('Month or Year not selected');
-      return;
-    }
-
-    const startDate = new Date(selectedYear, selectedMonth - 1, 1);
-    const endDate = new Date(selectedYear, selectedMonth, 0);
-    
-    console.log('Start Date:', startDate);
-    console.log('End Date:', endDate);
-
-    const filtered = patients.filter(patient => {
-      // Parse the dates properly
-      const parseDate = (dateStr) => {
-        if (!dateStr) return null;
-        const [month, day, year] = dateStr.split('-').map(Number);
-        return new Date(year, month - 1, day);
-      };
-
-      let isSignedInMonth = false;
-
-      if (filterType === 'cert') {
-        // Check cert/recert dates
-        const certSignedDate = patient.certStatus === 'Document Signed' || patient.certStatus === 'Document Billed' 
-          ? parseDate(patient.certSignedDate)
-          : null;
-        const recertSignedDate = patient.recertStatus === 'Document Signed' || patient.recertStatus === 'Document Billed' 
-          ? parseDate(patient.recertSignedDate)
-          : null;
-
-        isSignedInMonth = (certSignedDate && certSignedDate >= startDate && certSignedDate <= endDate) ||
-                         (recertSignedDate && recertSignedDate >= startDate && recertSignedDate <= endDate);
-      } else {
-        // Check all CPO document dates
-        const cpoDocuments = [
-          { date: patient.insuranceSignedDate, status: patient.insuranceStatus },
-          { date: patient.paymentSignedDate, status: patient.paymentStatus },
-          // Add other CPO documents here
-        ];
-
-        // Count documents signed in the selected month
-        const signedDocsInMonth = cpoDocuments.filter(doc => {
-          const signedDate = doc.status === 'Document Signed' || doc.status === 'Document Billed'
-            ? parseDate(doc.date)
-            : null;
-          return signedDate && signedDate >= startDate && signedDate <= endDate;
-        }).length;
-
-        // Calculate CPO minutes (2 minutes per document)
-        const cpoMinutes = signedDocsInMonth * 2;
-
-        console.log('Patient:', patient.patientLastName);
-        console.log('Signed Docs in Month:', signedDocsInMonth);
-        console.log('CPO Minutes:', cpoMinutes);
-
-        isSignedInMonth = signedDocsInMonth > 0 && cpoMinutes >= 30;
-      }
-
-      // Check if total ICD codes >= 3
-      const totalIcdCodes = [...(patient.primaryDiagnosisCodes || []), ...(patient.secondaryDiagnosisCodes || [])].length;
-      const hasEnoughIcdCodes = totalIcdCodes >= 3;
-
-      // Check if EHR is yes
-      const hasEhr = patient.patientInEHR === 'yes';
-
-      console.log('Patient:', patient.patientLastName);
-      console.log('Is Signed in Month:', isSignedInMonth);
-      console.log('Has Enough ICD Codes:', hasEnoughIcdCodes);
-      console.log('Has EHR:', hasEhr);
-
-      return isSignedInMonth && hasEnoughIcdCodes && hasEhr;
-    });
-
-    console.log('Filtered Patients:', filtered);
-    setFilteredPatients(filtered);
-    setShowMonthPicker(false);
-  };
-
-  // Add useEffect to track filteredPatients changes
-  React.useEffect(() => {
-    console.log('filteredPatients updated:', filteredPatients);
-  }, [filteredPatients]);
-
-  // Add useEffect to track showMonthPicker changes
-  React.useEffect(() => {
-    console.log('showMonthPicker updated:', showMonthPicker);
-  }, [showMonthPicker]);
-
-  // Add useEffect to track selectedMonth and selectedYear changes
-  React.useEffect(() => {
-    console.log('selectedMonth updated:', selectedMonth);
-    console.log('selectedYear updated:', selectedYear);
-  }, [selectedMonth, selectedYear]);
-
-  const handleDownloadExcel = () => {
-    if (!filteredPatients.length) return;
-
-    const excelData = filteredPatients.map(patient => {
-      const allIcdCodes = [...(patient.primaryDiagnosisCodes || []), ...(patient.secondaryDiagnosisCodes || [])];
-      const startDate = new Date(selectedYear, selectedMonth - 1, 1);
-      const endDate = new Date(selectedYear, selectedMonth, 0);
-      const episodeFrom = new Date(patient.patientEpisodeFrom);
-      const episodeTo = new Date(patient.patientEpisodeTo);
-
-      // Format date as MM-DD-YYYY
-      const formatDate = (date) => {
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        return `${month}-${day}-${date.getFullYear()}`;
-      };
-
-      // Calculate DOS dates based on filter type
-      let dosFrom, dosTo;
-      
-      if (filterType === 'cert') {
-        // For cert/recert, both DOS dates are the episode from date
-        dosFrom = patient.patientEpisodeFrom;
-        dosTo = patient.patientEpisodeFrom;
-      } else {
-        // For CPO, use the current logic
-        if (episodeFrom > startDate) {
-          // If episode starts after month start, use episode from + 1 day
-          const nextDay = new Date(episodeFrom);
-          nextDay.setDate(nextDay.getDate() + 1);
-          dosFrom = formatDate(nextDay);
-        } else {
-          // Use month start
-          dosFrom = formatDate(startDate);
-        }
-
-        if (episodeTo < endDate) {
-          // If episode ends before month end, use episode to - 1 day
-          const prevDay = new Date(episodeTo);
-          prevDay.setDate(prevDay.getDate() - 1);
-          dosTo = formatDate(prevDay);
-        } else {
-          // Use month end
-          dosTo = formatDate(endDate);
-        }
-      }
-
-      return {
-        'Full Name': `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName}`,
-        'ICD Code 1': allIcdCodes[0] || '',
-        'ICD Code 2': allIcdCodes[1] || '',
-        'ICD Code 3': allIcdCodes[2] || '',
-        'SOC': patient.patientSOC,
-        'Episode From': patient.patientEpisodeFrom,
-        'Episode To': patient.patientEpisodeTo,
-        'Billing Code': 'G0181',
-        'Line 1 DOS FROM': dosFrom,
-        'Line 1 DOS TO': dosTo,
-        'Line Charges': '113',
-        'Line 1 Units': '1',
-        'Line 1 POS': '11'
-      };
-    });
-
-    const ws = XLSX.utils.json_to_sheet(excelData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Patient Data");
-    XLSX.writeFile(wb, `patient_data_${selectedMonth}_${selectedYear}.xlsx`);
-  };
 
   return (
     <div className="patient-form-container">
@@ -1707,8 +1701,8 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 <th>HHAH</th>
                 <th>CPO Mins</th>
                 <th>Remarks</th>
-                <th>New Docs</th>
-                <th>New CPO Docs</th>
+                <th data-sort-info="Primary sort: always in descending order">New Docs</th>
+                <th data-sort-info="Secondary sort: always in ascending order">New CPO Docs</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -1717,7 +1711,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 <tr key={patient.id}>
                   <td 
                     className="patient-name-cell"
-                    onClick={() => handleViewPatient(patient)}
+                    onClick={() => onPatientClick(patient)}
                   >
                     {`${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName}`}
                   </td>
