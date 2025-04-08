@@ -1,9 +1,9 @@
 // servicestable.jsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import './ServicesTable.css';
 
-const ServicesTable = ({ data, onSort }) => {
+const ServicesTable = ({ data }) => {
   const [sortConfig, setSortConfig] = useState({
     primaryKey: 'daysLeftForBilling',
     primaryDirection: 'asc',
@@ -11,49 +11,77 @@ const ServicesTable = ({ data, onSort }) => {
     secondaryDirection: 'desc'
   });
 
-  useEffect(() => {
-    // Apply initial sorting when component mounts
-    const sortedData = [...data].sort((a, b) => {
-      // Primary sort: Days left (ascending)
-      if (a.daysLeftForBilling !== b.daysLeftForBilling) {
-        return a.daysLeftForBilling - b.daysLeftForBilling;
+  // Create a stable sort function
+  const sortData = useCallback((dataToSort, config) => {
+    const { primaryKey, primaryDirection, secondaryKey, secondaryDirection } = config;
+    
+    return [...dataToSort].sort((a, b) => {
+      // Handle primary sort
+      if (primaryKey === 'daysLeftForBilling' || primaryKey === 'docsToBeSignedCount') {
+        // Numeric comparison for numeric fields
+        if (a[primaryKey] !== b[primaryKey]) {
+          return primaryDirection === 'asc'
+            ? a[primaryKey] - b[primaryKey]
+            : b[primaryKey] - a[primaryKey];
+        }
+      } else if (typeof a[primaryKey] === 'string' && typeof b[primaryKey] === 'string') {
+        // String comparison
+        const compareResult = a[primaryKey].localeCompare(b[primaryKey]);
+        if (compareResult !== 0) {
+          return primaryDirection === 'asc' ? compareResult : -compareResult;
+        }
+      } else {
+        // Generic comparison for other types
+        if (a[primaryKey] !== b[primaryKey]) {
+          if (primaryDirection === 'asc') {
+            return a[primaryKey] > b[primaryKey] ? 1 : -1;
+          } else {
+            return a[primaryKey] < b[primaryKey] ? 1 : -1;
+          }
+        }
       }
-      // Secondary sort: Docs to be signed (descending)
-      return b.docsToBeSignedCount - a.docsToBeSignedCount;
+      
+      // Handle secondary sort if we have one and primary keys were equal
+      if (secondaryKey) {
+        if (secondaryKey === 'daysLeftForBilling' || secondaryKey === 'docsToBeSignedCount') {
+          return secondaryDirection === 'asc'
+            ? a[secondaryKey] - b[secondaryKey]
+            : b[secondaryKey] - a[secondaryKey];
+        } else if (typeof a[secondaryKey] === 'string' && typeof b[secondaryKey] === 'string') {
+          const compareResult = a[secondaryKey].localeCompare(b[secondaryKey]);
+          return secondaryDirection === 'asc' ? compareResult : -compareResult;
+        } else {
+          if (secondaryDirection === 'asc') {
+            return a[secondaryKey] > b[secondaryKey] ? 1 : -1;
+          } else {
+            return a[secondaryKey] < b[secondaryKey] ? 1 : -1;
+          }
+        }
+      }
+      
+      return 0; // If we got here, both primary and secondary keys were equal
     });
-    onSort(sortedData);
-  }, [data, onSort]);
+  }, []);
+
+  // Sort the data whenever it changes or sort config changes
+  const sortedData = useMemo(() => {
+    return sortData(data, sortConfig);
+  }, [data, sortConfig, sortData]);
 
   const handleSort = (key) => {
-    let direction = 'asc';
-    if (sortConfig.primaryKey === key && sortConfig.primaryDirection === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ 
-      primaryKey: key,
-      primaryDirection: direction,
-      secondaryKey: key === 'daysLeftForBilling' ? 'docsToBeSignedCount' : null,
-      secondaryDirection: key === 'daysLeftForBilling' ? 'desc' : null
+    setSortConfig(prevConfig => {
+      const direction = 
+        prevConfig.primaryKey === key && prevConfig.primaryDirection === 'asc' 
+          ? 'desc' 
+          : 'asc';
+      
+      return {
+        primaryKey: key,
+        primaryDirection: direction,
+        secondaryKey: key === 'daysLeftForBilling' ? 'docsToBeSignedCount' : null,
+        secondaryDirection: key === 'daysLeftForBilling' ? 'desc' : null
+      };
     });
-    
-    const sortedData = [...data].sort((a, b) => {
-      if (key === 'daysLeftForBilling') {
-        // Primary sort: Days left
-        if (a.daysLeftForBilling !== b.daysLeftForBilling) {
-          return direction === 'asc' 
-            ? a.daysLeftForBilling - b.daysLeftForBilling
-            : b.daysLeftForBilling - a.daysLeftForBilling;
-        }
-        // Secondary sort: Docs to be signed (descending)
-        return b.docsToBeSignedCount - a.docsToBeSignedCount;
-      }
-      // For other columns, simple sort
-      return direction === 'asc'
-        ? (a[key] > b[key] ? 1 : -1)
-        : (a[key] < b[key] ? 1 : -1);
-    });
-    
-    onSort(sortedData);
   };
 
   const getSortIcon = (columnName) => {
@@ -94,7 +122,7 @@ const ServicesTable = ({ data, onSort }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
+          {sortedData.map((row, index) => (
             <tr key={index}>
               <td>{row.ptName}</td>
               <td>{row.dob}</td>

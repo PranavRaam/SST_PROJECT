@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import SearchBar from './SearchBar';
 import ServicesTable from './ServicesTable';
 import * as XLSX from 'xlsx';  // Import XLSX library for Excel export
@@ -250,20 +250,17 @@ const dummyData = [
 
 
 const HHAHServicesView = () => {
-  const [data, setData] = useState(dummyData);
+  const [baseData] = useState(dummyData); // This never changes, it's our source data
+  const [filteredData, setFilteredData] = useState(dummyData); // Initialize with all data
   const [searchTerm, setSearchTerm] = useState('');
   const [signedFilter, setSignedFilter] = useState('all');
 
-  const handleSort = (sortedData) => {
-    setData(sortedData);
-  };
-
-  const applyFiltersAndSorts = (dataToFilter, term, signed) => {
-    let filteredData = [...dataToFilter];
+  const applyFiltersAndSorts = useCallback((term, signed) => {
+    let filtered = [...baseData];
 
     // Apply search filter
     if (term) {
-      filteredData = filteredData.filter(item =>
+      filtered = filtered.filter(item =>
         Object.values(item).some(
           val => typeof val === 'string' && 
           val.toLowerCase().includes(term.toLowerCase())
@@ -273,36 +270,30 @@ const HHAHServicesView = () => {
 
     // Apply 485 signed filter
     if (signed !== 'all') {
-      filteredData = filteredData.filter(item =>
+      filtered = filtered.filter(item =>
         signed === 'signed' ? item.is485Signed : !item.is485Signed
       );
     }
 
-    // Apply default sorting (days left ascending, docs to be signed descending)
-    filteredData.sort((a, b) => {
-      if (a.daysLeftForBilling !== b.daysLeftForBilling) {
-        return a.daysLeftForBilling - b.daysLeftForBilling;
-      }
-      return b.docsToBeSignedCount - a.docsToBeSignedCount;
-    });
+    return filtered;
+  }, [baseData]);
 
-    return filteredData;
-  };
+  // Update filtered data when filters change
+  React.useEffect(() => {
+    const newFilteredData = applyFiltersAndSorts(searchTerm, signedFilter);
+    setFilteredData(newFilteredData);
+  }, [searchTerm, signedFilter, applyFiltersAndSorts]);
 
   const handleSearch = (term) => {
     setSearchTerm(term);
-    const filtered = applyFiltersAndSorts(dummyData, term, signedFilter);
-    setData(filtered);
   };
 
   const handleSignedFilter = (status) => {
     setSignedFilter(status);
-    const filtered = applyFiltersAndSorts(dummyData, searchTerm, status);
-    setData(filtered);
   };
 
   const getFormattedData = () => {
-    return data.map(item => ({
+    return filteredData.map(item => ({
       ...item,
       dob: formatDate(item.dob),
       soc: formatDate(item.soc),
@@ -365,8 +356,7 @@ const HHAHServicesView = () => {
       <main className="viv-hhah-main-content">
         <div className="viv-hhah-content-card">
           <ServicesTable 
-            data={applyFiltersAndSorts(data, searchTerm, signedFilter)}
-            onSort={handleSort}
+            data={filteredData}
           />
         </div>
       </main>

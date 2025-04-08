@@ -2151,7 +2151,12 @@ Total documents: ${documents.length}
                   </button>
                 </div>
               ) : (
-                <></>
+                <button className="action-button edit" onClick={() => setIsEditing(true)}>
+                  <span className="icon-wrapper">
+                    <span className="material-icons">edit</span>
+                  </span>
+                  Edit Patient Information
+                </button>
               )}
             </div>
           </div>

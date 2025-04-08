@@ -2733,3 +2733,83 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-07 22:06:18,019 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Phoenix_Mesa_Scottsdale_AZ_lightweight.html
 2025-04-07 22:06:18,019 - __main__ - INFO - Request completed in 0.00 seconds
 2025-04-07 22:06:18,020 - werkzeug - INFO - 127.0.0.1 - - [07/Apr/2025 22:06:18] "GET /api/statistical-area-map/Phoenix-Mesa-Scottsdale,%20AZ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744043777887&_show_states=true&_show_counties=true&_show_msas=true&_t=1744043777972 HTTP/1.1" 200 -
+2025-04-08 21:49:11,826 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 21:49:11,832 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 21:49:11,852 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-08 21:49:11,852 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 21:49:11,853 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 21:49:12,911 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 21:49:12,918 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 21:49:12,936 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 21:49:12,937 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-08 21:49:22,089 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 21:49:22,093 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 21:49:22,129 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:22] "GET /api/map?t=1744129162100&noCache=true&stableView=true?t%3D1744129162100&_show_states=true&_show_counties=true&_show_msas=true&_t=1744129162101 HTTP/1.1" 200 -
+2025-04-08 21:49:22,155 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 21:49:22,161 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 21:49:22,239 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:22] "GET /api/map?t=1744129162188&noCache=true&stableView=true?t%3D1744129162188&_show_states=true&_show_counties=true&_show_msas=true&_t=1744129162192 HTTP/1.1" 200 -
+2025-04-08 21:49:23,231 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:23] "GET /api/map?t=1744129163211&noCache=true&stableView=true?t%3D1744129163211&_show_states=true&_show_counties=true&_show_msas=true&_t=1744129163211 HTTP/1.1" 200 -
+2025-04-08 21:49:29,059 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:29] "GET /api/health HTTP/1.1" 200 -
+2025-04-08 21:49:29,072 - __main__ - INFO - Map request for area: Lakeland-Winter Haven, FL
+2025-04-08 21:49:29,072 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744129169069')])
+2025-04-08 21:49:29,072 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-08 21:49:29,073 - statistical_area_zoom - INFO - Generating map for statistical area: Lakeland-Winter Haven, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-08 21:49:29,073 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 21:49:29,073 - statistical_area_zoom - INFO - Loading map data...
+2025-04-08 21:49:29,073 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-08 21:49:29,073 - data_preloader - INFO - Loading all cached data...
+2025-04-08 21:49:29,098 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-08 21:49:29,099 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-08 21:49:29,099 - statistical_area_zoom - INFO - Data loaded in 0.03 seconds
+2025-04-08 21:49:29,099 - statistical_area_zoom - INFO - Normalized area name: lakeland-winter haven, fl
+2025-04-08 21:49:29,104 - statistical_area_zoom - INFO - Found exact match: Lakeland-Winter Haven, FL
+2025-04-08 21:49:29,104 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-08 21:49:29,104 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-08 21:49:29,105 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Lakeland-Winter Haven, FL
+2025-04-08 21:49:29,105 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Lakeland-Winter Haven, FL
+2025-04-08 21:49:29,106 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-08 21:49:29,106 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-08 21:49:29,106 - statistical_area_zoom - INFO - Center: 27.948947734372524, -81.69786990487846
+2025-04-08 21:49:29,106 - statistical_area_zoom - INFO - Bounds: -82.106236, 27.646382, -81.132526, 28.361868
+2025-04-08 21:49:29,422 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 21:49:29,422 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 21:49:29,422 - __main__ - INFO - Request completed in 0.35 seconds
+2025-04-08 21:49:29,423 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:29] "GET /api/statistical-area-map/Lakeland-Winter%20Haven,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744129169069 HTTP/1.1" 200 -
+2025-04-08 21:49:29,467 - __main__ - INFO - Map request for area: Lakeland-Winter Haven, FL
+2025-04-08 21:49:29,468 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744129169069'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744129169430')])
+2025-04-08 21:49:29,468 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-08 21:49:29,468 - statistical_area_zoom - INFO - Generating map for statistical area: Lakeland-Winter Haven, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-08 21:49:29,468 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 21:49:29,468 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html (age: 0.0 hours)
+2025-04-08 21:49:29,468 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-08 21:49:29,468 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 21:49:29,469 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-08 21:49:29,470 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 21:49:29] "GET /api/statistical-area-map/Lakeland-Winter%20Haven,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744129169069&_show_states=true&_show_counties=true&_show_msas=true&_t=1744129169430 HTTP/1.1" 200 -
+2025-04-08 22:13:31,148 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:13:31] "GET /api/health HTTP/1.1" 200 -
+2025-04-08 22:13:31,158 - __main__ - INFO - Map request for area: Lakeland-Winter Haven, FL
+2025-04-08 22:13:31,158 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744130611155')])
+2025-04-08 22:13:31,158 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-08 22:13:31,159 - statistical_area_zoom - INFO - Generating map for statistical area: Lakeland-Winter Haven, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-08 22:13:31,159 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 22:13:31,159 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html (age: 0.4 hours)
+2025-04-08 22:13:31,159 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-08 22:13:31,159 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 22:13:31,159 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-08 22:13:31,160 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:13:31] "GET /api/statistical-area-map/Lakeland-Winter%20Haven,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744130611155 HTTP/1.1" 200 -
+2025-04-08 22:13:31,245 - __main__ - INFO - Map request for area: Lakeland-Winter Haven, FL
+2025-04-08 22:13:31,246 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744130611155'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744130611206')])
+2025-04-08 22:13:31,246 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-08 22:13:31,246 - statistical_area_zoom - INFO - Generating map for statistical area: Lakeland-Winter Haven, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-08 22:13:31,246 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 22:13:31,246 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html (age: 0.4 hours)
+2025-04-08 22:13:31,246 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-08 22:13:31,246 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Lakeland_Winter_Haven_FL_lightweight.html
+2025-04-08 22:13:31,246 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-08 22:13:31,247 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:13:31] "GET /api/statistical-area-map/Lakeland-Winter%20Haven,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744130611155&_show_states=true&_show_counties=true&_show_msas=true&_t=1744130611206 HTTP/1.1" 200 -
+2025-04-08 22:17:27,591 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:17:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 22:17:27,596 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:17:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 22:22:52,449 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:22:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 22:22:52,454 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:22:52] "GET /api/map-status HTTP/1.1" 200 -
