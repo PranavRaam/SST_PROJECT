@@ -23,7 +23,8 @@ CORS(app,
             "https://railway-prototype-pranavraams-projects.vercel.app",
             "https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app",
             "https://railway-prototype.vercel.app",
-            "https://railwayprototypesst-production.up.railway.app"
+            "https://railwayprototypesst-production.up.railway.app",
+            "https://railway-prototype-sst.vercel.app"
         ],
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
@@ -71,7 +72,8 @@ def add_cors_headers(response):
         'https://railway-prototype-pranavraams-projects.vercel.app',
         'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
         'https://railway-prototype.vercel.app',
-        'https://railwayprototypesst-production.up.railway.app'
+        'https://railwayprototypesst-production.up.railway.app',
+        'https://railway-prototype-sst.vercel.app'
     ]
     
     # Allow specific origins only when credentials are involved
@@ -89,7 +91,7 @@ def add_cors_headers(response):
     # For iframe embedding
     if response.mimetype == 'text/html':
         response.headers['X-Frame-Options'] = 'ALLOW-FROM http://localhost:3000'
-        response.headers['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:3000 https://sst-frontend-swart.vercel.app https://prototype-railway-production.up.railway.app https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app https://railway-prototype-pranavraams-projects.vercel.app https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app https://railway-prototype.vercel.app https://railwayprototypesst-production.up.railway.app"
+        response.headers['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:3000 https://sst-frontend-swart.vercel.app https://prototype-railway-production.up.railway.app https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app https://railway-prototype-pranavraams-projects.vercel.app https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app https://railway-prototype.vercel.app https://railwayprototypesst-production.up.railway.app https://railway-prototype-sst.vercel.app"
         response.headers['Access-Control-Allow-Origin'] = origin if origin in allowed_origins else '*'
     
     return response
@@ -109,7 +111,8 @@ def options_statistical_area_map(area_name):
         'https://railway-prototype-pranavraams-projects.vercel.app',
         'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
         'https://railway-prototype.vercel.app',
-        'https://railwayprototypesst-production.up.railway.app'
+        'https://railwayprototypesst-production.up.railway.app',
+        'https://railway-prototype-sst.vercel.app'
     ]
     
     # Allow specific origins when credentials are involved
@@ -450,7 +453,8 @@ def health_check():
         'https://railway-prototype-pranavraams-projects.vercel.app',
         'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
         'https://railway-prototype.vercel.app',
-        'https://railwayprototypesst-production.up.railway.app'
+        'https://railwayprototypesst-production.up.railway.app',
+        'https://railway-prototype-sst.vercel.app'
     ]
     
     if origin in allowed_origins:
