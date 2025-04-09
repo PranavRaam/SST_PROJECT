@@ -2813,3 +2813,316 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-08 22:17:27,596 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:17:27] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-08 22:22:52,449 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:22:52] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-08 22:22:52,454 - werkzeug - INFO - 127.0.0.1 - - [08/Apr/2025 22:22:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-08 22:37:02,562 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-08 22:37:02,701 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 22:37:03,581 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 22:37:03,586 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 22:37:03,604 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 22:37:03,605 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-08 22:37:11,626 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-08 22:37:11,802 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 22:37:12,605 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 22:37:12,609 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 22:37:12,623 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 22:37:12,623 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-08 22:37:15,636 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-08 22:37:15,773 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 22:37:16,520 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 22:37:16,525 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 22:37:16,539 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 22:37:16,539 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-08 22:56:31,176 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/app.py', reloading
+2025-04-08 22:56:31,325 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 22:56:32,078 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 22:56:32,082 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 22:56:32,095 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 22:56:32,096 - werkzeug - INFO -  * Debugger PIN: 912-713-756
+2025-04-08 23:14:53,139 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 23:14:53,146 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 23:14:53,174 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-08 23:14:53,174 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-08 23:14:53,175 - werkzeug - INFO -  * Restarting with stat
+2025-04-08 23:14:54,193 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-08 23:14:54,200 - __main__ - INFO - Checking for cached data at startup
+2025-04-08 23:14:54,218 - werkzeug - WARNING -  * Debugger is active!
+2025-04-08 23:14:54,219 - werkzeug - INFO -  * Debugger PIN: 109-173-489
+2025-04-10 00:14:46,077 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-10 00:14:46,080 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 00:14:46,097 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.191.110:5000
+2025-04-10 00:14:46,097 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 00:14:46,098 - werkzeug - INFO -  * Restarting with stat
+2025-04-10 00:14:46,676 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-10 00:14:46,679 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 00:14:46,690 - werkzeug - WARNING -  * Debugger is active!
+2025-04-10 00:14:46,690 - werkzeug - INFO -  * Debugger PIN: 299-979-890
+2025-04-10 00:15:23,031 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:15:23,036 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:15:23,106 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:23] "GET /api/map?t=1744224323084&noCache=true&stableView=true?t%3D1744224323084&_show_states=true&_show_counties=true&_show_msas=true&_t=1744224323084 HTTP/1.1" 200 -
+2025-04-10 00:15:23,107 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:15:23,112 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:15:23,792 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:23] "GET /api/map?t=1744224323780&noCache=true&stableView=true?t%3D1744224323780&_show_states=true&_show_counties=true&_show_msas=true&_t=1744224323781 HTTP/1.1" 200 -
+2025-04-10 00:15:29,086 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:29] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 00:15:29,091 - __main__ - INFO - Map request for area: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:29,091 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744224329089')])
+2025-04-10 00:15:29,091 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:15:29,091 - statistical_area_zoom - INFO - Generating map for statistical area: Crestview-Fort Walton Beach-Destin, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:15:29,091 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:29,091 - statistical_area_zoom - INFO - Cached map is 75.0 hours old, regenerating...
+2025-04-10 00:15:29,091 - statistical_area_zoom - INFO - Loading map data...
+2025-04-10 00:15:29,091 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-10 00:15:29,091 - data_preloader - INFO - Loading all cached data...
+2025-04-10 00:15:29,106 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-10 00:15:29,108 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-10 00:15:29,108 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-10 00:15:29,108 - statistical_area_zoom - INFO - Normalized area name: crestview-fort walton beach-destin, fl
+2025-04-10 00:15:29,114 - statistical_area_zoom - INFO - Found exact match: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:29,114 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 00:15:29,114 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 00:15:29,115 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:29,115 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:29,116 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 00:15:29,116 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 00:15:29,116 - statistical_area_zoom - INFO - Center: 30.591853906264667, -86.37103726015351
+2025-04-10 00:15:29,116 - statistical_area_zoom - INFO - Bounds: -86.803374, 30.1036, -85.844421, 30.99698
+2025-04-10 00:15:29,277 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:29,277 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:29,278 - __main__ - INFO - Request completed in 0.19 seconds
+2025-04-10 00:15:29,278 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:29] "GET /api/statistical-area-map/Crestview-Fort%20Walton%20Beach-Destin,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744224329089 HTTP/1.1" 200 -
+2025-04-10 00:15:29,301 - __main__ - INFO - Map request for area: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:29,301 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744224329089'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744224329283')])
+2025-04-10 00:15:29,301 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:15:29,301 - statistical_area_zoom - INFO - Generating map for statistical area: Crestview-Fort Walton Beach-Destin, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:15:29,301 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:29,301 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html (age: 0.0 hours)
+2025-04-10 00:15:29,301 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 00:15:29,301 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:29,301 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 00:15:29,301 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:29] "GET /api/statistical-area-map/Crestview-Fort%20Walton%20Beach-Destin,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744224329089&_show_states=true&_show_counties=true&_show_msas=true&_t=1744224329283 HTTP/1.1" 200 -
+2025-04-10 00:15:42,750 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:42] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 00:15:42,774 - __main__ - INFO - Map request for area: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:42,774 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744224342771')])
+2025-04-10 00:15:42,774 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:15:42,774 - statistical_area_zoom - INFO - Generating map for statistical area: Crestview-Fort Walton Beach-Destin, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:15:42,774 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:42,774 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html (age: 0.0 hours)
+2025-04-10 00:15:42,774 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 00:15:42,774 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:42,774 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 00:15:42,775 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:42] "GET /api/statistical-area-map/Crestview-Fort%20Walton%20Beach-Destin,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744224342771 HTTP/1.1" 200 -
+2025-04-10 00:15:42,863 - __main__ - INFO - Map request for area: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:15:42,863 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744224342771'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744224342820')])
+2025-04-10 00:15:42,863 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:15:42,863 - statistical_area_zoom - INFO - Generating map for statistical area: Crestview-Fort Walton Beach-Destin, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:15:42,863 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:42,863 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html (age: 0.0 hours)
+2025-04-10 00:15:42,864 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 00:15:42,864 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:15:42,864 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 00:15:42,864 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:15:42] "GET /api/statistical-area-map/Crestview-Fort%20Walton%20Beach-Destin,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744224342771&_show_states=true&_show_counties=true&_show_msas=true&_t=1744224342820 HTTP/1.1" 200 -
+2025-04-10 00:19:24,103 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:19:24] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 00:19:24,111 - __main__ - INFO - Map request for area: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:19:24,112 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744224564109')])
+2025-04-10 00:19:24,112 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:19:24,112 - statistical_area_zoom - INFO - Generating map for statistical area: Crestview-Fort Walton Beach-Destin, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:19:24,112 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:19:24,112 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html (age: 0.1 hours)
+2025-04-10 00:19:24,112 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 00:19:24,112 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:19:24,112 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 00:19:24,112 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:19:24] "GET /api/statistical-area-map/Crestview-Fort%20Walton%20Beach-Destin,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744224564109 HTTP/1.1" 200 -
+2025-04-10 00:19:24,155 - __main__ - INFO - Map request for area: Crestview-Fort Walton Beach-Destin, FL
+2025-04-10 00:19:24,156 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744224564109'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744224564137')])
+2025-04-10 00:19:24,156 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:19:24,156 - statistical_area_zoom - INFO - Generating map for statistical area: Crestview-Fort Walton Beach-Destin, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:19:24,156 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:19:24,156 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html (age: 0.1 hours)
+2025-04-10 00:19:24,156 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 00:19:24,156 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Crestview_Fort_Walton_Beach_Destin_FL_lightweight.html
+2025-04-10 00:19:24,156 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 00:19:24,156 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:19:24] "GET /api/statistical-area-map/Crestview-Fort%20Walton%20Beach-Destin,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744224564109&_show_states=true&_show_counties=true&_show_msas=true&_t=1744224564137 HTTP/1.1" 200 -
+2025-04-10 00:42:56,134 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-10 00:42:56,139 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 00:42:56,159 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.191.110:5000
+2025-04-10 00:42:56,159 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 00:42:56,160 - werkzeug - INFO -  * Restarting with stat
+2025-04-10 00:42:56,977 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-10 00:42:56,981 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 00:42:56,996 - werkzeug - WARNING -  * Debugger is active!
+2025-04-10 00:42:56,997 - werkzeug - INFO -  * Debugger PIN: 945-801-954
+2025-04-10 00:48:49,428 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-10 00:48:49,431 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 00:48:49,453 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.191.110:5000
+2025-04-10 00:48:49,454 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 00:48:49,454 - werkzeug - INFO -  * Restarting with stat
+2025-04-10 00:48:50,040 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/data_cache
+2025-04-10 00:48:50,043 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 00:48:50,057 - werkzeug - WARNING -  * Debugger is active!
+2025-04-10 00:48:50,057 - werkzeug - INFO -  * Debugger PIN: 945-801-954
+2025-04-10 00:53:00,654 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:53:00,657 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:53:00,683 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:00] "GET /api/map?t=1744226580661&noCache=true&stableView=true?t%3D1744226580661&_show_states=true&_show_counties=true&_show_msas=true&_t=1744226580662 HTTP/1.1" 200 -
+2025-04-10 00:53:00,698 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:53:00,703 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:53:00,737 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:00] "GET /api/map?t=1744226580718&noCache=true&stableView=true?t%3D1744226580718&_show_states=true&_show_counties=true&_show_msas=true&_t=1744226580720 HTTP/1.1" 200 -
+2025-04-10 00:53:01,461 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:01] "GET /api/map?t=1744226581442&noCache=true&stableView=true?t%3D1744226581442&_show_states=true&_show_counties=true&_show_msas=true&_t=1744226581443 HTTP/1.1" 200 -
+2025-04-10 00:53:04,133 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:04] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 00:53:04,138 - __main__ - INFO - Map request for area: Norwich-New London-Westerly, CT-RI
+2025-04-10 00:53:04,139 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744226584136')])
+2025-04-10 00:53:04,139 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:53:04,139 - statistical_area_zoom - INFO - Generating map for statistical area: Norwich-New London-Westerly, CT-RI with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:53:04,139 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Norwich_New_London_Westerly_CT_RI_lightweight.html
+2025-04-10 00:53:04,139 - statistical_area_zoom - INFO - Cached map is 75.6 hours old, regenerating...
+2025-04-10 00:53:04,139 - statistical_area_zoom - INFO - Loading map data...
+2025-04-10 00:53:04,139 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-10 00:53:04,139 - data_preloader - INFO - Loading all cached data...
+2025-04-10 00:53:04,153 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-10 00:53:04,155 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-10 00:53:04,155 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-10 00:53:04,155 - statistical_area_zoom - INFO - Normalized area name: norwich-new london-westerly, ct-ri
+2025-04-10 00:53:04,160 - statistical_area_zoom - INFO - Trying to match city name: norwich
+2025-04-10 00:53:04,162 - statistical_area_zoom - INFO - Found fuzzy city match: Norwich-New London-Willimantic, CT
+2025-04-10 00:53:04,162 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 00:53:04,162 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 00:53:04,163 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Norwich-New London-Westerly, CT-RI
+2025-04-10 00:53:04,163 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Norwich-New London-Westerly, CT-RI
+2025-04-10 00:53:04,164 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 00:53:04,164 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 00:53:04,164 - statistical_area_zoom - INFO - Center: 41.486228964143194, -72.10016846370154
+2025-04-10 00:53:04,164 - statistical_area_zoom - INFO - Bounds: -72.46673, 41.230711, -71.79316, 41.756211
+2025-04-10 00:53:04,300 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Norwich_New_London_Westerly_CT_RI_lightweight.html
+2025-04-10 00:53:04,300 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Norwich_New_London_Westerly_CT_RI_lightweight.html
+2025-04-10 00:53:04,300 - __main__ - INFO - Request completed in 0.16 seconds
+2025-04-10 00:53:04,301 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:04] "GET /api/statistical-area-map/Norwich-New%20London-Westerly,%20CT-RI?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744226584136 HTTP/1.1" 200 -
+2025-04-10 00:53:04,324 - __main__ - INFO - Map request for area: Norwich-New London-Westerly, CT-RI
+2025-04-10 00:53:04,324 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744226584136'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744226584307')])
+2025-04-10 00:53:04,325 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 00:53:04,325 - statistical_area_zoom - INFO - Generating map for statistical area: Norwich-New London-Westerly, CT-RI with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 00:53:04,325 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Norwich_New_London_Westerly_CT_RI_lightweight.html
+2025-04-10 00:53:04,325 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Norwich_New_London_Westerly_CT_RI_lightweight.html (age: 0.0 hours)
+2025-04-10 00:53:04,325 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 00:53:04,325 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Norwich_New_London_Westerly_CT_RI_lightweight.html
+2025-04-10 00:53:04,325 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 00:53:04,325 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:53:04] "GET /api/statistical-area-map/Norwich-New%20London-Westerly,%20CT-RI?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744226584136&_show_states=true&_show_counties=true&_show_msas=true&_t=1744226584307 HTTP/1.1" 200 -
+2025-04-10 00:57:51,425 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:57:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 00:57:51,428 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 00:57:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:46,970 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:46] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:46,972 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:46] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:48,830 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:48,834 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:55,380 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:55,392 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:55] "GET /api/map?t=1744228195367&noCache=true&stableView=true?t%3D1744228195367&_show_states=true&_show_counties=true&_show_msas=true&_t=1744228195368 HTTP/1.1" 200 -
+2025-04-10 01:19:55,393 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:19:56,092 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:56] "GET /api/map?t=1744228196076&noCache=true&stableView=true?t%3D1744228196076&_show_states=true&_show_counties=true&_show_msas=true&_t=1744228196077 HTTP/1.1" 200 -
+2025-04-10 01:19:58,888 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:58] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 01:19:58,895 - __main__ - INFO - Map request for area: Jacksonville, FL
+2025-04-10 01:19:58,895 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744228198892')])
+2025-04-10 01:19:58,895 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 01:19:58,895 - statistical_area_zoom - INFO - Generating map for statistical area: Jacksonville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 01:19:58,895 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:19:58,895 - statistical_area_zoom - INFO - Cached map is 76.1 hours old, regenerating...
+2025-04-10 01:19:58,895 - statistical_area_zoom - INFO - Loading map data...
+2025-04-10 01:19:58,895 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-10 01:19:58,895 - statistical_area_zoom - INFO - Normalized area name: jacksonville, fl
+2025-04-10 01:19:58,897 - statistical_area_zoom - INFO - Found exact match: Jacksonville, FL
+2025-04-10 01:19:58,897 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 01:19:58,897 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 01:19:58,898 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Jacksonville, FL
+2025-04-10 01:19:58,898 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Jacksonville, FL
+2025-04-10 01:19:58,899 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 01:19:58,899 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 01:19:58,899 - statistical_area_zoom - INFO - Center: 30.23424841656615, -81.75869243951098
+2025-04-10 01:19:58,899 - statistical_area_zoom - INFO - Bounds: -82.459793, 29.622432, -81.150817, 30.82988
+2025-04-10 01:19:59,032 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:19:59,032 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:19:59,032 - __main__ - INFO - Request completed in 0.14 seconds
+2025-04-10 01:19:59,033 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:59] "GET /api/statistical-area-map/Jacksonville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744228198892 HTTP/1.1" 200 -
+2025-04-10 01:19:59,059 - __main__ - INFO - Map request for area: Jacksonville, FL
+2025-04-10 01:19:59,060 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744228198892'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744228199039')])
+2025-04-10 01:19:59,060 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 01:19:59,060 - statistical_area_zoom - INFO - Generating map for statistical area: Jacksonville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 01:19:59,060 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:19:59,060 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html (age: 0.0 hours)
+2025-04-10 01:19:59,060 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 01:19:59,060 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:19:59,060 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 01:19:59,060 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:19:59] "GET /api/statistical-area-map/Jacksonville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744228198892&_show_states=true&_show_counties=true&_show_msas=true&_t=1744228199039 HTTP/1.1" 200 -
+2025-04-10 01:20:03,230 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:20:03] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 01:20:03,237 - __main__ - INFO - Map request for area: Jacksonville, FL
+2025-04-10 01:20:03,237 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744228203235')])
+2025-04-10 01:20:03,237 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 01:20:03,237 - statistical_area_zoom - INFO - Generating map for statistical area: Jacksonville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 01:20:03,237 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:20:03,237 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html (age: 0.0 hours)
+2025-04-10 01:20:03,237 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 01:20:03,237 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:20:03,237 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 01:20:03,238 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:20:03] "GET /api/statistical-area-map/Jacksonville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744228203235 HTTP/1.1" 200 -
+2025-04-10 01:20:03,283 - __main__ - INFO - Map request for area: Jacksonville, FL
+2025-04-10 01:20:03,283 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744228203235'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744228203263')])
+2025-04-10 01:20:03,283 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 01:20:03,283 - statistical_area_zoom - INFO - Generating map for statistical area: Jacksonville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 01:20:03,283 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:20:03,283 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html (age: 0.0 hours)
+2025-04-10 01:20:03,283 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 01:20:03,283 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 01:20:03,283 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 01:20:03,284 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:20:03] "GET /api/statistical-area-map/Jacksonville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744228203235&_show_states=true&_show_counties=true&_show_msas=true&_t=1744228203263 HTTP/1.1" 200 -
+2025-04-10 01:22:15,199 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:22:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:22:15,206 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:22:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:22:16,758 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:22:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:22:16,762 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:22:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:25:23,721 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:25:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:25:23,725 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:25:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:44:04,801 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:44:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:44:04,805 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:44:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:44:33,884 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:44:33] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:44:33,888 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:44:33] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:51:19,156 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:51:19] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 01:51:19,158 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 01:51:19] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:02:35,200 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:02:35] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:02:35,204 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:02:35] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:05:43,284 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:05:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:05:43,287 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:05:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:13:54,984 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:13:54] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:13:54,988 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:13:54] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:18:55,536 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:18:55,546 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:55] "GET /api/map?t=1744231735520&noCache=true&stableView=true?t%3D1744231735520&_show_states=true&_show_counties=true&_show_msas=true&_t=1744231735520 HTTP/1.1" 200 -
+2025-04-10 02:18:55,548 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:18:56,272 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:56] "GET /api/map?t=1744231736259&noCache=true&stableView=true?t%3D1744231736259&_show_states=true&_show_counties=true&_show_msas=true&_t=1744231736260 HTTP/1.1" 200 -
+2025-04-10 02:18:58,436 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:58] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 02:18:58,444 - __main__ - INFO - Map request for area: Jacksonville, FL
+2025-04-10 02:18:58,444 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744231738441')])
+2025-04-10 02:18:58,444 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 02:18:58,444 - statistical_area_zoom - INFO - Generating map for statistical area: Jacksonville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 02:18:58,444 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 02:18:58,444 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html (age: 1.0 hours)
+2025-04-10 02:18:58,444 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 02:18:58,444 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 02:18:58,444 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 02:18:58,445 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:58] "GET /api/statistical-area-map/Jacksonville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744231738441 HTTP/1.1" 200 -
+2025-04-10 02:18:58,507 - __main__ - INFO - Map request for area: Jacksonville, FL
+2025-04-10 02:18:58,512 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744231738441'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744231738487')])
+2025-04-10 02:18:58,513 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 02:18:58,513 - statistical_area_zoom - INFO - Generating map for statistical area: Jacksonville, FL with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 02:18:58,513 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 02:18:58,513 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html (age: 1.0 hours)
+2025-04-10 02:18:58,513 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 02:18:58,513 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Jacksonville_FL_lightweight.html
+2025-04-10 02:18:58,513 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 02:18:58,513 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:18:58] "GET /api/statistical-area-map/Jacksonville,%20FL?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744231738441&_show_states=true&_show_counties=true&_show_msas=true&_t=1744231738487 HTTP/1.1" 200 -
+2025-04-10 02:22:22,292 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:22:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:22:22,295 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:22:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:24:15,374 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:24:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 02:24:15,377 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 02:24:15] "GET /api/map-status HTTP/1.1" 200 -

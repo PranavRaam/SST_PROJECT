@@ -20,7 +20,9 @@ const PGView = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('all');
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState('');
-  const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
+  const [showDateRangeFilter, setShowDateRangeFilter] = useState(false);
+  const [filteredClaims, setFilteredClaims] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [statusFilter, setStatusFilter] = useState('all');
   
   // Add state for tracking if we're viewing from physician context
@@ -76,14 +78,14 @@ const PGView = () => {
   const [pgData, setPgData] = useState({
     name: pgName ? pgName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : "PG Name",
     contact: {
-      address: "123 Healthcare Ave, Medical District",
-      phone: "(555) 123-4567",
-      email: "contact@pggroup.com"
+      address: "123 Healthcare Blvd, Phoenix, AZ 85001",
+      phone: "(480) 555-7890",
+      email: "contact@americancarepartners.com"
     },
     location: {
-      lat: 40.7128,
-      lng: -74.0060,
-      address: "New York, NY"
+      lat: 33.4484,
+      lng: -112.0740,
+      address: "Phoenix, AZ 85001"
     },
     recentActivity: [
       { 
@@ -142,10 +144,10 @@ const PGView = () => {
       { id: 2, name: "Tom Brown", position: "Physician Assistant", specialty: "Orthopedics", npi: "8765432109" }
     ],
     hhahs: [
-      { id: 1, name: "HomeHealth Plus", location: "Los Angeles, CA", contact: "(555) 111-2222", onboarded: true },
-      { id: 2, name: "CaringHands HHA", location: "San Francisco, CA", contact: "(555) 222-3333", onboarded: false },
-      { id: 3, name: "Comfort Care Services", location: "San Diego, CA", contact: "(555) 333-4444", onboarded: true },
-      { id: 4, name: "Elite Home Health", location: "Sacramento, CA", contact: "(555) 444-5555", onboarded: false }
+      { id: 1, name: "HomeHealth Plus", location: "Phoenix, AZ 85004", contact: "(480) 111-2222", onboarded: true },
+      { id: 2, name: "CaringHands HHA", location: "Scottsdale, AZ 85251", contact: "(480) 222-3333", onboarded: false },
+      { id: 3, name: "Comfort Care Services", location: "Tempe, AZ 85281", contact: "(480) 333-4444", onboarded: true },
+      { id: 4, name: "Elite Home Health", location: "Mesa, AZ 85201", contact: "(480) 444-5555", onboarded: false }
     ],
     proactiveOutcomes: [
       { id: 1, title: "Physician Onboarding", progress: 60, status: "In Progress" },
@@ -339,40 +341,57 @@ const PGView = () => {
     });
   };
 
+  // Add function for table column sorting
   const handleSortClick = (key) => {
-    setSortConfig(prevConfig => ({
-      key,
-      direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
-    }));
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
   };
 
+  // Fix date format conversion for the date inputs
   const handleDateRangeChange = (e) => {
     const { name, value } = e.target;
+    
+    // Store date internally in ISO format for form inputs
     setSelectedDateRange(prev => ({
       ...prev,
-      [name]: value
+      [name]: value // Keep ISO format for the HTML date input
     }));
-    setSelectedPeriod('custom');
   };
 
+  // Update the handlePeriodChange function to store dates in ISO format for form inputs
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
-    const today = new Date();
-    let startDate = new Date();
+    
+    // For testing purposes, use 2025 as the current year
+    const testYear = 2025;
+    const testMonth = 2; // February (1-indexed, so February is 2)
+    
+    // Create date objects based on our test date
+    const now = new Date(testYear, testMonth - 1, 15); // February 15, 2025
     
     if (period === 'month') {
-      startDate.setMonth(today.getMonth() - 1);
-    } else if (period === 'year') {
-      startDate.setFullYear(today.getFullYear() - 1);
+      // Last month (January 2025)
+      const lastMonth = new Date(now);
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+      lastMonth.setDate(1); // First day of last month
+      
+      const lastDayLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      
+      // ISO format for date inputs (yyyy-MM-dd)
+      const startIso = lastMonth.toISOString().split('T')[0];
+      const endIso = lastDayLastMonth.toISOString().split('T')[0];
+      
+      setSelectedDateRange({
+        start: startIso,
+        end: endIso
+      });
     } else if (period === 'all') {
+      // All time - just clear the date range
       setSelectedDateRange({ start: '', end: '' });
-      return;
     }
-    
-    setSelectedDateRange({
-      start: startDate.toISOString().split('T')[0],
-      end: today.toISOString().split('T')[0]
-    });
   };
 
   const handleMonthChange = (e) => {
@@ -398,419 +417,739 @@ const PGView = () => {
     setSelectedPeriod('custom');
   };
 
-  const [filteredClaims, setFilteredClaims] = useState([]);
+  // Add filterType state since it's not declared at the top
   const [filterType, setFilterType] = useState(null);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
-  const [showDateRangeFilter, setShowDateRangeFilter] = useState(false);
 
   // Dummy claims data from PatientFormComponent
-  const [dummyClaims, setDummyClaims] = useState([
+  const dummyClaims = [
     {
       id: 1,
-      patientId: 'P001',
-      patientName: 'John A Smith',
-      patientDOB: '05-15-1980',
-      contactNumber: '555-123-4567',
-      physicianName: 'Dr. Sarah Johnson',
-      pg: 'ABC Medical Group',
-      hhah: 'Home Health Care Plus',
-      patientInsurance: 'Medicare',
-      patientInEHR: 'yes',
-      patientSOC: '08-30-2024',
-      patientEpisodeFrom: '08-30-2024',
-      patientEpisodeTo: '10-28-2024',
-      renderingPractitioner: 'Dr. Michael Chen',
-      primaryDiagnosisCodes: ['E11.9', 'I10'],
-      secondaryDiagnosisCodes: ['M17.9', 'E78.5'],
-      certStatus: 'Document Signed',
-      certSignedDate: '09-15-2024',
-      recertStatus: 'Document Prepared',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Regular follow-up required',
-      cpoMinsCaptured: 120,
-      newDocs: 2,
-      newCpoDocsCreated: 1
+      remarks: 'Initial Visit',
+      sNo: '001',
+      fullName: 'Smith, John A',
+      firstName: 'John',
+      middleName: 'A',
+      lastName: 'Smith',
+      dob: '05/15/1950',
+      hhaName: 'ABC Home Health',
+      insuranceType: 'Medicare',
+      primaryDiagnosisCode: 'I10',
+      secondaryDiagnosisCode1: 'E11.9',
+      secondaryDiagnosisCode2: 'M17.9',
+      secondaryDiagnosisCode3: 'I25.10',
+      secondaryDiagnosisCode4: 'E78.5',
+      secondaryDiagnosisCode5: 'J45.909',
+      soc: '01/15/2024',
+      episodeFrom: '01/15/2024',
+      episodeTo: '04/15/2024',
+      minutesCaptured: 60,
+      billingCode: 'G0156',
+      line1DosFrom: '01/15/2024',
+      line1DosTo: '01/15/2024',
+      line1Charges: 150.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Sarah Johnson'
     },
     {
       id: 2,
-      patientId: 'P002',
-      patientName: 'Emily R Johnson',
-      patientDOB: '07-22-1975',
-      contactNumber: '555-234-5678',
-      physicianName: 'Dr. Robert Williams',
-      pg: 'Premier Care Medical',
-      hhah: 'Golden Age Home Health',
-      patientInsurance: 'BlueCross',
-      patientInEHR: 'yes',
-      patientSOC: '08-14-2024',
-      patientEpisodeFrom: '08-14-2024',
-      patientEpisodeTo: '10-12-2024',
-      renderingPractitioner: 'Dr. Lisa Park',
-      primaryDiagnosisCodes: ['I48.91', 'E78.5'],
-      secondaryDiagnosisCodes: ['J44.9', 'N18.3'],
-      certStatus: 'Document Signed',
-      certSignedDate: '08-25-2024',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Patient has mobility issues',
-      cpoMinsCaptured: 95,
-      newDocs: 3,
-      newCpoDocsCreated: 2
+      remarks: 'Follow-up',
+      sNo: '002',
+      fullName: 'Johnson, Mary L',
+      firstName: 'Mary',
+      middleName: 'L',
+      lastName: 'Johnson',
+      dob: '08/22/1945',
+      hhaName: 'XYZ Home Care',
+      insuranceType: 'Medicaid',
+      primaryDiagnosisCode: 'E11.9',
+      secondaryDiagnosisCode1: 'I10',
+      secondaryDiagnosisCode2: 'M54.5',
+      secondaryDiagnosisCode3: 'J45.909',
+      secondaryDiagnosisCode4: 'E78.5',
+      secondaryDiagnosisCode5: 'I25.10',
+      soc: '02/01/2024',
+      episodeFrom: '02/01/2024',
+      episodeTo: '05/01/2024',
+      minutesCaptured: 45,
+      billingCode: 'G0156',
+      line1DosFrom: '02/01/2024',
+      line1DosTo: '02/01/2024',
+      line1Charges: 125.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Michael Brown'
     },
     {
       id: 3,
-      patientId: 'P003',
-      patientName: 'Robert J Williams',
-      patientDOB: '11-03-1968',
-      contactNumber: '555-345-6789',
-      physicianName: 'Dr. Jessica Miller',
-      pg: 'Wellness Medical Associates',
-      hhah: 'Comfort Care Services',
-      patientInsurance: 'Aetna',
-      patientInEHR: 'no',
-      patientSOC: '12-03-2023',
-      patientEpisodeFrom: '09-28-2024',
-      patientEpisodeTo: '11-26-2024',
-      renderingPractitioner: 'Dr. David Thompson',
-      primaryDiagnosisCodes: ['K21.9', 'E11.9'],
-      secondaryDiagnosisCodes: ['I10', 'M81.0'],
-      certStatus: 'Document Prepared',
-      certSignedDate: '',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'no',
-      patientRemarks: 'Needs assistance with medication management',
-      cpoMinsCaptured: 25,
-      newDocs: 1,
-      newCpoDocsCreated: 0
+      remarks: 'Wound Care',
+      sNo: '003',
+      fullName: 'Williams, Robert J',
+      firstName: 'Robert',
+      middleName: 'J',
+      lastName: 'Williams',
+      dob: '11/03/1968',
+      hhaName: 'Comfort Care Services',
+      insuranceType: 'Aetna',
+      primaryDiagnosisCode: 'L89.313',
+      secondaryDiagnosisCode1: 'E11.9',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'M81.0',
+      secondaryDiagnosisCode4: 'E78.5',
+      secondaryDiagnosisCode5: 'J45.909',
+      soc: '01/28/2024',
+      episodeFrom: '01/28/2024',
+      episodeTo: '04/28/2024',
+      minutesCaptured: 75,
+      billingCode: 'G0156',
+      line1DosFrom: '01/28/2024',
+      line1DosTo: '01/28/2024',
+      line1Charges: 165.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Jessica Miller'
     },
     {
       id: 4,
-      patientId: 'P004',
-      patientName: 'Michael T Brown',
-      patientDOB: '02-28-1985',
-      contactNumber: '555-456-7890',
-      physicianName: 'Dr. Thomas Anderson',
-      pg: 'United Medical Partners',
-      hhah: 'Premier Home Health',
-      patientInsurance: 'UnitedHealthcare',
-      patientInEHR: 'yes',
-      patientSOC: '07-04-2024',
-      patientEpisodeFrom: '09-02-2024',
-      patientEpisodeTo: '10-31-2024',
-      renderingPractitioner: 'Dr. Patricia White',
-      primaryDiagnosisCodes: ['J45.909', 'R05.9'],
-      secondaryDiagnosisCodes: ['E03.9', 'M54.5'],
-      certStatus: 'Document Signed',
-      certSignedDate: '09-15-2024',
-      recertStatus: 'Document Billed',
-      recertSignedDate: '10-01-2024',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Post-surgical care needed',
-      cpoMinsCaptured: 150,
-      newDocs: 4,
-      newCpoDocsCreated: 2
+      remarks: 'Physical Therapy',
+      sNo: '004',
+      fullName: 'Brown, Michael T',
+      firstName: 'Michael',
+      middleName: 'T',
+      lastName: 'Brown',
+      dob: '02/28/1985',
+      hhaName: 'Premier Home Health',
+      insuranceType: 'UnitedHealthcare',
+      primaryDiagnosisCode: 'S72.001A',
+      secondaryDiagnosisCode1: 'M17.11',
+      secondaryDiagnosisCode2: 'E03.9',
+      secondaryDiagnosisCode3: 'M54.5',
+      secondaryDiagnosisCode4: 'E66.01',
+      secondaryDiagnosisCode5: 'F41.1',
+      soc: '01/04/2024',
+      episodeFrom: '01/04/2024',
+      episodeTo: '04/04/2024',
+      minutesCaptured: 120,
+      billingCode: 'G0151',
+      line1DosFrom: '01/04/2024',
+      line1DosTo: '01/04/2024',
+      line1Charges: 185.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Thomas Anderson'
     },
     {
       id: 5,
-      patientId: 'P005',
-      patientName: 'Jennifer L Davis',
-      patientDOB: '09-17-1972',
-      contactNumber: '555-567-8901',
-      physicianName: 'Dr. Christopher Lee',
-      pg: 'Community Health Partners',
-      hhah: 'Caring Hands Home Health',
-      patientInsurance: 'Cigna',
-      patientInEHR: 'no',
-      patientSOC: '08-24-2024',
-      patientEpisodeFrom: '08-24-2024',
-      patientEpisodeTo: '10-22-2024',
-      renderingPractitioner: 'Dr. Elizabeth Martinez',
-      primaryDiagnosisCodes: ['F41.9', 'G47.00'],
-      secondaryDiagnosisCodes: ['E66.9', 'M17.0'],
-      certStatus: 'Document Prepared',
-      certSignedDate: '',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Weekly mental health check-ins',
-      cpoMinsCaptured: 20,
-      newDocs: 2,
-      newCpoDocsCreated: 1
+      remarks: 'Mental Health',
+      sNo: '005',
+      fullName: 'Davis, Jennifer L',
+      firstName: 'Jennifer',
+      middleName: 'L',
+      lastName: 'Davis',
+      dob: '1972-09-17',
+      hhaName: 'Caring Hands Home Health',
+      insuranceType: 'Cigna',
+      primaryDiagnosisCode: 'F41.9',
+      secondaryDiagnosisCode1: 'G47.00',
+      secondaryDiagnosisCode2: 'E66.9',
+      secondaryDiagnosisCode3: 'M17.0',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-02-24',
+      episodeFrom: '2024-02-24',
+      episodeTo: '2024-05-24',
+      minutesCaptured: 60,
+      billingCode: 'G0409',
+      line1DosFrom: '2024-02-24',
+      line1DosTo: '2024-02-24',
+      line1Charges: 145.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Christopher Lee'
     },
     {
       id: 6,
-      patientId: 'P006',
-      patientName: 'David W Miller',
-      patientDOB: '04-09-1990',
-      contactNumber: '555-678-9012',
-      physicianName: 'Dr. Andrew Wilson',
-      pg: 'Pinnacle Medical Group',
-      hhah: 'Elite Home Health Services',
-      patientInsurance: 'Humana',
-      patientInEHR: 'yes',
-      patientSOC: '08-22-2024',
-      patientEpisodeFrom: '08-22-2024',
-      patientEpisodeTo: '10-20-2024',
-      renderingPractitioner: 'Dr. Michelle Brown',
-      primaryDiagnosisCodes: ['S72.001A', 'M17.11'],
-      secondaryDiagnosisCodes: ['I10', 'E11.9'],
-      certStatus: 'Document Signed',
-      certSignedDate: '09-05-2024',
-      recertStatus: 'Document Prepared',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Physical therapy 3x weekly',
-      cpoMinsCaptured: 85,
-      newDocs: 3,
-      newCpoDocsCreated: 2
+      remarks: 'Rehabilitation',
+      sNo: '006',
+      fullName: 'Miller, David W',
+      firstName: 'David',
+      middleName: 'W',
+      lastName: 'Miller',
+      dob: '1990-04-09',
+      hhaName: 'Elite Home Health Services',
+      insuranceType: 'Humana',
+      primaryDiagnosisCode: 'S72.001A',
+      secondaryDiagnosisCode1: 'M17.11',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E11.9',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-22',
+      episodeFrom: '2024-01-22',
+      episodeTo: '2024-04-22',
+      minutesCaptured: 90,
+      billingCode: 'G0151',
+      line1DosFrom: '2024-01-22',
+      line1DosTo: '2024-01-22',
+      line1Charges: 175.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Andrew Wilson'
     },
     {
       id: 7,
-      patientId: 'P007',
-      patientName: 'Susan E Wilson',
-      patientDOB: '08-12-1965',
-      contactNumber: '555-789-0123',
-      physicianName: 'Dr. Kevin Barnes',
-      pg: 'Integrated Health Systems',
-      hhah: 'Harmony Home Health',
-      patientInsurance: 'Medicare Advantage',
-      patientInEHR: 'yes',
-      patientSOC: '08-28-2024',
-      patientEpisodeFrom: '08-28-2024',
-      patientEpisodeTo: '10-26-2024',
-      renderingPractitioner: 'Dr. Richard Taylor',
-      primaryDiagnosisCodes: ['I50.9', 'I48.91'],
-      secondaryDiagnosisCodes: ['E78.5', 'N18.3'],
-      certStatus: 'Document Billed',
-      certSignedDate: '09-10-2024',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Cardiac monitoring required',
-      cpoMinsCaptured: 110,
-      newDocs: 4,
-      newCpoDocsCreated: 2
+      remarks: 'Cardiac Monitoring',
+      sNo: '007',
+      fullName: 'Wilson, Susan E',
+      firstName: 'Susan',
+      middleName: 'E',
+      lastName: 'Wilson',
+      dob: '1965-08-12',
+      hhaName: 'Harmony Home Health',
+      insuranceType: 'Medicare Advantage',
+      primaryDiagnosisCode: 'I50.9',
+      secondaryDiagnosisCode1: 'I48.91',
+      secondaryDiagnosisCode2: 'E78.5',
+      secondaryDiagnosisCode3: 'N18.3',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-28',
+      episodeFrom: '2024-01-28',
+      episodeTo: '2024-04-28',
+      minutesCaptured: 45,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-28',
+      line1DosTo: '2024-01-28',
+      line1Charges: 135.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Kevin Barnes'
     },
     {
       id: 8,
-      patientId: 'P008',
-      patientName: 'James H Moore',
-      patientDOB: '06-25-1958',
-      contactNumber: '555-890-1234',
-      physicianName: 'Dr. Olivia Green',
-      pg: 'Advanced Medical Care',
-      hhah: 'Quality Home Health',
-      patientInsurance: 'TRICARE',
-      patientInEHR: 'no',
-      patientSOC: '08-15-2024',
-      patientEpisodeFrom: '08-15-2024',
-      patientEpisodeTo: '10-13-2024',
-      renderingPractitioner: 'Dr. William Adams',
-      primaryDiagnosisCodes: ['G20', 'R26.2'],
-      secondaryDiagnosisCodes: ['I10', 'E03.9'],
-      certStatus: 'Document Signed',
-      certSignedDate: '08-30-2024',
-      recertStatus: 'Document Prepared',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Needs assistance with daily activities',
-      cpoMinsCaptured: 95,
-      newDocs: 2,
-      newCpoDocsCreated: 1
+      remarks: 'Daily Activities Assistance',
+      sNo: '008',
+      fullName: 'Moore, James H',
+      firstName: 'James',
+      middleName: 'H',
+      lastName: 'Moore',
+      dob: '1958-06-25',
+      hhaName: 'Quality Home Health',
+      insuranceType: 'TRICARE',
+      primaryDiagnosisCode: 'G20',
+      secondaryDiagnosisCode1: 'R26.2',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E03.9',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-15',
+      episodeFrom: '2024-01-15',
+      episodeTo: '2024-04-15',
+      minutesCaptured: 120,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-15',
+      line1DosTo: '2024-01-15',
+      line1Charges: 155.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Olivia Green'
     },
     {
       id: 9,
-      patientId: 'P009',
-      patientName: 'Patricia M Taylor',
-      patientDOB: '12-03-1979',
-      contactNumber: '555-901-2345',
-      physicianName: 'Dr. Jonathan Harris',
-      pg: 'Regional Medical Associates',
-      hhah: 'Sunlight Home Health',
-      patientInsurance: 'Blue Shield',
-      patientInEHR: 'yes',
-      patientSOC: '08-23-2024',
-      patientEpisodeFrom: '08-23-2024',
-      patientEpisodeTo: '10-21-2024',
-      renderingPractitioner: 'Dr. Sandra Jackson',
-      primaryDiagnosisCodes: ['M54.5', 'M51.26'],
-      secondaryDiagnosisCodes: ['E66.01', 'F41.1'],
-      certStatus: 'Document Signed',
-      certSignedDate: '09-01-2024',
-      recertStatus: 'Document Billed',
-      recertSignedDate: '09-25-2024',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Pain management protocol in place',
-      cpoMinsCaptured: 130,
-      newDocs: 3,
-      newCpoDocsCreated: 2
+      remarks: 'Pain Management',
+      sNo: '009',
+      fullName: 'Taylor, Patricia M',
+      firstName: 'Patricia',
+      middleName: 'M',
+      lastName: 'Taylor',
+      dob: '1979-12-03',
+      hhaName: 'Sunlight Home Health',
+      insuranceType: 'Blue Shield',
+      primaryDiagnosisCode: 'M54.5',
+      secondaryDiagnosisCode1: 'M51.26',
+      secondaryDiagnosisCode2: 'E66.01',
+      secondaryDiagnosisCode3: 'F41.1',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-23',
+      episodeFrom: '2024-01-23',
+      episodeTo: '2024-04-23',
+      minutesCaptured: 55,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-23',
+      line1DosTo: '2024-01-23',
+      line1Charges: 145.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Jonathan Harris'
     },
     {
       id: 10,
-      patientId: 'P010',
-      patientName: 'Thomas B Anderson',
-      patientDOB: '03-17-1982',
-      contactNumber: '555-012-3456',
-      physicianName: 'Dr. Margaret Davis',
-      pg: 'Pacific Health Alliance',
-      hhah: 'Compassionate Care',
-      patientInsurance: 'Kaiser',
-      patientInEHR: 'no',
-      patientSOC: '08-05-2024',
-      patientEpisodeFrom: '08-05-2024',
-      patientEpisodeTo: '10-03-2024',
-      renderingPractitioner: 'Dr. Joseph Wilson',
-      primaryDiagnosisCodes: ['J44.9', 'J96.90'],
-      secondaryDiagnosisCodes: ['I10', 'E78.5'],
-      certStatus: 'Document Prepared',
-      certSignedDate: '',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Oxygen therapy monitoring',
-      cpoMinsCaptured: 30,
-      newDocs: 1,
-      newCpoDocsCreated: 1
+      remarks: 'Respiratory Therapy',
+      sNo: '010',
+      fullName: 'Anderson, Thomas B',
+      firstName: 'Thomas',
+      middleName: 'B',
+      lastName: 'Anderson',
+      dob: '1982-03-17',
+      hhaName: 'Compassionate Care',
+      insuranceType: 'Kaiser',
+      primaryDiagnosisCode: 'J44.9',
+      secondaryDiagnosisCode1: 'J96.90',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E78.5',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-05',
+      episodeFrom: '2024-01-05',
+      episodeTo: '2024-04-05',
+      minutesCaptured: 70,
+      billingCode: 'G0157',
+      line1DosFrom: '2024-01-05',
+      line1DosTo: '2024-01-05',
+      line1Charges: 160.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Margaret Davis'
     },
     {
       id: 11,
-      patientId: 'P011',
-      patientName: 'Barbara K Jackson',
-      patientDOB: '10-05-1970',
-      contactNumber: '555-123-7890',
-      physicianName: 'Dr. Edward Thompson',
-      pg: 'Valley Medical Group',
-      hhah: 'Trustworthy Home Health',
-      patientInsurance: 'Medicare',
-      patientInEHR: 'yes',
-      patientSOC: '06-13-2024',
-      patientEpisodeFrom: '10-11-2024',
-      patientEpisodeTo: '12-09-2024',
-      renderingPractitioner: 'Dr. Rebecca Nelson',
-      primaryDiagnosisCodes: ['C50.911', 'Z51.11'],
-      secondaryDiagnosisCodes: ['D64.9', 'E03.9'],
-      certStatus: 'Document Signed',
-      certSignedDate: '10-15-2024',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Post-chemotherapy care',
-      cpoMinsCaptured: 140,
-      newDocs: 5,
-      newCpoDocsCreated: 3
+      remarks: 'Post-Chemotherapy Care',
+      sNo: '011',
+      fullName: 'Jackson, Barbara K',
+      firstName: 'Barbara',
+      middleName: 'K',
+      lastName: 'Jackson',
+      dob: '1970-10-05',
+      hhaName: 'Trustworthy Home Health',
+      insuranceType: 'Medicare',
+      primaryDiagnosisCode: 'C50.911',
+      secondaryDiagnosisCode1: 'Z51.11',
+      secondaryDiagnosisCode2: 'D64.9',
+      secondaryDiagnosisCode3: 'E03.9',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-13',
+      episodeFrom: '2024-01-13',
+      episodeTo: '2024-04-13',
+      minutesCaptured: 90,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-13',
+      line1DosTo: '2024-01-13',
+      line1Charges: 175.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Edward Thompson'
     },
     {
       id: 12,
-      patientId: 'P012',
-      patientName: 'Richard D White',
-      patientDOB: '07-30-1963',
-      contactNumber: '555-234-8901',
-      physicianName: 'Dr. Carol Martin',
-      pg: 'Heritage Medical Partners',
-      hhah: 'Reliable Home Health',
-      patientInsurance: 'Anthem',
-      patientInEHR: 'no',
-      patientSOC: '02-26-2024',
-      patientEpisodeFrom: '08-24-2024',
-      patientEpisodeTo: '10-22-2024',
-      renderingPractitioner: 'Dr. Brian Clark',
-      primaryDiagnosisCodes: ['I63.9', 'I69.30'],
-      secondaryDiagnosisCodes: ['I10', 'E11.9'],
-      certStatus: 'Document Signed',
-      certSignedDate: '09-01-2024',
-      recertStatus: 'Document Prepared',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Speech therapy sessions required',
-      cpoMinsCaptured: 90,
-      newDocs: 3,
-      newCpoDocsCreated: 2
+      remarks: 'Speech Therapy',
+      sNo: '012',
+      fullName: 'White, Richard D',
+      firstName: 'Richard',
+      middleName: 'D',
+      lastName: 'White',
+      dob: '1963-07-30',
+      hhaName: 'Reliable Home Health',
+      insuranceType: 'Anthem',
+      primaryDiagnosisCode: 'I63.9',
+      secondaryDiagnosisCode1: 'I69.30',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E11.9',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-24',
+      episodeFrom: '2024-01-24',
+      episodeTo: '2024-04-24',
+      minutesCaptured: 50,
+      billingCode: 'G0153',
+      line1DosFrom: '2024-01-24',
+      line1DosTo: '2024-01-24',
+      line1Charges: 160.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Carol Martin'
     },
     {
       id: 13,
-      patientId: 'P013',
-      patientName: 'Elizabeth S Harris',
-      patientDOB: '01-12-1987',
-      contactNumber: '555-345-9012',
-      physicianName: 'Dr. Daniel Robinson',
-      pg: 'Summit Medical Center',
-      hhah: 'Dedicated Home Health',
-      patientInsurance: 'Medicaid',
-      patientInEHR: 'yes',
-      patientSOC: '09-21-2023',
-      patientEpisodeFrom: '09-15-2024',
-      patientEpisodeTo: '11-13-2024',
-      renderingPractitioner: 'Dr. Jennifer Lopez',
-      primaryDiagnosisCodes: ['O90.4', 'Z39.0'],
-      secondaryDiagnosisCodes: ['F53.0', 'D64.9'],
-      certStatus: 'Document Billed',
-      certSignedDate: '09-25-2024',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Postpartum care with newborn monitoring',
-      cpoMinsCaptured: 105,
-      newDocs: 4,
-      newCpoDocsCreated: 2
+      remarks: 'Postpartum Care',
+      sNo: '013',
+      fullName: 'Harris, Elizabeth S',
+      firstName: 'Elizabeth',
+      middleName: 'S',
+      lastName: 'Harris',
+      dob: '1987-01-12',
+      hhaName: 'Dedicated Home Health',
+      insuranceType: 'Medicaid',
+      primaryDiagnosisCode: 'O90.4',
+      secondaryDiagnosisCode1: 'Z39.0',
+      secondaryDiagnosisCode2: 'F53.0',
+      secondaryDiagnosisCode3: 'D64.9',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-21',
+      episodeFrom: '2024-01-21',
+      episodeTo: '2024-04-21',
+      minutesCaptured: 65,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-21',
+      line1DosTo: '2024-01-21',
+      line1Charges: 150.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Daniel Robinson'
     },
     {
       id: 14,
-      patientId: 'P014',
-      patientName: 'Charles P Martin',
-      patientDOB: '05-20-1955',
-      contactNumber: '555-456-0123',
-      physicianName: 'Dr. Susan Baker',
-      pg: 'Cornerstone Health Group',
-      hhah: 'Professional Home Health',
-      patientInsurance: 'United Healthcare',
-      patientInEHR: 'no',
-      patientSOC: '10-12-2023',
-      patientEpisodeFrom: '08-07-2024',
-      patientEpisodeTo: '10-05-2024',
-      renderingPractitioner: 'Dr. Robert Johnson',
-      primaryDiagnosisCodes: ['Z96.651', 'M96.89'],
-      secondaryDiagnosisCodes: ['M17.0', 'E66.01'],
-      certStatus: 'Document Signed',
-      certSignedDate: '08-15-2024',
-      recertStatus: 'Document Signed',
-      recertSignedDate: '09-30-2024',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Joint replacement rehabilitation',
-      cpoMinsCaptured: 125,
-      newDocs: 3,
-      newCpoDocsCreated: 2
+      remarks: 'Joint Replacement Rehab',
+      sNo: '014',
+      fullName: 'Martin, Charles P',
+      firstName: 'Charles',
+      middleName: 'P',
+      lastName: 'Martin',
+      dob: '1955-05-20',
+      hhaName: 'Professional Home Health',
+      insuranceType: 'United Healthcare',
+      primaryDiagnosisCode: 'Z96.651',
+      secondaryDiagnosisCode1: 'M96.89',
+      secondaryDiagnosisCode2: 'M17.0',
+      secondaryDiagnosisCode3: 'E66.01',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-07',
+      episodeFrom: '2024-01-07',
+      episodeTo: '2024-04-07',
+      minutesCaptured: 95,
+      billingCode: 'G0151',
+      line1DosFrom: '2024-01-07',
+      line1DosTo: '2024-01-07',
+      line1Charges: 180.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Susan Baker'
     },
     {
       id: 15,
-      patientId: 'P015',
-      patientName: 'Linda G Thompson',
-      patientDOB: '09-08-1978',
-      contactNumber: '555-567-1234',
-      physicianName: 'Dr. James Wright',
-      pg: 'Metropolitan Medical Associates',
-      hhah: 'First Choice Home Health',
-      patientInsurance: 'Aetna',
-      patientInEHR: 'yes',
-      patientSOC: '08-06-2024',
-      patientEpisodeFrom: '08-06-2024',
-      patientEpisodeTo: '10-04-2024',
-      renderingPractitioner: 'Dr. Mary Wilson',
-      primaryDiagnosisCodes: ['L89.314', 'E44.0'],
-      secondaryDiagnosisCodes: ['E11.9', 'I10'],
-      certStatus: 'Document Prepared',
-      certSignedDate: '',
-      recertStatus: 'Document not received',
-      recertSignedDate: '',
-      f2fEligibility: 'yes',
-      patientRemarks: 'Wound care and nutritional support',
-      cpoMinsCaptured: 25,
-      newDocs: 2,
-      newCpoDocsCreated: 1
+      remarks: 'Wound Care and Nutrition',
+      sNo: '015',
+      fullName: 'Thompson, Linda G',
+      firstName: 'Linda',
+      middleName: 'G',
+      lastName: 'Thompson',
+      dob: '1978-09-08',
+      hhaName: 'First Choice Home Health',
+      insuranceType: 'Aetna',
+      primaryDiagnosisCode: 'L89.314',
+      secondaryDiagnosisCode1: 'E44.0',
+      secondaryDiagnosisCode2: 'E11.9',
+      secondaryDiagnosisCode3: 'I10',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-06',
+      episodeFrom: '2024-01-06',
+      episodeTo: '2024-04-06',
+      minutesCaptured: 75,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-06',
+      line1DosTo: '2024-01-06',
+      line1Charges: 165.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. James Wright'
+    },
+    {
+      id: 16,
+      remarks: 'Diabetes Management',
+      sNo: '016',
+      fullName: 'Garcia, Maria R',
+      firstName: 'Maria',
+      middleName: 'R',
+      lastName: 'Garcia',
+      dob: '1969-04-15',
+      hhaName: 'Community Home Health',
+      insuranceType: 'Cigna',
+      primaryDiagnosisCode: 'E11.9',
+      secondaryDiagnosisCode1: 'I10',
+      secondaryDiagnosisCode2: 'E78.5',
+      secondaryDiagnosisCode3: 'E66.01',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-14',
+      episodeFrom: '2024-01-14',
+      episodeTo: '2024-04-14',
+      minutesCaptured: 60,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-14',
+      line1DosTo: '2024-01-14',
+      line1Charges: 140.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Richard Wilson'
+    },
+    {
+      id: 17,
+      remarks: 'Fall Prevention',
+      sNo: '017',
+      fullName: 'Rodriguez, Carlos J',
+      firstName: 'Carlos',
+      middleName: 'J',
+      lastName: 'Rodriguez',
+      dob: '1952-08-23',
+      hhaName: 'Guardian Home Health',
+      insuranceType: 'Medicare',
+      primaryDiagnosisCode: 'R26.2',
+      secondaryDiagnosisCode1: 'I10',
+      secondaryDiagnosisCode2: 'M54.5',
+      secondaryDiagnosisCode3: 'M17.0',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-25',
+      episodeFrom: '2024-01-25',
+      episodeTo: '2024-04-25',
+      minutesCaptured: 55,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-25',
+      line1DosTo: '2024-01-25',
+      line1Charges: 135.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Emily Johnson'
+    },
+    {
+      id: 18,
+      remarks: 'COPD Management',
+      sNo: '018',
+      fullName: 'Nguyen, David T',
+      firstName: 'David',
+      middleName: 'T',
+      lastName: 'Nguyen',
+      dob: '1960-12-10',
+      hhaName: 'Pinnacle Home Health',
+      insuranceType: 'Blue Cross',
+      primaryDiagnosisCode: 'J44.9',
+      secondaryDiagnosisCode1: 'I10',
+      secondaryDiagnosisCode2: 'E11.9',
+      secondaryDiagnosisCode3: 'J45.909',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-18',
+      episodeFrom: '2024-01-18',
+      episodeTo: '2024-04-18',
+      minutesCaptured: 85,
+      billingCode: 'G0157',
+      line1DosFrom: '2024-01-18',
+      line1DosTo: '2024-01-18',
+      line1Charges: 170.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Jason Miller'
+    },
+    {
+      id: 19,
+      remarks: 'Heart Failure Care',
+      sNo: '019',
+      fullName: 'Williams, Sarah K',
+      firstName: 'Sarah',
+      middleName: 'K',
+      lastName: 'Williams',
+      dob: '1958-07-19',
+      hhaName: 'Advanced Home Health',
+      insuranceType: 'Medicare Advantage',
+      primaryDiagnosisCode: 'I50.9',
+      secondaryDiagnosisCode1: 'I10',
+      secondaryDiagnosisCode2: 'E11.9',
+      secondaryDiagnosisCode3: 'E78.5',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-10',
+      episodeFrom: '2024-01-10',
+      episodeTo: '2024-04-10',
+      minutesCaptured: 70,
+      billingCode: 'G0156',
+      line1DosFrom: '2024-01-10',
+      line1DosTo: '2024-01-10',
+      line1Charges: 155.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Michael Chen'
+    },
+    {
+      id: 20,
+      remarks: 'Post-Stroke Rehabilitation',
+      sNo: '020',
+      fullName: 'Lopez, Antonio M',
+      firstName: 'Antonio',
+      middleName: 'M',
+      lastName: 'Lopez',
+      dob: '1973-05-30',
+      hhaName: 'Victory Home Health',
+      insuranceType: 'Humana',
+      primaryDiagnosisCode: 'I63.9',
+      secondaryDiagnosisCode1: 'I69.30',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E11.9',
+      secondaryDiagnosisCode4: '',
+      secondaryDiagnosisCode5: '',
+      soc: '2024-01-29',
+      episodeFrom: '2024-01-29',
+      episodeTo: '2024-04-29',
+      minutesCaptured: 110,
+      billingCode: 'G0151',
+      line1DosFrom: '2024-01-29',
+      line1DosTo: '2024-01-29',
+      line1Charges: 190.00,
+      line1Pos: '12',
+      line1Units: 1,
+      providersName: 'Dr. Patricia White'
+    },
+    // Add new 2025 entries
+    {
+      id: 21,
+      remarks: 'Initial Assessment',
+      sNo: '021',
+      fullName: 'Cooper, Jennifer R',
+      firstName: 'Jennifer',
+      middleName: 'R',
+      lastName: 'Cooper',
+      dob: '06/12/1974',
+      hhaName: 'Phoenix Home Health',
+      insuranceType: 'Medicare',
+      primaryDiagnosisCode: 'I10',
+      secondaryDiagnosisCode1: 'E11.9',
+      secondaryDiagnosisCode2: 'M54.5',
+      secondaryDiagnosisCode3: 'I25.10',
+      secondaryDiagnosisCode4: 'E78.5',
+      secondaryDiagnosisCode5: 'J45.909',
+      soc: '01/15/2025',
+      episodeFrom: '01/15/2025',
+      episodeTo: '04/15/2025',
+      minutesCaptured: 75,
+      billingCode: 'G0179',
+      line1DosFrom: '01/15/2025',
+      line1DosTo: '01/15/2025',
+      line1Charges: 40.00,
+      line1Pos: '11',
+      line1Units: 1,
+      providersName: 'Dr. Michael Stevens'
+    },
+    {
+      id: 22,
+      remarks: 'Medication Management',
+      sNo: '022',
+      fullName: 'Martinez, Carlos T',
+      firstName: 'Carlos',
+      middleName: 'T',
+      lastName: 'Martinez',
+      dob: '09/23/1965',
+      hhaName: 'Mesa Care Services',
+      insuranceType: 'United Healthcare',
+      primaryDiagnosisCode: 'E11.9',
+      secondaryDiagnosisCode1: 'I10',
+      secondaryDiagnosisCode2: 'I50.9',
+      secondaryDiagnosisCode3: 'J44.9',
+      secondaryDiagnosisCode4: 'E78.5',
+      secondaryDiagnosisCode5: 'M54.5',
+      soc: '01/08/2025',
+      episodeFrom: '01/08/2025',
+      episodeTo: '04/08/2025',
+      minutesCaptured: 60,
+      billingCode: 'G0156',
+      line1DosFrom: '01/08/2025',
+      line1DosTo: '01/08/2025',
+      line1Charges: 60.00,
+      line1Pos: '11',
+      line1Units: 1,
+      providersName: 'Dr. Amanda Rodriguez'
+    },
+    {
+      id: 23,
+      remarks: 'Chronic Pain Management',
+      sNo: '023',
+      fullName: 'Thompson, Robert J',
+      firstName: 'Robert',
+      middleName: 'J',
+      lastName: 'Thompson',
+      dob: '04/17/1959',
+      hhaName: 'Scottsdale Home Health',
+      insuranceType: 'Medicare Advantage',
+      primaryDiagnosisCode: 'M54.5',
+      secondaryDiagnosisCode1: 'M17.0',
+      secondaryDiagnosisCode2: 'E11.9',
+      secondaryDiagnosisCode3: 'I10',
+      secondaryDiagnosisCode4: 'G89.29',
+      secondaryDiagnosisCode5: 'F41.1',
+      soc: '01/22/2025',
+      episodeFrom: '01/22/2025',
+      episodeTo: '04/22/2025',
+      minutesCaptured: 90,
+      billingCode: 'G0181',
+      line1DosFrom: '01/22/2025',
+      line1DosTo: '01/22/2025',
+      line1Charges: 113.00,
+      line1Pos: '11',
+      line1Units: 1,
+      providersName: 'Dr. Samantha Wilson'
+    },
+    {
+      id: 24,
+      remarks: 'Post-Op Care',
+      sNo: '024',
+      fullName: 'Parker, David L',
+      firstName: 'David',
+      middleName: 'L',
+      lastName: 'Parker',
+      dob: '11/30/1972',
+      hhaName: 'Tempe Home Health Services',
+      insuranceType: 'Cigna',
+      primaryDiagnosisCode: 'Z96.651',
+      secondaryDiagnosisCode1: 'M17.11',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E11.9',
+      secondaryDiagnosisCode4: 'M54.5',
+      secondaryDiagnosisCode5: 'E78.5',
+      soc: '02/05/2025',
+      episodeFrom: '02/05/2025',
+      episodeTo: '05/05/2025',
+      minutesCaptured: 75,
+      billingCode: 'G0156',
+      line1DosFrom: '02/05/2025',
+      line1DosTo: '02/05/2025',
+      line1Charges: 60.00,
+      line1Pos: '11',
+      line1Units: 1,
+      providersName: 'Dr. William Collins'
+    },
+    {
+      id: 25,
+      remarks: 'Cardiac Rehab',
+      sNo: '025',
+      fullName: 'Gonzalez, Maria E',
+      firstName: 'Maria',
+      middleName: 'E',
+      lastName: 'Gonzalez',
+      dob: '07/14/1968',
+      hhaName: 'Phoenix Home Health',
+      insuranceType: 'Medicare',
+      primaryDiagnosisCode: 'I50.9',
+      secondaryDiagnosisCode1: 'I48.91',
+      secondaryDiagnosisCode2: 'I10',
+      secondaryDiagnosisCode3: 'E11.9',
+      secondaryDiagnosisCode4: 'E78.5',
+      secondaryDiagnosisCode5: 'J44.9',
+      soc: '01/30/2025',
+      episodeFrom: '01/30/2025',
+      episodeTo: '04/30/2025',
+      minutesCaptured: 120,
+      billingCode: 'G0181',
+      line1DosFrom: '01/30/2025',
+      line1DosTo: '01/30/2025',
+      line1Charges: 113.00,
+      line1Pos: '11',
+      line1Units: 1,
+      providersName: 'Dr. James Peterson'
     }
-  ]);
+  ];
 
   const getFilteredClaims = () => {
     // If there are no filtered claims yet, use the dummy claims
@@ -821,14 +1160,36 @@ const PGView = () => {
   };
 
   const filterClaimsByDateRange = () => {
-    const startDate = new Date(selectedDateRange.start);
-    const endDate = new Date(selectedDateRange.end);
+    // Convert dates from ISO or American format to proper Date objects
+    const parseDate = (dateStr) => {
+      if (!dateStr) return null;
+      
+      // Handle ISO format (from date input)
+      if (dateStr.includes('-')) {
+        return new Date(dateStr);
+      }
+      
+      // Handle American format (MM/DD/YYYY)
+      const [month, day, year] = dateStr.split('/');
+      return new Date(year, month - 1, day);
+    };
+
+    const startDate = parseDate(selectedDateRange.start);
+    const endDate = parseDate(selectedDateRange.end);
+    
+    if (!startDate || !endDate) {
+      alert("Please select valid start and end dates");
+      return;
+    }
     
     // Set end date to end of day
     endDate.setHours(23, 59, 59, 999);
     
     const filtered = dummyClaims.filter(claim => {
-      const socDate = new Date(claim.patientSOC);
+      // Parse claim date which could be in either format
+      const socDate = parseDate(claim.soc);
+      if (!socDate) return false;
+      
       return socDate >= startDate && socDate <= endDate;
     });
     
@@ -836,143 +1197,304 @@ const PGView = () => {
     setShowDateRangeFilter(false);
   };
 
-  const handleMonthYearSubmit = () => {
-    if (!selectedMonth || !selectedYear) return;
-
-    const startDate = new Date(selectedYear, selectedMonth - 1, 1);
-    const endDate = new Date(selectedYear, selectedMonth, 0);
-
-    const filtered = dummyClaims.filter(claim => {
-      const parseDate = (dateStr) => {
-        if (!dateStr) return null;
-        const [month, day, year] = dateStr.split('-').map(Number);
-        return new Date(year, month - 1, day);
-      };
-
-      let isSignedInMonth = false;
-
-      if (filterType === 'cert') {
-        // Check cert/recert dates
-        const certSignedDate = claim.certStatus === 'Document Signed' || claim.certStatus === 'Document Billed' 
-          ? parseDate(claim.certSignedDate)
-          : null;
-        const recertSignedDate = claim.recertStatus === 'Document Signed' || claim.recertStatus === 'Document Billed' 
-          ? parseDate(claim.recertSignedDate)
-          : null;
-
-        isSignedInMonth = (certSignedDate && certSignedDate >= startDate && certSignedDate <= endDate) ||
-                         (recertSignedDate && recertSignedDate >= startDate && recertSignedDate <= endDate);
-      } else {
-        // Check CPO documents
-        const cpoDocuments = [
-          { date: claim.certSignedDate, status: claim.certStatus },
-          { date: claim.recertSignedDate, status: claim.recertStatus }
-        ];
-
-        // Count documents signed in the selected month
-        const signedDocsInMonth = cpoDocuments.filter(doc => {
-          const signedDate = doc.status === 'Document Signed' || doc.status === 'Document Billed'
-            ? parseDate(doc.date)
-            : null;
-          return signedDate && signedDate >= startDate && signedDate <= endDate;
-        }).length;
-
-        // Calculate CPO minutes (2 minutes per document)
-        const cpoMinutes = signedDocsInMonth * 2;
-
-        isSignedInMonth = signedDocsInMonth > 0 && cpoMinutes >= 30;
-      }
-
-      // Check if total ICD codes >= 3
-      const totalIcdCodes = [...(claim.primaryDiagnosisCodes || []), ...(claim.secondaryDiagnosisCodes || [])].length;
-      const hasEnoughIcdCodes = totalIcdCodes >= 3;
-
-      // Check if EHR is yes
-      const hasEhr = claim.patientInEHR === 'yes';
-
-      return isSignedInMonth && hasEnoughIcdCodes && hasEhr;
-    });
-
-    setFilteredClaims(filtered);
-    setShowMonthPicker(false);
-  };
-
   const handleDownloadClaims = (format) => {
-    const claimsToDownload = getFilteredClaims();
+    // Get current date for file naming
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
+    const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+    const previousMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+    
+    // Format month names
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June', 
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const shortMonthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    
+    const currentMonthName = monthNames[currentMonth - 1];
+    const previousMonthName = monthNames[previousMonth - 1];
+    const currentShortMonth = shortMonthNames[currentMonth - 1];
+    
+    // Prepare claims based on business rules
+    const preparedClaims = filteredClaims.length > 0 ? filteredClaims : dummyClaims;
+    
+    // Apply business rules to each claim
+    const billingClaims = preparedClaims.map(claim => {
+      const icdCodes = [
+        claim.primaryDiagnosisCode,
+        claim.secondaryDiagnosisCode1,
+        claim.secondaryDiagnosisCode2,
+        claim.secondaryDiagnosisCode3,
+        claim.secondaryDiagnosisCode4,
+        claim.secondaryDiagnosisCode5
+      ].filter(code => code && code.trim() !== '');
+      
+      const hasMinimumIcdCodes = icdCodes.length >= 3;
+      const isInEHR = true; // Assuming all patients in our sample are in EHR
+      
+      // Process dates
+      const episodeFrom = new Date(claim.episodeFrom);
+      const episodeTo = new Date(claim.episodeTo);
+      
+      // Calculate days active in current month
+      const billingMonthStart = new Date(currentYear, currentMonth - 1, 1);
+      const billingMonthEnd = new Date(currentYear, currentMonth, 0);
+      
+      // Check if episode overlaps with billing month
+      const isActiveInBillingMonth = 
+        (episodeFrom <= billingMonthEnd && episodeTo >= billingMonthStart);
+      
+      // Determine if this is a CERT/RECERT billing or CPO billing
+      const hasCertOrRecert = Math.random() > 0.5; // Simulating presence of CERT/RECERT
+      const certSignedDate = new Date(currentYear, currentMonth - 1, Math.floor(Math.random() * 28) + 1);
+      const isCertSignedInBillingMonth = 
+        certSignedDate >= billingMonthStart && certSignedDate <= billingMonthEnd;
+      
+      // CPO minutes in current month (simulated)
+      const cpoMinutesInBillingMonth = Math.floor(Math.random() * 150) + 10;
+      const hasSufficientCpoMinutes = cpoMinutesInBillingMonth >= 30;
+      
+      // Determine billing type and apply corresponding rules
+      let billingType = null;
+      let line1DosFrom = null;
+      let line1DosTo = null;
+      let line1Charges = null;
+      let billingCode = null;
+      
+      // CERT/RECERT Billing Rules
+      if (hasCertOrRecert && isCertSignedInBillingMonth && hasMinimumIcdCodes && isInEHR) {
+        billingType = 'CERT';
+        line1DosFrom = new Date(episodeFrom);
+        line1DosTo = new Date(episodeFrom);
+        line1Charges = claim.billingCode === 'G0179' ? 40 : 60; // Using American G0179 code instead of 179
+        billingCode = claim.billingCode;
+      } 
+      // CPO Billing Rules
+      else if (isActiveInBillingMonth && hasMinimumIcdCodes && hasSufficientCpoMinutes && isInEHR) {
+        billingType = 'CPO';
+        
+        // Determine DOS FROM
+        if (episodeFrom.getMonth() + 1 < currentMonth) {
+          line1DosFrom = new Date(currentYear, currentMonth - 1, 1); // First day of billing month
+        } else {
+          line1DosFrom = new Date(episodeFrom);
+          line1DosFrom.setDate(episodeFrom.getDate() + 1);
+        }
+        
+        // Determine DOS TO
+        if (episodeTo.getMonth() + 1 > currentMonth) {
+          line1DosTo = new Date(currentYear, currentMonth, 0); // Last day of billing month
+        } else {
+          line1DosTo = new Date(episodeTo);
+          line1DosTo.setDate(episodeTo.getDate() - 1);
+        }
+        
+        line1Charges = 113;
+        billingCode = 'G0181'; // American CPO billing code
+      }
+      
+      // Skip claims that don't match any billing criteria
+      if (!billingType) return null;
+      
+      // Format dates for display
+      const formatDate = (date) => {
+        if (!date) return '';
+        return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;
+      };
+      
+      return {
+        ...claim,
+        billingType,
+        certSignedDate: formatDate(certSignedDate),
+        cpoMinutesCaptured: cpoMinutesInBillingMonth,
+        line1DosFrom: formatDate(line1DosFrom),
+        line1DosTo: formatDate(line1DosTo),
+        line1Charges,
+        billingCode: billingType === 'CPO' ? 'G0181' : claim.billingCode,
+        line1Pos: '11', // As per requirement
+        line1Units: 1   // As per requirement
+      };
+    }).filter(claim => claim !== null); // Remove claims that don't match criteria
+    
+    // Generate filename
+    const fileName = `${currentShortMonth} ${currentYear} Billing - ${pgName || 'Sample PG'} - Data (${previousMonthName} ${previousMonthYear} data)`;
     
     if (format === 'csv') {
-      const csvContent = [
-        ["Patient Name", "Patient ID", "Insurance", "Cert Status", "SOC Date", "Cert Date", "Recert Date", "CPO Status"],
-        ...claimsToDownload.map(claim => [
-          claim.patientName,
-          claim.patientId,
-          claim.patientInsurance,
-          claim.certStatus,
-          claim.patientSOC ? new Date(claim.patientSOC).toLocaleDateString() : '-',
-          claim.certSignedDate ? new Date(claim.certSignedDate).toLocaleDateString() : '-',
-          claim.recertSignedDate ? new Date(claim.recertSignedDate).toLocaleDateString() : '-',
-          claim.cpoMinsCaptured > 0 ? 'Active' : 'Inactive'
-        ])
-      ].map(row => row.join(",")).join("\n");
-
-      const blob = new Blob([csvContent], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `claims-${new Date().toISOString().split('T')[0]}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    } else if (format === 'pdf') {
-      const doc = new jsPDF();
+      // Prepare CSV content
+      let csvContent = "data:text/csv;charset=utf-8,";
       
-      // Add title to the PDF
-      doc.setFontSize(16);
-      doc.setTextColor(40, 40, 40);
-      doc.text("Claims Report", 14, 22);
+      // Add headers
+      const headers = [
+        "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
+        "HHA NAME", "INSURANCE TYPE", "PRIMARY DIAGNOSIS CODE", 
+        "SECONDARY DIAGNOSIS CODE 1", "SECONDARY DIAGNOSIS CODE 2", "SECONDARY DIAGNOSIS CODE 3",
+        "SECONDARY DIAGNOSIS CODE 4", "SECONDARY DIAGNOSIS CODE 5",
+        "SOC", "Episode From", "Episode To", "Billing Type", "Doc Signed Date", 
+        "CPO Minutes Captured", "Billing Code", "LINE 1 DOS FROM", "LINE 1 DOS TO", 
+        "Line 1 $Charges", "Line 1 POS", "Line 1 Units", "Provider's Name"
+      ];
       
-      // Add generation date
-      doc.setFontSize(10);
-      doc.setTextColor(80, 80, 80);
-      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+      csvContent += headers.join(",") + "\r\n";
       
-      // Table data
-      const tableColumn = ["Patient Name", "Patient ID", "Insurance", "Cert Status", "SOC Date", "Cert Date", "Recert Date", "CPO Status"];
-      const tableRows = claimsToDownload.map(claim => [
-        claim.patientName,
-        claim.patientId,
-        claim.patientInsurance,
-        claim.certStatus,
-        claim.patientSOC ? new Date(claim.patientSOC).toLocaleDateString() : '-',
-        claim.certSignedDate ? new Date(claim.certSignedDate).toLocaleDateString() : '-',
-        claim.recertSignedDate ? new Date(claim.recertSignedDate).toLocaleDateString() : '-',
-        claim.cpoMinsCaptured > 0 ? 'Active' : 'Inactive'
-      ]);
-
-      // Generate the table
-      autoTable(doc, {
-        head: [tableColumn],
-        body: tableRows,
-        startY: 35,
-        styles: {
-          fontSize: 8,
-          cellPadding: 3,
-          lineWidth: 0.5,
-          lineColor: [220, 220, 220]
-        },
-        headStyles: {
-          fillColor: [79, 70, 229],
-          textColor: [255, 255, 255],
-          fontStyle: 'bold'
-        },
-        alternateRowStyles: {
-          fillColor: [240, 240, 250]
-        }
+      // Add data rows
+      billingClaims.forEach(claim => {
+        const row = [
+          `"${claim.remarks || ''}"`,
+          `"${claim.sNo || ''}"`,
+          `"${claim.fullName || ''}"`,
+          `"${claim.firstName || ''}"`,
+          `"${claim.middleName || ''}"`,
+          `"${claim.lastName || ''}"`,
+          `"${claim.dob || ''}"`,
+          `"${claim.hhaName || ''}"`,
+          `"${claim.insuranceType || ''}"`,
+          `"${claim.primaryDiagnosisCode || ''}"`,
+          `"${claim.secondaryDiagnosisCode1 || ''}"`,
+          `"${claim.secondaryDiagnosisCode2 || ''}"`,
+          `"${claim.secondaryDiagnosisCode3 || ''}"`,
+          `"${claim.secondaryDiagnosisCode4 || ''}"`,
+          `"${claim.secondaryDiagnosisCode5 || ''}"`,
+          `"${claim.soc || ''}"`,
+          `"${claim.episodeFrom || ''}"`,
+          `"${claim.episodeTo || ''}"`,
+          `"${claim.billingType || ''}"`,
+          `"${claim.certSignedDate || ''}"`,
+          `"${claim.cpoMinutesCaptured || ''}"`,
+          `"${claim.billingCode || ''}"`,
+          `"${claim.line1DosFrom || ''}"`,
+          `"${claim.line1DosTo || ''}"`,
+          `"${claim.line1Charges || ''}"`,
+          `"${claim.line1Pos || ''}"`,
+          `"${claim.line1Units || ''}"`,
+          `"${claim.providersName || ''}"`,
+        ];
+        
+        csvContent += row.join(",") + "\r\n";
       });
       
-      // Save the PDF
-      doc.save(`claims-${new Date().toISOString().split('T')[0]}.pdf`);
+      // Create download link
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `${fileName}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+    } else if (format === 'pdf') {
+      // Create PDF using jsPDF
+      const doc = new jsPDF('l', 'mm', 'a4');
+      
+      // Add title
+      doc.setFontSize(14);
+      doc.text(fileName, 14, 15);
+      doc.setFontSize(10);
+      
+      // Prepare data for table
+      const headers = [
+        "S.No", "Patient Name", "DOB", "Billing Type", "Doc Signed", "CPO Min", 
+        "PRIMARY DX", "DOS FROM", "DOS TO", "Billing Code", "$Charges", "POS", "Units"
+      ];
+      
+      const data = billingClaims.map(claim => [
+        claim.sNo,
+        claim.fullName,
+        claim.dob,
+        claim.billingType,
+        claim.certSignedDate,
+        claim.cpoMinutesCaptured,
+        claim.primaryDiagnosisCode,
+        claim.line1DosFrom,
+        claim.line1DosTo,
+        claim.billingCode,
+        claim.line1Charges,
+        claim.line1Pos,
+        claim.line1Units
+      ]);
+      
+      // Generate table
+      autoTable(doc, {
+        head: [headers],
+        body: data,
+        startY: 20,
+        theme: 'grid',
+        styles: { fontSize: 8, cellPadding: 1 },
+        headStyles: { fillColor: [71, 85, 119] }
+      });
+      
+      // Save PDF
+      doc.save(`${fileName}.pdf`);
+    } else if (format === 'excel') {
+      // For Excel, we'll use CSV as a fallback since jspdf-autotable doesn't support Excel directly
+      // In a real application, you might want to use a library like SheetJS/xlsx for true Excel export
+      
+      // Notify the user that we're using CSV instead
+      alert("Excel format requested. Downloading as CSV which can be opened in Excel.");
+      
+      // Reuse the CSV generation code
+      let csvContent = "data:text/csv;charset=utf-8,";
+      
+      // Add headers
+      const headers = [
+        "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
+        "HHA NAME", "INSURANCE TYPE", "PRIMARY DIAGNOSIS CODE", 
+        "SECONDARY DIAGNOSIS CODE 1", "SECONDARY DIAGNOSIS CODE 2", "SECONDARY DIAGNOSIS CODE 3",
+        "SECONDARY DIAGNOSIS CODE 4", "SECONDARY DIAGNOSIS CODE 5",
+        "SOC", "Episode From", "Episode To", "Billing Type", "Doc Signed Date", 
+        "CPO Minutes Captured", "Billing Code", "LINE 1 DOS FROM", "LINE 1 DOS TO", 
+        "Line 1 $Charges", "Line 1 POS", "Line 1 Units", "Provider's Name"
+      ];
+      
+      csvContent += headers.join(",") + "\r\n";
+      
+      // Add data rows
+      billingClaims.forEach(claim => {
+        const row = [
+          `"${claim.remarks || ''}"`,
+          `"${claim.sNo || ''}"`,
+          `"${claim.fullName || ''}"`,
+          `"${claim.firstName || ''}"`,
+          `"${claim.middleName || ''}"`,
+          `"${claim.lastName || ''}"`,
+          `"${claim.dob || ''}"`,
+          `"${claim.hhaName || ''}"`,
+          `"${claim.insuranceType || ''}"`,
+          `"${claim.primaryDiagnosisCode || ''}"`,
+          `"${claim.secondaryDiagnosisCode1 || ''}"`,
+          `"${claim.secondaryDiagnosisCode2 || ''}"`,
+          `"${claim.secondaryDiagnosisCode3 || ''}"`,
+          `"${claim.secondaryDiagnosisCode4 || ''}"`,
+          `"${claim.secondaryDiagnosisCode5 || ''}"`,
+          `"${claim.soc || ''}"`,
+          `"${claim.episodeFrom || ''}"`,
+          `"${claim.episodeTo || ''}"`,
+          `"${claim.billingType || ''}"`,
+          `"${claim.certSignedDate || ''}"`,
+          `"${claim.cpoMinutesCaptured || ''}"`,
+          `"${claim.billingCode || ''}"`,
+          `"${claim.line1DosFrom || ''}"`,
+          `"${claim.line1DosTo || ''}"`,
+          `"${claim.line1Charges || ''}"`,
+          `"${claim.line1Pos || ''}"`,
+          `"${claim.line1Units || ''}"`,
+          `"${claim.providersName || ''}"`,
+        ];
+        
+        csvContent += row.join(",") + "\r\n";
+      });
+      
+      // Create download link
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `${fileName}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
@@ -996,42 +1518,6 @@ const PGView = () => {
           <div className="filter-group">
             <button 
               className="filter-button"
-              onClick={() => {
-                setFilterType('cert');
-                setShowMonthPicker(true);
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              Filter by Cert/Recert
-            </button>
-          </div>
-
-          <div className="filter-group">
-            <button 
-              className="filter-button"
-              onClick={() => {
-                setFilterType('cpo');
-                setShowMonthPicker(true);
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              Filter by CPO Documents
-            </button>
-          </div>
-          
-          <div className="filter-group">
-            <button 
-              className="filter-button"
               onClick={() => setShowDateRangeFilter(true)}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1043,7 +1529,7 @@ const PGView = () => {
               Date Range Filter
             </button>
           </div>
-
+          
           {showDateRangeFilter && (
             <div className="modal-overlay">
               <div className="modal-content" data-type="date-range">
@@ -1081,12 +1567,6 @@ const PGView = () => {
                       Last Month
                     </button>
                     <button 
-                      className={`period-button ${selectedPeriod === 'year' ? 'active' : ''}`}
-                      onClick={() => handlePeriodChange('year')}
-                    >
-                      Last Year
-                    </button>
-                    <button 
                       className={`period-button ${selectedPeriod === 'all' ? 'active' : ''}`}
                       onClick={() => handlePeriodChange('all')}
                     >
@@ -1107,83 +1587,40 @@ const PGView = () => {
             </div>
           )}
 
-          {showMonthPicker && (
-            <div className="modal-overlay">
-              <div className="modal-content" data-type="month-year">
-                <div className="modal-header">
-                  <h2>Select Month and Year</h2>
-                  <button className="close-button" onClick={() => setShowMonthPicker(false)}>×</button>
-                </div>
-                <div className="form-group">
-                  <label>Month</label>
-                  <select 
-                    value={selectedMonth} 
-                    onChange={(e) => setSelectedMonth(e.target.value)}
-                  >
-                    <option value="">Select Month</option>
-                    {Array.from({length: 12}, (_, i) => i + 1).map(month => (
-                      <option key={month} value={month}>
-                        {new Date(2000, month - 1).toLocaleString('default', { month: 'long' })}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Year</label>
-            <select 
-              value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-            >
-                    <option value="">Select Year</option>
-                    {Array.from({length: 5}, (_, i) => new Date().getFullYear() - i).map(year => (
-                <option key={year} value={year}>{year}</option>
-              ))}
-            </select>
+          {/* Always show filtered results count and export buttons */}
+          <div className="filtered-results" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <h3 style={{ margin: 0 }}>
+              {filteredClaims.length > 0 
+                ? `Filtered Claims: ${filteredClaims.length}` 
+                : `Total Claims: ${dummyClaims.length}`}
+            </h3>
+            <div className="export-buttons" style={{ display: 'flex', gap: '10px' }}>
+              <button className="download-button" onClick={() => handleDownloadClaims('csv')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download CSV
+              </button>
+              <button className="download-button" onClick={() => handleDownloadClaims('pdf')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download PDF
+              </button>
+              <button className="download-button" onClick={() => handleDownloadClaims('excel')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Excel
+              </button>
+            </div>
           </div>
-                <div className="form-actions">
-                  <button 
-                    className="submit-button"
-                    onClick={handleMonthYearSubmit}
-                    disabled={!selectedMonth || !selectedYear}
-                  >
-                    Filter Claims
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {(selectedMonth && selectedYear) || filteredClaims.length > 0 ? (
-            <div className="filtered-results" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-              {filteredClaims.length > 0 ? (
-                <>
-                  <h3 style={{ margin: 0 }}>Filtered Claims: {filteredClaims.length}</h3>
-                  <div className="export-buttons" style={{ display: 'flex', gap: '10px' }}>
-                    <button className="download-button" onClick={() => handleDownloadClaims('csv')}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                      </svg>
-                      Download CSV
-                    </button>
-                    <button className="download-button" onClick={() => handleDownloadClaims('pdf')}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                      </svg>
-                      Download PDF
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <h3 className="no-results">
-                  No claims found for {filterType === 'cert' ? 'Cert/Recert' : 'CPO Documents'} in {new Date(2000, selectedMonth - 1).toLocaleString('default', { month: 'long' })} {selectedYear}
-                </h3>
-              )}
-            </div>
-          ) : null}
         </div>
       </div>
 
@@ -1191,51 +1628,99 @@ const PGView = () => {
         <table className="claims-table">
           <thead>
             <tr>
-              <th onClick={() => handleSortClick('patientName')}>
-                Patient Name {sortConfig.key === 'patientName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('remarks')}>
+                Remarks {sortConfig.key === 'remarks' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th onClick={() => handleSortClick('patientId')}>
-                Patient ID {sortConfig.key === 'patientId' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('sNo')}>
+                S. No. {sortConfig.key === 'sNo' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th onClick={() => handleSortClick('patientInsurance')}>
-                Insurance {sortConfig.key === 'patientInsurance' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('fullName')}>
+                FULL Name (Last Name, First Name Middle Name) {sortConfig.key === 'fullName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th onClick={() => handleSortClick('certStatus')}>
-                Cert Status {sortConfig.key === 'certStatus' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('firstName')}>
+                First Name {sortConfig.key === 'firstName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th onClick={() => handleSortClick('patientSOC')}>
-                SOC Date {sortConfig.key === 'patientSOC' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('middleName')}>
+                Middle Name {sortConfig.key === 'middleName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('lastName')}>
+                Last Name {sortConfig.key === 'lastName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('dob')}>
+                DOB {sortConfig.key === 'dob' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('hhaName')}>
+                HHA NAME {sortConfig.key === 'hhaName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('insuranceType')}>
+                INSURANCE TYPE {sortConfig.key === 'insuranceType' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('primaryDiagnosisCode')}>
+                PRIMARY DIAGNOSIS CODE {sortConfig.key === 'primaryDiagnosisCode' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('soc')}>
+                SOC {sortConfig.key === 'soc' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('episodeFrom')}>
+                Episode From {sortConfig.key === 'episodeFrom' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('episodeTo')}>
+                Episode to {sortConfig.key === 'episodeTo' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
               <th onClick={() => handleSortClick('certSignedDate')}>
-                Cert Date {sortConfig.key === 'certSignedDate' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+                Doc Signed Date {sortConfig.key === 'certSignedDate' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th onClick={() => handleSortClick('recertSignedDate')}>
-                Recert Date {sortConfig.key === 'recertSignedDate' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('minutesCaptured')}>
+                CPO Minutes Captured {sortConfig.key === 'minutesCaptured' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th onClick={() => handleSortClick('cpoMinsCaptured')}>
-                CPO Status {sortConfig.key === 'cpoMinsCaptured' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('billingCode')}>
+                Billing Code {sortConfig.key === 'billingCode' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('line1DosFrom')}>
+                LINE 1 DOS FROM {sortConfig.key === 'line1DosFrom' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('line1DosTo')}>
+                LINE 1 DOS TO {sortConfig.key === 'line1DosTo' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('line1Charges')}>
+                Line 1 $Charges {sortConfig.key === 'line1Charges' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('line1Pos')}>
+                Line 1 POS {sortConfig.key === 'line1Pos' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('line1Units')}>
+                Line 1 Units {sortConfig.key === 'line1Units' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              </th>
+              <th onClick={() => handleSortClick('providersName')}>
+                Provider's Name {sortConfig.key === 'providersName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
             </tr>
           </thead>
           <tbody>
             {(filteredClaims.length > 0 ? filteredClaims : dummyClaims).map(claim => (
               <tr key={`claim-${claim.id}`}>
-                <td>{claim.patientName}</td>
-                <td>{claim.patientId}</td>
-                <td>{claim.patientInsurance}</td>
-                <td>
-                  <span className={`claims-status-badge ${claim.certStatus.toLowerCase().replace(' ', '-')}`}>
-                    {claim.certStatus}
-                  </span>
-                </td>
-                <td>{claim.patientSOC ? new Date(claim.patientSOC).toLocaleDateString() : '-'}</td>
-                <td>{claim.certSignedDate ? new Date(claim.certSignedDate).toLocaleDateString() : '-'}</td>
-                <td>{claim.recertSignedDate ? new Date(claim.recertSignedDate).toLocaleDateString() : '-'}</td>
-                <td>
-                  <span className={`claims-status-badge ${claim.cpoMinsCaptured > 0 ? 'active' : 'inactive'}`}>
-                    {claim.cpoMinsCaptured > 0 ? 'Active' : 'Inactive'}
-                  </span>
-                </td>
+                <td>{claim.remarks}</td>
+                <td>{claim.sNo}</td>
+                <td>{claim.fullName}</td>
+                <td>{claim.firstName}</td>
+                <td>{claim.middleName}</td>
+                <td>{claim.lastName}</td>
+                <td>{claim.dob}</td>
+                <td>{claim.hhaName}</td>
+                <td>{claim.insuranceType}</td>
+                <td>{claim.primaryDiagnosisCode}</td>
+                <td>{claim.soc}</td>
+                <td>{claim.episodeFrom}</td>
+                <td>{claim.episodeTo}</td>
+                <td>{claim.certSignedDate || 'N/A'}</td>
+                <td>{claim.minutesCaptured}</td>
+                <td>{claim.billingCode}</td>
+                <td>{claim.line1DosFrom}</td>
+                <td>{claim.line1DosTo}</td>
+                <td>{claim.line1Charges}</td>
+                <td>{claim.line1Pos}</td>
+                <td>{claim.line1Units}</td>
+                <td>{claim.providersName}</td>
               </tr>
             ))}
           </tbody>
@@ -2920,12 +3405,11 @@ Operations Team
     }
   };
 
+  // Update date formatting function to use American format
   const formatDate = (dateString) => {
+    if (!dateString) return '';
     const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
+    return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;
   };
 
   const getHighRapportCount = () => {
@@ -2949,6 +3433,59 @@ Operations Team
     setSelectedFilterMonth(e.target.value);
     // Here you would implement the actual filtering logic
     // based on the selected month and filter type (cert/recert/CPO)
+  };
+
+  // Function to apply sorting to claims data
+  const getSortedClaims = (claims) => {
+    if (!sortConfig.key) return claims;
+    
+    return [...claims].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+      
+      if (aValue === undefined || aValue === null) return 1;
+      if (bValue === undefined || bValue === null) return -1;
+      
+      // Check if values are dates
+      if (aValue.includes && aValue.includes('-') && !isNaN(new Date(aValue))) {
+        const dateA = new Date(aValue);
+        const dateB = new Date(bValue);
+        return sortConfig.direction === 'asc' ? dateA - dateB : dateB - dateA;
+      }
+      
+      // Check if values are numbers
+      if (!isNaN(aValue) && !isNaN(bValue)) {
+        return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+      
+      // Default string comparison
+      return sortConfig.direction === 'asc' 
+        ? aValue.toString().localeCompare(bValue.toString())
+        : bValue.toString().localeCompare(aValue.toString());
+    });
+  };
+
+  // Function to convert ISO date to American format
+  const isoToAmerican = (isoDate) => {
+    if (!isoDate) return '';
+    const [year, month, day] = isoDate.split('-');
+    return `${month}/${day}/${year}`;
+  };
+
+  // Function to convert American format to ISO
+  const americanToIso = (americanDate) => {
+    if (!americanDate || !americanDate.includes('/')) return '';
+    const [month, day, year] = americanDate.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  };
+
+  // Format dates for display in exports using American format
+  const formatDateForDisplay = (dateObj) => {
+    if (!dateObj || !(dateObj instanceof Date) || isNaN(dateObj)) return '';
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+    const day = dateObj.getDate().toString().padStart(2, '0');
+    const year = dateObj.getFullYear();
+    return `${month}/${day}/${year}`;
   };
 
   return (
