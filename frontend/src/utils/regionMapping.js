@@ -87,7 +87,7 @@ export const regionToStatisticalAreas = {
     "Sherman-Denison, TX", "Tyler, TX", "Victoria, TX", "Waco, TX", "Wichita Falls, TX",
     "Appleton, WI", "Eau Claire, WI", "Fond du Lac, WI", "Green Bay, WI",
     "Janesville-Beloit, WI", "Madison, WI", "Milwaukee-Waukesha-West Allis, WI",
-    "Oshkosh-Neenah, WI", "Racine, WI", "Sheboygan, WI", "Wausau, WI"
+    "Oshkosh-Neenah, WI", "Racine, WI", "Sheboygan, WI", "Wausau, WI", "Cleveland-Elyria"
   ],
 
   "East Central": [
@@ -126,8 +126,25 @@ export const regionToStatisticalAreas = {
     "Cleveland, TN", "Jackson, TN", "Johnson City, TN",
     "Kingsport-Bristol-Bristol, TN-VA", "Knoxville, TN", "Morristown, TN",
     "Nashville-Davidson--Murfreesboro--Franklin, TN",
-    "Beckley, WV", "Charleston, WV", "Morgantown, WV", "Parkersburg-Vienna, WV"
-  ],
+    "Beckley, WV", "Charleston, WV", "Morgantown, WV", "Parkersburg-Vienna, WV",
+    "Ada Micropolitan Statistical Area", "Asheville, NC", "Baltimore-Columbia-Towson, MD",
+    "Birmingham-Hoover, AL", "Boston-Cambridge-Newton, MA", "Bryan-College Station",
+    "Chicago-Naperville-Elgin", "Columbia", "Columbia Micropolitan Statistical Area",
+    "Columbus", "Cookeville Micropolitan Statistical Area", "Dallas-Fort Worth-Arlington, TX",
+    "Danville", "Detroit-Warren-Flint", "Greensboro-High Point", "Hohenwald",
+    "Houston-The Woodlands-Sugar Land", "Indianapolis-Carmel-Anderson", "Jackson",
+    "Kansas City", "Killeen-Temple-Fort Hood", "Lafayette", "Lawrenceburg",
+    "Lawrenceburg Micropolitan Statistical Area", "Los Angeles-Long Beach-Anaheim",
+    "McAllen-Edinburg-Mission", "McMinnville Micropolitan Statistical Area", "Memphis",
+    "Miami-Fort Lauderdale-Pompano Beach", "Milwaukee-Waukesha-West Allis",
+    "Minneapolis-St. Paul-Bloomington", "Muncie Micropolitan Statistical Area", 
+    "New York-Newark-Jersey City", "Oklahoma City", "Philadelphia-Camden-Wilmington",
+    "Richmond", "Richmond Micropolitan Statistical Area", "Salt Lake City",
+    "San Antonio-New Braunfels, TX", "San Diego–Chula Vista–Carlsbad", "Sebastian–Vero Beach",
+    "Shelbyville Micropolitan Statistical Area", "St. Louis", "Texarkana",
+    "Tullahoma-Manchester Micropolitan Statistical Area", "Tullahoma–Manchester",
+    "Wichita Falls, TX"
+],
 
   "East": [
     "Bridgeport-Stamford-Norwalk, CT", "Danbury, CT",

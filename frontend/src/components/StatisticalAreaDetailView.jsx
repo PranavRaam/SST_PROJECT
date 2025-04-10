@@ -8,6 +8,7 @@ import MapPlaceholder from './sa_view_components/MapPlaceholder';
 import NavigationButtons from './sa_view_components/NavigationButtons';
 import Listings from './sa_view_components/Listings';
 import ChartsSection from './sa_view_components/ChartsSection';
+import VivIntegratedServicesStatusMatrix from './sa_view_components/VivIntegratedServicesStatusMatrix';
 import { FunnelDataContext, FunnelDataProvider } from './sa_view_components/FunnelDataContext';
 
 // Import CSS files
@@ -334,6 +335,7 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         {/* Integration of sa_view_page components */}
         <div className="sa-view-integration">
           <NavigationButtons />
+          <VivIntegratedServicesStatusMatrix />
           <Listings />
           <ChartsSection />
         </div>
@@ -437,6 +439,9 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
       <div className="sa-view-integration">
         {/* Navigation buttons for PG and HHAH services */}
         <NavigationButtons />
+        
+        {/* Viv Integrated Services Statistics table */}
+        <VivIntegratedServicesStatusMatrix />
         
         {/* Listings section with tables */}
         <Listings />

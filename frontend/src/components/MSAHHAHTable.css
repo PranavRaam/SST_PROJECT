@@ -1,0 +1,118 @@
+.msa-hhah-table-container {
+  width: 100%;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.msa-hhah-table-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  letter-spacing: -0.5px;
+}
+
+.msa-hhah-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.msa-hhah-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  color: #1a1a1a;
+  table-layout: fixed;
+}
+
+.msa-hhah-table th,
+.msa-hhah-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e6ed;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.msa-hhah-table th {
+  background: #2c3e50;
+  color: white;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.msa-hhah-table tbody tr:hover {
+  background: #f8f9fa;
+  cursor: pointer;
+}
+
+/* Set specific widths for each column */
+.msa-hhah-table th:nth-child(1),
+.msa-hhah-table td:nth-child(1) {
+  width: 20%; /* Agency Name */
+}
+
+.msa-hhah-table th:nth-child(2),
+.msa-hhah-table td:nth-child(2) {
+  width: 20%; /* Address */
+}
+
+.msa-hhah-table th:nth-child(3),
+.msa-hhah-table td:nth-child(3) {
+  width: 10%; /* City */
+}
+
+.msa-hhah-table th:nth-child(4),
+.msa-hhah-table td:nth-child(4) {
+  width: 8%; /* State */
+}
+
+.msa-hhah-table th:nth-child(5),
+.msa-hhah-table td:nth-child(5) {
+  width: 8%; /* Zipcode */
+}
+
+.msa-hhah-table th:nth-child(6),
+.msa-hhah-table td:nth-child(6) {
+  width: 12%; /* Telephone */
+}
+
+.msa-hhah-table th:nth-child(7),
+.msa-hhah-table td:nth-child(7) {
+  width: 12%; /* Email */
+}
+
+.msa-hhah-table th:nth-child(8),
+.msa-hhah-table td:nth-child(8) {
+  width: 10%; /* Agency Type */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .msa-hhah-table-container {
+    padding: 12px;
+  }
+  
+  .msa-hhah-table-title {
+    font-size: 20px;
+    padding: 12px;
+  }
+  
+  .msa-hhah-table th,
+  .msa-hhah-table td {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+} 

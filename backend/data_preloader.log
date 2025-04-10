@@ -4749,3 +4749,280 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-10 19:45:16,665 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/Railway_Prototype_SST/backend/cache/statistical_area_Fort_Collins_CO_lightweight.html
 2025-04-10 19:45:16,665 - __main__ - INFO - Request completed in 0.00 seconds
 2025-04-10 19:45:16,666 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 19:45:16] "GET /api/statistical-area-map/Fort%20Collins,%20CO?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744294516618&_show_states=true&_show_counties=true&_show_msas=true&_t=1744294516637 HTTP/1.1" 200 -
+2025-04-10 22:59:27,253 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\data_cache
+2025-04-10 22:59:27,273 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 22:59:27,390 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.178:5000
+2025-04-10 22:59:27,390 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 22:59:27,394 - werkzeug - INFO -  * Restarting with stat
+2025-04-10 22:59:30,749 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\data_cache
+2025-04-10 22:59:30,760 - __main__ - INFO - Checking for cached data at startup
+2025-04-10 22:59:30,781 - werkzeug - WARNING -  * Debugger is active!
+2025-04-10 22:59:30,788 - werkzeug - INFO -  * Debugger PIN: 136-428-153
+2025-04-10 23:00:48,427 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:00:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:00:48,723 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:00:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:00:48,742 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:00:48] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:00:49,036 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:00:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:00:50,801 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:00:50] "GET /api/map?t=1744306248732&noCache=true&stableView=true?t%3D1744306248732&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306248738 HTTP/1.1" 200 -
+2025-04-10 23:00:54,441 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:00:54] "GET /api/map?t=1744306254308&noCache=true&stableView=true?t%3D1744306254308&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306254312 HTTP/1.1" 200 -
+2025-04-10 23:01:26,979 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:01:26] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:01:27,348 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:01:27,349 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744306286995')])
+2025-04-10 23:01:27,351 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:01:27,353 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:01:27,354 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:01:27,356 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.1 hours)
+2025-04-10 23:01:27,357 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:01:27,358 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:01:27,360 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:01:27,365 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:01:27] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744306286995 HTTP/1.1" 200 -
+2025-04-10 23:01:27,447 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:01:27,449 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744306286995'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744306287387')])
+2025-04-10 23:01:27,450 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:01:27,451 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:01:27,452 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:01:27,462 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.1 hours)
+2025-04-10 23:01:27,465 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-10 23:01:27,471 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:01:27,473 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-10 23:01:27,476 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:01:27] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744306286995&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306287387 HTTP/1.1" 200 -
+2025-04-10 23:03:44,596 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:03:44] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:07:57,553 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:07:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:07:57,800 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:07:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:07:57,910 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:07:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:07:58,064 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:07:58] "GET /api/map?t=1744306677818&noCache=true&stableView=true?t%3D1744306677818&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306677826 HTTP/1.1" 200 -
+2025-04-10 23:07:58,116 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:07:58] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:08:27,921 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:08:27] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:08:28,260 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:08:28,262 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744306707948')])
+2025-04-10 23:08:28,264 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:08:28,265 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:08:28,267 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:08:28,269 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.2 hours)
+2025-04-10 23:08:28,271 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:08:28,273 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:08:28,276 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:08:28,285 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:08:28] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744306707948 HTTP/1.1" 200 -
+2025-04-10 23:08:28,396 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:08:28,398 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744306707948'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744306708306')])
+2025-04-10 23:08:28,400 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:08:28,402 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:08:28,403 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:08:28,405 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.2 hours)
+2025-04-10 23:08:28,407 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:08:28,409 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:08:28,410 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:08:28,417 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:08:28] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744306707948&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306708306 HTTP/1.1" 200 -
+2025-04-10 23:10:50,762 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:10:50] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:10:51,017 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:10:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:10:51,074 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:10:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:10:51,241 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:10:51] "GET /api/map?t=1744306851038&noCache=true&stableView=true?t%3D1744306851038&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306851053 HTTP/1.1" 200 -
+2025-04-10 23:10:51,327 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:10:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:10:54,139 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:10:54] "GET /api/map?t=1744306854079&noCache=true&stableView=true?t%3D1744306854079&_show_states=true&_show_counties=true&_show_msas=true&_t=1744306854080 HTTP/1.1" 200 -
+2025-04-10 23:13:34,384 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:34] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:13:34,644 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:13:34,646 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307014398')])
+2025-04-10 23:13:34,648 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:13:34,649 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:13:34,651 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:34,653 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.3 hours)
+2025-04-10 23:13:34,654 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:13:34,657 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:34,659 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:13:34,666 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:34] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307014398 HTTP/1.1" 200 -
+2025-04-10 23:13:35,154 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:13:35,161 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307014398'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744307014689')])
+2025-04-10 23:13:35,165 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:13:35,169 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:13:35,175 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:35,191 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.3 hours)
+2025-04-10 23:13:35,198 - statistical_area_zoom - INFO - Map retrieval completed in 0.02 seconds (from cache)
+2025-04-10 23:13:35,204 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:35,215 - __main__ - INFO - Request completed in 0.05 seconds
+2025-04-10 23:13:35,232 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:35] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307014398&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307014689 HTTP/1.1" 200 -
+2025-04-10 23:13:39,611 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:13:39,743 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:39] "GET /api/map?t=1744307019648&noCache=true&stableView=true?t%3D1744307019648&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307019650 HTTP/1.1" 200 -
+2025-04-10 23:13:39,942 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:13:40,227 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:13:40,259 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:13:41,266 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:41] "GET /api/map?t=1744307020916&noCache=true&stableView=true?t%3D1744307020916&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307020918 HTTP/1.1" 200 -
+2025-04-10 23:13:46,317 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:46] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:13:46,706 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:13:46,710 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307026365')])
+2025-04-10 23:13:46,712 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:13:46,714 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:13:46,716 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:46,719 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.3 hours)
+2025-04-10 23:13:46,722 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-10 23:13:46,724 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:46,726 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:13:46,733 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:46] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307026365 HTTP/1.1" 200 -
+2025-04-10 23:13:46,844 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:13:46,846 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307026365'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744307026753')])
+2025-04-10 23:13:46,847 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:13:46,849 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:13:46,851 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:46,853 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.3 hours)
+2025-04-10 23:13:46,854 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:13:46,856 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:13:46,858 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:13:46,865 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:13:46] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307026365&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307026753 HTTP/1.1" 200 -
+2025-04-10 23:14:06,217 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:14:06] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:14:06,733 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:14:06,735 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307046400')])
+2025-04-10 23:14:06,737 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:14:06,739 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:14:06,742 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:14:06,744 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.3 hours)
+2025-04-10 23:14:06,747 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-10 23:14:06,749 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:14:06,752 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:14:06,757 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:14:06] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307046400 HTTP/1.1" 200 -
+2025-04-10 23:14:07,243 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:14:07,245 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307046400'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744307046889')])
+2025-04-10 23:14:07,248 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:14:07,249 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:14:07,252 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:14:07,255 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.3 hours)
+2025-04-10 23:14:07,257 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-10 23:14:07,259 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:14:07,261 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:14:07,266 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:14:07] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307046400&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307046889 HTTP/1.1" 200 -
+2025-04-10 23:15:05,060 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:15:05] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:15:05,218 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:15:05] "GET /api/map?t=1744307105018&noCache=true&stableView=true?t%3D1744307105019&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307105020 HTTP/1.1" 200 -
+2025-04-10 23:15:05,394 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:15:05] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:15:06,935 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:15:06] "GET /api/map?t=1744307106510&noCache=true&stableView=true?t%3D1744307106510&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307106511 HTTP/1.1" 200 -
+2025-04-10 23:16:42,613 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:42] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:45,264 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:45] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:52,976 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:53,245 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:53] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:53,304 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:53] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:53,568 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:53] "GET /api/map?t=1744307213267&noCache=true&stableView=true?t%3D1744307213267&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307213280 HTTP/1.1" 200 -
+2025-04-10 23:16:53,584 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:53] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:58,021 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:58] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:16:58,180 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:58] "GET /api/map?t=1744307217987&noCache=true&stableView=true?t%3D1744307217987&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307217988 HTTP/1.1" 200 -
+2025-04-10 23:16:58,343 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:16:58] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:17:04,576 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:17:04] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:17:04,904 - __main__ - INFO - Map request for area: Cleveland-Elyria
+2025-04-10 23:17:04,906 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307224584')])
+2025-04-10 23:17:04,907 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:17:04,909 - statistical_area_zoom - INFO - Generating map for statistical area: Cleveland-Elyria with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:17:04,910 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:17:04,913 - statistical_area_zoom - INFO - Loading map data...
+2025-04-10 23:17:04,915 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-10 23:17:04,916 - data_preloader - INFO - Loading all cached data...
+2025-04-10 23:17:05,005 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-10 23:17:05,010 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-10 23:17:05,011 - statistical_area_zoom - INFO - Data loaded in 0.10 seconds
+2025-04-10 23:17:05,017 - statistical_area_zoom - INFO - Normalized area name: cleveland-elyria
+2025-04-10 23:17:05,036 - statistical_area_zoom - INFO - Trying to match city name: cleveland
+2025-04-10 23:17:05,045 - statistical_area_zoom - INFO - Found exact city match: Cleveland, TN
+2025-04-10 23:17:05,047 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 23:17:05,048 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-10 23:17:05,052 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Cleveland-Elyria
+2025-04-10 23:17:05,054 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Cleveland-Elyria
+2025-04-10 23:17:05,062 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 23:17:05,064 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-10 23:17:05,065 - statistical_area_zoom - INFO - Center: 35.13434359255922, -84.66610542580251
+2025-04-10 23:17:05,067 - statistical_area_zoom - INFO - Bounds: -85.026643, 34.987664, -84.292365, 35.357871
+2025-04-10 23:17:05,813 - statistical_area_zoom - INFO - Map saved to C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:17:05,814 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:17:05,815 - __main__ - INFO - Request completed in 0.91 seconds
+2025-04-10 23:17:06,109 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:17:06] "GET /api/statistical-area-map/Cleveland-Elyria?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307224584 HTTP/1.1" 200 -
+2025-04-10 23:17:06,477 - __main__ - INFO - Map request for area: Cleveland-Elyria
+2025-04-10 23:17:06,479 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307224584'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744307226119')])
+2025-04-10 23:17:06,481 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:17:06,482 - statistical_area_zoom - INFO - Generating map for statistical area: Cleveland-Elyria with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:17:06,484 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:17:06,485 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html (age: 0.0 hours)
+2025-04-10 23:17:06,487 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:17:06,489 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:17:06,490 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:17:06,494 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:17:06] "GET /api/statistical-area-map/Cleveland-Elyria?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307224584&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307226119 HTTP/1.1" 200 -
+2025-04-10 23:29:00,527 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:29:00] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:29:00,696 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:29:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:29:00,806 - __main__ - INFO - Map request for area: Cleveland-Elyria
+2025-04-10 23:29:00,807 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307940562')])
+2025-04-10 23:29:00,807 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:29:00,808 - statistical_area_zoom - INFO - Generating map for statistical area: Cleveland-Elyria with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:29:00,808 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:29:00,809 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html (age: 0.2 hours)
+2025-04-10 23:29:00,810 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:29:00,810 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:29:00,810 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-10 23:29:00,813 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:29:00] "GET /api/statistical-area-map/Cleveland-Elyria?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307940562 HTTP/1.1" 200 -
+2025-04-10 23:29:01,235 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:29:01] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:29:01,578 - __main__ - INFO - Map request for area: Cleveland-Elyria
+2025-04-10 23:29:01,580 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307941240')])
+2025-04-10 23:29:01,582 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:29:01,584 - statistical_area_zoom - INFO - Generating map for statistical area: Cleveland-Elyria with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:29:01,586 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:29:01,589 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html (age: 0.2 hours)
+2025-04-10 23:29:01,591 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-10 23:29:01,593 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:29:01,594 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:29:01,599 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:29:01] "GET /api/statistical-area-map/Cleveland-Elyria?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307941240 HTTP/1.1" 200 -
+2025-04-10 23:29:02,059 - __main__ - INFO - Map request for area: Cleveland-Elyria
+2025-04-10 23:29:02,061 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744307941240'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744307941652')])
+2025-04-10 23:29:02,063 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:29:02,065 - statistical_area_zoom - INFO - Generating map for statistical area: Cleveland-Elyria with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:29:02,067 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:29:02,069 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html (age: 0.2 hours)
+2025-04-10 23:29:02,071 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:29:02,073 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Cleveland_Elyria_lightweight.html
+2025-04-10 23:29:02,074 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:29:02,078 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:29:02] "GET /api/statistical-area-map/Cleveland-Elyria?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744307941240&_show_states=true&_show_counties=true&_show_msas=true&_t=1744307941652 HTTP/1.1" 200 -
+2025-04-10 23:31:07,533 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:07] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:07,823 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:07] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:07,847 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:07] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:07,985 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:07] "GET /api/map?t=1744308067832&noCache=true&stableView=true?t%3D1744308067832&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308067834 HTTP/1.1" 200 -
+2025-04-10 23:31:08,138 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:08,222 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:08,297 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:08] "GET /api/map?t=1744308068206&noCache=true&stableView=true?t%3D1744308068206&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308068209 HTTP/1.1" 200 -
+2025-04-10 23:31:08,655 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:08] "GET /api/map?t=1744308068231&noCache=true&stableView=true?t%3D1744308068231&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308068234 HTTP/1.1" 200 -
+2025-04-10 23:31:11,695 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:11] "GET /api/map?t=1744308071602&noCache=true&stableView=true?t%3D1744308071602&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308071603 HTTP/1.1" 200 -
+2025-04-10 23:31:11,941 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:11] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:12,236 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:15,272 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:15] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:15,640 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:15] "GET /api/map?t=1744308075300&noCache=true&stableView=true?t%3D1744308075300&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308075306 HTTP/1.1" 200 -
+2025-04-10 23:31:17,260 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:17] "GET /api/map?t=1744308077204&noCache=true&stableView=true?t%3D1744308077204&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308077205 HTTP/1.1" 200 -
+2025-04-10 23:31:19,783 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:19] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:20,048 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:20,097 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:20,291 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:20] "GET /api/map?t=1744308080063&noCache=true&stableView=true?t%3D1744308080063&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308080070 HTTP/1.1" 200 -
+2025-04-10 23:31:20,395 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:31:26,322 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:26] "GET /api/health HTTP/1.1" 200 -
+2025-04-10 23:31:26,728 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:31:26,730 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744308086398')])
+2025-04-10 23:31:26,731 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:31:26,733 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:31:26,735 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:31:26,737 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.6 hours)
+2025-04-10 23:31:26,739 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:31:26,741 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:31:26,743 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:31:26,748 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:26] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744308086398 HTTP/1.1" 200 -
+2025-04-10 23:31:26,847 - __main__ - INFO - Map request for area: Lubbock, TX
+2025-04-10 23:31:26,848 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744308086398'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744308086764')])
+2025-04-10 23:31:26,850 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-10 23:31:26,851 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock, TX with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-10 23:31:26,853 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:31:26,855 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html (age: 0.6 hours)
+2025-04-10 23:31:26,857 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-10 23:31:26,859 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
+2025-04-10 23:31:26,860 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-10 23:31:26,865 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:31:26] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744308086398&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308086764 HTTP/1.1" 200 -
+2025-04-10 23:33:12,301 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:33:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:33:12,583 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:33:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:33:12,620 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:33:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:33:12,800 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:33:12] "GET /api/map?t=1744308192601&noCache=true&stableView=true?t%3D1744308192601&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308192609 HTTP/1.1" 200 -
+2025-04-10 23:33:12,903 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:33:12] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:33:15,156 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:33:15] "GET /api/map?t=1744308195098&noCache=true&stableView=true?t%3D1744308195098&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308195100 HTTP/1.1" 200 -
+2025-04-10 23:34:01,273 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:34:01] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:34:01,718 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:34:01] "GET /api/map?t=1744308241240&noCache=true&stableView=true?t%3D1744308241243&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308241245 HTTP/1.1" 200 -
+2025-04-10 23:34:01,770 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:34:01] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:34:01,869 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:34:01] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-10 23:34:01,982 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:34:01] "GET /api/map?t=1744308241913&noCache=true&stableView=true?t%3D1744308241913&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308241920 HTTP/1.1" 200 -
+2025-04-10 23:34:04,904 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:34:04] "GET /api/map?t=1744308244506&noCache=true&stableView=true?t%3D1744308244506&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308244508 HTTP/1.1" 200 -
