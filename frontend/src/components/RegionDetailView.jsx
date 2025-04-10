@@ -7,6 +7,7 @@ import {
 } from '../utils/regionMapping';
 import BarChart from './BarChart';
 import './RegionDetailView.css';
+import { FunnelDataProvider } from './sa_view_components/FunnelDataContext';
 
 const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, onSelectStatisticalArea }) => {
   const [activeTab, setActiveTab] = useState('table');
@@ -175,10 +176,9 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
   };
 
   // Handle statistical area click
-  const handleStatisticalAreaClick = (area) => {
-    if (onSelectStatisticalArea) {
-      onSelectStatisticalArea(area);
-    }
+  const handleStatisticalAreaClick = (areaName) => {
+    // Wrap the call in the FunnelDataProvider
+    onSelectStatisticalArea(areaName);
   };
 
   return (

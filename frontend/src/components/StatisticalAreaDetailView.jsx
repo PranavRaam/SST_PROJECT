@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { statisticalAreaStatistics } from '../utils/regionMapping';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { getApiUrl } from '../config'; // Import the API URL helper
 import './StatisticalAreaDetailView.css';
+import { fetchAgencyData, getStatisticsForArea } from '../utils/csvDataService';
+
 // Import components from local sa_view_components
 import MapPlaceholder from './sa_view_components/MapPlaceholder';
 import NavigationButtons from './sa_view_components/NavigationButtons';
 import Listings from './sa_view_components/Listings';
 import ChartsSection from './sa_view_components/ChartsSection';
-import { FunnelDataProvider } from './sa_view_components/FunnelDataContext';
+import { FunnelDataContext, FunnelDataProvider } from './sa_view_components/FunnelDataContext';
+
 // Import CSS files
 import './sa_view_css/MapPlaceholder.css';
 import './sa_view_css/NavigationButtons.css';
@@ -26,8 +28,55 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
   const [mapUrl, setMapUrl] = useState('');
   const [useFallbackMap, setUseFallbackMap] = useState(false);
   const [dataStatus, setDataStatus] = useState('unknown'); // 'unknown', 'loading', 'cached', 'downloading'
+  const [stats, setStats] = useState({
+    patients: 0,
+    physicianGroups: 0,
+    agencies: 0,
+    activeOutcomes: 0
+  });
+  const [agencies, setAgencies] = useState([]);
   const iframeRef = useRef(null);
-  const stats = statisticalAreaStatistics[statisticalArea] || {};
+  const { setCurrentArea } = useContext(FunnelDataContext) || {};
+
+  // Debug log when component mounts or updates
+  useEffect(() => {
+    console.log('StatisticalAreaDetailView rendered with:', {
+      statisticalArea,
+      divisionalGroup,
+      contextAvailable: !!setCurrentArea
+    });
+  }, [statisticalArea, divisionalGroup, setCurrentArea]);
+
+  // Load the agency data and set the current area in the context
+  useEffect(() => {
+    const loadAgencyData = async () => {
+      try {
+        console.log(`Loading agency data for statistical area: ${statisticalArea}`);
+        const agencyData = await fetchAgencyData();
+        setAgencies(agencyData);
+        
+        // Log the retrieved agency data for debugging
+        console.log(`Total agencies loaded: ${agencyData.length}`);
+        
+        // Calculate statistics for this area
+        const areaStats = getStatisticsForArea(agencyData, statisticalArea);
+        console.log(`Statistics for ${statisticalArea}:`, areaStats);
+        setStats(areaStats);
+        
+        // Set the current area in the context if the context is available
+        if (setCurrentArea) {
+          console.log(`Setting current area in context: ${statisticalArea}`);
+          setCurrentArea(statisticalArea);
+        } else {
+          console.warn('FunnelDataContext not available - setCurrentArea is undefined');
+        }
+      } catch (error) {
+        console.error('Error loading agency data:', error);
+      }
+    };
+    
+    loadAgencyData();
+  }, [statisticalArea, setCurrentArea]);
 
   useEffect(() => {
     // Check data cache status first
@@ -283,13 +332,11 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         </div>
         
         {/* Integration of sa_view_page components */}
-        <FunnelDataProvider>
-          <div className="sa-view-integration">
-            <NavigationButtons />
-            <Listings />
-            <ChartsSection />
-          </div>
-        </FunnelDataProvider>
+        <div className="sa-view-integration">
+          <NavigationButtons />
+          <Listings />
+          <ChartsSection />
+        </div>
       </div>
     );
   }
@@ -387,18 +434,16 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
       </div>
       
       {/* Integration of sa_view_page components */}
-      <FunnelDataProvider>
-        <div className="sa-view-integration">
-          {/* Navigation buttons for PG and HHAH services */}
-          <NavigationButtons />
-          
-          {/* Listings section with tables */}
-          <Listings />
-          
-          {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
-          <ChartsSection />
-        </div>
-      </FunnelDataProvider>
+      <div className="sa-view-integration">
+        {/* Navigation buttons for PG and HHAH services */}
+        <NavigationButtons />
+        
+        {/* Listings section with tables */}
+        <Listings />
+        
+        {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
+        <ChartsSection />
+      </div>
     </div>
   );
 };

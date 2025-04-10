@@ -171,6 +171,7 @@ function App() {
   };
 
   const handleSelectStatisticalArea = (area) => {
+    console.log(`Selected statistical area: ${area}`);
     setIsTransitioning(true);
     // Add slight delay to show loading animation
     setTimeout(() => {
