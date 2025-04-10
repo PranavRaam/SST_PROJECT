@@ -61,7 +61,6 @@ const HHAHView = () => {
     name: hhahName,
     type: "HHAH",
     status: "Active",
-    location: "New York, NY",
     contact: {
       name: "John Doe",
       email: "john.doe@example.com",
@@ -1379,7 +1378,6 @@ const HHAHView = () => {
       </div>
       <div className="hhah-header-right">
         <span className="hhah-status">{hhahData.status}</span>
-        <span className="hhah-location">{hhahData.location}</span>
       </div>
     </div>
   );

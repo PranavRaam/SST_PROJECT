@@ -172,25 +172,25 @@ export const transformAgencyDataForFunnel = (agencies, type) => {
   } else {
     // HHAH funnel stages
     const stages = [
-      "They exist but they haven't heard of us",
-      "They've now heard of us but that's it",
-      "Enough interest that they're interacting with our content",
-      "Enough interest that they're now talking to us",
-      "99 cent model",
+      "Freemium",
+      "Not Using",
+      "Order360 Lite",
+      "Order360 Full",
       "Upsold (Fully subscribed)"
     ];
     
-    // Create random distribution of HHAHs across stages
+    // Create assignments based on actual HHAH data
     const assignments = {};
     stages.forEach(stage => {
       assignments[stage] = [];
     });
     
-    // Distribute HHAHs across stages
+    // Distribute HHAHs based on their actual type
     agenciesToProcess.forEach(agency => {
-      const randomIndex = Math.floor(Math.random() * stages.length);
-      const stage = stages[randomIndex];
-      assignments[stage].push(agency['Agency Name']);
+      const stage = agency['Agency Type'] || 'Not Using'; // Default to 'Not Using' if no type specified
+      if (assignments[stage]) {
+        assignments[stage].push(agency['Agency Name']);
+      }
     });
     
     return assignments;
