@@ -5134,3 +5134,59 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-10 23:39:04,196 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\_safe\Railway_Prototype_SST\backend\cache\statistical_area_Lubbock_TX_lightweight.html
 2025-04-10 23:39:04,198 - __main__ - INFO - Request completed in 0.01 seconds
 2025-04-10 23:39:04,200 - werkzeug - INFO - 127.0.0.1 - - [10/Apr/2025 23:39:04] "GET /api/statistical-area-map/Lubbock,%20TX?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744308543822&_show_states=true&_show_counties=true&_show_msas=true&_t=1744308544152 HTTP/1.1" 200 -
+2025-04-13 13:33:39,514 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/data_cache
+2025-04-13 13:33:39,521 - __main__ - INFO - Checking for cached data at startup
+2025-04-13 13:33:39,550 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-13 13:33:39,550 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-13 13:33:39,551 - werkzeug - INFO -  * Restarting with stat
+2025-04-13 13:33:40,709 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/data_cache
+2025-04-13 13:33:40,715 - __main__ - INFO - Checking for cached data at startup
+2025-04-13 13:33:40,737 - werkzeug - WARNING -  * Debugger is active!
+2025-04-13 13:33:40,738 - werkzeug - INFO -  * Debugger PIN: 436-574-442
+2025-04-13 13:34:28,387 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:28] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 13:34:28,400 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:28] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 13:34:28,459 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:28] "GET /api/map?t=1744531468413&noCache=true&stableView=true?t%3D1744531468413&_show_states=true&_show_counties=true&_show_msas=true&_t=1744531468414 HTTP/1.1" 200 -
+2025-04-13 13:34:28,485 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:28] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 13:34:28,488 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:28] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 13:34:28,580 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:28] "GET /api/map?t=1744531468519&noCache=true&stableView=true?t%3D1744531468519&_show_states=true&_show_counties=true&_show_msas=true&_t=1744531468522 HTTP/1.1" 200 -
+2025-04-13 13:34:29,772 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:29] "GET /api/map?t=1744531469753&noCache=true&stableView=true?t%3D1744531469753&_show_states=true&_show_counties=true&_show_msas=true&_t=1744531469754 HTTP/1.1" 200 -
+2025-04-13 13:34:44,351 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:44] "GET /api/health HTTP/1.1" 200 -
+2025-04-13 13:34:44,370 - __main__ - INFO - Map request for area: Anchorage
+2025-04-13 13:34:44,370 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744531484366')])
+2025-04-13 13:34:44,370 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-13 13:34:44,371 - statistical_area_zoom - INFO - Generating map for statistical area: Anchorage with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-13 13:34:44,371 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-13 13:34:44,371 - statistical_area_zoom - INFO - Loading map data...
+2025-04-13 13:34:44,371 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-13 13:34:44,371 - data_preloader - INFO - Loading all cached data...
+2025-04-13 13:34:44,406 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-13 13:34:44,407 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-13 13:34:44,407 - statistical_area_zoom - INFO - Data loaded in 0.04 seconds
+2025-04-13 13:34:44,407 - statistical_area_zoom - INFO - Normalized area name: anchorage
+2025-04-13 13:34:44,413 - statistical_area_zoom - INFO - Trying to match city name: anchorage
+2025-04-13 13:34:44,415 - statistical_area_zoom - INFO - Found exact city match: Anchorage, AK
+2025-04-13 13:34:44,415 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-13 13:34:44,415 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-13 13:34:44,415 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anchorage
+2025-04-13 13:34:44,416 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anchorage
+2025-04-13 13:34:44,417 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-13 13:34:44,417 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-13 13:34:44,417 - statistical_area_zoom - INFO - Center: 62.223817936287546, -149.55378677182418
+2025-04-13 13:34:44,417 - statistical_area_zoom - INFO - Bounds: -153.001881, 60.732987, -146.423984, 63.477639
+2025-04-13 13:34:44,738 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-13 13:34:44,738 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-13 13:34:44,738 - __main__ - INFO - Request completed in 0.37 seconds
+2025-04-13 13:34:44,739 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:44] "GET /api/statistical-area-map/Anchorage?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744531484366 HTTP/1.1" 200 -
+2025-04-13 13:34:44,785 - __main__ - INFO - Map request for area: Anchorage
+2025-04-13 13:34:44,787 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744531484366'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744531484749')])
+2025-04-13 13:34:44,788 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-13 13:34:44,788 - statistical_area_zoom - INFO - Generating map for statistical area: Anchorage with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-13 13:34:44,788 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-13 13:34:44,789 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html (age: 0.0 hours)
+2025-04-13 13:34:44,789 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-13 13:34:44,789 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-13 13:34:44,789 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-13 13:34:44,791 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:44] "GET /api/statistical-area-map/Anchorage?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744531484366&_show_states=true&_show_counties=true&_show_msas=true&_t=1744531484749 HTTP/1.1" 200 -
