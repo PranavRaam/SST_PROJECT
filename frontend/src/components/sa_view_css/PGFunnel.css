@@ -240,34 +240,23 @@
     }
     
     .funnel-chart-wrapper {
-/* Tooltip styling */
-.custom-tooltip {
-    background-color: rgba(255, 255, 255, 0.95);
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        padding-bottom: 10px;
+    }
 }
 
-.tooltip-label {
-    margin: 0 0 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.tooltip-value {
-    margin: 0;
-    color: #666;
-}
-
-/* Responsive adjustments */
+/* Additional tooltip styling for small screens */
 @media (max-width: 768px) {
-    .pg-funnel-container {
-        padding: 15px;
+    .custom-tooltip {
+        padding: 8px;
+        min-width: 120px;
     }
     
-    .funnel-chart-wrapper {
-        transform: scale(0.9);
+    .tooltip-label {
+        font-size: 12px;
+    }
+    
+    .tooltip-value {
+        font-size: 16px;
     }
 }
   

@@ -67,13 +67,15 @@ if (fs.existsSync(path.resolve(templateDir, 'index.html'))) {
 // Apply a direct CSS fix by adding an inline <style> tag to the index.html
 try {
   const indexHtmlPath = path.resolve(distDir, 'index.html');
-  let indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
   
-  // Check if our styles are already in the file
-  if (!indexHtml.includes('viv-ism-container')) {
-    console.log('Adding inline CSS styles for tables to index.html...');
+  if (fs.existsSync(indexHtmlPath)) {
+    let indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
     
-    const inlineStyles = `
+    // Check if our styles are already in the file
+    if (!indexHtml.includes('viv-ism-container')) {
+      console.log('Adding inline CSS styles for tables to index.html...');
+      
+      const inlineStyles = `
     <style>
       /* Critical table styles for VivIntegratedServicesStatusMatrix */
       .viv-ism-container {
@@ -127,17 +129,6 @@ try {
         padding: 16px 8px 45px !important;
       }
       
-      .viv-ism-service-header.pg-services {
-        color: #2563eb;
-        border-left: 1px solid #e5e7eb;
-        min-width: 300px !important;
-      }
-      
-      .viv-ism-service-header.hhah-services {
-        color: #9333ea;
-        min-width: 200px !important;
-      }
-      
       .viv-ism-icon.success {
         color: #22c55e;
       }
@@ -167,18 +158,18 @@ try {
       }
     </style>
     `;
-    
-    // Insert the inline styles before the closing head tag
-    indexHtml = indexHtml.replace('</head>', `${inlineStyles}\n  </head>`);
-    
-    // Add a link to the override-styles.css
-    indexHtml = indexHtml.replace('</head>', '  <link rel="stylesheet" href="/override-styles.css">\n  </head>');
-    
-    // Write the updated index.html back to disk
-    fs.writeFileSync(indexHtmlPath, indexHtml);
-    console.log('✅ Added inline CSS styles to index.html');
+      
+      // Insert the inline styles before the closing head tag
+      indexHtml = indexHtml.replace('</head>', `${inlineStyles}\n  <link rel="stylesheet" href="/override-styles.css">\n  </head>`);
+      
+      // Write the updated index.html back to disk
+      fs.writeFileSync(indexHtmlPath, indexHtml);
+      console.log('✅ Added inline CSS styles to index.html');
+    } else {
+      console.log('✅ Inline CSS styles already present in index.html');
+    }
   } else {
-    console.log('✅ Inline CSS styles already present in index.html');
+    console.warn('⚠️ index.html not found in dist directory');
   }
 } catch (err) {
   console.error(`❌ Error adding inline CSS: ${err.message}`);
