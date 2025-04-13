@@ -9,6 +9,22 @@
       "dest": "/frontend/dist/assets/$1"
     },
     {
+      "src": "/(.*\\.css)",
+      "headers": { 
+        "cache-control": "public, max-age=31536000, immutable",
+        "content-type": "text/css" 
+      },
+      "dest": "/frontend/dist/$1"
+    },
+    {
+      "src": "/override-styles.css",
+      "headers": { 
+        "cache-control": "public, max-age=0",
+        "content-type": "text/css" 
+      },
+      "dest": "/frontend/dist/override-styles.css"
+    },
+    {
       "handle": "filesystem"
     },
     {

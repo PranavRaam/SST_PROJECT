@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/map-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Healthcare Services Dashboard with US 20-Region Classification Map" />
+    <title>Healthcare Services Dashboard</title>
+    
+    <!-- Console suppression to prevent excessive warnings -->
+    <script>
+      // Suppress console logs in production to improve performance
+      if (window.location.hostname !== 'localhost') {
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+      }
+    </script>
+    
+    <!-- Map fix scripts to address the show_states error -->
+    <script>
+      // Immediate fix for map variables
+      window.show_states = true;
+      window.show_counties = true;
+      window.show_msas = true;
+      window.True = true;
+      window.False = false;
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Inline critical CSS to prevent FOUC -->
+    <style>
+      /* Critical CSS for immediate rendering */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      
+      .initial-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5f5f7;
+      }
+      
+      .initial-spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(51, 136, 255, 0.2);
+        border-top: 3px solid #3388FF;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Critical table styles for VivIntegratedServicesStatusMatrix */
+      .viv-ism-container {
+        width: 100%;
+        overflow-x: auto !important;
+        margin: 20px 0;
+        padding: 0 24px;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .viv-ism-table-wrapper {
+        min-width: 100%;
+        overflow-x: auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        margin-bottom: 24px;
+      }
+      
+      .viv-ism-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+      }
+      
+      .viv-ism-table th,
+      .viv-ism-table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #e5e7eb;
+        white-space: nowrap;
+      }
+      
+      .viv-ism-table td {
+        vertical-align: middle;
+      }
+      
+      .viv-ism-table th {
+        background-color: #f9fafb;
+        font-weight: 600;
+        color: #374151;
+        padding: 16px;
+      }
+      
+      .viv-ism-service-header {
+        background-color: #f3f4f6 !important;
+        text-align: center !important;
+        position: relative;
+        padding: 16px 8px 45px !important;
+      }
+      
+      .viv-ism-icon.success {
+        color: #22c55e;
+      }
+      
+      .viv-ism-icon.error {
+        color: #ef4444;
+      }
+    </style>
+    
+    <!-- INJECTED_CSS_LINKS -->
+  </head>
+  <body>
+    <div id="root">
+      <div class="initial-loading">
+        <div class="initial-spinner"></div>
+      </div>
+    </div>
+    
+    <!-- INJECTED_SCRIPTS -->
+  </body>
+</html> 

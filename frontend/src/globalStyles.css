@@ -1,0 +1,94 @@
+/* Global CSS file that imports all component styles to ensure they're properly included in the build */
+
+/* Main styles */
+@import './App.css';
+@import './index.css';
+
+/* Component styles */
+@import './components/DataTable.css';
+@import './components/StatisticalAreaDetailView.css';
+@import './components/sa_view_components/VivIntegratedServicesStatusMatrix.css';
+@import './components/sa_view_components/proactiveoutcomes.css';
+@import './components/sa_view_components/reactiveoc.css';
+@import './components/sa_view_css/PGListingTable.css';
+@import './components/sa_view_css/HHAHListingTable.css';
+@import './components/hhah_service/HHAHServicesView.css';
+@import './components/hhah_service/ServicesTable.css';
+@import './components/hhah_services/HHAHServicesView.css';
+@import './components/hhah_services/ServicesTable.css';
+@import './components/MSAHHAHTable.css';
+
+/* Override styles for production to ensure proper display in Vercel/Render deployments */
+.viv-ism-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.viv-ism-table-wrapper {
+  min-width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.viv-ism-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+.viv-ism-table th,
+.viv-ism-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.viv-ism-table td {
+  vertical-align: middle;
+}
+
+.viv-ism-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  padding: 16px;
+}
+
+.viv-ism-service-header {
+  background-color: #f3f4f6 !important;
+  text-align: center !important;
+  position: relative;
+  padding: 16px 8px 45px !important;
+}
+
+.viv-ism-icon.success {
+  color: #22c55e;
+}
+
+.viv-ism-icon.error {
+  color: #ef4444;
+}
+
+.viv-ism-status-number {
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  display: inline-block;
+  min-width: 45px;
+  text-align: center;
+}
+
+.viv-ism-status-number.success {
+  color: #15803d;
+  background-color: #dcfce7;
+}
+
+.viv-ism-status-number.warning {
+  color: #b45309;
+  background-color: #fef3c7;
+} 

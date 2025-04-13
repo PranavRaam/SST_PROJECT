@@ -14,12 +14,19 @@ export default defineConfig({
     }
   },
   build: {
-    cssCodeSplit: true,
+    cssCodeSplit: false,
     rollupOptions: {
       output: {
         manualChunks: undefined,
         assetFileNames: 'assets/[name].[hash].[ext]'
-      }
+      },
+      preserveEntrySignatures: 'strict'
+    },
+    assetsInlineLimit: 0
+  },
+  css: {
+    postcss: {
+      plugins: []
     }
   }
 })

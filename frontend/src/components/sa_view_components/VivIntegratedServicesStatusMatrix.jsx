@@ -1,6 +1,7 @@
 import React from 'react';
-import './VivIntegratedServicesStatusMatrix.css';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+// Explicitly import the CSS file to ensure it's properly processed in the build
+import './VivIntegratedServicesStatusMatrix.css';
 
 const mockData = [
   {
@@ -165,32 +166,153 @@ const mockData = [
   }
 ];
 
+// Backup inline styles for production deployments
+const backupStyles = {
+  container: {
+    margin: '20px 0',
+    padding: '0 24px',
+    fontFamily: "'Inter', sans-serif",
+    overflowX: 'auto',
+    width: '100%'
+  },
+  tableWrapper: {
+    background: '#ffffff',
+    borderRadius: '12px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    overflowX: 'auto',
+    border: '1px solid #e5e7eb',
+    marginBottom: '24px',
+    minWidth: '100%'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: '0',
+    fontSize: '14px'
+  },
+  th: {
+    backgroundColor: '#f9fafb',
+    fontWeight: '600',
+    color: '#374151',
+    padding: '16px',
+    textAlign: 'center',
+    borderBottom: '1px solid #e5e7eb',
+    whiteSpace: 'nowrap'
+  },
+  td: {
+    padding: '12px',
+    textAlign: 'center',
+    borderBottom: '1px solid #e5e7eb',
+    whiteSpace: 'nowrap',
+    verticalAlign: 'middle'
+  },
+  serviceHeader: {
+    backgroundColor: '#f3f4f6',
+    textAlign: 'center',
+    position: 'relative',
+    padding: '16px 8px 45px'
+  },
+  pgServicesHeader: {
+    color: '#2563eb',
+    borderLeft: '1px solid #e5e7eb',
+    minWidth: '300px'
+  },
+  hhahServicesHeader: {
+    color: '#9333ea',
+    minWidth: '200px'
+  },
+  successIcon: {
+    color: '#22c55e',
+    fontSize: '18px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '24px',
+    margin: '0 auto'
+  },
+  errorIcon: {
+    color: '#ef4444',
+    fontSize: '18px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '24px',
+    margin: '0 auto'
+  },
+  statusNumber: {
+    fontWeight: '600',
+    padding: '4px 12px',
+    borderRadius: '12px',
+    fontSize: '13px',
+    display: 'inline-block',
+    minWidth: '45px',
+    textAlign: 'center',
+    margin: '0 auto'
+  },
+  successNumber: {
+    color: '#15803d',
+    backgroundColor: '#dcfce7'
+  },
+  warningNumber: {
+    color: '#b45309',
+    backgroundColor: '#fef3c7'
+  }
+};
+
 const StatusIcon = ({ status, value }) => {
   if (typeof value === 'number') {
-    return <span className={`viv-ism-status-number ${value >= 30 ? 'success' : 'warning'}`}>{value}</span>;
+    const style = {
+      ...backupStyles.statusNumber,
+      ...(value >= 30 ? backupStyles.successNumber : backupStyles.warningNumber)
+    };
+    
+    return (
+      <span 
+        className={`viv-ism-status-number ${value >= 30 ? 'success' : 'warning'}`}
+        style={style}
+      >
+        {value}
+      </span>
+    );
   }
-  return status ? 
-    <FaCheck className="viv-ism-icon success" /> : 
-    <FaTimes className="viv-ism-icon error" />;
+  
+  return status ? (
+    <FaCheck 
+      className="viv-ism-icon success" 
+      style={backupStyles.successIcon}
+    />
+  ) : (
+    <FaTimes 
+      className="viv-ism-icon error" 
+      style={backupStyles.errorIcon}
+    />
+  );
 };
 
 const VivIntegratedServicesStatusMatrix = () => {
   return (
-    <div className="viv-ism-container">
-      <div className="viv-ism-table-wrapper">
-        <table className="viv-ism-table">
+    <div className="viv-ism-container" style={backupStyles.container}>
+      <div className="viv-ism-table-wrapper" style={backupStyles.tableWrapper}>
+        <table className="viv-ism-table" style={backupStyles.table}>
           <thead>
             <tr>
-              <th>Pt name</th>
-              <th>DOB</th>
-              <th>PG</th>
-              <th>HHAH</th>
-              <th>Rendering Provider</th>
-              <th>SOC</th>
-              <th>Episode From</th>
-              <th>Episode To</th>
-              <th>Remarks</th>
-              <th colSpan="3" className="viv-ism-service-header pg-services">
+              <th style={backupStyles.th}>Pt name</th>
+              <th style={backupStyles.th}>DOB</th>
+              <th style={backupStyles.th}>PG</th>
+              <th style={backupStyles.th}>HHAH</th>
+              <th style={backupStyles.th}>Rendering Provider</th>
+              <th style={backupStyles.th}>SOC</th>
+              <th style={backupStyles.th}>Episode From</th>
+              <th style={backupStyles.th}>Episode To</th>
+              <th style={backupStyles.th}>Remarks</th>
+              <th 
+                colSpan="3" 
+                className="viv-ism-service-header pg-services"
+                style={{
+                  ...backupStyles.serviceHeader,
+                  ...backupStyles.pgServicesHeader
+                }}
+              >
                 PG Services
                 <div className="viv-ism-subheaders">
                   <span>Docs prepared</span>
@@ -198,7 +320,14 @@ const VivIntegratedServicesStatusMatrix = () => {
                   <span>30 CPO mins</span>
                 </div>
               </th>
-              <th colSpan="2" className="viv-ism-service-header hhah-services">
+              <th 
+                colSpan="2" 
+                className="viv-ism-service-header hhah-services"
+                style={{
+                  ...backupStyles.serviceHeader,
+                  ...backupStyles.hhahServicesHeader
+                }}
+              >
                 HHAH Services
                 <div className="viv-ism-subheaders">
                   <span>485 signed</span>
@@ -210,20 +339,20 @@ const VivIntegratedServicesStatusMatrix = () => {
           <tbody>
             {mockData.map((row, index) => (
               <tr key={index}>
-                <td>{row.ptName}</td>
-                <td>{row.dob}</td>
-                <td>{row.pg}</td>
-                <td>{row.hhah}</td>
-                <td>{row.renderingProvider}</td>
-                <td>{row.soc}</td>
-                <td>{row.episodeFrom}</td>
-                <td>{row.episodeTo}</td>
-                <td>{row.remarks}</td>
-                <td><StatusIcon status={row.pgServices.docsPrepared} /></td>
-                <td><StatusIcon status={row.pgServices.cpoDocsCreated} /></td>
-                <td><StatusIcon value={row.pgServices.cpoMinsCaptured} /></td>
-                <td><StatusIcon status={row.hhahServices.signed485} /></td>
-                <td><StatusIcon status={row.hhahServices.docsSigned} /></td>
+                <td style={backupStyles.td}>{row.ptName}</td>
+                <td style={backupStyles.td}>{row.dob}</td>
+                <td style={backupStyles.td}>{row.pg}</td>
+                <td style={backupStyles.td}>{row.hhah}</td>
+                <td style={backupStyles.td}>{row.renderingProvider}</td>
+                <td style={backupStyles.td}>{row.soc}</td>
+                <td style={backupStyles.td}>{row.episodeFrom}</td>
+                <td style={backupStyles.td}>{row.episodeTo}</td>
+                <td style={backupStyles.td}>{row.remarks}</td>
+                <td style={backupStyles.td}><StatusIcon status={row.pgServices.docsPrepared} /></td>
+                <td style={backupStyles.td}><StatusIcon status={row.pgServices.cpoDocsCreated} /></td>
+                <td style={backupStyles.td}><StatusIcon value={row.pgServices.cpoMinsCaptured} /></td>
+                <td style={backupStyles.td}><StatusIcon status={row.hhahServices.signed485} /></td>
+                <td style={backupStyles.td}><StatusIcon status={row.hhahServices.docsSigned} /></td>
               </tr>
             ))}
           </tbody>
