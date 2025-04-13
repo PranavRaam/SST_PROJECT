@@ -17,15 +17,9 @@ CORS(app,
     resources={r"/api/*": {
         "origins": [
             "https://sst-frontend-swart.vercel.app", 
-            "http://localhost:3000", 
-            "https://prototype-railway-production.up.railway.app",
-            "https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app",
-            "https://railway-prototype-pranavraams-projects.vercel.app",
-            "https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app",
-            "https://railway-prototype.vercel.app",
-            "https://railwayprototypesst-production.up.railway.app",
-            "https://railway-prototype-sst.vercel.app",
-            "https://your-frontend-domain.vercel.app"
+            "http://localhost:3000",
+            "https://sst-project.onrender.com",
+            "*.onrender.com"
         ],
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
@@ -67,14 +61,8 @@ def add_cors_headers(response):
     # List of allowed origins
     allowed_origins = [
         'https://sst-frontend-swart.vercel.app', 
-        'http://localhost:3000', 
-        'https://prototype-railway-production.up.railway.app',
-        'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-        'https://railway-prototype-pranavraams-projects.vercel.app',
-        'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
-        'https://railway-prototype.vercel.app',
-        'https://railwayprototypesst-production.up.railway.app',
-        'https://railway-prototype-sst.vercel.app',
+        'http://localhost:3000',
+        'https://sst-project.onrender.com',
         'https://your-frontend-domain.vercel.app'
     ]
     
@@ -93,7 +81,7 @@ def add_cors_headers(response):
     # For iframe embedding
     if response.mimetype == 'text/html':
         response.headers['X-Frame-Options'] = 'ALLOW-FROM http://localhost:3000'
-        response.headers['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:3000 https://sst-frontend-swart.vercel.app https://prototype-railway-production.up.railway.app https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app https://railway-prototype-pranavraams-projects.vercel.app https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app https://railway-prototype.vercel.app https://railwayprototypesst-production.up.railway.app https://railway-prototype-sst.vercel.app"
+        response.headers['Content-Security-Policy'] = "frame-ancestors *"
         response.headers['Access-Control-Allow-Origin'] = origin if origin in allowed_origins else '*'
     
     return response
@@ -107,14 +95,8 @@ def options_statistical_area_map(area_name):
     # List of allowed origins
     allowed_origins = [
         'https://sst-frontend-swart.vercel.app', 
-        'http://localhost:3000', 
-        'https://prototype-railway-production.up.railway.app',
-        'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-        'https://railway-prototype-pranavraams-projects.vercel.app',
-        'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
-        'https://railway-prototype.vercel.app',
-        'https://railwayprototypesst-production.up.railway.app',
-        'https://railway-prototype-sst.vercel.app',
+        'http://localhost:3000',
+        'https://sst-project.onrender.com',
         'https://your-frontend-domain.vercel.app'
     ]
     
@@ -450,14 +432,8 @@ def health_check():
     origin = request.headers.get('Origin', '')
     allowed_origins = [
         'https://sst-frontend-swart.vercel.app', 
-        'http://localhost:3000', 
-        'https://prototype-railway-production.up.railway.app',
-        'https://railway-prototype-1iolyqhqo-pranavraams-projects.vercel.app',
-        'https://railway-prototype-pranavraams-projects.vercel.app',
-        'https://railway-prototype-ojzn7bwdk-pranavraams-projects.vercel.app',
-        'https://railway-prototype.vercel.app',
-        'https://railwayprototypesst-production.up.railway.app',
-        'https://railway-prototype-sst.vercel.app',
+        'http://localhost:3000',
+        'https://sst-project.onrender.com',
         'https://your-frontend-domain.vercel.app'
     ]
     
