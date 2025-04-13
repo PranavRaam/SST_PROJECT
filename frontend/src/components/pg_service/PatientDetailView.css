@@ -5749,8 +5749,9 @@
 }
 
 .episode-details {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 80px 1fr 80px;  /* Three columns: SOC, space for line, End */
+  width: 100%;
   padding: 0 15px;
   margin-top: 5px;
   transform: scale(var(--timeline-zoom));
@@ -5765,18 +5766,23 @@
 }
 
 .episode-date-label.soc {
+  grid-column: 1;
+  justify-self: start;
   color: var(--soc-marker-color);
   font-weight: 500;
 }
 
 .episode-date-label.start {
+  grid-column: 2;
+  justify-self: start;
+  margin-left: 20px;  /* Adjust this value to align with the From marker */
   color: var(--from-marker-color);
-  text-align: center;
 }
 
 .episode-date-label.end {
+  grid-column: 3;
+  justify-self: end;
   color: var(--end-marker-color);
-  text-align: right;
 }
 
 .episode-expanded-info {

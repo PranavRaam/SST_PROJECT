@@ -964,36 +964,28 @@ const PatientDetailView = ({ patient, onBack }) => {
     }
   };
 
-  // Update the addCpoDocument function to properly add a new document
-  const addCpoDocument = () => {
-    // Show document upload dialog or prompt for document details
+  // Replace the addCpoDocument function with file upload functionality
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
-    const documentTypes = ["CPO Assessment", "CPO Evaluation", "CPO Minutes", "CPO Plan"];
-    
-    // Create prompt with document type options
-    const promptMessage = `Select CPO document type:\n${documentTypes.map((type, index) => `${index + 1}. ${type}`).join('\n')}`;
-    const typeResponse = prompt(promptMessage, documentTypes[0]);
-    
-    if (!typeResponse) return; // User cancelled
-    
-    // Generate a unique ID for the document
-    const newDocId = `CPO_${Date.now().toString().slice(-6)}`;
     
     // Create the new document object
     const newDocument = {
-      id: newDocId,
-      fileName: `${typeResponse.replace(/\s+/g, '_')}_${formattedDate}.pdf`,
-      type: typeResponse,
+      id: `CPO_${Date.now().toString().slice(-6)}`,
+      fileName: file.name,
+      type: 'CPO Document',
       creationDate: formattedDate,
-      size: `${(Math.random() * 1 + 0.5).toFixed(1)} MB`
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
     };
     
     // Add the document to the cpoDocs state
     setCpoDocs(prevDocs => [...prevDocs, newDocument]);
     
     // Show success notification
-    showNotification('success', 'New CPO Document Added', `A new ${typeResponse} document has been added.`);
+    showNotification('success', 'CPO Document Added', 'New CPO document has been uploaded successfully.');
   };
 
   // Function to update CPO document status
@@ -3465,11 +3457,17 @@ Total documents: ${documents.length}
               
               <button 
                 className="action-button primary add-cpo-btn"
-                onClick={addCpoDocument}
+                onClick={() => document.getElementById('cpo-file-input').click()}
               >
                 <span className="icon-wrapper"><FaPlus /></span>
                 Add new CPO document
               </button>
+              <input
+                type="file"
+                id="cpo-file-input"
+                style={{ display: 'none' }}
+                onChange={handleFileUpload}
+              />
             </div>
             
             <div className="cpo-content">

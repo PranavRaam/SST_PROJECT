@@ -700,26 +700,10 @@
 
 .patient-table th:nth-child(7)::before,
 .patient-table th:nth-child(8)::before {
-  content: attr(data-sort-info);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 5px 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  z-index: 10;
+  display: none;
 }
 
 .patient-table th:nth-child(7):hover::before,
 .patient-table th:nth-child(8):hover::before {
-  opacity: 1;
-  visibility: visible;
-  bottom: calc(100% + 5px);
+  display: none;
 }

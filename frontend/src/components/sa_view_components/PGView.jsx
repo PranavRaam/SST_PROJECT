@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import '../sa_view_css/PGView.css';
 import './StaffList.css';
 import './proactiveoutcomes.css';
@@ -236,8 +238,8 @@ const PGView = () => {
       { id: 2, task: "Collect physician feedback", completed: false, dueDate: "03/18/2024" },
       { id: 3, task: "Update patient satisfaction metrics", completed: false, dueDate: "03/25/2024" }
     ],
-    mbrsDone: 12,
-    mbrsUpcoming: 5,
+    mbrsDone: 1,
+    mbrsUpcoming: 2,
     weeklyReportsSent: 24,
     weeklyReportsUpcoming: 3,
     newInteraction: "",
@@ -248,7 +250,14 @@ const PGView = () => {
     newWeeklyTaskDate: "",
     showAllInteractions: false,
     selectedReport: null,
-    isEditingReport: false
+    isEditingReport: false,
+    weeklyTasksDone: 1,
+    weeklyTasksUpcoming: 2,
+    weeklyTasks: [
+      { id: 1, task: "Review weekly metrics", completed: true, dueDate: "03/20/2024" },
+      { id: 2, task: "Schedule team meeting", completed: false, dueDate: "03/18/2024" },
+      { id: 3, task: "Update progress report", completed: false, dueDate: "03/25/2024" }
+    ]
   });
 
   const [rapportState, setRapportState] = useState({
@@ -1833,7 +1842,7 @@ const PGView = () => {
             </div>
           </div>
 
-          <div className="mbr-tasks-list">
+          <div className="mbr-tasks-list weekly-tasks-list">
             {valueCommunicationState.mdrTasks
               .filter(task => task.task.toLowerCase().includes('data') || task.task.toLowerCase().includes('metrics'))
               .map(task => (
@@ -1871,14 +1880,16 @@ const PGView = () => {
               }))}
               className="task-input"
             />
-            <input
-              type="date"
-              value={valueCommunicationState.newMBRTaskDate}
-              onChange={(e) => setValueCommunicationState(prev => ({
+            <DatePicker
+              selected={valueCommunicationState.newMBRTaskDate}
+              onChange={(date) => setValueCommunicationState(prev => ({
                 ...prev,
-                newMBRTaskDate: e.target.value
+                newMBRTaskDate: date ? date.toISOString().split('T')[0] : ''
               }))}
+              dateFormat="MM-dd-yyyy"
+              placeholderText="MM-DD-YYYY"
               className="task-date-input"
+              isClearable
             />
             <button 
               className="submit-button"
@@ -1899,6 +1910,93 @@ const PGView = () => {
               }}
             >
               Add MBR Task
+            </button>
+          </div>
+        </div>
+
+        {/* Weekly Tasks Panel */}
+        <div className="value-comm-panel weekly-tasks-panel">
+          <div className="panel-header">
+            <h3>Weekly Tasks</h3>
+          </div>
+
+          <div className="mbr-stats">
+            <div className="mbr-stat-item">
+              <span className="stat-label">Tasks Done:</span>
+              <span className="stat-value">{valueCommunicationState.weeklyTasksDone}</span>
+            </div>
+            <div className="mbr-stat-item">
+              <span className="stat-label">Tasks Upcoming:</span>
+              <span className="stat-value">{valueCommunicationState.weeklyTasksUpcoming}</span>
+            </div>
+          </div>
+
+          <div className="mbr-tasks-list">
+            {valueCommunicationState.weeklyTasks.map(task => (
+              <div key={task.id} className={`task-card ${task.completed ? 'completed' : ''}`}>
+                <div className="task-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => handleToggleWeeklyTask(task.id)}
+                    id={`task-${task.id}`}
+                  />
+                  <label htmlFor={`task-${task.id}`}></label>
+                </div>
+                <div className="task-content">
+                  <p className="task-text">{task.task}</p>
+                  <div className="task-meta">
+                    <span className="task-due-date">Due: {task.dueDate}</span>
+                    <span className={`task-status ${task.completed ? 'completed' : 'pending'}`}>
+                      {task.completed ? 'Completed' : 'Pending'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="add-task-form">
+            <input
+              type="text"
+              placeholder="Add new weekly task..."
+              value={valueCommunicationState.newWeeklyTask}
+              onChange={(e) => setValueCommunicationState(prev => ({
+                ...prev,
+                newWeeklyTask: e.target.value
+              }))}
+              className="task-input"
+            />
+            <DatePicker
+              selected={valueCommunicationState.newWeeklyTaskDate}
+              onChange={(date) => setValueCommunicationState(prev => ({
+                ...prev,
+                newWeeklyTaskDate: date ? date.toISOString().split('T')[0] : ''
+              }))}
+              dateFormat="MM-dd-yyyy"
+              placeholderText="MM-DD-YYYY"
+              className="task-date-input"
+              isClearable
+            />
+            <button 
+              className="submit-button"
+              onClick={() => {
+                if (valueCommunicationState.newWeeklyTask && valueCommunicationState.newWeeklyTaskDate) {
+                  handleAddWeeklyTask(
+                    valueCommunicationState.newWeeklyTask,
+                    valueCommunicationState.newWeeklyTaskDate
+                  );
+                  setValueCommunicationState(prev => ({
+                    ...prev,
+                    newWeeklyTask: "",
+                    newWeeklyTaskDate: ""
+                  }));
+                } else {
+                  alert("Please fill in both the task description and due date");
+                }
+              }}
+            >
+              Add Weekly Task
             </button>
           </div>
         </div>
@@ -2249,14 +2347,42 @@ const PGView = () => {
           dueDate
         }
       ],
-      // Increment mbrsUpcoming if it's an MBR task
-      mbrsUpcoming: taskName.toLowerCase().includes('data') || taskName.toLowerCase().includes('metrics') 
-        ? prev.mbrsUpcoming + 1 
-        : prev.mbrsUpcoming,
-      // Increment weeklyReportsUpcoming if it's a weekly report task
-      weeklyReportsUpcoming: taskName.toLowerCase().includes('feedback') || taskName.toLowerCase().includes('collect')
-        ? prev.weeklyReportsUpcoming + 1
-        : prev.weeklyReportsUpcoming
+      mbrsUpcoming: prev.mbrsUpcoming + 1
+    }));
+  };
+
+  const handleToggleWeeklyTask = (taskId) => {
+    setValueCommunicationState(prev => {
+      const updatedTasks = prev.weeklyTasks.map(task =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      );
+      
+      // Count completed and upcoming tasks
+      const completedCount = updatedTasks.filter(task => task.completed).length;
+      const upcomingCount = updatedTasks.filter(task => !task.completed).length;
+      
+      return {
+        ...prev,
+        weeklyTasks: updatedTasks,
+        weeklyTasksDone: completedCount,
+        weeklyTasksUpcoming: upcomingCount
+      };
+    });
+  };
+
+  const handleAddWeeklyTask = (taskName, dueDate) => {
+    setValueCommunicationState(prev => ({
+      ...prev,
+      weeklyTasks: [
+        ...prev.weeklyTasks,
+        {
+          id: prev.weeklyTasks.length + 1,
+          task: taskName,
+          completed: false,
+          dueDate
+        }
+      ],
+      weeklyTasksUpcoming: prev.weeklyTasksUpcoming + 1
     }));
   };
 
