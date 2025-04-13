@@ -5190,3 +5190,58 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-13 13:34:44,789 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Mock_Test/Railway_Prototype_SST/backend/cache/statistical_area_Anchorage_lightweight.html
 2025-04-13 13:34:44,789 - __main__ - INFO - Request completed in 0.00 seconds
 2025-04-13 13:34:44,791 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 13:34:44] "GET /api/statistical-area-map/Anchorage?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744531484366&_show_states=true&_show_counties=true&_show_msas=true&_t=1744531484749 HTTP/1.1" 200 -
+2025-04-13 15:07:11,797 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/data_cache
+2025-04-13 15:07:11,800 - __main__ - INFO - Checking for cached data at startup
+2025-04-13 15:07:11,813 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-13 15:07:11,813 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-13 15:07:11,814 - werkzeug - INFO -  * Restarting with stat
+2025-04-13 15:07:12,361 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/data_cache
+2025-04-13 15:07:12,364 - __main__ - INFO - Checking for cached data at startup
+2025-04-13 15:07:12,375 - werkzeug - WARNING -  * Debugger is active!
+2025-04-13 15:07:12,375 - werkzeug - INFO -  * Debugger PIN: 754-142-547
+2025-04-13 15:07:22,141 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 15:07:22,145 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 15:07:24,713 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 15:07:24,718 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-13 15:07:24,726 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:24] "GET /api/map?t=1744537044704&noCache=true&stableView=true?t%3D1744537044704&_show_states=true&_show_counties=true&_show_msas=true&_t=1744537044704 HTTP/1.1" 200 -
+2025-04-13 15:07:25,275 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:25] "GET /api/map?t=1744537045260&noCache=true&stableView=true?t%3D1744537045260&_show_states=true&_show_counties=true&_show_msas=true&_t=1744537045261 HTTP/1.1" 200 -
+2025-04-13 15:07:28,143 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:28] "GET /api/health HTTP/1.1" 200 -
+2025-04-13 15:07:28,148 - __main__ - INFO - Map request for area: Albany
+2025-04-13 15:07:28,149 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744537048146')])
+2025-04-13 15:07:28,149 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-13 15:07:28,149 - statistical_area_zoom - INFO - Generating map for statistical area: Albany with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-13 15:07:28,149 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/cache/statistical_area_Albany_lightweight.html
+2025-04-13 15:07:28,149 - statistical_area_zoom - INFO - Loading map data...
+2025-04-13 15:07:28,149 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-13 15:07:28,149 - data_preloader - INFO - Loading all cached data...
+2025-04-13 15:07:28,164 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-13 15:07:28,165 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-13 15:07:28,165 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-13 15:07:28,165 - statistical_area_zoom - INFO - Normalized area name: albany
+2025-04-13 15:07:28,167 - statistical_area_zoom - INFO - Trying to match city name: albany
+2025-04-13 15:07:28,168 - statistical_area_zoom - INFO - Found exact city match: Albany, GA
+2025-04-13 15:07:28,168 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-13 15:07:28,168 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-13 15:07:28,168 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Albany
+2025-04-13 15:07:28,168 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Albany
+2025-04-13 15:07:28,169 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-13 15:07:28,169 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-13 15:07:28,169 - statistical_area_zoom - INFO - Center: 31.646759182348596, -84.11528437079876
+2025-04-13 15:07:28,169 - statistical_area_zoom - INFO - Bounds: -84.603086, 31.318412, -83.649384, 31.967456
+2025-04-13 15:07:28,279 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/cache/statistical_area_Albany_lightweight.html
+2025-04-13 15:07:28,279 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/cache/statistical_area_Albany_lightweight.html
+2025-04-13 15:07:28,280 - __main__ - INFO - Request completed in 0.13 seconds
+2025-04-13 15:07:28,280 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:28] "GET /api/statistical-area-map/Albany?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744537048146 HTTP/1.1" 200 -
+2025-04-13 15:07:28,298 - __main__ - INFO - Map request for area: Albany
+2025-04-13 15:07:28,299 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744537048146'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744537048284')])
+2025-04-13 15:07:28,299 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-13 15:07:28,299 - statistical_area_zoom - INFO - Generating map for statistical area: Albany with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-13 15:07:28,299 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/cache/statistical_area_Albany_lightweight.html
+2025-04-13 15:07:28,299 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/cache/statistical_area_Albany_lightweight.html (age: 0.0 hours)
+2025-04-13 15:07:28,299 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-13 15:07:28,299 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Hosting_Product/Railway_Prototype_SST/backend/cache/statistical_area_Albany_lightweight.html
+2025-04-13 15:07:28,299 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-13 15:07:28,299 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 15:07:28] "GET /api/statistical-area-map/Albany?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744537048146&_show_states=true&_show_counties=true&_show_msas=true&_t=1744537048284 HTTP/1.1" 200 -

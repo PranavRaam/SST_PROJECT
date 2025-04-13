@@ -1,0 +1,8 @@
+/* This file ensures that Vercel correctly processes CSS files
+ * It will be copied to the public directory during build
+ * This is a workaround for cases where CSS is not being properly loaded
+ */
+
+:root {
+  --vercel-css-fix: true;
+} 

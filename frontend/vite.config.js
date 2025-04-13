@@ -12,5 +12,14 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
+  },
+  build: {
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
   }
 })
