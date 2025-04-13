@@ -374,32 +374,9 @@ const PGView = () => {
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
     
-    // For testing purposes, use 2025 as the current year
-    const testYear = 2025;
-    const testMonth = 2; // February (1-indexed, so February is 2)
-    
-    // Create date objects based on our test date
-    const now = new Date(testYear, testMonth - 1, 15); // February 15, 2025
-    
-    if (period === 'month') {
-      // Last month (January 2025)
-      const lastMonth = new Date(now);
-      lastMonth.setMonth(lastMonth.getMonth() - 1);
-      lastMonth.setDate(1); // First day of last month
-      
-      const lastDayLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-      
-      // ISO format for date inputs (yyyy-MM-dd)
-      const startIso = lastMonth.toISOString().split('T')[0];
-      const endIso = lastDayLastMonth.toISOString().split('T')[0];
-      
-      setSelectedDateRange({
-        start: startIso,
-        end: endIso
-      });
-    } else if (period === 'all') {
-      // All time - just clear the date range
+    if (period === 'all') {
       setSelectedDateRange({ start: '', end: '' });
+      setFilteredClaims([]);
     }
   };
 
@@ -722,7 +699,7 @@ const PGView = () => {
     const endDate = parseDate(selectedDateRange.end);
     
     if (!startDate || !endDate) {
-      alert("Please select valid start and end dates");
+      alert("Please select valid episode start dates");
       return;
     }
     
@@ -730,315 +707,182 @@ const PGView = () => {
     endDate.setHours(23, 59, 59, 999);
     
     const filtered = dummyClaims.filter(claim => {
-      // Parse claim date which could be in either format
-      const socDate = parseDate(claim.soc);
-      if (!socDate) return false;
+      // Parse episode start date which could be in either format
+      const episodeStartDate = parseDate(claim.episodeFrom);
+      if (!episodeStartDate) return false;
       
-      return socDate >= startDate && socDate <= endDate;
+      return episodeStartDate >= startDate && episodeStartDate <= endDate;
     });
     
     setFilteredClaims(filtered);
     setShowDateRangeFilter(false);
   };
 
+  const formatDownloadDate = (dateStr) => {
+    if (!dateStr) return '';
+    try {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr; // Return original if invalid
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${month}/${day}/${year}`;
+    } catch (error) {
+      return dateStr; // Return original if parsing fails
+    }
+  };
+
+  const handleViewReport = (report) => {
+    // For now, just show an alert with report details
+    alert(`Viewing report: ${report.fileName}\n\nNotes: ${report.notes}\nDate: ${report.date}`);
+    // In a real application, this would open a modal or navigate to a report viewer
+  };
+
   const handleDownloadClaims = (format) => {
-    // Get current date for file naming
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
-    const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
-    const previousMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
-    
-    // Format month names
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June', 
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    const shortMonthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    
-    const currentMonthName = monthNames[currentMonth - 1];
-    const previousMonthName = monthNames[previousMonth - 1];
-    const currentShortMonth = shortMonthNames[currentMonth - 1];
-    
-    // Prepare claims based on business rules
-    const preparedClaims = filteredClaims.length > 0 ? filteredClaims : dummyClaims;
-    
-    // Apply business rules to each claim
-    const billingClaims = preparedClaims.map(claim => {
-      const icdCodes = [
-        claim.primaryDiagnosisCode,
-        claim.secondaryDiagnosisCode1,
-        claim.secondaryDiagnosisCode2,
-        claim.secondaryDiagnosisCode3,
-        claim.secondaryDiagnosisCode4,
-        claim.secondaryDiagnosisCode5
-      ].filter(code => code && code.trim() !== '');
+    try {
+      // Get current date for file naming
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
       
-      const hasMinimumIcdCodes = icdCodes.length >= 3;
-      const isInEHR = true; // Assuming all patients in our sample are in EHR
+      // Format month names
+      const shortMonthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      ];
       
-      // Process dates
-      const episodeFrom = new Date(claim.episodeFrom);
-      const episodeTo = new Date(claim.episodeTo);
+      const currentShortMonth = shortMonthNames[currentMonth - 1];
       
-      // Calculate days active in current month
-      const billingMonthStart = new Date(currentYear, currentMonth - 1, 1);
-      const billingMonthEnd = new Date(currentYear, currentMonth, 0);
+      // Prepare claims based on business rules
+      const preparedClaims = filteredClaims.length > 0 ? filteredClaims : dummyClaims;
       
-      // Check if episode overlaps with billing month
-      const isActiveInBillingMonth = 
-        (episodeFrom <= billingMonthEnd && episodeTo >= billingMonthStart);
+      // Generate filename
+      const fileName = `${currentShortMonth} ${currentYear} Billing - ${pgName || 'Sample PG'} - Data`;
       
-      // Determine if this is a CERT/RECERT billing or CPO billing
-      const hasCertOrRecert = Math.random() > 0.5; // Simulating presence of CERT/RECERT
-      const certSignedDate = new Date(currentYear, currentMonth - 1, Math.floor(Math.random() * 28) + 1);
-      const isCertSignedInBillingMonth = 
-        certSignedDate >= billingMonthStart && certSignedDate <= billingMonthEnd;
-      
-      // CPO minutes in current month (simulated)
-      const cpoMinutesInBillingMonth = Math.floor(Math.random() * 150) + 10;
-      const hasSufficientCpoMinutes = cpoMinutesInBillingMonth >= 30;
-      
-      // Determine billing type and apply corresponding rules
-      let billingType = null;
-      let line1DosFrom = null;
-      let line1DosTo = null;
-      let line1Charges = null;
-      let billingCode = null;
-      
-      // CERT/RECERT Billing Rules
-      if (hasCertOrRecert && isCertSignedInBillingMonth && hasMinimumIcdCodes && isInEHR) {
-        billingType = 'CERT';
-        line1DosFrom = new Date(episodeFrom);
-        line1DosTo = new Date(episodeFrom);
-        line1Charges = claim.billingCode === 'G0179' ? 40 : 60; // Using American G0179 code instead of 179
-        billingCode = claim.billingCode;
-      } 
-      // CPO Billing Rules
-      else if (isActiveInBillingMonth && hasMinimumIcdCodes && hasSufficientCpoMinutes && isInEHR) {
-        billingType = 'CPO';
+      if (format === 'csv') {
+        // Prepare CSV content
+        let csvContent = "data:text/csv;charset=utf-8,";
         
-        // Determine DOS FROM
-        if (episodeFrom.getMonth() + 1 < currentMonth) {
-          line1DosFrom = new Date(currentYear, currentMonth - 1, 1); // First day of billing month
-        } else {
-          line1DosFrom = new Date(episodeFrom);
-          line1DosFrom.setDate(episodeFrom.getDate() + 1);
-        }
+        // Add headers
+        const headers = [
+          "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
+          "HHA NAME", "INSURANCE TYPE", "PRIMARY DIAGNOSIS CODE", 
+          "SOC", "Episode From", "Episode To",
+          "CPO Minutes Captured", "Billing Code", "LINE 1 DOS FROM", "LINE 1 DOS TO", 
+          "Line 1 $Charges", "Line 1 POS", "Line 1 Units", "Provider's Name"
+        ];
         
-        // Determine DOS TO
-        if (episodeTo.getMonth() + 1 > currentMonth) {
-          line1DosTo = new Date(currentYear, currentMonth, 0); // Last day of billing month
-        } else {
-          line1DosTo = new Date(episodeTo);
-          line1DosTo.setDate(episodeTo.getDate() - 1);
-        }
+        csvContent += headers.join(",") + "\r\n";
         
-        line1Charges = 113;
-        billingCode = 'G0181'; // American CPO billing code
+        // Add data rows
+        preparedClaims.forEach(claim => {
+          const row = [
+            `"${claim.remarks || ''}"`,
+            `"${claim.sNo || ''}"`,
+            `"${claim.fullName || ''}"`,
+            `"${claim.firstName || ''}"`,
+            `"${claim.middleName || ''}"`,
+            `"${claim.lastName || ''}"`,
+            `"${formatDownloadDate(claim.dob)}"`,
+            `"${claim.hhaName || ''}"`,
+            `"${claim.insuranceType || ''}"`,
+            `"${claim.primaryDiagnosisCode || ''}"`,
+            `"${formatDownloadDate(claim.soc)}"`,
+            `"${formatDownloadDate(claim.episodeFrom)}"`,
+            `"${formatDownloadDate(claim.episodeTo)}"`,
+            `"${claim.cpoMinutesCaptured || ''}"`,
+            `"${claim.billingCode || ''}"`,
+            `"${formatDownloadDate(claim.line1DosFrom)}"`,
+            `"${formatDownloadDate(claim.line1DosTo)}"`,
+            `"${claim.line1Charges || ''}"`,
+            `"${claim.line1Pos || ''}"`,
+            `"${claim.line1Units || ''}"`,
+            `"${claim.providersName || ''}"`,
+          ];
+          
+          csvContent += row.join(",") + "\r\n";
+        });
+        
+        // Create download link
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${fileName}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+      } else if (format === 'pdf') {
+        // Create PDF using jsPDF
+        const doc = new jsPDF('l', 'mm', 'a4');
+        
+        // Add title
+        doc.setFontSize(14);
+        doc.text(fileName, 14, 15);
+        doc.setFontSize(10);
+        
+        // Prepare data for table
+        const headers = [
+          ["S.No", "Patient Name", "DOB", "HHA", "Insurance", "Primary DX", 
+           "SOC", "Episode From", "Episode To",
+           "CPO Min", "Billing Code", "$Charges"]
+        ];
+        
+        const data = preparedClaims.map(claim => [
+          claim.sNo || '',
+          claim.fullName || '',
+          formatDownloadDate(claim.dob),
+          claim.hhaName || '',
+          claim.insuranceType || '',
+          claim.primaryDiagnosisCode || '',
+          formatDownloadDate(claim.soc),
+          formatDownloadDate(claim.episodeFrom),
+          formatDownloadDate(claim.episodeTo),
+          claim.cpoMinutesCaptured || '',
+          claim.billingCode || '',
+          claim.line1Charges || ''
+        ]);
+        
+        // Generate table
+        doc.autoTable({
+          head: headers,
+          body: data,
+          startY: 25,
+          theme: 'grid',
+          styles: { 
+            fontSize: 7,
+            cellPadding: 1,
+            overflow: 'linebreak',
+            cellWidth: 'wrap'
+          },
+          columnStyles: {
+            0: { cellWidth: 10 }, // S.No
+            1: { cellWidth: 35 }, // Patient Name
+            2: { cellWidth: 20 }, // DOB
+            3: { cellWidth: 25 }, // HHA
+            4: { cellWidth: 20 }, // Insurance
+            5: { cellWidth: 15 }, // Primary DX
+            6: { cellWidth: 20 }, // SOC
+            7: { cellWidth: 20 }, // Episode From
+            8: { cellWidth: 20 }, // Episode To
+            9: { cellWidth: 15 }, // CPO Min
+            10: { cellWidth: 15 }, // Billing Code
+            11: { cellWidth: 15 }  // $Charges
+          },
+          headStyles: {
+            fillColor: [71, 85, 119],
+            textColor: 255,
+            fontSize: 8,
+            fontStyle: 'bold'
+          }
+        });
+        
+        // Save PDF
+        doc.save(`${fileName}.pdf`);
       }
-      
-      // Skip claims that don't match any billing criteria
-      if (!billingType) return null;
-      
-      // Format dates for display
-      const formatDate = (date) => {
-        if (!date) return '';
-        return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;
-      };
-      
-      return {
-        ...claim,
-        billingType,
-        certSignedDate: formatDate(certSignedDate),
-        cpoMinutesCaptured: cpoMinutesInBillingMonth,
-        line1DosFrom: formatDate(line1DosFrom),
-        line1DosTo: formatDate(line1DosTo),
-        line1Charges,
-        billingCode: billingType === 'CPO' ? 'G0181' : claim.billingCode,
-        line1Pos: '11', // As per requirement
-        line1Units: 1   // As per requirement
-      };
-    }).filter(claim => claim !== null); // Remove claims that don't match criteria
-    
-    // Generate filename
-    const fileName = `${currentShortMonth} ${currentYear} Billing - ${pgName || 'Sample PG'} - Data (${previousMonthName} ${previousMonthYear} data)`;
-    
-    if (format === 'csv') {
-      // Prepare CSV content
-      let csvContent = "data:text/csv;charset=utf-8,";
-      
-      // Add headers
-      const headers = [
-        "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
-        "HHA NAME", "INSURANCE TYPE", "PRIMARY DIAGNOSIS CODE", 
-        "SECONDARY DIAGNOSIS CODE 1", "SECONDARY DIAGNOSIS CODE 2", "SECONDARY DIAGNOSIS CODE 3",
-        "SECONDARY DIAGNOSIS CODE 4", "SECONDARY DIAGNOSIS CODE 5",
-        "SOC", "Episode From", "Episode To", "Billing Type", "Doc Signed Date", 
-        "CPO Minutes Captured", "Billing Code", "LINE 1 DOS FROM", "LINE 1 DOS TO", 
-        "Line 1 $Charges", "Line 1 POS", "Line 1 Units", "Provider's Name"
-      ];
-      
-      csvContent += headers.join(",") + "\r\n";
-      
-      // Add data rows
-      billingClaims.forEach(claim => {
-        const row = [
-          `"${claim.remarks || ''}"`,
-          `"${claim.sNo || ''}"`,
-          `"${claim.fullName || ''}"`,
-          `"${claim.firstName || ''}"`,
-          `"${claim.middleName || ''}"`,
-          `"${claim.lastName || ''}"`,
-          `"${claim.dob || ''}"`,
-          `"${claim.hhaName || ''}"`,
-          `"${claim.insuranceType || ''}"`,
-          `"${claim.primaryDiagnosisCode || ''}"`,
-          `"${claim.secondaryDiagnosisCode1 || ''}"`,
-          `"${claim.secondaryDiagnosisCode2 || ''}"`,
-          `"${claim.secondaryDiagnosisCode3 || ''}"`,
-          `"${claim.secondaryDiagnosisCode4 || ''}"`,
-          `"${claim.secondaryDiagnosisCode5 || ''}"`,
-          `"${claim.soc || ''}"`,
-          `"${claim.episodeFrom || ''}"`,
-          `"${claim.episodeTo || ''}"`,
-          `"${claim.billingType || ''}"`,
-          `"${claim.certSignedDate || ''}"`,
-          `"${claim.cpoMinutesCaptured || ''}"`,
-          `"${claim.billingCode || ''}"`,
-          `"${claim.line1DosFrom || ''}"`,
-          `"${claim.line1DosTo || ''}"`,
-          `"${claim.line1Charges || ''}"`,
-          `"${claim.line1Pos || ''}"`,
-          `"${claim.line1Units || ''}"`,
-          `"${claim.providersName || ''}"`,
-        ];
-        
-        csvContent += row.join(",") + "\r\n";
-      });
-      
-      // Create download link
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `${fileName}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-    } else if (format === 'pdf') {
-      // Create PDF using jsPDF
-      const doc = new jsPDF('l', 'mm', 'a4');
-      
-      // Add title
-      doc.setFontSize(14);
-      doc.text(fileName, 14, 15);
-      doc.setFontSize(10);
-      
-      // Prepare data for table
-      const headers = [
-        "S.No", "Patient Name", "DOB", "Billing Type", "Doc Signed", "CPO Min", 
-        "PRIMARY DX", "DOS FROM", "DOS TO", "Billing Code", "$Charges", "POS", "Units"
-      ];
-      
-      const data = billingClaims.map(claim => [
-        claim.sNo,
-        claim.fullName,
-        claim.dob,
-        claim.billingType,
-        claim.certSignedDate,
-        claim.cpoMinutesCaptured,
-        claim.primaryDiagnosisCode,
-        claim.line1DosFrom,
-        claim.line1DosTo,
-        claim.billingCode,
-        claim.line1Charges,
-        claim.line1Pos,
-        claim.line1Units
-      ]);
-      
-      // Generate table
-      autoTable(doc, {
-        head: [headers],
-        body: data,
-        startY: 20,
-        theme: 'grid',
-        styles: { fontSize: 8, cellPadding: 1 },
-        headStyles: { fillColor: [71, 85, 119] }
-      });
-      
-      // Save PDF
-      doc.save(`${fileName}.pdf`);
-    } else if (format === 'excel') {
-      // For Excel, we'll use CSV as a fallback since jspdf-autotable doesn't support Excel directly
-      // In a real application, you might want to use a library like SheetJS/xlsx for true Excel export
-      
-      // Notify the user that we're using CSV instead
-      alert("Excel format requested. Downloading as CSV which can be opened in Excel.");
-      
-      // Reuse the CSV generation code
-      let csvContent = "data:text/csv;charset=utf-8,";
-      
-      // Add headers
-      const headers = [
-        "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
-        "HHA NAME", "INSURANCE TYPE", "PRIMARY DIAGNOSIS CODE", 
-        "SECONDARY DIAGNOSIS CODE 1", "SECONDARY DIAGNOSIS CODE 2", "SECONDARY DIAGNOSIS CODE 3",
-        "SECONDARY DIAGNOSIS CODE 4", "SECONDARY DIAGNOSIS CODE 5",
-        "SOC", "Episode From", "Episode To", "Billing Type", "Doc Signed Date", 
-        "CPO Minutes Captured", "Billing Code", "LINE 1 DOS FROM", "LINE 1 DOS TO", 
-        "Line 1 $Charges", "Line 1 POS", "Line 1 Units", "Provider's Name"
-      ];
-      
-      csvContent += headers.join(",") + "\r\n";
-      
-      // Add data rows
-      billingClaims.forEach(claim => {
-        const row = [
-          `"${claim.remarks || ''}"`,
-          `"${claim.sNo || ''}"`,
-          `"${claim.fullName || ''}"`,
-          `"${claim.firstName || ''}"`,
-          `"${claim.middleName || ''}"`,
-          `"${claim.lastName || ''}"`,
-          `"${claim.dob || ''}"`,
-          `"${claim.hhaName || ''}"`,
-          `"${claim.insuranceType || ''}"`,
-          `"${claim.primaryDiagnosisCode || ''}"`,
-          `"${claim.secondaryDiagnosisCode1 || ''}"`,
-          `"${claim.secondaryDiagnosisCode2 || ''}"`,
-          `"${claim.secondaryDiagnosisCode3 || ''}"`,
-          `"${claim.secondaryDiagnosisCode4 || ''}"`,
-          `"${claim.secondaryDiagnosisCode5 || ''}"`,
-          `"${claim.soc || ''}"`,
-          `"${claim.episodeFrom || ''}"`,
-          `"${claim.episodeTo || ''}"`,
-          `"${claim.billingType || ''}"`,
-          `"${claim.certSignedDate || ''}"`,
-          `"${claim.cpoMinutesCaptured || ''}"`,
-          `"${claim.billingCode || ''}"`,
-          `"${claim.line1DosFrom || ''}"`,
-          `"${claim.line1DosTo || ''}"`,
-          `"${claim.line1Charges || ''}"`,
-          `"${claim.line1Pos || ''}"`,
-          `"${claim.line1Units || ''}"`,
-          `"${claim.providersName || ''}"`,
-        ];
-        
-        csvContent += row.join(",") + "\r\n";
-      });
-      
-      // Create download link
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `${fileName}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error in handleDownloadClaims:', error);
+      alert('Failed to download claims. Please try again.');
     }
   };
 
@@ -1078,11 +922,11 @@ const PGView = () => {
             <div className="modal-overlay">
               <div className="modal-content" data-type="date-range">
                 <div className="modal-header">
-                  <h2>Select Date Range</h2>
+                  <h2>Filter Episodes by Date Range</h2>
                   <button className="close-button" onClick={() => setShowDateRangeFilter(false)}>×</button>
                 </div>
                 <div className="form-group">
-                  <label>Start Date</label>
+                  <label>Episode Start Date (From)</label>
                   <input
                     type="date"
                     className="date-input"
@@ -1092,7 +936,7 @@ const PGView = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>End Date</label>
+                  <label>Episode Start Date (To)</label>
                   <input
                     type="date"
                     className="date-input"
@@ -1102,19 +946,13 @@ const PGView = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Predefined Periods</label>
+                  <label>Quick Select</label>
                   <div className="button-group">
-                    <button 
-                      className={`period-button ${selectedPeriod === 'month' ? 'active' : ''}`}
-                      onClick={() => handlePeriodChange('month')}
-                    >
-                      Last Month
-                    </button>
                     <button 
                       className={`period-button ${selectedPeriod === 'all' ? 'active' : ''}`}
                       onClick={() => handlePeriodChange('all')}
                     >
-                      All Time
+                      All Episodes
                     </button>
                   </div>
                 </div>
@@ -1154,14 +992,6 @@ const PGView = () => {
                   <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
                 Download PDF
-              </button>
-              <button className="download-button" onClick={() => handleDownloadClaims('excel')}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Download Excel
               </button>
             </div>
           </div>

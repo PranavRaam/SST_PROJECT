@@ -5454,3 +5454,61 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-13 19:52:45,644 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 19:52:45] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-13 19:56:30,966 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 19:56:30] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-13 19:56:31,233 - werkzeug - INFO - 127.0.0.1 - - [13/Apr/2025 19:56:31] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-14 01:34:22,693 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-14 01:34:22,697 - __main__ - INFO - Checking for cached data at startup
+2025-04-14 01:34:22,713 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-14 01:34:22,714 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-14 01:34:22,714 - werkzeug - INFO -  * Restarting with stat
+2025-04-14 01:34:23,259 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-14 01:34:23,263 - __main__ - INFO - Checking for cached data at startup
+2025-04-14 01:34:23,274 - werkzeug - WARNING -  * Debugger is active!
+2025-04-14 01:34:23,275 - werkzeug - INFO -  * Debugger PIN: 121-760-495
+2025-04-14 01:35:04,091 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-14 01:35:04,095 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-14 01:35:04,119 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map?t=1744574704101&noCache=true&stableView=true?t%3D1744574704101&_show_states=true&_show_counties=true&_show_msas=true&_t=1744574704102 HTTP/1.1" 200 -
+2025-04-14 01:35:04,137 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-14 01:35:04,140 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-14 01:35:04,182 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map?t=1744574704154&noCache=true&stableView=true?t%3D1744574704154&_show_states=true&_show_counties=true&_show_msas=true&_t=1744574704156 HTTP/1.1" 200 -
+2025-04-14 01:35:04,762 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:04] "GET /api/map?t=1744574704755&noCache=true&stableView=true?t%3D1744574704755&_show_states=true&_show_counties=true&_show_msas=true&_t=1744574704755 HTTP/1.1" 200 -
+2025-04-14 01:35:33,411 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:33] "GET /api/health HTTP/1.1" 200 -
+2025-04-14 01:35:33,417 - __main__ - INFO - Map request for area: Bellingham
+2025-04-14 01:35:33,418 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744574733415')])
+2025-04-14 01:35:33,418 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-14 01:35:33,418 - statistical_area_zoom - INFO - Generating map for statistical area: Bellingham with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-14 01:35:33,418 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-14 01:35:33,418 - statistical_area_zoom - INFO - Loading map data...
+2025-04-14 01:35:33,418 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-14 01:35:33,418 - data_preloader - INFO - Loading all cached data...
+2025-04-14 01:35:33,431 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-14 01:35:33,433 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-14 01:35:33,433 - statistical_area_zoom - INFO - Data loaded in 0.01 seconds
+2025-04-14 01:35:33,433 - statistical_area_zoom - INFO - Normalized area name: bellingham
+2025-04-14 01:35:33,437 - statistical_area_zoom - INFO - Trying to match city name: bellingham
+2025-04-14 01:35:33,438 - statistical_area_zoom - INFO - Found exact city match: Bellingham, WA
+2025-04-14 01:35:33,438 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-14 01:35:33,438 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-14 01:35:33,439 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bellingham
+2025-04-14 01:35:33,439 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bellingham
+2025-04-14 01:35:33,440 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-14 01:35:33,440 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-14 01:35:33,440 - statistical_area_zoom - INFO - Center: 48.82975917756058, -121.87404608505845
+2025-04-14 01:35:33,440 - statistical_area_zoom - INFO - Bounds: -123.32224, 48.625687, -120.655857, 49.002072
+2025-04-14 01:35:33,566 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-14 01:35:33,566 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-14 01:35:33,566 - __main__ - INFO - Request completed in 0.15 seconds
+2025-04-14 01:35:33,567 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:33] "GET /api/statistical-area-map/Bellingham?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744574733415 HTTP/1.1" 200 -
+2025-04-14 01:35:33,585 - __main__ - INFO - Map request for area: Bellingham
+2025-04-14 01:35:33,586 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744574733415'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744574733571')])
+2025-04-14 01:35:33,586 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-14 01:35:33,586 - statistical_area_zoom - INFO - Generating map for statistical area: Bellingham with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-14 01:35:33,586 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-14 01:35:33,586 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html (age: 0.0 hours)
+2025-04-14 01:35:33,586 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-14 01:35:33,586 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-14 01:35:33,586 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-14 01:35:33,587 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 01:35:33] "GET /api/statistical-area-map/Bellingham?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744574733415&_show_states=true&_show_counties=true&_show_msas=true&_t=1744574733571 HTTP/1.1" 200 -
+2025-04-14 02:07:25,204 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 02:07:25] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-14 02:07:25,208 - werkzeug - INFO - 127.0.0.1 - - [14/Apr/2025 02:07:25] "GET /api/map-status HTTP/1.1" 200 -
