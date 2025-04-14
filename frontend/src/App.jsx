@@ -12,6 +12,7 @@ import HHAHView from './components/sa_view_components/HHAHView'
 import PhysicianView from './components/sa_view_components/PhysicianView'
 import NPPView from './components/sa_view_components/NPPView'
 import OfficeStaffView from './components/sa_view_components/OfficeStaffView'
+import PatientView from './components/sa_view_components/PatientView'
 import { divisionalGroupToRegions, divisionalGroupToStatisticalAreas } from './utils/regionMapping'
 import { getApiUrl } from './config'
 import { FunnelDataProvider } from './components/sa_view_components/FunnelDataContext'
@@ -284,6 +285,7 @@ function App() {
               <Route path="/physician/:id" element={<PhysicianView />} />
               <Route path="/npp/:nppId" element={<NPPView />} />
               <Route path="/office-staff/:staffId" element={<OfficeStaffView />} />
+              <Route path="/patient-view/:id" element={<PatientView />} />
             </Routes>
           </div>
           

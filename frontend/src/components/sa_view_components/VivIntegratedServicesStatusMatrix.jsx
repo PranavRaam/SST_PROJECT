@@ -1,10 +1,12 @@
 import React from 'react';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 // Explicitly import the CSS file to ensure it's properly processed in the build
 import './VivIntegratedServicesStatusMatrix.css';
 
 const mockData = [
   {
+    id: "pt-001",
     ptName: "John Smith",
     dob: "1945-05-15",
     pg: "Sunshine Medical",
@@ -25,6 +27,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-002",
     ptName: "Mary Johnson",
     dob: "1938-08-22",
     pg: "Wellness Care",
@@ -45,6 +48,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-003",
     ptName: "Robert Davis",
     dob: "1952-03-10",
     pg: "Premier Health",
@@ -65,6 +69,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-004",
     ptName: "Patricia Brown",
     dob: "1960-11-28",
     pg: "Sunshine Medical",
@@ -85,6 +90,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-005",
     ptName: "James Wilson",
     dob: "1955-07-14",
     pg: "Premier Health",
@@ -105,6 +111,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-006",
     ptName: "Linda Martinez",
     dob: "1948-09-03",
     pg: "Wellness Care",
@@ -125,6 +132,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-007",
     ptName: "William Taylor",
     dob: "1942-12-18",
     pg: "Sunshine Medical",
@@ -145,6 +153,7 @@ const mockData = [
     }
   },
   {
+    id: "pt-008",
     ptName: "Elizabeth Anderson",
     dob: "1957-04-25",
     pg: "Premier Health",
@@ -256,6 +265,9 @@ const backupStyles = {
   warningNumber: {
     color: '#b45309',
     backgroundColor: '#fef3c7'
+  },
+  tr: {
+    cursor: 'pointer'
   }
 };
 
@@ -290,6 +302,14 @@ const StatusIcon = ({ status, value }) => {
 };
 
 const VivIntegratedServicesStatusMatrix = () => {
+  const navigate = useNavigate();
+
+  const handlePatientClick = (patient) => {
+    navigate(`/patient-view/${encodeURIComponent(patient.id)}`, {
+      state: { patientData: patient }
+    });
+  };
+
   return (
     <div className="viv-ism-container" style={backupStyles.container}>
       <div className="viv-ism-table-wrapper" style={backupStyles.tableWrapper}>
@@ -338,7 +358,12 @@ const VivIntegratedServicesStatusMatrix = () => {
           </thead>
           <tbody>
             {mockData.map((row, index) => (
-              <tr key={index}>
+              <tr 
+                key={index} 
+                onClick={() => handlePatientClick(row)}
+                style={{ cursor: 'pointer', ...backupStyles.tr }}
+                className="viv-ism-row"
+              >
                 <td style={backupStyles.td}>{row.ptName}</td>
                 <td style={backupStyles.td}>{row.dob}</td>
                 <td style={backupStyles.td}>{row.pg}</td>

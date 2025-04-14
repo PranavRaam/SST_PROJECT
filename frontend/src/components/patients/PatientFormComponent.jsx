@@ -1700,6 +1700,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 <th>PG</th>
                 <th>HHAH</th>
                 <th>CPO Mins</th>
+                <th>Rendering Provider</th>
                 <th>Remarks</th>
                 <th data-sort-info="Primary sort: always in descending order">New Docs</th>
                 <th data-sort-info="Secondary sort: always in ascending order">New CPO Docs</th>
@@ -1719,6 +1720,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                   <td>{patient.pg}</td>
                   <td>{patient.hhah}</td>
                   <td>{patient.cpoMinsCaptured}</td>
+                  <td>{patient.renderingPractitioner}</td>
                   <td>{patient.patientRemarks}</td>
                   <td>{patient.newDocs}</td>
                   <td>{patient.newCpoDocsCreated}</td>

@@ -164,3 +164,23 @@
       -webkit-overflow-scrolling: touch;
     }
   }
+
+  .viv-ism-row {
+    transition: all 0.2s ease-in-out;
+  }
+
+  .viv-ism-row:hover {
+    background-color: #f3f4f6;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .viv-ism-row:active {
+    transform: translateY(0);
+    background-color: #e5e7eb;
+  }
+
+  .viv-ism-row td:first-child {
+    font-weight: 500;
+    color: #2563eb;
+  }

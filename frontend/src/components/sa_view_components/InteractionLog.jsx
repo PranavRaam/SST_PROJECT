@@ -297,17 +297,16 @@ const InteractionLog = () => {
           <tbody>
             {filteredInteractions.map(interaction => (
               <tr key={interaction.id} className="il_table_row">
-                <td>{interaction.reactiveOutcomeNo}</td>
-                <td className="il_date_cell">
-                  {formatDateTime(interaction.dateTime)}
-                </td>
                 <td>{interaction.user}</td>
                 <td>{interaction.contact}</td>
                 <td>{interaction.designation}</td>
                 <td>{interaction.medium}</td>
                 <td>{interaction.summary}</td>
                 <td>{interaction.action}</td>
-                
+                <td>{interaction.reactiveOutcomeNo}</td>
+                <td className="il_date_cell">
+                  {formatDateTime(interaction.dateTime)}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -304,18 +304,37 @@
 
 .table-container {
   margin-top: 24px;
-  overflow: auto;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   max-height: calc(100vh - 200px);
+  position: relative;
 }
 
 .patient-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
   background-color: white;
+}
+
+.patient-table thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.patient-table tbody {
+  display: block;
+  overflow-y: auto;
+  max-height: calc(100vh - 280px);
+}
+
+.patient-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .patient-table th,
@@ -323,20 +342,45 @@
   padding: 14px 16px;
   text-align: left;
   border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .patient-table th {
   background-color: #f8fafc;
   font-weight: 600;
   color: #4b5563;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border-bottom: 2px solid #e2e8f0;
 }
 
-.patient-table tbody tr {
-  transition: background-color 0.2s;
-}
+/* Column widths */
+.patient-table th:nth-child(1),
+.patient-table td:nth-child(1) { width: 20%; }  /* Patient Name */
+
+.patient-table th:nth-child(2),
+.patient-table td:nth-child(2) { width: 10%; }  /* DOB */
+
+.patient-table th:nth-child(3),
+.patient-table td:nth-child(3) { width: 15%; }  /* PG */
+
+.patient-table th:nth-child(4),
+.patient-table td:nth-child(4) { width: 15%; }  /* HHAH */
+
+.patient-table th:nth-child(5),
+.patient-table td:nth-child(5) { width: 8%; }   /* CPO Mins */
+
+.patient-table th:nth-child(6),
+.patient-table td:nth-child(6) { width: 12%; }  /* Rendering Provider */
+
+.patient-table th:nth-child(7),
+.patient-table td:nth-child(7) { width: 10%; }  /* Remarks */
+
+.patient-table th:nth-child(8),
+.patient-table td:nth-child(8) { width: 5%; }   /* New Docs */
+
+.patient-table th:nth-child(9),
+.patient-table td:nth-child(9) { width: 5%; }   /* New CPO Docs */
 
 .patient-table tbody tr:hover {
   background-color: #f1f5f9;

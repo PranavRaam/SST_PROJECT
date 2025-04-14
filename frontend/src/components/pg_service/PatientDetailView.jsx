@@ -445,7 +445,7 @@ const PatientDetailView = ({ patient, onBack }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   
-  // Create refs
+  // Refs
   const fileInputRef = useRef(null);
   
   // State for editable patient info
@@ -628,12 +628,19 @@ const PatientDetailView = ({ patient, onBack }) => {
   // Sort function for documents
   const sortDocuments = (docs) => {
     return [...docs].sort((a, b) => {
-      const fieldA = a[sortField] || '';
-      const fieldB = b[sortField] || '';
+      let comparison = 0;
       
-      if (fieldA < fieldB) return sortDirection === 'asc' ? -1 : 1;
-      if (fieldA > fieldB) return sortDirection === 'asc' ? 1 : -1;
-      return 0;
+      if (sortField === 'date') {
+        const aDate = new Date(a.signedDate || a.receivedDate || 0);
+        const bDate = new Date(b.signedDate || b.receivedDate || 0);
+        comparison = aDate - bDate;
+      } else if (sortField === 'type') {
+        comparison = (a.type || '').localeCompare(b.type || '');
+      } else if (sortField === 'filename') {
+        comparison = (a.fileName || '').localeCompare(b.fileName || '');
+      }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
     });
   };
   
@@ -1809,61 +1816,6 @@ Total documents: ${documents.length}
     }, 1500);
   }, [showNotification]);
 
-  // Add this function to handle signed document uploads
-  const handleSignedDocumentUpload = (e) => {
-    const files = e.target.files;
-    if (files.length === 0) return;
-    
-    showNotification('info', 'Processing Signed Document', 'Preparing to upload signed documents...');
-    
-    setIsUploading(true);
-    
-    // Process each file
-    setTimeout(() => {
-      try {
-        const newSignedDocs = [];
-        
-        Array.from(files).forEach(file => {
-          const today = new Date().toISOString().split('T')[0];
-          const fileType = file.name.split('.').pop().toLowerCase();
-          let docType = 'General';
-          
-          // Determine document type based on filename
-          if (file.name.toLowerCase().includes('eval')) docType = 'Evaluation';
-          else if (file.name.toLowerCase().includes('order')) docType = 'Physician Order';
-          else if (file.name.toLowerCase().includes('lab')) docType = 'Lab Results';
-          else if (file.name.toLowerCase().includes('progress')) docType = 'Progress Note';
-          
-          // Create new signed document
-          const newDoc = {
-            id: `DOC-${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000)}`,
-            fileName: file.name,
-            type: docType,
-            status: 'Signed',
-            signedDate: today,
-            signedBy: 'Current User',
-            size: `${(file.size / 1024).toFixed(1)} KB`
-          };
-          
-          newSignedDocs.push(newDoc);
-        });
-        
-        // Add to signed docs
-        setSignedDocs(prev => [...prev, ...newSignedDocs]);
-        
-        setIsUploading(false);
-        showNotification('success', 'Upload Complete', `${newSignedDocs.length} signed document(s) uploaded successfully.`);
-      } catch (error) {
-        console.error("Error uploading signed documents:", error);
-        setIsUploading(false);
-        showNotification('error', 'Upload Failed', 'Failed to upload signed documents. Please try again.');
-      }
-    }, 1500);
-    
-    // Reset the file input
-    e.target.value = '';
-  };
-
   // Update calculateCPOMinutes function to call it when needed (like in useEffect)
   useEffect(() => {
     // Call calculateCPOMinutes when component mounts or cpoDocs changes
@@ -2040,6 +1992,51 @@ Total documents: ${documents.length}
   useEffect(() => {
     document.documentElement.style.setProperty('--timeline-zoom', timelineZoomLevel);
   }, [timelineZoomLevel]);
+
+  const [activeDocTab, setActiveDocTab] = useState('new');
+  
+  const handleSortChange = (field) => {
+    if (sortField === field) {
+      // Toggle direction if clicking the same field
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set new field and default to descending
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  // Function to handle signed document uploads
+  const handleSignedDocumentUpload = (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    
+    // Show uploading notification
+    showNotification('info', 'Uploading Signed Documents', 'Your signed documents are being uploaded...');
+    
+    // Process the files
+    Array.from(files).forEach(file => {
+      const newSignedDoc = {
+        id: `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
+        type: 'Signed Document',
+        fileName: file.name,
+        size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+        signedDate: new Date().toISOString().split('T')[0],
+        signedBy: 'Current User',
+        file: file // Store the actual file for potential preview
+      };
+      
+      // Add to signed documents
+      setSignedDocs(prev => [...prev, newSignedDoc]);
+    });
+    
+    // Clear file input
+    if (e.target) {
+      e.target.value = '';
+    }
+    
+    showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully');
+  };
 
   return (
     <div className="patient-detail-view">
@@ -2539,165 +2536,140 @@ Total documents: ${documents.length}
                 </button>
               </div>
                     
-              <div className="episode-timeline">
-                <div className="timeline-zoom-controls">
-                  <button 
-                    className="zoom-button" 
-                    onClick={() => handleTimelineZoom('in')}
-                    title="Zoom in to see more details"
-                  >
-                    <FaSearchPlus /> Zoom In
-                  </button>
-                  <button 
-                    className="zoom-button" 
-                    onClick={() => handleTimelineZoom('out')}
-                    title="Zoom out to see the big picture"
-                  >
-                    <FaSearchMinus /> Zoom Out
-                  </button>
-                  <button 
-                    className="zoom-button" 
-                    onClick={() => handleTimelineZoom('reset')}
-                    title="Reset to default zoom level"
-                  >
-                    <FaRedo /> Reset
-                  </button>
-                </div>
-                
-                {filteredEpisodes.length > 0 ? (
-                  filteredEpisodes.map((episode) => (
-                    <div 
-                      key={episode.id}
-                      className={`timeline-episode ${activeEpisode === episode.id ? 'active' : ''} ${expandedEpisode === episode.id ? 'expanded' : ''}`}
-                      onClick={() => handleEpisodeSelect(episode.id)}
-                    >
-                      <div className="episode-header">
-                        <div className="episode-title">
-                          <h5>Episode {episode.id}</h5>
-                          <span className={`episode-status ${episode.status}`}>{episode.status}</span>
+              <div className="episode-timeline-wrapper">
+                <div className="episode-timeline">
+                  {filteredEpisodes.length > 0 ? (
+                    filteredEpisodes.map((episode) => (
+                      <div 
+                        key={episode.id}
+                        className={`timeline-episode ${activeEpisode === episode.id ? 'active' : ''} ${expandedEpisode === episode.id ? 'expanded' : ''}`}
+                        onClick={() => handleEpisodeSelect(episode.id)}
+                      >
+                        <div className="episode-header">
+                          <div className="episode-title">
+                            <h5>Episode {episode.id}</h5>
+                            <span className={`episode-status ${episode.status}`}>{episode.status}</span>
+                          </div>
+                          <div className="episode-expand-icon">
+                            {expandedEpisode === episode.id ? 
+                              <FaChevronDown className="expand-icon" /> : 
+                              <FaChevronRight className="expand-icon" />
+                            }
+                          </div>
                         </div>
-                        <div className="episode-expand-icon">
-                          {expandedEpisode === episode.id ? 
-                            <FaChevronDown className="expand-icon" /> : 
-                            <FaChevronRight className="expand-icon" />
-                          }
-                        </div>
-                      </div>
-                    
-                      <div className="episode-date">
-                        <div className="episode-marker soc">
-                          <span className="marker-tooltip">
-                            SOC Date: {formatDate(episode.socDate)}
-                          </span>
-                          <FaCircle className="marker-icon" />
-                          <div className="marker-label">SOC</div>
-                        </div>
-                        <div className="episode-line soc-to-from"></div>
-                        <div className="episode-marker start">
-                          <span className="marker-tooltip">
-                            From Date: {formatDate(episode.startDate)}
-                          </span>
-                          <FaCircle className="marker-icon" />
-                          <div className="marker-label">From</div>
-                        </div>
-                        <div className="episode-line"></div>
-                        <div className="episode-marker end">
-                          <span className="marker-tooltip">
-                            End Date: {formatDate(episode.endDate)}
-                          </span>
-                          <FaCircle className="marker-icon" />
-                          <div className="marker-label">End</div>
-                        </div>
-                      </div>
-                    
-                      <div className="episode-details">
-                        <div className="episode-date-label soc">{formatDate(episode.socDate)}</div>
-                        <div className="episode-date-label start">{formatDate(episode.startDate)}</div>
-                        <div className="episode-date-label end">{formatDate(episode.endDate)}</div>
-                      </div>
-                    
-                      {/* Additional episode details visible when expanded */}
-                      {expandedEpisode === episode.id && (
-                        <div className="episode-expanded-info">
-                          <div className="episode-info-grid">
-                            <div className="episode-info-item">
-                              <label>Duration:</label>
-                              <span>{calculateDuration(episode.startDate, episode.endDate)}</span>
+                      
+                        <div className="episode-date">
+                          <div className="episode-marker soc">
+                            <div className="marker-icon">
+                              <FaCircle />
                             </div>
-                            <div className="episode-info-item">
-                              <label>Days Before Episode Start:</label>
-                              <span>{calculateDaysBetween(episode.socDate, episode.startDate)} days</span>
+                            <div className="marker-label">SOC</div>
+                          </div>
+                          <div className="episode-line soc-to-from"></div>
+                          <div className="episode-marker start">
+                            <div className="marker-icon">
+                              <FaCircle />
                             </div>
-                            <div className="episode-info-item">
-                              <label>Primary Diagnosis:</label>
-                              <span>{episode.diagnosis}</span>
+                            <div className="marker-label">From</div>
+                          </div>
+                          <div className="episode-line"></div>
+                          <div className="episode-marker end">
+                            <div className="marker-icon">
+                              <FaCircle />
                             </div>
-                            <div className="episode-info-item">
-                              <label>Provider:</label>
-                              <span>{episode.provider}</span>
-                            </div>
-                            {episode.notes && (
-                              <div className="episode-info-item full-width">
-                                <label>Notes:</label>
-                                <span>{episode.notes}</span>
+                            <div className="marker-label">End</div>
+                          </div>
+                        </div>
+                      
+                        <div className="episode-details">
+                          <div className="episode-date-label soc">{formatDate(episode.socDate)}</div>
+                          <div className="episode-date-label start">{formatDate(episode.startDate)}</div>
+                          <div className="episode-date-label end">{formatDate(episode.endDate)}</div>
+                        </div>
+                      
+                        {/* Additional episode details visible when expanded */}
+                        {expandedEpisode === episode.id && (
+                          <div className="episode-expanded-info">
+                            <div className="episode-info-grid">
+                              <div className="episode-info-item">
+                                <label>Duration:</label>
+                                <span>{calculateDuration(episode.startDate, episode.endDate)}</span>
                               </div>
-                            )}
-                            <div className="episode-info-item">
-                              <label>Documents:</label>
-                              <span>{episode.documents ? episode.documents.length : 0} document(s)</span>
+                              <div className="episode-info-item">
+                                <label>Days Before Episode Start:</label>
+                                <span>{calculateDaysBetween(episode.socDate, episode.startDate)} days</span>
+                              </div>
+                              <div className="episode-info-item">
+                                <label>Primary Diagnosis:</label>
+                                <span>{episode.diagnosis}</span>
+                              </div>
+                              <div className="episode-info-item">
+                                <label>Provider:</label>
+                                <span>{episode.provider}</span>
+                              </div>
+                              {episode.notes && (
+                                <div className="episode-info-item full-width">
+                                  <label>Notes:</label>
+                                  <span>{episode.notes}</span>
+                                </div>
+                              )}
+                              <div className="episode-info-item">
+                                <label>Documents:</label>
+                                <span>{episode.documents ? episode.documents.length : 0} document(s)</span>
+                              </div>
+                            </div>
+                  
+                            <div className="episode-actions">
+                              <button 
+                                className="episode-action-button edit"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleEditEpisode(episode.id);
+                                }}
+                              >
+                                <FaEdit className="action-icon" />
+                                Edit Episode
+                              </button>
+                              <button 
+                                className="episode-action-button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleViewEpisodeDocuments(episode.id);
+                                }}
+                              >
+                                <FaFileMedicalAlt className="action-icon" />
+                                View Documents
+                              </button>
+                              <button 
+                                className="episode-action-button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const type = prompt('Enter document type:', 'Evaluation');
+                                  if (type) {
+                                    handleAddDocumentToEpisode(episode.id, type);
+                                  }
+                                }}
+                              >
+                                <FaPlus className="action-icon" />
+                                Add Document
+                              </button>
                             </div>
                           </div>
-                
-                          <div className="episode-actions">
-                            <button 
-                              className="episode-action-button edit"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleEditEpisode(episode.id);
-                              }}
-                            >
-                              <FaEdit className="action-icon" />
-                              Edit Episode
-                            </button>
-                            <button 
-                              className="episode-action-button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewEpisodeDocuments(episode.id);
-                              }}
-                            >
-                              <FaFileMedicalAlt className="action-icon" />
-                              View Documents
-                            </button>
-                            <button 
-                              className="episode-action-button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                const type = prompt('Enter document type:', 'Evaluation');
-                                if (type) {
-                                  handleAddDocumentToEpisode(episode.id, type);
-                                }
-                              }}
-                            >
-                              <FaPlus className="action-icon" />
-                              Add Document
-                            </button>
-                          </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="no-episodes">
+                      <p>No episodes found for the selected date range.</p>
+                      <button 
+                        className="action-button primary"
+                        onClick={() => setEpisodeFilterDates({ start: '', end: '' })}
+                      >
+                        Reset Filters
+                      </button>
                     </div>
-                  ))
-                ) : (
-                  <div className="no-episodes">
-                    <p>No episodes found for the selected date range.</p>
-                    <button 
-                      className="action-button primary"
-                      onClick={() => setEpisodeFilterDates({ start: '', end: '' })}
-                    >
-                      Reset Filters
-                    </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
             
@@ -2776,9 +2748,9 @@ Total documents: ${documents.length}
                         <option key={index} value={category}>{category}</option>
                       ))}
                     </select>
-                        </div>
+                  </div>
                   <button 
-                    className="action-button secondary small"
+                    className="action-button secondary"
                     onClick={() => {
                       // Show dropdown of document categories
                       const category = prompt('Select document category:', documentCategories.join(', '));
@@ -2790,140 +2762,206 @@ Total documents: ${documents.length}
                     <FaPlus className="action-icon" />
                     Add Document
                   </button>
-                      </div>
-                    </div>
+                </div>
+              </div>
                     
               <div className="hhah-services-timeline">
-                <div className="hhah-documents">
-                  <div className="document-status-container">
-                    <h5>Signed Documents</h5>
-                    {signedDocs.length > 0 ? (
-                      signedDocs.map((doc, index) => (
-                        <div key={index} className="document-status-item signed">
-                          <div className="document-status-icon">
-                            <FaCheckCircle className="status-icon signed" />
-                          </div>
-                          <div className="document-info">
-                            <div className="document-name">
-                              {doc.type || 'Unspecified Document'}
-                              <div className="document-actions">
-                                <button 
-                                  className="document-action-button"
-                                  title="View Document"
-                                  onClick={() => openDocumentViewer(doc)}
-                                >
-                                  <span className="material-icons">visibility</span>
-                                </button>
-                                <button 
-                                  className="document-action-button"
-                                  title="Download Document"
-                                  onClick={() => handleDownloadDocument(doc)}
-                                >
-                                  <span className="material-icons">file_download</span>
-                                </button>
-                              </div>
-                            </div>
-                            <div className="document-date">Signed on: {formatDate(doc.signedDate)}</div>
-                            <div className="document-meta">
-                              <span className="document-id">{doc.id}</span>
-                              <span className="document-size">{doc.size}</span>
-                        </div>
-                          </div>
-                            </div>
-                      ))
-                    ) : (
-                      <div className="no-documents">
-                        <p>No signed documents available.</p>
-                              </div>
-                    )}
+                <div className="document-tabs">
+                  <button className={`document-tab ${activeDocTab === 'new' ? 'active' : ''}`} onClick={() => setActiveDocTab('new')}>
+                    <FaFileAlt className="tab-icon" />
+                    New & Prepared <span className="doc-count">{newPreparedDocs.length}</span>
+                  </button>
+                  <button className={`document-tab ${activeDocTab === 'signed' ? 'active' : ''}`} onClick={() => setActiveDocTab('signed')}>
+                    <FaCheckCircle className="tab-icon" />
+                    Signed Documents <span className="doc-count">{signedDocs.length}</span>
+                  </button>
                 </div>
                 
-                  <div className="document-status-container">
-                    <h5>
-                      New & Prepared Documents
+                <div className="document-listing">
+                  {/* Document toolbar without upload button */}
+                  <div className="document-toolbar">
+                    <div className="sort-controls">
+                      <span className="sort-label">Sort by:</span>
                       <button 
-                        className="action-button primary upload-button"
-                        onClick={() => fileInputRef.current && fileInputRef.current.click()}
-                        style={{ marginLeft: '1rem', padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                        className={`sort-button ${sortField === 'date' ? 'active' : ''}`} 
+                        onClick={() => handleSortChange('date')}
                       >
-                        <span className="material-icons" style={{ marginRight: '0.5rem', fontSize: '1.1rem' }}>upload_file</span>
-                        Upload Documents
+                        Date {sortField === 'date' && (sortDirection === 'asc' ? <FaSortAmountUp /> : <FaSortAmountDown />)}
                       </button>
-                      <input 
-                        type="file" 
-                        ref={fileInputRef}
-                        className="hidden-file-input"
-                        onChange={handleFileInputChange}
-                        multiple
-                      />
-                    </h5>
-                    {newPreparedDocs.length > 0 ? (
-                      newPreparedDocs.map((doc, index) => (
-                        <div key={index} className="document-status-item unsigned">
-                          <div className="document-status-icon">
-                            <FaTimesCircle className="status-icon unsigned" />
-                          </div>
-                          <div className="document-info">
-                            <div className="document-name">
-                              <select 
-                                value={doc.type || ''}
-                                onChange={(e) => handleUpdateDocumentType(doc.id, true, e.target.value)}
-                                className="document-type-select"
-                              >
-                                <option value="">Select Document Type</option>
-                                {documentCategories.map((category, idx) => (
-                                  <option key={idx} value={category}>{category}</option>
-                                ))}
-                              </select>
-                              <div className="document-actions">
-                                <button 
-                                  className="document-action-button"
-                                  title="View Document"
-                                  onClick={() => openDocumentViewer(doc)}
-                                >
-                                  <span className="material-icons">visibility</span>
-                                </button>
-                                <button 
-                                  className="document-action-button"
-                                  title="Download Document"
-                                  onClick={() => handleDownloadDocument(doc)}
-                                >
-                                  <span className="material-icons">file_download</span>
-                                </button>
-                                <button 
-                                  className="document-action-button"
-                                  title="Sign Document"
-                                  onClick={() => handleSignDocument(doc.id)}
-                                >
-                                  <span className="material-icons">edit</span>
-                                </button>
-                                <button 
-                                  className="document-action-button"
-                                  title="Delete Document"
-                                  onClick={() => {
-                                    if (window.confirm('Are you sure you want to delete this document?')) {
-                                      setNewPreparedDocs(prev => prev.filter(d => d.id !== doc.id));
-                                    }
-                                  }}
-                                >
-                                  <span className="material-icons">delete</span>
-                                </button>
-                              </div>
-                            </div>
-                            <div className="document-date">Received on: {formatDate(doc.receivedDate)}</div>
-                            <div className="document-meta">
-                              <span className="document-status">{doc.status}</span>
-                              <span className="document-id">{doc.id}</span>
-                              <span className="document-size">{doc.size}</span>
+                      <button 
+                        className={`sort-button ${sortField === 'type' ? 'active' : ''}`} 
+                        onClick={() => handleSortChange('type')}
+                      >
+                        Type {sortField === 'type' && (sortDirection === 'asc' ? <FaSortAmountUp /> : <FaSortAmountDown />)}
+                      </button>
+                      <button 
+                        className={`sort-button ${sortField === 'filename' ? 'active' : ''}`} 
+                        onClick={() => handleSortChange('filename')}
+                      >
+                        Filename {sortField === 'filename' && (sortDirection === 'asc' ? <FaSortAmountUp /> : <FaSortAmountDown />)}
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {activeDocTab === 'new' && (
+                    <div className="document-list">
+                      {newPreparedDocs.length > 0 ? (
+                        <table className="documents-table">
+                          <thead>
+                            <tr>
+                              <th>Document Type</th>
+                              <th>Document ID</th>
+                              <th>File Name</th>
+                              <th>Date Received</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {newPreparedDocs.map((doc, index) => (
+                              <tr key={index}>
+                                <td>
+                                  <select 
+                                    className="document-type-select"
+                                    value={doc.type || ''}
+                                    onChange={(e) => handleUpdateDocumentType(doc.id, true, e.target.value)}
+                                  >
+                                    <option value="">Select Type</option>
+                                    {documentCategories.map((category, idx) => (
+                                      <option key={idx} value={category}>{category}</option>
+                                    ))}
+                                  </select>
+                                </td>
+                                <td>{doc.id}</td>
+                                <td>
+                                  <div className="file-name-cell">
+                                    <span className="file-icon-wrapper">
+                                      {doc.fileName && doc.fileName.endsWith('.pdf') ? (
+                                        <FaFilePdf className="file-icon pdf" />
+                                      ) : doc.fileName && doc.fileName.endsWith('.docx') ? (
+                                        <FaFileWord className="file-icon word" />
+                                      ) : (
+                                        <FaFile className="file-icon" />
+                                      )}
+                                    </span>
+                                    {doc.fileName || 'Unnamed File'}
+                                  </div>
+                                </td>
+                                <td>{formatDate(doc.receivedDate)}</td>
+                                <td>
+                                  <span className={`status-badge ${doc.status === 'New' ? 'new' : 'prepared'}`}>
+                                    {doc.status === 'New' ? 'New' : 'Prepared'}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div className="action-buttons">
+                                    <button className="doc-action-btn view" title="View" onClick={() => openDocumentViewer(doc)}>
+                                      <FaEye />
+                                    </button>
+                                    <button className="doc-action-btn download" title="Download" onClick={() => handleDownloadDocument(doc)}>
+                                      <FaDownload />
+                                    </button>
+                                    <button className="doc-action-btn edit" title="Edit" onClick={() => handleSignDocument(doc.id)}>
+                                      <FaEdit />
+                                    </button>
+                                    <button 
+                                      className="doc-action-btn delete" 
+                                      title="Delete" 
+                                      onClick={() => {
+                                        if (window.confirm('Are you sure you want to delete this document?')) {
+                                          setNewPreparedDocs(prev => prev.filter(d => d.id !== doc.id));
+                                        }
+                                      }}
+                                    >
+                                      <FaTrash />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        <div className="no-documents">
+                          <FaFileUpload className="no-documents-icon" />
+                          <p>No new or prepared documents available.</p>
+                          <p className="no-documents-hint">Contact administrator to add documents.</p>
                         </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {activeDocTab === 'signed' && (
+                    <div className="document-list">
+                      {signedDocs.length > 0 ? (
+                        <table className="documents-table">
+                          <thead>
+                            <tr>
+                              <th>Document Type</th>
+                              <th>Document ID</th>
+                              <th>File Name</th>
+                              <th>Date Signed</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {signedDocs.map((doc, index) => (
+                              <tr key={index}>
+                                <td>{doc.type || 'Unspecified Document'}</td>
+                                <td>{doc.id}</td>
+                                <td>
+                                  <div className="file-name-cell">
+                                    <span className="file-icon-wrapper">
+                                      {doc.fileName && doc.fileName.endsWith('.pdf') ? (
+                                        <FaFilePdf className="file-icon pdf" />
+                                      ) : doc.fileName && doc.fileName.endsWith('.docx') ? (
+                                        <FaFileWord className="file-icon word" />
+                                      ) : (
+                                        <FaFile className="file-icon" />
+                                      )}
+                                    </span>
+                                    {doc.fileName || 'Signed Document'}
+                                  </div>
+                                </td>
+                                <td>{formatDate(doc.signedDate)}</td>
+                                <td>
+                                  <div className="action-buttons">
+                                    <button className="doc-action-btn view" title="View" onClick={() => openDocumentViewer(doc)}>
+                                      <FaEye />
+                                    </button>
+                                    <button className="doc-action-btn download" title="Download" onClick={() => handleDownloadDocument(doc)}>
+                                      <FaDownload />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        <div className="no-documents">
+                          <FaFileSignature className="no-documents-icon" />
+                          <p>No signed documents available.</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  <div className="documents-summary">
+                    <div className="document-stats">
+                      <div className="stat-item">
+                        <span className="stat-value">{newPreparedDocs.length + signedDocs.length}</span>
+                        <span className="stat-label">Total</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-value">{newPreparedDocs.length}</span>
+                        <span className="stat-label">New & Prepared</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-value">{signedDocs.length}</span>
+                        <span className="stat-label">Signed</span>
                       </div>
                     </div>
-                      ))
-                    ) : (
-                      <div className="no-documents">
-                        <p>No new or prepared documents available.</p>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -3161,8 +3199,8 @@ Total documents: ${documents.length}
                       className="action-button primary upload-button"
                       onClick={() => fileInputRef.current && fileInputRef.current.click()}
                     >
-                      <span className="material-icons" style={{ marginRight: '0.5rem', fontSize: '1.1rem' }}>upload_file</span>
-                      Upload Documents
+                      <FaFileUpload className="button-icon" style={{ marginRight: '0.5rem' }} />
+                      Upload New Documents
                     </button>
                     <input 
                       type="file" 
@@ -3170,6 +3208,7 @@ Total documents: ${documents.length}
                       className="hidden-file-input"
                       onChange={handleFileInputChange}
                       multiple
+                      style={{ display: 'none' }}
                     />
                   </div>
                   {filteredNewPreparedDocs.length === 0 ? (
@@ -3295,23 +3334,24 @@ Total documents: ${documents.length}
                   </div>
                 ) : (
                   <>
-                    <div className="signed-document-actions">
-                      <button 
-                        className="action-button secondary small"
-                        onClick={() => document.getElementById('signed-file-input').click()}
-                      >
-                        <FaFileUpload className="action-icon" />
-                        Upload Signed Document
-                      </button>
-                      <input 
-                        type="file" 
-                        id="signed-file-input"
-                        className="hidden-file-input"
-                        onChange={handleSignedDocumentUpload}
-                        multiple
-                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                      />
-                    </div>
+                  <div className="upload-section">
+                    <button 
+                      className="action-button primary upload-button"
+                      onClick={() => document.getElementById('signed-file-input').click()}
+                    >
+                      <FaFileSignature className="button-icon" style={{ marginRight: '0.5rem' }} />
+                      Upload Signed Documents
+                    </button>
+                    <input 
+                      type="file" 
+                      id="signed-file-input"
+                      className="hidden-file-input"
+                      onChange={handleSignedDocumentUpload}
+                      multiple
+                      style={{ display: 'none' }}
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    />
+                  </div>
                   <table className="document-table">
                     <thead>
                       <tr>
@@ -3390,7 +3430,7 @@ Total documents: ${documents.length}
               <div className="drop-zone-content">
                 <FaUpload className="drop-icon" />
                 <h4 className="drop-title">Drop files here to upload</h4>
-                <p className="drop-description">or click the Upload button above</p>
+                <p className="drop-description">Or use the upload buttons above</p>
               </div>
             </div>
             
