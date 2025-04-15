@@ -1671,10 +1671,22 @@
 }
 
 /* Claims Table */
+.claims-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-overflow-scrolling: touch;
+}
+
 .claims-table {
   width: 100%;
-  border-collapse: collapse;
+  min-width: 1200px; /* Ensure table has enough width for all columns */
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
 .claims-table th {
@@ -1685,16 +1697,20 @@
   font-weight: 600;
   border-bottom: 2px solid #e5e7eb;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .claims-table td {
-  padding: 0.75rem 1rem;
+  padding: 12px 16px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
   border-bottom: 1px solid #e5e7eb;
-  color: #1e293b;
 }
 
 .claims-table tr:hover {
-  background-color: #f8fafc;
+  background-color: #f9fafb;
 }
 
 .sort-indicator {
@@ -2080,4 +2096,65 @@
 
 .filter-button svg {
   flex-shrink: 0;
+}
+
+/* Claims Table Styles */
+.claims-table .col-remarks {
+  max-width: 200px;
+}
+
+.claims-table .col-sno {
+  max-width: 80px;
+}
+
+.claims-table .col-full-name {
+  max-width: 200px;
+}
+
+.claims-table .col-first-name {
+  max-width: 150px;
+}
+
+.claims-table .col-middle-name {
+  max-width: 100px;
+}
+
+.claims-table .col-last-name {
+  max-width: 150px;
+}
+
+.claims-table .col-dob {
+  max-width: 100px;
+}
+
+.claims-table .col-hha {
+  max-width: 200px;
+}
+
+.claims-table .col-insurance {
+  max-width: 120px;
+}
+
+.claims-table .col-diagnosis {
+  max-width: 120px;
+}
+
+.claims-table .col-date {
+  max-width: 100px;
+}
+
+.claims-table .col-minutes {
+  max-width: 120px;
+}
+
+.claims-table .col-billing {
+  max-width: 100px;
+}
+
+.claims-table .col-small {
+  max-width: 80px;
+}
+
+.claims-table .col-provider {
+  max-width: 200px;
 } 

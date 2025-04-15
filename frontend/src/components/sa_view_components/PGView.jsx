@@ -12,11 +12,13 @@ import ReactiveOutcomes from './reactiveoc';
 import InteractionLog from './InteractionLog';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { usePatientContext } from '../../context/PatientContext';
 
 const PGView = () => {
   const navigate = useNavigate();
   const { pgName } = useParams();
   const location = useLocation();
+  const { getPatientsByPG } = usePatientContext();
   const [activeSection, setActiveSection] = useState('overview');
   const [selectedDateRange, setSelectedDateRange] = useState({ start: '', end: '' });
   const [selectedPeriod, setSelectedPeriod] = useState('all');
@@ -683,21 +685,56 @@ const PGView = () => {
   ];
 
   const getFilteredClaims = () => {
+    // First, get only patients from the selected PG
+    const pgPatients = getPatientsByPG(pgName);
+    
+    // Convert patient data to claims format
+    const pgClaims = pgPatients.map(patient => ({
+      id: patient.id,
+      remarks: patient.patientRemarks,
+      sNo: patient.patientId,
+      fullName: `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName || ''}`,
+      firstName: patient.patientFirstName,
+      middleName: patient.patientMiddleName,
+      lastName: patient.patientLastName,
+      dob: patient.patientDOB,
+      hhaName: patient.hhah,
+      insuranceType: patient.patientInsurance,
+      primaryDiagnosisCode: patient.primaryDiagnosisCodes[0],
+      soc: patient.patientSOC,
+      episodeFrom: patient.patientEpisodeFrom,
+      episodeTo: patient.patientEpisodeTo,
+      minutesCaptured: patient.cpoMinsCaptured,
+      billingCode: patient.billingCode,
+      line1DosFrom: patient.patientEpisodeFrom,
+      line1DosTo: patient.patientEpisodeTo,
+      line1Charges: patient.charges,
+      line1Pos: patient.pos,
+      line1Units: patient.units,
+      providersName: patient.physicianName,
+      docType: patient.certStatus === 'Document Signed' ? 'CERT' : 
+               patient.recertStatus === 'Document Signed' ? 'RECERT' : 
+               patient.cpoMinsCaptured >= 30 ? 'CPO' : ''
+    }));
+
     // If showCertClaimsOnly is true, return only validated CERT claims
     if (showCertClaimsOnly) {
-      return certValidatedClaims;
+      return pgClaims.filter(claim => claim.docType === 'CERT' || claim.docType === 'RECERT');
     }
     
     // If showCpoClaimsOnly is true, return only validated CPO claims
     if (showCpoClaimsOnly) {
-      return cpoValidatedClaims;
+      return pgClaims.filter(claim => claim.docType === 'CPO');
     }
     
-    // If there are no filtered claims yet, use the dummy claims
-    if (filteredClaims.length === 0) {
-      return dummyClaims;
+    // If there are filtered claims, use those
+    if (filteredClaims.length > 0) {
+      return filteredClaims.filter(claim => 
+        pgClaims.some(pgClaim => pgClaim.id === claim.id)
+      );
     }
-    return filteredClaims;
+
+    return pgClaims;
   };
 
   // Validate CERT/RECERT claims based on business rules
@@ -1407,86 +1444,77 @@ const PGView = () => {
       </div>
 
       <div className="table-container" style={{ maxWidth: '100%', overflowX: 'auto', position: 'relative' }}>
-        <table className="claims-table" style={{ tableLayout: 'fixed', minWidth: '1500px' }}>
+        <table className="claims-table">
           <thead>
             <tr>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('remarks')}>
-                Remarks {sortConfig.key === 'remarks' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('remarks')}>
+                Remarks {sortConfig.key === 'remarks' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '80px' }} onClick={() => handleSortClick('sNo')}>
-                S. No. {sortConfig.key === 'sNo' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('sNo')}>
+                S. No. {sortConfig.key === 'sNo' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '200px' }} onClick={() => handleSortClick('fullName')}>
-                FULL Name {sortConfig.key === 'fullName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('fullName')}>
+                FULL Name {sortConfig.key === 'fullName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('firstName')}>
-                First Name {sortConfig.key === 'firstName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('firstName')}>
+                First Name {sortConfig.key === 'firstName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('middleName')}>
-                Middle Name {sortConfig.key === 'middleName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('middleName')}>
+                Middle Name {sortConfig.key === 'middleName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('lastName')}>
-                Last Name {sortConfig.key === 'lastName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('lastName')}>
+                Last Name {sortConfig.key === 'lastName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('dob')}>
-                DOB {sortConfig.key === 'dob' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('dob')}>
+                DOB {sortConfig.key === 'dob' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '120px' }} onClick={() => handleSortClick('hhaName')}>
-                HHA NAME {sortConfig.key === 'hhaName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('hhaName')}>
+                HHA NAME {sortConfig.key === 'hhaName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('insuranceType')}>
-                Insurance {sortConfig.key === 'insuranceType' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('insuranceType')}>
+                Insurance {sortConfig.key === 'insuranceType' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('primaryDiagnosisCode')}>
-                Primary DX {sortConfig.key === 'primaryDiagnosisCode' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('primaryDiagnosisCode')}>
+                Primary Diagnosis {sortConfig.key === 'primaryDiagnosisCode' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('soc')}>
-                SOC {sortConfig.key === 'soc' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('soc')}>
+                SOC {sortConfig.key === 'soc' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('episodeFrom')}>
-                Episode From {sortConfig.key === 'episodeFrom' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('episodeFrom')}>
+                Episode From {sortConfig.key === 'episodeFrom' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('episodeTo')}>
-                Episode To {sortConfig.key === 'episodeTo' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('episodeTo')}>
+                Episode To {sortConfig.key === 'episodeTo' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('minutesCaptured')}>
-                Minutes {sortConfig.key === 'minutesCaptured' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('minutesCaptured')}>
+                Minutes {sortConfig.key === 'minutesCaptured' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('billingCode')}>
-                Billing Code {sortConfig.key === 'billingCode' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('billingCode')}>
+                Billing Code {sortConfig.key === 'billingCode' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('line1DosFrom')}>
-                DOS From {sortConfig.key === 'line1DosFrom' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('line1DosFrom')}>
+                DOS From {sortConfig.key === 'line1DosFrom' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('line1DosTo')}>
-                DOS To {sortConfig.key === 'line1DosTo' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('line1DosTo')}>
+                DOS To {sortConfig.key === 'line1DosTo' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '100px' }} onClick={() => handleSortClick('line1Charges')}>
-                Charges {sortConfig.key === 'line1Charges' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('line1Charges')}>
+                Charges {sortConfig.key === 'line1Charges' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '80px' }} onClick={() => handleSortClick('line1Pos')}>
-                POS {sortConfig.key === 'line1Pos' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('line1Pos')}>
+                POS {sortConfig.key === 'line1Pos' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '80px' }} onClick={() => handleSortClick('line1Units')}>
-                Units {sortConfig.key === 'line1Units' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('line1Units')}>
+                Units {sortConfig.key === 'line1Units' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
-              <th style={{ width: '150px' }} onClick={() => handleSortClick('providersName')}>
-                Provider {sortConfig.key === 'providersName' && <span className="sort-indicator">{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
+              <th onClick={() => handleSortClick('providersName')}>
+                Provider {sortConfig.key === 'providersName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
               </th>
             </tr>
           </thead>
           <tbody>
             {(getFilteredClaims()).map(claim => (
-              <tr 
-                key={`claim-${claim.id}`}
-                style={{
-                  backgroundColor: claim.docType === 'CERT' || claim.docType === 'RECERT' 
-                    ? '#c6f6d5' 
-                    : claim.docType === 'CPO' 
-                      ? '#e9d8fd' 
-                      : 'inherit'
-                }}
-              >
+              <tr key={`claim-${claim.id}`}>
                 <td>{claim.remarks}</td>
                 <td>{claim.sNo}</td>
                 <td>{claim.fullName}</td>
