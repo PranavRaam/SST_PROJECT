@@ -7131,3 +7131,46 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-15 22:13:59,589 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
 2025-04-15 22:13:59,590 - __main__ - INFO - Request completed in 0.00 seconds
 2025-04-15 22:13:59,592 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:13:59] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744735438980&_show_states=true&_show_counties=true&_show_msas=true&_t=1744735439249 HTTP/1.1" 200 -
+2025-04-15 22:45:40,433 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:45:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-15 22:47:44,139 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:47:44] "GET /api/health HTTP/1.1" 200 -
+2025-04-15 22:47:44,386 - __main__ - INFO - Map request for area: Amarillo
+2025-04-15 22:47:44,387 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744737464141')])
+2025-04-15 22:47:44,388 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-15 22:47:44,389 - statistical_area_zoom - INFO - Generating map for statistical area: Amarillo with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-15 22:47:44,390 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:47:44,391 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html (age: 2.0 hours)
+2025-04-15 22:47:44,392 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-15 22:47:44,394 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:47:44,399 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-15 22:47:44,405 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:47:44] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744737464141 HTTP/1.1" 200 -
+2025-04-15 22:47:44,762 - __main__ - INFO - Map request for area: Amarillo
+2025-04-15 22:47:44,764 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744737464141'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744737464425')])
+2025-04-15 22:47:44,765 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-15 22:47:44,766 - statistical_area_zoom - INFO - Generating map for statistical area: Amarillo with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-15 22:47:44,767 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:47:44,768 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html (age: 2.0 hours)
+2025-04-15 22:47:44,769 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-15 22:47:44,770 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:47:44,771 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-15 22:47:44,773 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:47:44] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744737464141&_show_states=true&_show_counties=true&_show_msas=true&_t=1744737464425 HTTP/1.1" 200 -
+2025-04-15 22:48:24,909 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:48:24] "GET /api/health HTTP/1.1" 200 -
+2025-04-15 22:48:25,234 - __main__ - INFO - Map request for area: Amarillo
+2025-04-15 22:48:25,235 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744737504914')])
+2025-04-15 22:48:25,236 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-15 22:48:25,238 - statistical_area_zoom - INFO - Generating map for statistical area: Amarillo with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-15 22:48:25,238 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:48:25,240 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html (age: 2.0 hours)
+2025-04-15 22:48:25,242 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-15 22:48:25,243 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:48:25,244 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-15 22:48:25,246 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:48:25] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744737504914 HTTP/1.1" 200 -
+2025-04-15 22:48:25,269 - __main__ - INFO - Map request for area: Amarillo
+2025-04-15 22:48:25,271 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744737504914'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744737505252')])
+2025-04-15 22:48:25,271 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-15 22:48:25,272 - statistical_area_zoom - INFO - Generating map for statistical area: Amarillo with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-15 22:48:25,273 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:48:25,274 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html (age: 2.0 hours)
+2025-04-15 22:48:25,274 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-15 22:48:25,275 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
+2025-04-15 22:48:25,275 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-15 22:48:25,277 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 22:48:25] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744737504914&_show_states=true&_show_counties=true&_show_msas=true&_t=1744737505252 HTTP/1.1" 200 -

@@ -1419,7 +1419,7 @@ const PGView = () => {
             <h3 style={{ margin: 0 }}>
               {filteredClaims.length > 0 
                 ? `Filtered Claims: ${filteredClaims.length}` 
-                : `Total Claims: ${dummyClaims.length}`}
+                : `Total Claims: ${getFilteredClaims().length}`}
             </h3>
             <div className="export-buttons" style={{ display: 'flex', gap: '10px' }}>
               <button className="download-button" onClick={() => handleDownloadClaims('csv')}>
