@@ -58,6 +58,11 @@ const PatientFormComponent = ({ onPatientClick }) => {
   const [newPrimaryCode, setNewPrimaryCode] = useState('');
   const [newSecondaryCode, setNewSecondaryCode] = useState('');
   const [filterType, setFilterType] = useState('cert');
+  const [sortConfig, setSortConfig] = useState({
+    newDocs: 'desc',
+    newCpoDocs: 'asc'
+  });
+  const [isReversed, setIsReversed] = useState(false);
 
   // Predefined PG list
   const predefinedPGs = [
@@ -453,7 +458,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
     );
   }, [patients, searchQuery]);
 
-  // Sort patients - New Docs in descending order and New CPO Docs in ascending order
+  // Sort patients based on current sort configuration
   const sortedPatients = useMemo(() => {
     // First normalize the data to ensure consistent types
     const normalizedData = filteredPatientsBySearch.map(patient => ({
@@ -462,21 +467,29 @@ const PatientFormComponent = ({ onPatientClick }) => {
       newCpoDocsCreated: parseInt(patient.newCpoDocsCreated, 10) || 0
     }));
     
-    return [...normalizedData].sort((a, b) => {
+    // Sort the array
+    const sorted = [...normalizedData].sort((a, b) => {
       // Primary sort: New Docs (descending)
       if (a.newDocs !== b.newDocs) {
-        return b.newDocs - a.newDocs; // Descending order
+        return b.newDocs - a.newDocs;
       }
       
       // Secondary sort: New CPO Docs (ascending)
       if (a.newCpoDocsCreated !== b.newCpoDocsCreated) {
-        return a.newCpoDocsCreated - b.newCpoDocsCreated; // Ascending order
+        return a.newCpoDocsCreated - b.newCpoDocsCreated;
       }
       
       // Tertiary sort: Patient ID (ascending) for consistent ordering
       return a.patientId.localeCompare(b.patientId);
     });
-  }, [filteredPatientsBySearch]);
+
+    // Reverse the entire array if isReversed is true
+    return isReversed ? [...sorted].reverse() : sorted;
+  }, [filteredPatientsBySearch, isReversed]);
+
+  const handleSort = () => {
+    setIsReversed(prev => !prev);
+  };
 
   return (
     <div className="patient-form-container">
@@ -1041,8 +1054,12 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 <th>CPO Mins</th>
                 <th>Rendering Provider</th>
                 <th>Remarks</th>
-                <th data-sort-info="Primary sort: always in descending order">New Docs</th>
-                <th data-sort-info="Secondary sort: always in ascending order">New CPO Docs</th>
+                <th onClick={handleSort} className="sortable-header">
+                  New Docs {isReversed ? '↑' : '↓'}
+                </th>
+                <th onClick={handleSort} className="sortable-header">
+                  New CPO Docs {isReversed ? '↑' : '↓'}
+                </th>
                 <th>Actions</th>
               </tr>
             </thead>

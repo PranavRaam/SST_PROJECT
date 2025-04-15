@@ -129,48 +129,48 @@
 
 /* Adjust column widths */
 .il_interaction_table th:nth-child(1), 
-.il_interaction_table td:nth-child(1) { /* User */
-  width: 12%;
+.il_interaction_table td:nth-child(1) { /* Reactive Outcome No */
+  width: 10%;
 }
 
 .il_interaction_table th:nth-child(2), 
-.il_interaction_table td:nth-child(2) { /* Contact */
-  width: 9%;
+.il_interaction_table td:nth-child(2) { /* Date and Time */
+  width: 14%;
 }
 
 .il_interaction_table th:nth-child(3), 
-.il_interaction_table td:nth-child(3) { /* Designation */
-  width: 10%;
+.il_interaction_table td:nth-child(3) { /* User */
+  width: 12%;
 }
 
 .il_interaction_table th:nth-child(4), 
-.il_interaction_table td:nth-child(4) { /* Medium */
-  width: 7%;
+.il_interaction_table td:nth-child(4) { /* Contact */
+  width: 9%;
 }
 
 .il_interaction_table th:nth-child(5), 
-.il_interaction_table td:nth-child(5) { /* Summary */
-  width: 14%;
-}
-
-.il_interaction_table th:nth-child(6), 
-.il_interaction_table td:nth-child(6) { /* Action */
-  width: 12%;
-}
-
-.il_interaction_table th:nth-child(7), 
-.il_interaction_table td:nth-child(7) { /* Action Taken */
-  width: 12%;
-}
-
-.il_interaction_table th:nth-child(8), 
-.il_interaction_table td:nth-child(8) { /* Reactive Outcome No */
+.il_interaction_table td:nth-child(5) { /* Designation */
   width: 10%;
 }
 
-.il_interaction_table th:nth-child(9), 
-.il_interaction_table td:nth-child(9) { /* Date and Time */
+.il_interaction_table th:nth-child(6), 
+.il_interaction_table td:nth-child(6) { /* Medium */
+  width: 7%;
+}
+
+.il_interaction_table th:nth-child(7), 
+.il_interaction_table td:nth-child(7) { /* Summary */
   width: 14%;
+}
+
+.il_interaction_table th:nth-child(8), 
+.il_interaction_table td:nth-child(8) { /* Action */
+  width: 12%;
+}
+
+.il_interaction_table th:nth-child(9), 
+.il_interaction_table td:nth-child(9) { /* Action Taken */
+  width: 12%;
 }
 
 .il_interaction_table th {

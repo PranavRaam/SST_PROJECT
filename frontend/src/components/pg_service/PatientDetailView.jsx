@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import './PatientDetailView.css';
 import { 
   FaUser, 
@@ -440,7 +442,10 @@ const PatientDetailView = ({ patient, onBack }) => {
   const [selectedTimeline, setSelectedTimeline] = useState(null);
   const [isDropActive, setIsDropActive] = useState(false);
   const [fileTypes, setFileTypes] = useState([]);
-  const [dateRange, setDateRange] = useState({ from: '', to: '' });
+  const [dateRange, setDateRange] = useState({
+    startDate: null,
+    endDate: null
+  });
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -607,10 +612,10 @@ const PatientDetailView = ({ patient, onBack }) => {
       
       // Apply date filtering if date range is set
       let matchesDate = true;
-      if (dateRange.from && dateRange.to && doc.receivedDate) {
+      if (dateRange.startDate && dateRange.endDate && doc.receivedDate) {
         const docDate = new Date(doc.receivedDate);
-        const fromDate = new Date(dateRange.from);
-        const toDate = new Date(dateRange.to);
+        const fromDate = new Date(dateRange.startDate);
+        const toDate = new Date(dateRange.endDate);
         matchesDate = docDate >= fromDate && docDate <= toDate;
       }
       
@@ -1039,7 +1044,7 @@ const PatientDetailView = ({ patient, onBack }) => {
   const resetFilters = () => {
     setSearchTerm('');
     setStatusFilter('all');
-    setDateRange({ from: '', to: '' });
+    setDateRange({ startDate: null, endDate: null });
     setFileTypes([]);
     setSortField('receivedDate');
     setSortDirection('desc');
@@ -2049,6 +2054,22 @@ Total documents: ${documents.length}
     showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully');
   };
 
+  const handleDateChange = (date, field) => {
+    setDateRange(prev => ({
+      ...prev,
+      [field]: date
+    }));
+    
+    // Update your existing filter state/logic here
+    const formattedDate = date ? date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    }).replace(/\//g, '-') : '';
+    
+    handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', formattedDate);
+  };
+
   return (
     <div className="patient-detail-view">
       <div className="detail-header">
@@ -2437,13 +2458,6 @@ Total documents: ${documents.length}
                   ) : (
                     <div className="cpo-minutes-display">
                       <span>{patientInfo.cpoMinsCaptured} minutes</span>
-                      <div className="cpo-progress-bar">
-                        <div 
-                          className="cpo-progress-fill" 
-                          style={{width: `${calculateCPOPercentage(patientInfo.cpoMinsCaptured, 300)}%`}}
-                        ></div>
-                      </div>
-                      <span className="cpo-target">Target: 300 min</span>
                     </div>
                   )}
                 </div>
@@ -2742,16 +2756,16 @@ Total documents: ${documents.length}
                           </div>
             
             {/* HHAH Services Timeline Section with document management */}
-            <div className="timeline-section">
-              <div className="section-header">
-                <h4 className="timeline-section-title">
-                  <FaFileAlt className="section-icon" />
+            <div className="timeline-sectionn">
+              <div className="section-headerr">
+                <h4 className="timeline-section-titlee">
+                  <FaFileAlt className="section-iconn" />
                   HHAH Services
                 </h4>
-                <div className="document-actions">
-                  <div className="document-filter">
+                <div className="document-actionss">
+                  <div className="document-filterr">
                     <select 
-                      className="document-type-filter"
+                      className="document-type-filterr"
                       onChange={(e) => handleFilterDocumentsByType(e.target.value)}
                     >
                       <option value="all">All Document Types</option>
@@ -2761,7 +2775,7 @@ Total documents: ${documents.length}
                     </select>
                   </div>
                   <button 
-                    className="action-button secondary"
+                    className="action-buttonn secondaryy"
                     onClick={() => {
                       // Show dropdown of document categories
                       const category = prompt('Select document category:', documentCategories.join(', '));
@@ -2770,29 +2784,29 @@ Total documents: ${documents.length}
                       }
                     }}
                   >
-                    <FaPlus className="action-icon" />
+                    <FaPlus className="action-iconn" />
                     Add Document
                   </button>
                 </div>
               </div>
                     
-              <div className="hhah-services-timeline">
-                <div className="document-tabs">
-                  <button className={`document-tab ${activeDocTab === 'new' ? 'active' : ''}`} onClick={() => setActiveDocTab('new')}>
-                    <FaFileAlt className="tab-icon" />
-                    New & Prepared <span className="doc-count">{newPreparedDocs.length}</span>
+              <div className="hhah-services-timelinee">
+                <div className="document-tabss">
+                  <button className={`document-tabb ${activeDocTab === 'new' ? 'activee' : ''}`} onClick={() => setActiveDocTab('new')}>
+                    <FaFileAlt className="tab-iconn" />
+                    New & Prepared <span className="doc-countt">{newPreparedDocs.length}</span>
                   </button>
-                  <button className={`document-tab ${activeDocTab === 'signed' ? 'active' : ''}`} onClick={() => setActiveDocTab('signed')}>
-                    <FaCheckCircle className="tab-icon" />
-                    Signed Documents <span className="doc-count">{signedDocs.length}</span>
+                  <button className={`document-tabb ${activeDocTab === 'signed' ? 'activee' : ''}`} onClick={() => setActiveDocTab('signed')}>
+                    <FaCheckCircle className="tab-iconn" />
+                    Signed Documents <span className="doc-countt">{signedDocs.length}</span>
                   </button>
                 </div>
                 
-                <div className="document-listing">
+                <div className="document-listingg">
                   {/* Document toolbar without upload button */}
-                  <div className="document-toolbar">
-                    <div className="sort-controls">
-                      <span className="sort-label">Sort by:</span>
+                  <div className="document-toolbarr">
+                    <div className="sort-controlss">
+                      <span className="sort-labell">Sort by:</span>
                       <button 
                         className={`sort-button ${sortField === 'date' ? 'active' : ''}`} 
                         onClick={() => handleSortChange('date')}
@@ -2993,8 +3007,7 @@ Total documents: ${documents.length}
                   {documentCounts.total} Documents
                 </span>
               </h3>
-              
-              <div className="document-actions">
+              <div className="document-actions" style={{ gap: '1rem', position: 'relative', alignItems: 'flex-start' }}>
                 <div className="search-box">
                   <FaSearch className="search-icon" />
                   <input 
@@ -3005,202 +3018,90 @@ Total documents: ${documents.length}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                
+                <div style={{ position: 'relative', display: 'inline-block' }}>
+                  <button 
+                    className="action-button filter"
+                    onClick={() => setShowFilters(!showFilters)}
+                  >
+                    Filters {fileTypes.length > 0 || dateRange.startDate ? `(${fileTypes.length + (dateRange.startDate ? 1 : 0)})` : ''}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="pdv-doc-tabs-unique">
+              <div className="pdv-doc-tabs-row-unique">
                 <button 
-                  className="action-button filter"
-                  onClick={() => setShowFilters(!showFilters)}
+                  className={`pdv-doc-tab-btn-unique${activeDocumentTab === 'newPrepared' ? ' active' : ''}`}
+                  onClick={() => setActiveDocumentTab('newPrepared')}
                 >
-                  <span className="icon-wrapper">
-                    <FaFilter className="action-icon" />
-                  </span>
-                  Filters {fileTypes.length > 0 || dateRange.from ? `(${fileTypes.length + (dateRange.from ? 1 : 0)})` : ''}
+                  <FaFileAlt className="tab-icon" />
+                  <span>New & Prepared</span>
+                  <span className="pdv-doc-tab-count-unique">{documentCounts.new + documentCounts.prepared}</span>
+                </button>
+                <button 
+                  className={`pdv-doc-tab-btn-unique${activeDocumentTab === 'signed' ? ' active' : ''}`}
+                  onClick={() => setActiveDocumentTab('signed')}
+                >
+                  <FaFileSignature className="tab-icon" />
+                  <span>Signed Documents</span>
+                  <span className="pdv-doc-tab-count-unique">{documentCounts.signed}</span>
                 </button>
               </div>
             </div>
             
             {showFilters && (
-              <div className="document-filters">
-                <div className="filter-section">
-                  <h4 className="filter-heading">Document Status</h4>
-                  <div className="filter-options">
-                    <label className="filter-option">
-                      <input 
-                        type="radio" 
-                        name="status-filter" 
-                        value="all" 
-                        checked={statusFilter === 'all'}
-                        onChange={() => setStatusFilter('all')}
-                      />
-                      <span className="filter-text">All</span>
-                    </label>
-                    <label className="filter-option">
-                      <input 
-                        type="radio" 
-                        name="status-filter" 
-                        value="new" 
-                        checked={statusFilter === 'new'}
-                        onChange={() => setStatusFilter('new')}
-                      />
-                      <span className="filter-text">New</span>
-                    </label>
-                    <label className="filter-option">
-                      <input 
-                        type="radio" 
-                        name="status-filter" 
-                        value="prepared" 
-                        checked={statusFilter === 'prepared'}
-                        onChange={() => setStatusFilter('prepared')}
-                      />
-                      <span className="filter-text">Prepared</span>
-                    </label>
+              <div className="pdv-doc-filters-unique filter-section">
+                <div className="pdv-doc-filter-group-unique">
+                  <label className="pdv-doc-filter-label-unique">Document Status</label>
+                  <div>
+                    <label><input type="radio" name="status" checked={statusFilter === 'all'} onChange={() => setStatusFilter('all')} /> All</label>
+                    <label><input type="radio" name="status" checked={statusFilter === 'new'} onChange={() => setStatusFilter('new')} /> New</label>
+                    <label><input type="radio" name="status" checked={statusFilter === 'prepared'} onChange={() => setStatusFilter('prepared')} /> Prepared</label>
                   </div>
                 </div>
-                
-                <div className="filter-section">
-                  <h4 className="filter-heading">File Type</h4>
-                  <div className="filter-options">
-                    <label className="filter-option">
-                      <input 
-                        type="checkbox" 
-                        checked={fileTypes.includes('pdf')}
-                        onChange={() => handleFileTypeFilter('pdf')}
-                      />
-                      <FaFilePdf className="filter-icon pdf" />
-                      <span className="filter-text">PDF</span>
-                    </label>
-                    <label className="filter-option">
-                      <input 
-                        type="checkbox" 
-                        checked={fileTypes.includes('doc') || fileTypes.includes('docx')}
-                        onChange={() => {
-                          handleFileTypeFilter('doc');
-                          handleFileTypeFilter('docx');
-                        }}
-                      />
-                      <FaFileWord className="filter-icon word" />
-                      <span className="filter-text">Word</span>
-                    </label>
-                    <label className="filter-option">
-                      <input 
-                        type="checkbox" 
-                        checked={fileTypes.includes('xls') || fileTypes.includes('xlsx')}
-                        onChange={() => {
-                          handleFileTypeFilter('xls');
-                          handleFileTypeFilter('xlsx');
-                        }}
-                      />
-                      <FaFileExcel className="filter-icon excel" />
-                      <span className="filter-text">Excel</span>
-                    </label>
-                    <label className="filter-option">
-                      <input 
-                        type="checkbox" 
-                        checked={
-                          fileTypes.includes('jpg') || 
-                          fileTypes.includes('jpeg') || 
-                          fileTypes.includes('png') || 
-                          fileTypes.includes('gif')
-                        }
-                        onChange={() => {
-                          handleFileTypeFilter('jpg');
-                          handleFileTypeFilter('jpeg');
-                          handleFileTypeFilter('png');
-                          handleFileTypeFilter('gif');
-                        }}
-                      />
-                      <FaFileImage className="filter-icon image" />
-                      <span className="filter-text">Images</span>
-                    </label>
+                <div className="pdv-doc-filter-group-unique">
+                  <label className="pdv-doc-filter-label-unique">File Type</label>
+                  <div>
+                    <label><input type="checkbox" checked={fileTypes.includes('pdf')} onChange={() => handleFileTypeFilter('pdf')} /> PDF</label>
+                    <label><input type="checkbox" checked={fileTypes.includes('word')} onChange={() => handleFileTypeFilter('word')} /> Word</label>
+                    <label><input type="checkbox" checked={fileTypes.includes('excel')} onChange={() => handleFileTypeFilter('excel')} /> Excel</label>
+                    <label><input type="checkbox" checked={fileTypes.includes('image')} onChange={() => handleFileTypeFilter('image')} /> Images</label>
                   </div>
                 </div>
-                
-                <div className="filter-section">
-                  <h4 className="filter-heading">Date Range</h4>
-                  <div className="date-range">
-                    <div className="date-input-group">
-                      <label className="date-label">From:</label>
-                      <input 
-                        type="date" 
-                        className="date-input"
-                        value={dateRange.from}
-                        onChange={(e) => setDateRange({...dateRange, from: e.target.value})}
-                      />
-                    </div>
-                    <div className="date-input-group">
-                      <label className="date-label">To:</label>
-                      <input 
-                        type="date" 
-                        className="date-input"
-                        value={dateRange.to}
-                        onChange={(e) => setDateRange({...dateRange, to: e.target.value})}
-                      />
-                    </div>
+                <div className="pdv-doc-filter-group-unique">
+                  <span className="pdv-doc-filter-label-unique">Date Range</span>
+                  <div>
+                    <DatePicker
+                      selected={dateRange.startDate}
+                      onChange={(date) => handleDateChange(date, 'startDate')}
+                      dateFormat="MM-dd-yyyy"
+                      placeholderText="mm-dd-yyyy"
+                      className="pdv-doc-date-input-unique"
+                      isClearable
+                      autoComplete="off"
+                    />
+                    <span>to</span>
+                    <DatePicker
+                      selected={dateRange.endDate}
+                      onChange={(date) => handleDateChange(date, 'endDate')}
+                      dateFormat="MM-dd-yyyy"
+                      placeholderText="mm-dd-yyyy"
+                      className="pdv-doc-date-input-unique"
+                      isClearable
+                      autoComplete="off"
+                    />
                   </div>
                 </div>
-                
-                <div className="filter-actions">
-                  <button 
-                    className="filter-button reset"
-                    onClick={resetFilters}
-                  >
-                    <FaTimes className="button-icon" />
-                    Reset Filters
+                <div className="pdv-doc-filter-group-unique" style={{ flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
+                  <button className="pdv-doc-filter-btn-unique pdv-doc-filter-reset-unique" onClick={resetFilters}>
+                    <FaTimes style={{ marginRight: 4 }} /> Reset 
                   </button>
-                  <button 
-                    className="filter-button apply"
-                    onClick={() => setShowFilters(false)}
-                  >
-                    <FaCheck className="button-icon" />
-                    Apply Filters
+                  <button className="pdv-doc-filter-btn-unique" onClick={() => setShowFilters(false)}>
+                    <FaCheck style={{ marginRight: 4 }} /> Apply
                   </button>
                 </div>
               </div>
             )}
-
-            <div className="document-tabs-container">
-              <div className="document-tabs">
-                <button 
-                  className={`document-tab ${activeDocumentTab === 'newPrepared' ? 'active' : ''}`}
-                  onClick={() => setActiveDocumentTab('newPrepared')}
-                >
-                  <FaFileAlt className="tab-icon" />
-                  <span className="tab-label">New & Prepared</span>
-                  <span className="tab-count">{documentCounts.new + documentCounts.prepared}</span>
-                </button>
-                <button 
-                  className={`document-tab ${activeDocumentTab === 'signed' ? 'active' : ''}`}
-                  onClick={() => setActiveDocumentTab('signed')}
-                >
-                  <FaFileSignature className="tab-icon" />
-                  <span className="tab-label">Signed Documents</span>
-                  <span className="tab-count">{documentCounts.signed}</span>
-                </button>
-              </div>
-
-              <div className="document-sort-container">
-                <span className="sort-label">Sort by:</span>
-                <div className="sort-buttons">
-                  <button 
-                    className={`sort-button ${sortField === 'receivedDate' ? 'active' : ''}`}
-                    onClick={() => toggleSort('receivedDate')}
-                  >
-                    Date {sortField === 'receivedDate' && (sortDirection === 'asc' ? '↑' : '↓')}
-                  </button>
-                  <button 
-                    className={`sort-button ${sortField === 'type' ? 'active' : ''}`}
-                    onClick={() => toggleSort('type')}
-                  >
-                    Type {sortField === 'type' && (sortDirection === 'asc' ? '↑' : '↓')}
-                  </button>
-                  <button 
-                    className={`sort-button ${sortField === 'fileName' ? 'active' : ''}`}
-                    onClick={() => toggleSort('fileName')}
-                  >
-                    Filename {sortField === 'fileName' && (sortDirection === 'asc' ? '↑' : '↓')}
-                  </button>
-                </div>
-              </div>
-            </div>
             
             <div className="document-table-container">
               {activeDocumentTab === 'newPrepared' ? (
@@ -3231,7 +3132,7 @@ Total documents: ${documents.length}
                         className="action-button secondary"
                         onClick={resetFilters}
                       >
-                        Reset Filters
+                        Reset
                       </button>
                     </div>
                   ) : (
@@ -3340,7 +3241,7 @@ Total documents: ${documents.length}
                       className="action-button secondary"
                       onClick={resetFilters}
                     >
-                      Reset Filters
+                      Reset
                     </button>
                   </div>
                 ) : (

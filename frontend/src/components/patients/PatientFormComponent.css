@@ -141,23 +141,34 @@
   color: #333;
 }
 
+.form-grid {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
 .form-group {
-  margin-bottom: 15px;
+  display: table-row;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #333;
+  display: table-cell;
+  padding: 10px;
+  vertical-align: middle;
 }
 
-.form-group select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+.form-group input,
+.form-group select,
+.form-group textarea {
+  display: table-cell;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+/* Remove the specialized width classes */
+.form-grid .full-width,
+.form-grid .double-width {
+  display: table-row;
 }
 
 .form-actions {
@@ -222,21 +233,6 @@
   background-color: #0b7dda;
 }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-/* For specialized fields that might need more space */
-.form-grid .full-width {
-  grid-column: span 3;
-}
-
-.form-grid .double-width {
-  grid-column: span 2;
-}
-
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -281,10 +277,6 @@
   background-color: white;
 }
 
-.full-width {
-  grid-column: span 2;
-}
-
 .close-button-text {
   background-color: #f3f4f6;
   color: #4b5563;
@@ -313,10 +305,8 @@
 
 .patient-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 14px;
-  background-color: white;
+  border-collapse: collapse;
+  table-layout: auto;
 }
 
 .patient-table thead {
@@ -342,9 +332,8 @@
   padding: 14px 16px;
   text-align: left;
   border-bottom: 1px solid #e2e8f0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .patient-table th {
@@ -354,33 +343,28 @@
   border-bottom: 2px solid #e2e8f0;
 }
 
-/* Column widths */
+/* Remove all width constraints and let content wrap naturally */
 .patient-table th:nth-child(1),
-.patient-table td:nth-child(1) { width: 20%; }  /* Patient Name */
-
+.patient-table td:nth-child(1),
 .patient-table th:nth-child(2),
-.patient-table td:nth-child(2) { width: 10%; }  /* DOB */
-
+.patient-table td:nth-child(2),
 .patient-table th:nth-child(3),
-.patient-table td:nth-child(3) { width: 15%; }  /* PG */
-
+.patient-table td:nth-child(3),
 .patient-table th:nth-child(4),
-.patient-table td:nth-child(4) { width: 15%; }  /* HHAH */
-
+.patient-table td:nth-child(4),
 .patient-table th:nth-child(5),
-.patient-table td:nth-child(5) { width: 8%; }   /* CPO Mins */
-
+.patient-table td:nth-child(5),
 .patient-table th:nth-child(6),
-.patient-table td:nth-child(6) { width: 12%; }  /* Rendering Provider */
-
+.patient-table td:nth-child(6),
 .patient-table th:nth-child(7),
-.patient-table td:nth-child(7) { width: 10%; }  /* Remarks */
-
+.patient-table td:nth-child(7),
 .patient-table th:nth-child(8),
-.patient-table td:nth-child(8) { width: 5%; }   /* New Docs */
-
+.patient-table td:nth-child(8),
 .patient-table th:nth-child(9),
-.patient-table td:nth-child(9) { width: 5%; }   /* New CPO Docs */
+.patient-table td:nth-child(9) {
+  white-space: normal;
+  word-wrap: break-word;
+}
 
 .patient-table tbody tr:hover {
   background-color: #f1f5f9;
@@ -750,4 +734,25 @@
 .patient-table th:nth-child(7):hover::before,
 .patient-table th:nth-child(8):hover::before {
   display: none;
+}
+
+.sortable-header {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+  padding-right: 20px;
+}
+
+.sortable-header:hover {
+  background-color: #f1f5f9;
+}
+
+.sortable-header::after {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+  color: #3b82f6;
 }

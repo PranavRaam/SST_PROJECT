@@ -262,196 +262,45 @@ const InteractionLog = () => {
 
   return (
     <div className="il_interaction_log_container">
-      <h1 className="il_main_heading">Interaction Log</h1>
-      
+      <h2 className="il_main_heading">Interaction Log</h2>
       <div className="il_search_container">
         <input
           type="text"
           placeholder="Search interactions..."
-          value={searchTerm}
-          onChange={handleSearch}
           className="il_search_input"
         />
-        <button 
-          className="il_add_button"
-          onClick={() => setShowModal(true)}
-        >
-          Add Interaction
-        </button>
+        <button className="il_add_button">Add New</button>
       </div>
-
       <div className="il_table_container">
         <table className="il_interaction_table">
           <thead>
             <tr>
+              <th>Reactive Outcome No</th>
+              <th>Date and Time</th>
               <th>User</th>
               <th>Contact</th>
               <th>Designation</th>
               <th>Medium</th>
               <th>Summary</th>
               <th>Action</th>
-              <th>Reactive Outcome No</th>
-              <th>Date and Time</th>
             </tr>
           </thead>
           <tbody>
-            {filteredInteractions.map(interaction => (
-              <tr key={interaction.id} className="il_table_row">
+            {interactions.map((interaction) => (
+              <tr key={interaction.id}>
+                <td>{interaction.reactiveOutcomeNo}</td>
+                <td>{formatDateTime(interaction.dateTime)}</td>
                 <td>{interaction.user}</td>
                 <td>{interaction.contact}</td>
                 <td>{interaction.designation}</td>
                 <td>{interaction.medium}</td>
                 <td>{interaction.summary}</td>
                 <td>{interaction.action}</td>
-                <td>{interaction.reactiveOutcomeNo}</td>
-                <td className="il_date_cell">
-                  {formatDateTime(interaction.dateTime)}
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {showModal && (
-        <div className="il_modal_overlay">
-          <div className="il_modal_content">
-            <h2 className="il_modal_heading">Add New Interaction</h2>
-            <form onSubmit={handleSubmit} className="il_modal_form">
-              <div className="il_form_group">
-                <label className="il_form_label">User:</label>
-                <input
-                  type="text"
-                  name="user"
-                  value={newInteraction.user}
-                  onChange={handleInputChange}
-                  required
-                  className="il_form_input"
-                />
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Contact:</label>
-                <input
-                  type="text"
-                  name="contact"
-                  value={newInteraction.contact}
-                  onChange={handleInputChange}
-                  required
-                  className="il_form_input"
-                />
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Designation:</label>
-                <input
-                  type="text"
-                  name="designation"
-                  value={newInteraction.designation}
-                  onChange={handleInputChange}
-                  required
-                  className="il_form_input"
-                />
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Medium:</label>
-                <input
-                  type="text"
-                  name="medium"
-                  value={newInteraction.medium}
-                  onChange={handleInputChange}
-                  required
-                  className="il_form_input"
-                />
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Summary:</label>
-                <textarea
-                  name="summary"
-                  value={newInteraction.summary}
-                  onChange={handleInputChange}
-                  required
-                  className="il_form_textarea"
-                />
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Action:</label>
-                <input
-                  type="text"
-                  name="action"
-                  value={newInteraction.action}
-                  onChange={handleInputChange}
-                  required
-                  className="il_form_input"
-                />
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Reactive Outcome No:</label>
-                <div className="il_form_input_container">
-                  <select
-                    name="reactiveOutcomeNo"
-                    value={newInteraction.reactiveOutcomeNo}
-                    onChange={handleInputChange}
-                    className="il_form_select"
-                  >
-                    <option value="">Select a Reactive Outcome</option>
-                    {reactiveOutcomeOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="il_form_group">
-                <label className="il_form_label">Date and Time</label>
-                <input
-                  type="text"
-                  name="dateAndTime"
-                  className="il_form_input"
-                  value={formatDate(newInteraction.dateTime.split('T')[0])}
-                  onChange={(e) => {
-                    const inputDate = e.target.value;
-                    // Validate and parse mm/dd/yyyy format
-                    if (/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/.test(inputDate)) {
-                      const [month, day, year] = inputDate.split('/');
-                      const isoDate = `${year}-${month}-${day}`;
-                      const time = newInteraction.dateTime.split('T')[1] || '00:00';
-                      setNewInteraction({ 
-                        ...newInteraction, 
-                        dateTime: `${isoDate}T${time}` 
-                      });
-                    }
-                  }}
-                  placeholder="mm/dd/yyyy"
-                />
-                <input
-                  type="time"
-                  name="timeAndDate"
-                  className="il_form_input"
-                  value={newInteraction.dateTime.split('T')[1] || ''}
-                  onChange={(e) => {
-                    const date = newInteraction.dateTime.split('T')[0];
-                    const time = e.target.value;
-                    setNewInteraction({ 
-                      ...newInteraction, 
-                      dateTime: `${date}T${time}` 
-                    });
-                  }}
-                />
-              </div>
-              <div className="il_modal_buttons">
-                <button type="submit" className="il_submit_button">Submit</button>
-                <button 
-                  type="button" 
-                  className="il_cancel_button"
-                  onClick={() => setShowModal(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import SearchBar from './SearchBar';
 import ServicesTable from './ServicesTable';
+import PatientDetailView from '../pg_service/PatientDetailView';
 import * as XLSX from 'xlsx';  // Import XLSX library for Excel export
 import './HHAHServicesView.css';
 import { formatDate } from '../../utils/dateUtils';
@@ -248,41 +249,11 @@ const dummyData = [
   }
 ];
 
-
 const HHAHServicesView = () => {
-  const [baseData] = useState(dummyData); // This never changes, it's our source data
-  const [filteredData, setFilteredData] = useState(dummyData); // Initialize with all data
-  const [searchTerm, setSearchTerm] = useState('');
+  const [data] = useState(dummyData);
   const [signedFilter, setSignedFilter] = useState('all');
-
-  const applyFiltersAndSorts = useCallback((term, signed) => {
-    let filtered = [...baseData];
-
-    // Apply search filter
-    if (term) {
-      filtered = filtered.filter(item =>
-        Object.values(item).some(
-          val => typeof val === 'string' && 
-          val.toLowerCase().includes(term.toLowerCase())
-        )
-      );
-    }
-
-    // Apply 485 signed filter
-    if (signed !== 'all') {
-      filtered = filtered.filter(item =>
-        signed === 'signed' ? item.is485Signed : !item.is485Signed
-      );
-    }
-
-    return filtered;
-  }, [baseData]);
-
-  // Update filtered data when filters change
-  React.useEffect(() => {
-    const newFilteredData = applyFiltersAndSorts(searchTerm, signedFilter);
-    setFilteredData(newFilteredData);
-  }, [searchTerm, signedFilter, applyFiltersAndSorts]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -292,23 +263,63 @@ const HHAHServicesView = () => {
     setSignedFilter(status);
   };
 
-  const getFormattedData = () => {
-    return filteredData.map(item => ({
-      ...item,
-      dob: formatDate(item.dob),
-      soc: formatDate(item.soc),
-      fromToDate: item.fromToDate
-        .split(' - ')
-        .map(formatDate)
-        .join(' - ')
-    }));
+  const handlePatientSelect = (patient) => {
+    setSelectedPatient(patient);
   };
 
+  const handleBackToMain = () => {
+    setSelectedPatient(null);
+  };
+
+  // If a patient is selected, render the PatientDetailView
+  if (selectedPatient) {
+    return (
+      <PatientDetailView 
+        patient={selectedPatient} 
+        onBack={handleBackToMain} 
+      />
+    );
+  }
+
+  // Filter data based on current filters
+  const filteredData = data.filter(item => {
+    // Apply search filter
+    if (searchTerm && !Object.values(item).some(
+      val => String(val).toLowerCase().includes(searchTerm.toLowerCase())
+    )) {
+      return false;
+    }
+
+    // Apply signed filter
+    if (signedFilter === 'signed' && !item.is485Signed) {
+      return false;
+    }
+    if (signedFilter === 'unsigned' && item.is485Signed) {
+      return false;
+    }
+
+    return true;
+  });
+
+  // Handle export to Excel
   const exportToExcel = () => {
-    const formattedData = getFormattedData();
+    const worksheet = XLSX.utils.json_to_sheet(
+      filteredData.map(item => ({
+        "PT.NAME": item.ptName,
+        "DOB": item.dob,
+        "SOC": item.soc,
+        "FROM - TO DATE": item.fromToDate,
+        "485 SIGNED": item.is485Signed ? "Yes" : "No",
+        "DOC TO BE SIGNED": item.docsToBeSignedCount,
+        "DAYS LEFT (TO BE BILLED)": item.daysLeftForBilling,
+        "PG": item.pg,
+        "PHYSICIAN": item.physician,
+        "REMARKS": item.remarks
+      }))
+    );
+    
     const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(formattedData);
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Services Data");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "HHAH Services");
     XLSX.writeFile(workbook, "HHAH_Services_Data.xlsx");
   };
 
@@ -357,6 +368,7 @@ const HHAHServicesView = () => {
         <div className="viv-hhah-content-card">
           <ServicesTable 
             data={filteredData}
+            onRowClick={handlePatientSelect}
           />
         </div>
       </main>

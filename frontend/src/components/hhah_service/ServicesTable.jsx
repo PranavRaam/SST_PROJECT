@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import './ServicesTable.css';
 
-const ServicesTable = ({ data }) => {
+const ServicesTable = ({ data, onRowClick }) => {
   const [sortConfig, setSortConfig] = useState({
     primaryKey: 'daysLeftForBilling',
     primaryDirection: 'asc',
@@ -123,7 +123,11 @@ const ServicesTable = ({ data }) => {
         </thead>
         <tbody>
           {sortedData.map((row, index) => (
-            <tr key={index}>
+            <tr 
+              key={index}
+              onClick={() => onRowClick(row)}
+              className="clickable-row"
+            >
               <td>{row.ptName}</td>
               <td>{row.dob}</td>
               <td>{row.soc}</td>
