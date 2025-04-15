@@ -578,14 +578,12 @@ const PatientDetailView = ({ patient, onBack }) => {
     {
       id: "CPO_001",
       fileName: "CPO_Document_001.pdf",
-      type: "CPO Assessment",
       creationDate: "2023-04-05",
       size: "1.2 MB"
     },
     {
       id: "CPO_002",
       fileName: "CPO_Document_002.pdf",
-      type: "CPO Evaluation",
       creationDate: "2023-05-10",
       size: "0.9 MB"
     }
@@ -976,9 +974,6 @@ const PatientDetailView = ({ patient, onBack }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Show notification that file is being processed
-    showNotification('info', 'Processing Document', 'Uploading and processing document...');
-
     const today = new Date();
     const formattedDate = today.toISOString().slice(0, 10);
     
@@ -986,11 +981,8 @@ const PatientDetailView = ({ patient, onBack }) => {
     const newDocument = {
       id: `CPO_${Date.now().toString().slice(-6)}`,
       fileName: file.name,
-      type: 'CPO Document',
       creationDate: formattedDate,
-      file: file,
-      fileSize: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-      uploadedBy: 'Current User'
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
     };
     
     // Add the document to the cpoDocs state
@@ -998,12 +990,6 @@ const PatientDetailView = ({ patient, onBack }) => {
     
     // Show success notification
     showNotification('success', 'CPO Document Added', 'New CPO document has been uploaded successfully.');
-    
-    // Reset the file input
-    e.target.value = '';
-    
-    // Calculate CPO minutes after adding document
-    calculateCPOMinutes();
   };
 
   // Function to update CPO document status
@@ -1855,7 +1841,6 @@ Total documents: ${documents.length}
           documents: cpoDocs.map(doc => ({
             id: doc.id,
             fileName: doc.fileName,
-            type: doc.type,
             creationDate: formatDate(doc.creationDate),
             size: doc.size
           })),
@@ -1926,7 +1911,1973 @@ Total documents: ${documents.length}
     let y = -20;
     reportData.documents.forEach((doc, index) => {
       content += "0 " + y + " Td\n(" + (index + 1) + ". " + doc.fileName + 
-                " - Created on " + doc.creationDate + " - " + doc.type + ") Tj\n";
+                " - Created on " + doc.creationDate + ") Tj\n";
+      y = -15;
+    });
+    
+    // Monthly CPO Data
+    content += "0 -40 Td\n(MONTHLY CPO DISTRIBUTION) Tj\n";
+    
+    y = -20;
+    reportData.monthlyCPOData.forEach((month) => {
+      if (month.minutes > 0) {
+        content += "0 " + y + " Td\n(" + month.month + ": " + month.minutes + " minutes) Tj\n";
+        y = -15;
+      }
+    });
+    
+    content += "ET\n";
+    
+    // Add content to PDF
+    pdf += "5 0 obj\n<< /Length " + content.length + " >>\nstream\n" + content + "endstream\nendobj\n";
+    
+    // Add font
+    pdf += "6 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n";
+    
+    // Add cross-reference table
+    const xrefOffset = pdf.length;
+    pdf += "xref\n0 7\n0000000000 65535 f\n";
+    
+    // Add trailer
+    pdf += "trailer\n<< /Size 7 /Root 1 0 R >>\n";
+    pdf += "startxref\n" + xrefOffset + "\n";
+    pdf += "%%EOF";
+    
+    return pdf;
+  };
+
+  // Function to calculate duration between two dates
+  const calculateDuration = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+  };
+
+  // Function to calculate days between SOC and start date
+  const calculateDaysBetween = (socDate, startDate) => {
+    if (!socDate || !startDate) return 0;
+    const startDateObj = new Date(startDate);
+    const socDateObj = new Date(socDate);
+    const diffTime = Math.abs(startDateObj - socDateObj);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import './PatientDetailView.css';
+import { 
+  FaUser, 
+  FaCalendarAlt, 
+  FaPhone, 
+  FaEnvelope, 
+  FaMapMarkerAlt,
+  FaBuilding,
+  FaIdCard,
+  FaHeartbeat,
+  FaPills,
+  FaAllergies,
+  FaUserMd,
+  FaFileAlt,
+  FaClock,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaPauseCircle,
+  FaClipboardCheck,
+  FaArrowLeft,
+  FaPrint,
+  FaDownload,
+  FaUpload,
+  FaCog,
+  FaEdit,
+  FaSave,
+  FaTimes,
+  FaSearch,
+  FaFilter,
+  FaEye,
+  FaFileUpload,
+  FaSpinner,
+  FaExclamationTriangle,
+  FaInfoCircle,
+  FaHistory,
+  FaFileMedical,
+  FaUserCircle,
+  FaClipboardList,
+  FaFileMedicalAlt,
+  FaHashtag,
+  FaCalendar,
+  FaFilePdf,
+  FaFileWord,
+  FaFileExcel,
+  FaFileImage,
+  FaFile,
+  FaTrash,
+  FaLink,
+  FaChartLine,
+  FaUserCheck,
+  FaBell,
+  FaSortAmountDown,
+  FaSortAmountUp,
+  FaSignature,
+  FaCommentMedical,
+  FaHospital,
+  FaShareAlt,
+  FaPlus,
+  FaStethoscope,
+  FaProcedures,
+  FaChevronDown,
+  FaChevronRight,
+  FaCircle,
+  FaFileSignature,
+  FaCheck,
+  FaArrowCircleRight,
+  FaExclamationCircle,
+  FaSearchPlus,
+  FaSearchMinus,
+  FaRedo
+} from 'react-icons/fa';
+
+// Helper functions
+const getStatusIcon = (status) => {
+  switch (status) {
+    case 'active':
+      return <FaCheckCircle className="status-icon active" />;
+    case 'discharged':
+      return <FaArrowCircleRight className="status-icon discharged" />;
+    case 'on-hold':
+      return <FaPauseCircle className="status-icon on-hold" />;
+    case 'evaluation':
+      return <FaExclamationCircle className="status-icon evaluation" />;
+    default:
+      return <FaInfoCircle className="status-icon" />;
+  }
+};
+
+const getStatusMessage = (status) => {
+  switch (status) {
+    case 'active':
+      return 'Patient is actively receiving care';
+    case 'discharged':
+      return 'Patient has been discharged from care';
+    case 'on-hold':
+      return 'Patient care is temporarily on hold';
+    case 'evaluation':
+      return 'Patient is being evaluated for care plan';
+    default:
+      return 'Status information unavailable';
+  }
+};
+
+const getNextReviewDate = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 7); // Next review in 7 days
+  return date.toLocaleDateString();
+};
+
+const getTodayMinusDays = (days) => {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date.toLocaleDateString();
+};
+
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric'
+  });
+};
+
+const getTimelineIcon = (eventType) => {
+  switch (eventType) {
+    case 'admission':
+      return <FaHospital className="timeline-icon" />;
+    case 'evaluation':
+      return <FaClipboardCheck className="timeline-icon" />;
+    case 'document':
+      return <FaFileAlt className="timeline-icon" />;
+    case 'status':
+      return <FaUserCheck className="timeline-icon" />;
+    case 'treatment':
+      return <FaStethoscope className="timeline-icon" />;
+    default:
+      return <FaInfoCircle className="timeline-icon" />;
+  }
+};
+
+// Generate some mock timeline data for demonstration
+const generateMockTimelineData = () => {
+  return [
+    {
+      id: 1,
+      type: 'admission',
+      title: 'Patient Admitted',
+      date: getTodayMinusDays(30),
+      description: 'Initial admission to care program',
+      provider: 'Dr. Sarah Johnson',
+      location: 'General Ward',
+      tags: ['Admission', 'Initial Assessment']
+    },
+    {
+      id: 2,
+      type: 'evaluation',
+      title: 'Initial Evaluation',
+      date: getTodayMinusDays(28),
+      description: 'Full physical evaluation completed',
+      provider: 'Dr. Robert Chen',
+      tags: ['Evaluation', 'Completed']
+    },
+    {
+      id: 3,
+      type: 'document',
+      title: 'Care Plan Created',
+      date: getTodayMinusDays(26),
+      description: 'Initial care plan documented and approved',
+      provider: 'Care Team',
+      tags: ['Care Plan', 'Documentation']
+    },
+    {
+      id: 4,
+      type: 'treatment',
+      title: 'Treatment Started',
+      date: getTodayMinusDays(25),
+      description: 'Treatment regimen initiated',
+      provider: 'Dr. Sarah Johnson',
+      tags: ['Treatment', 'Medication']
+    },
+    {
+      id: 5,
+      type: 'status',
+      title: 'Status Updated',
+      date: getTodayMinusDays(15),
+      description: 'Patient status updated to Active',
+      provider: 'Care Team',
+      tags: ['Status Change', 'Active']
+    },
+    {
+      id: 6,
+      type: 'evaluation',
+      title: 'Follow-up Evaluation',
+      date: getTodayMinusDays(10),
+      description: 'Regular follow-up evaluation',
+      provider: 'Dr. Robert Chen',
+      tags: ['Evaluation', 'Follow-up']
+    },
+    {
+      id: 7,
+      type: 'document',
+      title: 'Progress Report Filed',
+      date: getTodayMinusDays(5),
+      description: 'Monthly progress report completed',
+      provider: 'Care Team',
+      tags: ['Progress Report', 'Documentation']
+    }
+  ];
+};
+
+// DocIdInput component for better user experience
+const DocIdInput = ({ docId, onUpdate }) => {
+  const [value, setValue] = useState(docId);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+  const [validationMessage, setValidationMessage] = useState('');
+  const inputRef = useRef(null);
+  
+  // Reset value if docId changes from outside
+  useEffect(() => {
+    setValue(docId);
+    validateDocId(docId);
+  }, [docId]);
+  
+  // Auto-focus when entering edit mode
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [isEditing]);
+  
+  // Simple validation for doc IDs
+  const validateDocId = (id) => {
+    // Check if empty
+    if (!id.trim()) {
+      setIsValid(false);
+      setValidationMessage('ID cannot be empty');
+      return false;
+    }
+    
+    // Check if follows common pattern for backoffice IDs (e.g., DOC-123)
+    const backofficePattern = /^[A-Z]+-\d+$/;
+    if (!backofficePattern.test(id)) {
+      setIsValid(false);
+      setValidationMessage('Recommended format: PREFIX-123');
+      return false;
+    }
+    
+    setIsValid(true);
+    setValidationMessage('');
+    return true;
+  };
+  
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    validateDocId(newValue);
+  };
+  
+  const handleBlur = () => {
+    setIsEditing(false);
+    setIsFocused(false);
+    
+    // Auto-format the ID if not valid but not empty
+    if (!isValid && value.trim()) {
+      // If it's just missing the dash, try to format it
+      if (/^[A-Za-z]+\d+$/.test(value)) {
+        // Extract prefix and number, then format
+        const match = value.match(/^([A-Za-z]+)(\d+)$/);
+        if (match) {
+          const formattedId = `${match[1].toUpperCase()}-${match[2]}`;
+          setValue(formattedId);
+          onUpdate(docId, formattedId);
+          return;
+        }
+      }
+    }
+    
+    if (value !== docId) {
+      // Even if not valid format, still update if not empty
+      if (value.trim()) {
+        onUpdate(docId, value);
+      } else {
+        // Reset to original if empty
+        setValue(docId);
+      }
+    }
+  };
+  
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+  
+  const handleClick = () => {
+    if (!isEditing) {
+      setIsEditing(true);
+    }
+  };
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      inputRef.current.blur();
+    } else if (e.key === 'Escape') {
+      setValue(docId);
+      setIsEditing(false);
+      setIsFocused(false);
+    }
+  };
+  
+  return (
+    <div 
+      className={`doc-id-field ${isEditing ? 'editing' : ''} ${isFocused ? 'focused' : ''} ${!isValid ? 'invalid' : ''}`} 
+      onClick={handleClick}
+      title={validationMessage || 'Click to edit document ID'}
+    >
+      <FaHashtag className="doc-id-icon" />
+      {isEditing ? (
+        <input
+          ref={inputRef}
+          type="text"
+          className="doc-id-input"
+          value={value}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          placeholder="PREFIX-123"
+        />
+      ) : (
+        <div className="doc-id-display">
+          <span>{docId}</span>
+          <div className="edit-indicator">
+            <FaEdit className="edit-icon" />
+          </div>
+        </div>
+      )}
+      {isEditing && validationMessage && (
+        <div className="validation-message">{validationMessage}</div>
+      )}
+    </div>
+  );
+};
+
+// Add this function to filter episodes by date range
+const filterEpisodesByDateRange = (episodes, startDate, endDate) => {
+  if (!startDate && !endDate) return episodes;
+  
+  const start = startDate ? new Date(startDate) : new Date(0);
+  const end = endDate ? new Date(endDate) : new Date();
+  
+  return episodes.filter(episode => {
+    const episodeStart = new Date(episode.startDate);
+    return episodeStart >= start && episodeStart <= end;
+  });
+};
+
+// Add function to format CPO minutes
+const formatCPOMinutes = (minutes) => {
+  if (!minutes) return '0 min';
+  return `${minutes} min`;
+};
+
+// Add function to calculate CPO percentage
+const calculateCPOPercentage = (captured, total) => {
+  if (!total) return 0;
+  const percentage = (captured / total) * 100;
+  return Math.min(100, percentage);
+};
+
+// Add function to create mock documents for episodes
+const createMockDocumentsForEpisode = (episodeId) => {
+  const documentTypes = ['Evaluation', 'Treatment Plan', 'Progress Report', 'Discharge Summary'];
+  const randomCount = Math.floor(Math.random() * 3) + 1; // 1-3 documents
+  const documents = [];
+
+  for (let i = 0; i < randomCount; i++) {
+    const type = documentTypes[Math.floor(Math.random() * documentTypes.length)];
+    const date = new Date();
+    date.setDate(date.getDate() - Math.floor(Math.random() * 30));
+    
+    documents.push({
+      id: `DOC-EP${episodeId}-${i + 1}`,
+      type: type,
+      fileName: `${type.toLowerCase().replace(/\s/g, '_')}_episode${episodeId}.pdf`,
+      createdDate: date.toISOString().split('T')[0],
+      size: `${(Math.random() * 2 + 0.5).toFixed(1)} MB`,
+      status: Math.random() > 0.5 ? 'Signed' : 'New'
+    });
+  }
+  
+  return documents;
+};
+
+// Add episode data structure
+const generateEpisodeData = () => {
+  return [
+    {
+      id: 1,
+      startDate: '2023-04-01',
+      socDate: '2023-03-28',  // SOC date should be a few days before the start date
+      endDate: '2023-06-30',
+      status: 'complete',
+      diagnosis: 'Hypertension',
+      provider: 'Dr. Sarah Johnson',
+      notes: 'Patient completed first episode successfully.',
+      documents: createMockDocumentsForEpisode(1)
+    },
+    {
+      id: 2,
+      startDate: '2023-07-01',
+      socDate: '2023-06-28',  // SOC date should be a few days before the start date
+      endDate: '2023-09-30',
+      status: 'active',
+      diagnosis: 'Type 2 Diabetes',
+      provider: 'Dr. Robert Chen',
+      notes: 'Patient is currently in this episode.',
+      documents: createMockDocumentsForEpisode(2)
+    }
+  ];
+};
+
+const PatientDetailView = ({ patient, onBack }) => {
+  // State for active tab and document type select
+  const [activeTab, setActiveTab] = useState('patientInfo');
+  const [activeDocumentTab, setActiveDocumentTab] = useState('newPrepared');
+  const [documentDate, setDocumentDate] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortField, setSortField] = useState('receivedDate');
+  const [sortDirection, setSortDirection] = useState('desc');
+  const [notification, setNotification] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [timelinePeriod, setTimelinePeriod] = useState('all');
+  const [selectedTimeline, setSelectedTimeline] = useState(null);
+  const [isDropActive, setIsDropActive] = useState(false);
+  const [fileTypes, setFileTypes] = useState([]);
+  const [dateRange, setDateRange] = useState({ from: '', to: '' });
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  
+  // Refs
+  const fileInputRef = useRef(null);
+  
+  // State for editable patient info
+  const [isEditing, setIsEditing] = useState(false);
+  const [patientInfo, setPatientInfo] = useState({
+    id: patient?.id || '',
+    name: patient?.patientFirstName ? `${patient.patientLastName || ''}, ${patient.patientFirstName} ${patient.patientMiddleName || ''}` : patient?.ptName || '',
+    dob: patient?.patientDOB || patient?.dob || '',
+    gender: patient?.gender || 'Not specified',
+    status: patient?.status || 'active',
+    phone: patient?.contactNumber || '',
+    email: patient?.email || '',
+    address: patient?.address || generateDummyAddress(),
+    insurance: patient?.patientInsurance || '',
+    insuranceId: patient?.insuranceId || '',
+    pg: patient?.pg || '',
+    hhah: patient?.hhah || '',
+    admissionDate: patient?.patientSOC || '',
+    episodeFrom: patient?.patientEpisodeFrom || '',
+    episodeTo: patient?.patientEpisodeTo || '',
+    dischargeDate: patient?.dischargeDate || '',
+    primaryDiagnosis: patient?.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes.join(", ") : '',
+    secondaryDiagnosis: patient?.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes.join(", ") : '',
+    primaryPhysician: patient?.physicianName || '',
+    specialist: patient?.specialist || '',
+    allergies: patient?.allergies || '',
+    medications: patient?.medications || '',
+    renderingPractitioner: patient?.renderingPractitioner || '',
+    hasEHR: patient?.patientInEHR === 'yes' || false,
+    cpoMinsCaptured: patient?.cpoMinsCaptured || 0,
+    newDocs: patient?.newDocs || 0,
+    newCPODocsCreated: patient?.newCpoDocsCreated || 0,
+    certStatus: patient?.certStatus || '',
+    recertStatus: patient?.recertStatus || '',
+    f2fEligibility: patient?.f2fEligibility || '',
+    remarks: patient?.patientRemarks || patient?.remarks || '',
+  });
+  
+  // Timeline data
+  const [timelineData, setTimelineData] = useState(generateMockTimelineData());
+  
+  // Dummy data for documents
+  const [newPreparedDocs, setNewPreparedDocs] = useState([
+    { 
+      id: 'DOC-001', 
+      type: 'Evaluation', 
+      status: 'New', 
+      receivedDate: '2023-05-10',
+      fileName: 'initial_evaluation.pdf',
+      size: '1.2 MB',
+      uploadedBy: 'Dr. Johnson'
+    },
+    { 
+      id: 'DOC-002', 
+      type: '', 
+      status: 'New', 
+      receivedDate: '2023-05-12',
+      fileName: 'lab_results.pdf',
+      size: '0.8 MB',
+      uploadedBy: 'Lab Technician'
+    },
+    { 
+      id: 'DOC-003', 
+      type: 'Position Order', 
+      status: 'Prepared', 
+      receivedDate: '2023-05-15',
+      fileName: 'position_order.docx',
+      size: '0.5 MB',
+      uploadedBy: 'Dr. Chen'
+    }
+  ]);
+  
+  const [signedDocs, setSignedDocs] = useState([
+    { 
+      id: 'DOC-004', 
+      type: 'Re-evaluation', 
+      signedDate: '2023-04-28',
+      fileName: 're_evaluation_signed.pdf',
+      size: '1.5 MB',
+      signedBy: 'Dr. Johnson'
+    },
+    { 
+      id: 'DOC-005', 
+      type: 'Position Order', 
+      signedDate: '2023-04-30',
+      fileName: 'position_order_signed.pdf',
+      size: '0.7 MB',
+      signedBy: 'Dr. Chen'
+    }
+  ]);
+
+  // CPO allocation data
+  const [cpoDocuments, setCpoDocuments] = useState([
+    {
+      id: 'CPO-001',
+      name: 'Initial Care Plan',
+      creationDate: '2023-04-05',
+      minutes: 15,
+      status: 'Completed',
+      provider: 'Dr. Sarah Johnson'
+    },
+    {
+      id: 'CPO-002',
+      name: 'Medication Review',
+      creationDate: '2023-04-15',
+      minutes: 10,
+      status: 'Completed',
+      provider: 'Dr. Robert Chen'
+    },
+    {
+      id: 'CPO-003',
+      name: 'Progress Report',
+      creationDate: '2023-05-01',
+      minutes: 20,
+      status: 'In Progress',
+      provider: 'Dr. Sarah Johnson'
+    },
+    {
+      id: 'CPO-004',
+      name: 'Care Coordination',
+      creationDate: '2023-05-10',
+      minutes: 30,
+      status: 'Completed',
+      provider: 'Care Team'
+    }
+  ]);
+  
+  // Add cpoDocs state before it's used in other functions
+  const [cpoDocs, setCpoDocs] = useState([
+    {
+      id: "CPO_001",
+      fileName: "CPO_Document_001.pdf",
+      creationDate: "2023-04-05",
+      size: "1.2 MB"
+    },
+    {
+      id: "CPO_002",
+      fileName: "CPO_Document_002.pdf",
+      creationDate: "2023-05-10",
+      size: "0.9 MB"
+    }
+  ]);
+
+  // Function to filter documents
+  const filterDocuments = (docs) => {
+    return docs.filter(doc => {
+      // Apply search term filtering
+      const matchesSearch = searchTerm === '' || 
+        doc.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (doc.type && doc.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (doc.fileName && doc.fileName.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      // Apply status filtering (for new/prepared docs only)
+      const matchesStatus = statusFilter === 'all' || 
+        (statusFilter === 'new' && doc.status === 'New') ||
+        (statusFilter === 'prepared' && doc.status === 'Prepared');
+      
+      // Apply date filtering if date range is set
+      let matchesDate = true;
+      if (dateRange.from && dateRange.to && doc.receivedDate) {
+        const docDate = new Date(doc.receivedDate);
+        const fromDate = new Date(dateRange.from);
+        const toDate = new Date(dateRange.to);
+        matchesDate = docDate >= fromDate && docDate <= toDate;
+      }
+      
+      // Apply file type filtering
+      let matchesFileType = true;
+      if (fileTypes.length > 0 && doc.fileName) {
+        const extension = doc.fileName.split('.').pop().toLowerCase();
+        matchesFileType = fileTypes.includes(extension);
+      }
+      
+      return matchesSearch && matchesStatus && matchesDate && matchesFileType;
+    });
+  };
+  
+  // Sort function for documents
+  const sortDocuments = (docs) => {
+    return [...docs].sort((a, b) => {
+      let comparison = 0;
+      
+      if (sortField === 'date') {
+        const aDate = new Date(a.signedDate || a.receivedDate || 0);
+        const bDate = new Date(b.signedDate || b.receivedDate || 0);
+        comparison = aDate - bDate;
+      } else if (sortField === 'type') {
+        comparison = (a.type || '').localeCompare(b.type || '');
+      } else if (sortField === 'filename') {
+        comparison = (a.fileName || '').localeCompare(b.fileName || '');
+      }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+  };
+  
+  // Memoize filtered and sorted documents
+  const filteredNewPreparedDocs = useMemo(() => {
+    return sortDocuments(filterDocuments(newPreparedDocs));
+  }, [newPreparedDocs, searchTerm, statusFilter, dateRange, fileTypes, sortField, sortDirection]);
+
+  const filteredSignedDocs = useMemo(() => {
+    const filtered = signedDocs.filter(doc => 
+      searchTerm === '' || 
+      doc.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (doc.type && doc.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (doc.fileName && doc.fileName.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+    return sortDocuments(filtered);
+  }, [signedDocs, searchTerm, sortField, sortDirection]);
+
+  // Filter timeline data based on the selected period
+  const filteredTimelineData = useMemo(() => {
+    if (timelinePeriod === 'all') return timelineData;
+    
+    return timelineData.filter(event => event.type === timelinePeriod);
+  }, [timelineData, timelinePeriod]);
+
+  // Memoize document counts
+  const documentCounts = useMemo(() => ({
+    new: newPreparedDocs.filter(doc => doc.status === 'New').length,
+    prepared: newPreparedDocs.filter(doc => doc.status === 'Prepared').length,
+    signed: signedDocs.length,
+    total: newPreparedDocs.length + signedDocs.length
+  }), [newPreparedDocs, signedDocs]);
+
+  // Calculate total CPO minutes
+  const totalCpoMinutes = useMemo(() => {
+    return cpoDocuments.reduce((total, doc) => total + doc.minutes, 0);
+  }, [cpoDocuments]);
+
+  // Function to show notification
+  const showNotification = useCallback((type, title, message) => {
+    setNotification({ type, title, message });
+  }, []);
+  
+  // Function to upload files
+  const uploadFiles = useCallback(async (files) => {
+    if (!files || files.length === 0) return;
+    
+    // Show uploading notification
+    showNotification('info', 'Uploading Files', 'Your files are being uploaded...');
+    
+    const newFiles = Array.from(files).map(file => ({
+      id: `DOC-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
+      type: '',
+      status: 'New',
+      receivedDate: new Date().toISOString().split('T')[0],
+      fileName: file.name,
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+      uploadedBy: 'Current User',
+      file: file // Store the actual file for potential preview
+    }));
+
+    // Simulate file upload
+    for (const file of newFiles) {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Add the file to the newPreparedDocs list
+        setNewPreparedDocs(prev => [...prev, file]);
+        
+        showNotification('success', 'File Uploaded', `${file.fileName} uploaded successfully`);
+      } catch (error) {
+        showNotification('error', 'Upload Failed', `Failed to upload ${file.fileName}`);
+      }
+    }
+    
+    // Clear file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [showNotification]);
+
+  const handleFileInputChange = useCallback((event) => {
+    const files = event.target.files;
+    if (files) {
+      uploadFiles(files);
+    }
+  }, [uploadFiles]);
+
+  const handleDrop = useCallback((event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(false);
+    
+    const files = event.dataTransfer.files;
+    if (files) {
+      uploadFiles(files);
+    }
+  }, [uploadFiles]);
+
+  const handleDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const toggleDocPrepared = useCallback((docId) => {
+    setNewPreparedDocs(prevDocs => {
+      const updatedDocs = prevDocs.map(doc => {
+        if (doc.id === docId) {
+          const newStatus = doc.status === 'New' ? 'Prepared' : 'New';
+          showNotification(
+            'success', 
+            'Status Updated', 
+            `Document ${docId} marked as ${newStatus}`
+          );
+          return { ...doc, status: newStatus };
+        }
+        return doc;
+      });
+      return updatedDocs;
+    });
+  }, [showNotification]);
+
+  const moveToSigned = useCallback((docId) => {
+    const docToMove = newPreparedDocs.find(doc => doc.id === docId);
+    if (docToMove) {
+      const signedDoc = {
+        id: docToMove.id,
+        type: docToMove.type,
+        fileName: docToMove.fileName,
+        size: docToMove.size,
+        signedDate: new Date().toISOString().split('T')[0],
+        signedBy: 'Dr. Sarah Johnson'
+      };
+      setSignedDocs(prev => [...prev, signedDoc]);
+      setNewPreparedDocs(prev => prev.filter(doc => doc.id !== docId));
+      
+      // Add to timeline
+      const newTimelineEvent = {
+        id: timelineData.length + 1,
+        type: 'document',
+        title: `Document Signed: ${docToMove.type || 'Unknown Type'}`,
+        date: new Date().toLocaleDateString(),
+        description: `Document ${docToMove.id} has been signed`,
+        provider: 'Dr. Sarah Johnson',
+        tags: ['Document', 'Signed']
+      };
+      
+      setTimelineData(prev => [newTimelineEvent, ...prev]);
+      
+      showNotification(
+        'success', 
+        'Document Signed', 
+        `Document ${docId} has been moved to signed documents`
+      );
+    }
+  }, [newPreparedDocs, timelineData, showNotification]);
+  
+  // Function to show notification
+  // Function to close notification
+  const closeNotification = useCallback(() => {
+    setNotification(null);
+  }, []);
+  
+  // Calculate CPO minutes
+  const calculateCPOMinutes = () => {
+    // Calculate CPO minutes based on documents count * 2
+    const documentCount = cpoDocs.length;
+    const cpoMinutes = documentCount * 2;
+    
+    // Update patient info with calculated CPO minutes
+    setPatientInfo(prev => ({
+      ...prev,
+      cpoMinsCaptured: cpoMinutes
+    }));
+    
+    // Update monthly CPO data
+    // This creates a simple distribution of CPO minutes across months
+    const updatedMonthlyCPOData = [...monthlyCPOData];
+    
+    // Reset all months to 0
+    updatedMonthlyCPOData.forEach(month => {
+      month.minutes = 0;
+    });
+    
+    // Distribute minutes across months with documents
+    if (documentCount > 0) {
+      const minutesPerDoc = 2;
+      cpoDocs.forEach(doc => {
+        const docDate = new Date(doc.creationDate);
+        const monthIndex = docDate.getMonth();
+        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+      });
+    }
+    
+    setMonthlyCPOData(updatedMonthlyCPOData);
+  };
+  
+  // Function to update document type
+  const updateDocType = (docId, newType) => {
+    setNewPreparedDocs(prevDocs => 
+      prevDocs.map(doc => 
+        doc.id === docId ? { ...doc, type: newType } : doc
+      )
+    );
+  };
+  
+  // Function to update document ID
+  const updateDocId = (docId, newId) => {
+    // Update in new/prepared docs
+    setNewPreparedDocs(prevDocs => 
+      prevDocs.map(doc => 
+        doc.id === docId ? { ...doc, id: newId } : doc
+      )
+    );
+    
+    // Update in signed docs
+    setSignedDocs(prevDocs => 
+      prevDocs.map(doc => 
+        doc.id === docId ? { ...doc, id: newId } : doc
+      )
+    );
+  };
+  
+  // Function to update signed date
+  const updateSignedDate = (docId, date) => {
+    setSignedDocs(prevDocs => 
+      prevDocs.map(doc => 
+        doc.id === docId ? { ...doc, signedDate: date } : doc
+      )
+    );
+  };
+  
+  // Document type options
+  const documentTypes = [
+    'Evaluation',
+    'Re-evaluation',
+    'Position Order',
+    'Recertification',
+    'Discharge Summary',
+    'Progress Note',
+    'Treatment Plan',
+    'Referral',
+    'Lab Results',
+    'Medical History',
+    'Medication List',
+    'Consent Form',
+    'Insurance Documentation',
+    'Other'
+  ];
+
+  // Handle patient info changes
+  const handleInfoChange = (field, value) => {
+    setPatientInfo(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  // Save patient info changes
+  const savePatientInfo = () => {
+    // Calculate total CPO minutes if not already done
+    if (!patientInfo.cpoMinsCaptured) {
+      const totalMinutes = cpoDocuments.reduce((sum, doc) => sum + doc.minutes, 0);
+      setPatientInfo(prev => ({
+        ...prev,
+        cpoMinsCaptured: totalMinutes
+      }));
+    }
+    
+    // Here you would typically save to backend
+    console.log('Saving patient info:', patientInfo);
+    
+    // For demo purposes, show success notification
+    showNotification('success', 'Patient Info Saved', 'Patient information has been successfully updated.');
+    
+    setIsEditing(false);
+  };
+
+  // Auto dismiss notification after time
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
+  // Function to determine file icon type based on file name
+  const getFileIconByName = (fileName) => {
+    if (!fileName) return <FaFile />;
+    
+    const extension = fileName.split('.').pop().toLowerCase();
+    
+    switch(extension) {
+      case 'pdf':
+        return <FaFilePdf className="file-icon pdf" />;
+      case 'doc':
+      case 'docx':
+        return <FaFileWord className="file-icon word" />;
+      case 'xls':
+      case 'xlsx':
+        return <FaFileExcel className="file-icon excel" />;
+      case 'jpg':
+      case 'jpeg':
+      case 'png':
+      case 'gif':
+        return <FaFileImage className="file-icon image" />;
+      default:
+        return <FaFile className="file-icon" />;
+    }
+  };
+
+  // Function to toggle sort
+  const toggleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  // Replace the addCpoDocument function with file upload functionality
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const today = new Date();
+    const formattedDate = today.toISOString().slice(0, 10);
+    
+    // Create the new document object
+    const newDocument = {
+      id: `CPO_${Date.now().toString().slice(-6)}`,
+      fileName: file.name,
+      creationDate: formattedDate,
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+    };
+    
+    // Add the document to the cpoDocs state
+    setCpoDocs(prevDocs => [...prevDocs, newDocument]);
+    
+    // Show success notification
+    showNotification('success', 'CPO Document Added', 'New CPO document has been uploaded successfully.');
+  };
+
+  // Function to update CPO document status
+  const updateCpoStatus = (docId, newStatus) => {
+    setCpoDocuments(prevDocs => 
+      prevDocs.map(doc => 
+        doc.id === docId ? { ...doc, status: newStatus } : doc
+      )
+    );
+    
+    showNotification('success', 'Status Updated', `CPO document status changed to ${newStatus}`);
+  };
+
+  // Function to update CPO minutes
+  const updateCpoMinutes = (docId, minutes) => {
+    setCpoDocuments(prevDocs => 
+      prevDocs.map(doc => 
+        doc.id === docId ? { ...doc, minutes: Number(minutes) } : doc
+      )
+    );
+  };
+
+  // Function to handle file type filter changes
+  const handleFileTypeFilter = (type) => {
+    if (fileTypes.includes(type)) {
+      setFileTypes(prev => prev.filter(t => t !== type));
+    } else {
+      setFileTypes(prev => [...prev, type]);
+    }
+  };
+
+  // Function to reset all filters
+  const resetFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setDateRange({ from: '', to: '' });
+    setFileTypes([]);
+    setSortField('receivedDate');
+    setSortDirection('desc');
+  };
+
+  // State for document viewer
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [isEditingDocumentDetails, setIsEditingDocumentDetails] = useState(false);
+
+  // Function to update document viewer document
+  const updateViewerDocument = (field, value) => {
+    setSelectedDocument(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  // Function to save document changes from viewer
+  const saveDocumentChanges = () => {
+    // Update document in the proper state array
+    if (selectedDocument.status) {
+      setNewPreparedDocs(prevDocs => 
+        prevDocs.map(doc => 
+          doc.id === selectedDocument.id ? selectedDocument : doc
+        )
+      );
+    } else {
+      setSignedDocs(prevDocs => 
+        prevDocs.map(doc => 
+          doc.id === selectedDocument.id ? selectedDocument : doc
+        )
+      );
+    }
+    
+    setIsEditingDocumentDetails(false);
+    showNotification('success', 'Document Updated', 'Document details have been updated successfully');
+  };
+
+  // Function to open document viewer
+  const openDocumentViewer = (doc) => {
+    // Create a URL for the file preview if the actual file is available
+    let enhancedDoc = { ...doc };
+    
+    if (doc.file) {
+      // If we have the actual file object (from an upload), create a URL for preview
+      enhancedDoc.fileUrl = URL.createObjectURL(doc.file);
+      enhancedDoc.hasFilePreview = true;
+    } else {
+      // For demo files without actual file content
+      enhancedDoc.hasFilePreview = false;
+    }
+    
+    setSelectedDocument(enhancedDoc);
+    setViewerOpen(true);
+  };
+
+  // Function to close document viewer
+  const closeDocumentViewer = () => {
+    // Clean up any object URLs created for previews
+    if (selectedDocument && selectedDocument.fileUrl) {
+      URL.revokeObjectURL(selectedDocument.fileUrl);
+    }
+    
+    setViewerOpen(false);
+    setSelectedDocument(null);
+  };
+
+  const markAsPrepared = useCallback((docId) => {
+    setNewPreparedDocs(prevDocs => {
+      const updatedDocs = prevDocs.map(doc => {
+        if (doc.id === docId) {
+          showNotification(
+            'success', 
+            'Status Updated', 
+            `Document ${docId} marked as Prepared`
+          );
+          return { ...doc, status: 'Prepared' };
+        }
+        return doc;
+      });
+      return updatedDocs;
+    });
+  }, [showNotification]);
+
+  const markAsUnprepared = useCallback((docId) => {
+    setNewPreparedDocs(prevDocs => {
+      const updatedDocs = prevDocs.map(doc => {
+        if (doc.id === docId) {
+          showNotification(
+            'success', 
+            'Status Updated', 
+            `Document ${docId} marked as New`
+          );
+          return { ...doc, status: 'New' };
+        }
+        return doc;
+      });
+      return updatedDocs;
+    });
+  }, [showNotification]);
+
+  // Add these new functions after the existing markAsPrepared function
+  
+  // Function to generate a report
+  const generateDocumentReport = () => {
+    // Show loading spinner
+    showNotification('info', 'Generating Report', 'Preparing document report...');
+    
+    // Create a PDF report
+    setTimeout(() => {
+      try {
+        // Create PDF content (simulating jsPDF usage)
+        const pdfContent = createPDFReport();
+        
+        // Convert the PDF content to a Blob
+        const pdfBlob = new Blob([pdfContent], { type: 'application/pdf' });
+        
+        // Create URL for the blob
+        const url = URL.createObjectURL(pdfBlob);
+        
+        // Create a temporary download link
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `patient_${patientInfo.id}_report_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(link);
+        
+        // Click the link to trigger download
+        link.click();
+        
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          
+          showNotification('success', 'Report Generated', 'Document report has been downloaded successfully!');
+        }, 100);
+      } catch (error) {
+        console.error("Error generating PDF:", error);
+        showNotification('error', 'Report Generation Failed', 'Failed to generate PDF report. Please try again.');
+      }
+    }, 1500);
+  };
+  
+  // Function to create PDF report content
+  const createPDFReport = () => {
+    // This function simulates creating a PDF using jsPDF
+    // In a real implementation, you would use jsPDF library
+    
+    // Create a binary representation of a simple PDF
+    // This is a simplified approach for simulation
+    const pdfHeader = "%PDF-1.3\n";
+    
+    // Add metadata
+    let pdf = pdfHeader;
+    pdf += "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n";
+    pdf += "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n";
+    pdf += "3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources 4 0 R /MediaBox [0 0 612 792] /Contents 5 0 R >>\nendobj\n";
+    pdf += "4 0 obj\n<< /Font << /F1 6 0 R >> >>\nendobj\n";
+    
+    // Create the actual content
+    let content = "BT\n/F1 12 Tf\n72 720 Td\n(PATIENT DOCUMENT REPORT) Tj\n";
+    content += "0 -20 Td\n(Patient: " + patientInfo.name + ") Tj\n";
+    content += "0 -20 Td\n(ID: " + patientInfo.id + ") Tj\n";
+    content += "0 -20 Td\n(Date of Birth: " + formatDate(patientInfo.dob) + ") Tj\n";
+    content += "0 -20 Td\n(Generated Date: " + new Date().toLocaleDateString() + ") Tj\n";
+    
+    // Document Summary
+    content += "0 -40 Td\n(DOCUMENT SUMMARY) Tj\n";
+    content += "0 -20 Td\n(Total Documents: " + (newPreparedDocs.length + signedDocs.length) + ") Tj\n";
+    content += "0 -20 Td\n(New Documents: " + newPreparedDocs.filter(d => d.status === 'New').length + ") Tj\n";
+    content += "0 -20 Td\n(Prepared Documents: " + newPreparedDocs.filter(d => d.status === 'Prepared').length + ") Tj\n";
+    content += "0 -20 Td\n(Signed Documents: " + signedDocs.length + ") Tj\n";
+    
+    // Document List
+    content += "0 -40 Td\n(DOCUMENT LIST) Tj\n";
+    
+    let y = -20;
+    // New & Prepared Documents
+    if (newPreparedDocs.length > 0) {
+      content += "0 " + y + " Td\n(New & Prepared Documents:) Tj\n";
+      y = -20;
+      
+      newPreparedDocs.forEach((doc, index) => {
+        content += "10 " + y + " Td\n(" + (index + 1) + ". " + (doc.type || "Unspecified") + 
+                  " - " + doc.fileName + " - " + doc.status + ") Tj\n";
+        y = -15;
+      });
+      
+      y = -20;
+    }
+    
+    // Signed Documents
+    if (signedDocs.length > 0) {
+      content += "0 " + y + " Td\n(Signed Documents:) Tj\n";
+      y = -20;
+      
+      signedDocs.forEach((doc, index) => {
+        content += "10 " + y + " Td\n(" + (index + 1) + ". " + (doc.type || "Unspecified") + 
+                  " - " + doc.fileName + " - Signed on " + formatDate(doc.signedDate) + ") Tj\n";
+        y = -15;
+      });
+    }
+    
+    content += "ET\n";
+    
+    // Add content to PDF
+    pdf += "5 0 obj\n<< /Length " + content.length + " >>\nstream\n" + content + "endstream\nendobj\n";
+    
+    // Add font
+    pdf += "6 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n";
+    
+    // Add cross-reference table
+    const xrefOffset = pdf.length;
+    pdf += "xref\n0 7\n0000000000 65535 f\n";
+    
+    // Add trailer
+    pdf += "trailer\n<< /Size 7 /Root 1 0 R >>\n";
+    pdf += "startxref\n" + xrefOffset + "\n";
+    pdf += "%%EOF";
+    
+    return pdf;
+  };
+  
+  // Update the export documents function to create a ZIP
+  const exportDocuments = () => {
+    // Show loading spinner
+    showNotification('info', 'Exporting Documents', 'Preparing documents for export...');
+    
+    // Create a ZIP file with document content
+    setTimeout(() => {
+      try {
+        // Create document data (using JSZip library simulation)
+        const mockDocuments = [
+          ...newPreparedDocs.map(doc => ({
+            id: doc.id,
+            fileName: doc.fileName,
+            type: doc.type || 'Unspecified',
+            status: doc.status,
+            content: generateMockDocumentContent(doc)
+          })),
+          ...signedDocs.map(doc => ({
+            id: doc.id,
+            fileName: doc.fileName,
+            type: doc.type || 'Unspecified',
+            status: 'Signed',
+            content: generateMockDocumentContent(doc)
+          }))
+        ];
+        
+        // Create a manifest file
+        const manifest = {
+          patientId: patientInfo.id,
+          patientName: patientInfo.name,
+          exportDate: new Date().toISOString(),
+          documents: mockDocuments.map(doc => ({
+            id: doc.id,
+            fileName: doc.fileName,
+            type: doc.type,
+            status: doc.status
+          }))
+        };
+        
+        // Convert manifest to JSON
+        const manifestJson = JSON.stringify(manifest, null, 2);
+        
+        // Create ZIP content (simulating JSZip usage)
+        const zipContent = createZIPArchive(mockDocuments, manifestJson);
+        
+        // Create a Blob for the ZIP
+        const zipBlob = new Blob([zipContent], { type: 'application/zip' });
+        const zipUrl = URL.createObjectURL(zipBlob);
+        
+        // Create a download link for the ZIP
+        const zipLink = document.createElement('a');
+        zipLink.href = zipUrl;
+        zipLink.download = `patient_${patientInfo.id}_documents_${new Date().toISOString().slice(0, 10)}.zip`;
+        document.body.appendChild(zipLink);
+        
+        // Click to download
+        zipLink.click();
+        
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(zipLink);
+          URL.revokeObjectURL(zipUrl);
+          
+          showNotification('success', 'Export Complete', 'Documents have been exported successfully!');
+        }, 1000);
+      } catch (error) {
+        console.error("Error exporting documents:", error);
+        showNotification('error', 'Export Failed', 'Failed to export documents. Please try again.');
+      }
+    }, 2000);
+  };
+  
+  // Function to create ZIP archive content
+  const createZIPArchive = (documents, manifestJson) => {
+    // This function simulates creating a ZIP using JSZip
+    // In a real implementation, you would use JSZip library
+    
+    // Create a binary representation of a simple ZIP
+    // This is a simplified approach for simulation - not a real ZIP format
+    
+    // ZIP signature and headers
+    const zipHeader = "PK\x03\x04";
+    
+    // Start with manifest.json
+    let zipContent = zipHeader + "manifest.json\n" + manifestJson + "\n";
+    
+    // Add each document to the ZIP
+    documents.forEach(doc => {
+      const fileName = doc.fileName.replace(/\s+/g, '_');
+      const fileExtension = fileName.split('.').pop().toLowerCase();
+      
+      if (fileExtension === 'pdf') {
+        // Add PDF file
+        zipContent += zipHeader + fileName + "\n" + createSimplePDF(doc.content) + "\n";
+      } else if (fileExtension === 'docx') {
+        // Add DOCX file
+        zipContent += zipHeader + fileName + "\n" + createSimpleDocx(doc.content) + "\n";
+      } else {
+        // Add text file
+        zipContent += zipHeader + fileName + "\n" + doc.content + "\n";
+      }
+    });
+    
+    // Add a readme file to explain the export
+    const readme = `PATIENT DOCUMENTS EXPORT
+    
+Patient: ${patientInfo.name}
+ID: ${patientInfo.id}
+Export Date: ${new Date().toLocaleDateString()}
+
+This ZIP archive contains the following:
+- manifest.json: A file with metadata about all documents
+- Document files: Each document exported from the patient's record
+
+Total documents: ${documents.length}
+`;
+    
+    zipContent += zipHeader + "README.txt\n" + readme + "\n";
+    
+    return zipContent;
+  };
+  
+  // Helper function to create a simple PDF representation
+  const createSimplePDF = (content) => {
+    // Create a simplified PDF structure
+    let pdf = "%PDF-1.3\n";
+    pdf += "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n";
+    pdf += "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n";
+    pdf += "3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources 4 0 R /MediaBox [0 0 612 792] /Contents 5 0 R >>\nendobj\n";
+    pdf += "4 0 obj\n<< /Font << /F1 6 0 R >> >>\nendobj\n";
+    
+    // Convert content to PDF format
+    const pdfContent = "BT\n/F1 12 Tf\n72 720 Td\n";
+    
+    // Split content into lines and add to PDF
+    const lines = content.split('\n');
+    let pdfLines = "";
+    let y = 0;
+    
+    lines.forEach((line, index) => {
+      if (index > 0) {
+        y -= 15;
+        pdfLines += "0 " + y + " Td\n";
+      }
+      pdfLines += "(" + line.replace(/[()\\]/g, '\\$&') + ") Tj\n";
+    });
+    
+    pdfLines += "ET\n";
+    
+    // Add content to PDF
+    pdf += "5 0 obj\n<< /Length " + pdfLines.length + " >>\nstream\n" + pdfLines + "endstream\nendobj\n";
+    
+    // Add font
+    pdf += "6 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n";
+    
+    // Add cross-reference table
+    pdf += "xref\n0 7\n0000000000 65535 f\n";
+    
+    // Add trailer
+    pdf += "trailer\n<< /Size 7 /Root 1 0 R >>\n";
+    pdf += "startxref\n100\n";
+    pdf += "%%EOF";
+    
+    return pdf;
+  };
+  
+  // Helper function to create a simple DOCX representation
+  const createSimpleDocx = (content) => {
+    // Create a simplified DOCX structure (just for simulation)
+    // In reality, DOCX is a ZIP file with XML content
+    let docx = "DOCX-SIMULATION\n";
+    docx += "Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document\n\n";
+    docx += content;
+    return docx;
+  };
+  
+  // Add helper function to generate mock document content
+  const generateMockDocumentContent = (doc) => {
+    let content = '';
+    
+    if (doc.type === 'Evaluation' || doc.type === 'Re-evaluation') {
+      content = `PATIENT EVALUATION REPORT\n`;
+      content += `=============================================\n`;
+      content += `Patient: ${patientInfo.name}\n`;
+      content += `DOB: ${formatDate(patientInfo.dob)}\n`;
+      content += `Evaluation Date: ${formatDate(doc.receivedDate || doc.signedDate)}\n`;
+      content += `Document ID: ${doc.id}\n\n`;
+      
+      content += `SUBJECTIVE:\n`;
+      content += `Patient presents with complaints of generalized pain and discomfort.\n`;
+      content += `History shows ${patientInfo.primaryDiagnosis}.\n\n`;
+      
+      content += `OBJECTIVE:\n`;
+      content += `- Blood Pressure: 130/85 mmHg\n`;
+      content += `- Heart Rate: 72 bpm\n`;
+      content += `- Respiratory Rate: 16 breaths/min\n`;
+      content += `- Temperature: 98.6°F\n\n`;
+      
+      content += `ASSESSMENT:\n`;
+      content += `Patient shows signs consistent with ${patientInfo.primaryDiagnosis}.\n`;
+      content += `Secondary concerns include ${patientInfo.secondaryDiagnosis}.\n\n`;
+      
+      content += `PLAN:\n`;
+      content += `1. Continue current medication regimen\n`;
+      content += `2. Physical therapy twice weekly\n`;
+      content += `3. Follow-up in 2 weeks\n\n`;
+      
+      if (doc.status === 'Signed') {
+        content += `SIGNED BY: ${doc.signedBy || 'Provider'}\n`;
+        content += `DATE: ${formatDate(doc.signedDate)}\n`;
+      }
+    } else if (doc.type === 'Position Order') {
+      content = `PHYSICIAN ORDER\n`;
+      content += `=============================================\n`;
+      content += `Patient: ${patientInfo.name}\n`;
+      content += `DOB: ${formatDate(patientInfo.dob)}\n`;
+      content += `Date: ${formatDate(doc.receivedDate || doc.signedDate)}\n`;
+      content += `Document ID: ${doc.id}\n\n`;
+      
+      content += `The following services are ordered for the above patient:\n\n`;
+      content += `1. Physical Therapy: 2 times per week for 6 weeks\n`;
+      content += `2. Occupational Therapy: 1 time per week for 4 weeks\n`;
+      content += `3. Home Health Aide: 3 times per week for 6 weeks\n\n`;
+      
+      content += `DIAGNOSIS: ${patientInfo.primaryDiagnosis}\n\n`;
+      content += `ADDITIONAL INSTRUCTIONS:\n`;
+      content += `Patient to be monitored for pain levels and progress.\n\n`;
+      
+      if (doc.status === 'Signed') {
+        content += `SIGNED BY: ${doc.signedBy || 'Provider'}\n`;
+        content += `DATE: ${formatDate(doc.signedDate)}\n`;
+      }
+    } else {
+      // Generic document content
+      content += `This is a mock document for demonstration purposes.\n\n`;
+      content += `It contains example text related to patient ${patientInfo.name}.\n`;
+      content += `Generated for document ID ${doc.id}.\n\n`;
+      content += `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisi ut aliquam facilisis, nisl ipsum ultricies nunc, ut aliquam nisl nunc eu nisl. Sed euismod, nisl ut aliquam facilisis, nisl ipsum ultricies nunc, ut aliquam nisl nunc eu nisl.\n\n`;
+      
+      if (doc.status === 'Signed') {
+        content += `SIGNED BY: ${doc.signedBy || 'Provider'}\n`;
+        content += `DATE: ${formatDate(doc.signedDate)}\n`;
+      }
+    }
+    
+    return content;
+  };
+
+  // New state for episodes, cpo data and document handling
+  const [episodes, setEpisodes] = useState(generateEpisodeData());
+  const [monthlyCPOData, setMonthlyCPOData] = useState(generateMonthlyCPOData());
+  const [activeEpisode, setActiveEpisode] = useState(null);
+  const [episodeFilterDates, setEpisodeFilterDates] = useState({ start: '', end: '' });
+  const [filteredEpisodes, setFilteredEpisodes] = useState([]);
+  const [expandedEpisode, setExpandedEpisode] = useState(null);
+  const [cpoMinutesEditing, setCpoMinutesEditing] = useState(null);
+  const [documentCategories, setDocumentCategories] = useState(['Evaluation', 'Treatment', 'Assessment', 'Plan of Care']);
+  const [showEpisodeModal, setShowEpisodeModal] = useState(false);
+  const [showDocumentsModal, setShowDocumentsModal] = useState(false);
+  const [currentEpisodeDocuments, setCurrentEpisodeDocuments] = useState([]);
+  const [editingEpisode, setEditingEpisode] = useState(null);
+  const [newEpisodeData, setNewEpisodeData] = useState({
+    startDate: '',
+    socDate: '',
+    endDate: '',
+    status: 'active',
+    diagnosis: '',
+    provider: '',
+    notes: ''
+  });
+  const [timelineZoomLevel, setTimelineZoomLevel] = useState(1); // Default zoom level
+  
+  // Initialize filtered episodes
+  useEffect(() => {
+    setFilteredEpisodes(episodes);
+    // Set the most recent episode as active by default
+    if (episodes.length > 0) {
+      setActiveEpisode(episodes[episodes.length - 1].id);
+    }
+  }, [episodes]);
+  
+  // Apply episode filters when date range changes
+  useEffect(() => {
+    const filtered = filterEpisodesByDateRange(episodes, episodeFilterDates.start, episodeFilterDates.end);
+    setFilteredEpisodes(filtered);
+  }, [episodeFilterDates, episodes]);
+  
+  // Updated filter function to properly filter by date
+  const handleEpisodeDateFilterChange = (field, value) => {
+    setEpisodeFilterDates(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+  
+  // Add function to handle episode selection
+  const handleEpisodeSelect = (episodeId) => {
+    setActiveEpisode(episodeId);
+    
+    // If the episode is already expanded, collapse it
+    if (expandedEpisode === episodeId) {
+      setExpandedEpisode(null);
+    } else {
+      setExpandedEpisode(episodeId);
+    }
+  };
+  
+  // Add function to handle adding a new episode
+  const handleAddEpisode = () => {
+    // Reset form data
+    setNewEpisodeData({
+      startDate: new Date().toISOString().split('T')[0],
+      socDate: '',
+      endDate: '',
+      status: 'active',
+      diagnosis: '',
+      provider: '',
+      notes: ''
+    });
+    setEditingEpisode(null);
+    setShowEpisodeModal(true);
+  };
+  
+  // Add function to save a new episode
+  const handleSaveEpisode = () => {
+    if (editingEpisode) {
+      // Update existing episode
+      setEpisodes(episodes.map(ep => 
+        ep.id === editingEpisode.id 
+          ? { ...ep, ...newEpisodeData } 
+          : ep
+      ));
+      showNotification('success', 'Episode Updated', 'Episode has been updated successfully.');
+    } else {
+      // Create new episode
+      const newEpisode = {
+        ...newEpisodeData,
+        id: episodes.length > 0 ? Math.max(...episodes.map(e => e.id)) + 1 : 1,
+        documents: []
+      };
+      setEpisodes([...episodes, newEpisode]);
+      showNotification('success', 'Episode Added', 'A new episode has been added successfully.');
+    }
+    setShowEpisodeModal(false);
+  };
+  
+  // Add function to edit an episode
+  const handleEditEpisode = (episodeId) => {
+    const episode = episodes.find(ep => ep.id === episodeId);
+    if (!episode) return;
+    
+    setEditingEpisode(episode);
+    setNewEpisodeData({
+      startDate: episode.startDate,
+      socDate: episode.socDate,
+      endDate: episode.endDate,
+      status: episode.status,
+      diagnosis: episode.diagnosis,
+      provider: episode.provider,
+      notes: episode.notes || ''
+    });
+    setShowEpisodeModal(true);
+  };
+  
+  // Add function to handle input changes for episode form
+  const handleEpisodeInputChange = (field, value) => {
+    setNewEpisodeData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+  
+  // Add function to view episode documents
+  const handleViewEpisodeDocuments = (episodeId) => {
+    const episode = episodes.find(ep => ep.id === episodeId);
+    if (!episode) return;
+    
+    setCurrentEpisodeDocuments(episode.documents || []);
+    setShowDocumentsModal(true);
+  };
+  
+  // Add function to add a document to an episode
+  const handleAddDocumentToEpisode = (episodeId, documentType) => {
+    const date = new Date();
+    const newDoc = {
+      id: `DOC-EP${episodeId}-${Date.now().toString().slice(-4)}`,
+      type: documentType,
+      fileName: `${documentType.toLowerCase().replace(/\s/g, '_')}_episode${episodeId}.pdf`,
+      createdDate: date.toISOString().split('T')[0],
+      size: `${(Math.random() * 2 + 0.5).toFixed(1)} MB`,
+      status: 'New'
+    };
+    
+    setEpisodes(episodes.map(ep => 
+      ep.id === episodeId 
+        ? { ...ep, documents: [...(ep.documents || []), newDoc] } 
+        : ep
+    ));
+    
+    if (episodeId === expandedEpisode) {
+      setCurrentEpisodeDocuments(prev => [...prev, newDoc]);
+    }
+    
+    showNotification('success', 'Document Added', `${documentType} document has been added to Episode ${episodeId}.`);
+  };
+  
+  const handleSignDocument = useCallback((docId) => {
+    // First check if the document exists and is prepared
+    const docToSign = newPreparedDocs.find(doc => doc.id === docId);
+    
+    if (!docToSign) {
+      showNotification('error', 'Sign Failed', 'Document not found');
+      return;
+    }
+    
+    if (docToSign.status !== 'Prepared') {
+      showNotification('warning', 'Not Ready', 'Document must be marked as Prepared before signing');
+      return;
+    }
+    
+    if (!docToSign.type) {
+      showNotification('warning', 'Type Required', 'Please select a document type before signing');
+      return;
+    }
+    
+    // Show signing in progress notification
+    showNotification('info', 'Signing Document', 'Processing signature...');
+    
+    // Simulate a delay for document signing
+    setTimeout(() => {
+      moveToSigned(docId);
+    }, 1500);
+  }, [newPreparedDocs, showNotification, moveToSigned]);
+  
+  // Add function to update document type
+  const handleUpdateDocumentType = (docId, isNew, newType) => {
+    if (isNew) {
+      setNewPreparedDocs(prev => 
+        prev.map(doc => 
+          doc.id === docId ? { ...doc, type: newType } : doc
+        )
+      );
+    } else {
+      setSignedDocs(prev => 
+        prev.map(doc => 
+          doc.id === docId ? { ...doc, type: newType } : doc
+        )
+      );
+    }
+  };
+  
+  // Add function to filter documents by type
+  const handleFilterDocumentsByType = (type) => {
+    if (type === 'all') {
+      setNewPreparedDocs(newPreparedDocs);
+      setSignedDocs(signedDocs);
+      return;
+    }
+    
+    const filteredNewPrepared = newPreparedDocs.filter(doc => doc.type === type);
+    const filteredSigned = signedDocs.filter(doc => doc.type === type);
+    
+    setNewPreparedDocs(filteredNewPrepared);
+    setSignedDocs(filteredSigned);
+  };
+
+  // Add function to update CPO minutes for a month
+  const handleUpdateCPOMinutes = (monthIndex, newMinutes) => {
+    if (isNaN(newMinutes) || newMinutes < 0) return;
+    
+    const updatedCPOData = [...monthlyCPOData];
+    updatedCPOData[monthIndex] = {
+      ...updatedCPOData[monthIndex],
+      minutes: newMinutes
+    };
+    
+    setMonthlyCPOData(updatedCPOData);
+    setCpoMinutesEditing(null);
+    
+    // Update total CPO minutes in patient info
+    const totalMinutes = updatedCPOData.reduce((sum, month) => sum + month.minutes, 0);
+    setPatientInfo(prev => ({
+      ...prev,
+      cpoMinsCaptured: totalMinutes
+    }));
+  };
+  
+  // Add function to add new document to signed or unsigned list
+  const handleAddDocument = (category, isNew = true) => {
+    const today = new Date().toISOString().split('T')[0];
+    const newDoc = {
+      id: `DOC-${Date.now().toString().slice(-6)}`,
+      type: category,
+      status: isNew ? 'New' : 'Prepared',
+      receivedDate: today,
+      fileName: `${category.toLowerCase().replace(/\s/g, '_')}_${today}.pdf`,
+      size: '0.8 MB',
+      uploadedBy: 'Current User'
+    };
+    
+    setNewPreparedDocs(prev => [...prev, newDoc]);
+    
+    // Update notification
+    showNotification('success', 'Document Added', `New ${category} document has been added to the list.`);
+  };
+
+  // Add this function to handle document download
+  const handleDownloadDocument = useCallback((doc) => {
+    showNotification('info', 'Downloading Document', `Preparing ${doc.fileName} for download...`);
+    
+    // If we have the actual file object from an upload, download it directly
+    if (doc.file) {
+      const url = URL.createObjectURL(doc.file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = doc.fileName;
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showNotification('success', 'Download Complete', `${doc.fileName} has been downloaded.`);
+      }, 100);
+      return;
+    }
+    
+    // Simulate file download delay for demo files
+    setTimeout(() => {
+      // Create sample content based on document type
+      const docContent = generateMockDocumentContent(doc);
+      
+      // Create a Blob with the content
+      let mimeType = 'text/plain';
+      if (doc.fileName.endsWith('.pdf')) {
+        mimeType = 'application/pdf';
+      } else if (doc.fileName.endsWith('.docx')) {
+        mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      }
+      
+      const blob = new Blob([docContent], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      
+      // Create a temporary download link
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = doc.fileName;
+      document.body.appendChild(link);
+      
+      // Click the link to trigger download
+      link.click();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        showNotification('success', 'Download Complete', `${doc.fileName} has been downloaded.`);
+      }, 100);
+    }, 1500);
+  }, [showNotification]);
+
+  // Update calculateCPOMinutes function to call it when needed (like in useEffect)
+  useEffect(() => {
+    // Call calculateCPOMinutes when component mounts or cpoDocs changes
+    calculateCPOMinutes();
+  }, [cpoDocs]);
+
+  // Add function to export CPO report
+  const exportCPOReport = () => {
+    showNotification('info', 'Generating CPO Report', 'Preparing CPO report for export...');
+    
+    setTimeout(() => {
+      try {
+        // Create report data
+        const reportData = {
+          patientInfo: {
+            id: patientInfo.id,
+            name: patientInfo.name,
+            dob: formatDate(patientInfo.dob),
+            provider: patientInfo.primaryPhysician || 'Not assigned'
+          },
+          cpoSummary: {
+            totalMinutes: patientInfo.cpoMinsCaptured,
+            documentsCount: cpoDocs.length,
+            calculationDate: new Date().toLocaleDateString()
+          },
+          documents: cpoDocs.map(doc => ({
+            id: doc.id,
+            fileName: doc.fileName,
+            creationDate: formatDate(doc.creationDate),
+            size: doc.size
+          })),
+          monthlyCPOData: monthlyCPOData
+        };
+        
+        // Convert to JSON
+        const jsonData = JSON.stringify(reportData, null, 2);
+        
+        // Create PDF-like content
+        const pdfContent = createCPOReportPDF(reportData);
+        
+        // Create a blob with the PDF data
+        const blob = new Blob([pdfContent], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary download link
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `patient_${patientInfo.id}_cpo_report_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(link);
+        
+        // Click the link to trigger download
+        link.click();
+        
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          
+          showNotification('success', 'CPO Report Generated', 'CPO report has been downloaded successfully!');
+        }, 100);
+      } catch (error) {
+        console.error("Error generating CPO report:", error);
+        showNotification('error', 'Report Generation Failed', 'Failed to generate CPO report. Please try again.');
+      }
+    }, 1000);
+  };
+
+  // Function to create a CPO report PDF
+  const createCPOReportPDF = (reportData) => {
+    // Create a simplified PDF structure similar to createPDFReport function
+    const pdfHeader = "%PDF-1.3\n";
+    
+    // Add metadata
+    let pdf = pdfHeader;
+    pdf += "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n";
+    pdf += "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n";
+    pdf += "3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources 4 0 R /MediaBox [0 0 612 792] /Contents 5 0 R >>\nendobj\n";
+    pdf += "4 0 obj\n<< /Font << /F1 6 0 R >> >>\nendobj\n";
+    
+    // Create the actual content
+    let content = "BT\n/F1 12 Tf\n72 720 Td\n(CPO REPORT) Tj\n";
+    content += "0 -20 Td\n(Patient: " + reportData.patientInfo.name + ") Tj\n";
+    content += "0 -20 Td\n(ID: " + reportData.patientInfo.id + ") Tj\n";
+    content += "0 -20 Td\n(Date of Birth: " + reportData.patientInfo.dob + ") Tj\n";
+    content += "0 -20 Td\n(Generated Date: " + new Date().toLocaleDateString() + ") Tj\n";
+    
+    // CPO Summary
+    content += "0 -40 Td\n(CPO SUMMARY) Tj\n";
+    content += "0 -20 Td\n(Total CPO Minutes: " + reportData.cpoSummary.totalMinutes + ") Tj\n";
+    content += "0 -20 Td\n(Documents Count: " + reportData.cpoSummary.documentsCount + ") Tj\n";
+    content += "0 -20 Td\n(Calculation Date: " + reportData.cpoSummary.calculationDate + ") Tj\n";
+    
+    // Document List
+    content += "0 -40 Td\n(CPO DOCUMENT LIST) Tj\n";
+    
+    let y = -20;
+    reportData.documents.forEach((doc, index) => {
+      content += "0 " + y + " Td\n(" + (index + 1) + ". " + doc.fileName + 
+                " - Created on " + doc.creationDate + ") Tj\n";
       y = -15;
     });
     
@@ -2013,7 +3964,7 @@ Total documents: ${documents.length}
     } else {
       // Set new field and default to descending
       setSortField(field);
-      setSortDirection('asc');
+      setSortDirection('desc');
     }
   };
 
@@ -2583,7 +4534,7 @@ Total documents: ${documents.length}
                             </div>
                             <div className="marker-label">From</div>
                           </div>
-                          <div className="episode-line from-to-end"></div>
+                          <div className="episode-line"></div>
                           <div className="episode-marker end">
                             <div className="marker-icon">
                               <FaCircle />
@@ -3508,12 +5459,7 @@ Total documents: ${documents.length}
               
               <button 
                 className="action-button primary add-cpo-btn"
-                onClick={() => {
-                  // Make sure we reset the file input first
-                  const fileInput = document.getElementById('cpo-file-input');
-                  if (fileInput) fileInput.value = '';
-                  fileInput.click();
-                }}
+                onClick={() => document.getElementById('cpo-file-input').click()}
               >
                 <span className="icon-wrapper"><FaPlus /></span>
                 Add new CPO document
@@ -3522,7 +5468,6 @@ Total documents: ${documents.length}
                 type="file"
                 id="cpo-file-input"
                 style={{ display: 'none' }}
-                accept=".pdf,.doc,.docx"
                 onChange={handleFileUpload}
               />
             </div>
@@ -3565,47 +5510,34 @@ Total documents: ${documents.length}
                     <tbody>
                       {cpoDocs.map((doc, index) => (
                         <tr key={doc.id}>
-                          <td>
-                            <div className="document-name">
-                              <FaFilePdf className="file-icon pdf" />
+                        <td>
+                          <div className="document-name">
+                            <FaFilePdf className="file-icon pdf" />
                               <span>{doc.fileName}</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="date-input-container">
-                              <FaCalendar className="date-icon" />
-                              <input 
-                                type="date" 
-                                value={doc.creationDate || ''} 
-                                onChange={(e) => {
-                                  setCpoDocs(prevDocs => 
-                                    prevDocs.map(d => 
-                                      d.id === doc.id ? {...d, creationDate: e.target.value} : d
-                                    )
-                                  );
-                                  // Recalculate CPO minutes when date changes
-                                  setTimeout(calculateCPOMinutes, 100);
-                                }}
-                                className="date-input"
-                              />
-                            </div>
-                          </td>
-                          <td>
-                            <div className="action-buttons">
-                              <button
-                                className="action-icon-button"
+                          </div>
+                        </td>
+                        <td>
+                          <div className="date-display">
+                            <FaCalendar className="date-icon" />
+                              <span>{formatDate(doc.creationDate)}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="action-buttons">
+                            <button
+                              className="action-icon-button"
                                 onClick={() => openDocumentViewer(doc)}
-                                title="View Document"
-                              >
-                                <FaEye />
-                              </button>
-                              <button
-                                className="action-icon-button"
+                              title="View Document"
+                            >
+                              <FaEye />
+                            </button>
+                            <button
+                              className="action-icon-button"
                                 title="Download Document"
                                 onClick={() => handleDownloadDocument(doc)}
-                              >
-                                <FaDownload />
-                              </button>
+                            >
+                              <FaDownload />
+                            </button>
                               <button 
                                 className="action-icon-button" 
                                 title="Edit Document"
@@ -3615,11 +5547,11 @@ Total documents: ${documents.length}
                                   setViewerOpen(true);
                                 }}
                               >
-                                <FaEdit />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
+                              <FaEdit />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
                       ))}
                     </tbody>
                   </table>
@@ -3683,12 +5615,24 @@ Total documents: ${documents.length}
                 <div className="document-meta">
                   <span className="document-meta-item">
                     <FaHashtag className="meta-icon" />
-                    <div className="doc-id-display viewer">
-                      <span>{selectedDocument.id}</span>
-                    </div>
+                    {isEditingDocumentDetails ? (
+                      <input 
+                        type="text" 
+                        value={selectedDocument.id} 
+                        onChange={(e) => updateViewerDocument('id', e.target.value)}
+                        className="doc-id-input"
+                      />
+                    ) : (
+                      <div className="doc-id-display viewer">
+                        <span>{selectedDocument.id}</span>
+                        <div className="edit-indicator">
+                          <FaEdit className="edit-icon" />
+                        </div>
+                      </div>
+                    )}
                   </span>
-                  {/* Remove or hide type selection if we're in the CPO tab */}
-                  {activeTab !== 'cpo' && (
+                  {/* Only show document type for non-CPO documents */}
+                  {!selectedDocument.id.startsWith('CPO_') && (
                     <span className="document-meta-item">
                       <FaFileAlt className="meta-icon" />
                       Type: {isEditingDocumentDetails ? (
@@ -3704,22 +5648,6 @@ Total documents: ${documents.length}
                         </select>
                       ) : (
                         selectedDocument.type || "Not specified"
-                      )}
-                    </span>
-                  )}
-                  {/* If we're in CPO tab, show creation date editor */}
-                  {activeTab === 'cpo' && (
-                    <span className="document-meta-item">
-                      <FaCalendar className="meta-icon" />
-                      Creation Date: {isEditingDocumentDetails ? (
-                        <input 
-                          type="date" 
-                          value={selectedDocument.creationDate || new Date().toISOString().slice(0, 10)} 
-                          onChange={(e) => updateViewerDocument('creationDate', e.target.value)}
-                          className="doc-date-input"
-                        />
-                      ) : (
-                        formatDate(selectedDocument.creationDate) || "Not specified"
                       )}
                     </span>
                   )}
@@ -3832,7 +5760,7 @@ Total documents: ${documents.length}
                     <div className="pdf-header">
                       <img src="https://via.placeholder.com/150x60" alt="Company Logo" className="pdf-logo" />
                       <div className="pdf-title">
-                        <h2>{selectedDocument.type || 'Patient Document'}</h2>
+                        <h2>{selectedDocument.id.startsWith('CPO_') ? 'CPO Document' : (selectedDocument.type || 'Patient Document')}</h2>
                         <p>Document ID: {selectedDocument.id}</p>
                       </div>
                     </div>
@@ -3862,10 +5790,17 @@ Total documents: ${documents.length}
                       <div className="pdf-section">
                         <h3>Document Details</h3>
                         <p>
-                          {selectedDocument.type === 'Evaluation' && 'This evaluation document contains the assessment findings for the patient. The patient was evaluated for various symptoms and conditions as described below.'}
-                          {selectedDocument.type === 'Re-evaluation' && 'This re-evaluation document contains updated assessment findings for the patient. The patient was re-evaluated for progress and current status as detailed below.'}
-                          {selectedDocument.type === 'Position Order' && 'This position order document contains specific instructions for patient positioning and physical therapy regimen as prescribed by the physician.'}
-                          {!selectedDocument.type && 'This document contains important patient information and healthcare details. Please review the contents carefully.'}
+                          {selectedDocument.id.startsWith('CPO_') 
+                            ? 'This is a CPO document created by the care team based on clinical principles. It contains important patient information related to Chronic Care Management Plan Oversight.'
+                            : (
+                              <>
+                                {selectedDocument.type === 'Evaluation' && 'This evaluation document contains the assessment findings for the patient. The patient was evaluated for various symptoms and conditions as described below.'}
+                                {selectedDocument.type === 'Re-evaluation' && 'This re-evaluation document contains updated assessment findings for the patient. The patient was re-evaluated for progress and current status as detailed below.'}
+                                {selectedDocument.type === 'Position Order' && 'This position order document contains specific instructions for patient positioning and physical therapy regimen as prescribed by the physician.'}
+                                {!selectedDocument.type && 'This document contains important patient information and healthcare details. Please review the contents carefully.'}
+                              </>
+                            )
+                          }
                         </p>
                         
                         <div className="pdf-table">
