@@ -2791,17 +2791,6 @@ Total documents: ${documents.length}
               </div>
                     
               <div className="hhah-services-timelinee">
-                <div className="document-tabss">
-                  <button className={`document-tabb ${activeDocTab === 'new' ? 'activee' : ''}`} onClick={() => setActiveDocTab('new')}>
-                    <FaFileAlt className="tab-iconn" />
-                    New & Prepared <span className="doc-countt">{newPreparedDocs.length}</span>
-                  </button>
-                  <button className={`document-tabb ${activeDocTab === 'signed' ? 'activee' : ''}`} onClick={() => setActiveDocTab('signed')}>
-                    <FaCheckCircle className="tab-iconn" />
-                    Signed Documents <span className="doc-countt">{signedDocs.length}</span>
-                  </button>
-                </div>
-                
                 <div className="document-listingg">
                   {/* Document toolbar without upload button */}
                   <div className="document-toolbarr">
@@ -2828,24 +2817,31 @@ Total documents: ${documents.length}
                     </div>
                   </div>
                   
-                  {activeDocTab === 'new' && (
+                  {/* New & Prepared Documents Section */}
+                  <div className="document-section">
+                    <div className="section-header">
+                      <h4 className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FaFileAlt className="section-icon" />
+                        New & Prepared Documents
+                      </h4>
+                    </div>
                     <div className="document-list">
                       {newPreparedDocs.length > 0 ? (
                         <table className="documents-table">
                           <thead>
                             <tr>
-                              <th>Document Type</th>
-                              <th>Document ID</th>
-                              <th>File Name</th>
-                              <th>Date Received</th>
-                              <th>Status</th>
-                              <th>Actions</th>
+                              <th style={{ textAlign: 'left' }}>Document Type</th>
+                              <th style={{ textAlign: 'left' }}>Document ID</th>
+                              <th style={{ textAlign: 'left' }}>File Name</th>
+                              <th style={{ textAlign: 'left' }}>Date Received</th>
+                              <th style={{ textAlign: 'left' }}>Status</th>
+                              <th style={{ textAlign: 'left' }}>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
                             {newPreparedDocs.map((doc, index) => (
                               <tr key={index}>
-                                <td>
+                                <td style={{ textAlign: 'left' }}>
                                   <select 
                                     className="document-type-select"
                                     value={doc.type || ''}
@@ -2857,8 +2853,8 @@ Total documents: ${documents.length}
                                     ))}
                                   </select>
                                 </td>
-                                <td>{doc.id}</td>
-                                <td>
+                                <td style={{ textAlign: 'left' }}>{doc.id}</td>
+                                <td style={{ textAlign: 'left' }}>
                                   <div className="file-name-cell">
                                     <span className="file-icon-wrapper">
                                       {doc.fileName && doc.fileName.endsWith('.pdf') ? (
@@ -2872,13 +2868,13 @@ Total documents: ${documents.length}
                                     {doc.fileName || 'Unnamed File'}
                                   </div>
                                 </td>
-                                <td>{formatDate(doc.receivedDate)}</td>
-                                <td>
+                                <td style={{ textAlign: 'left' }}>{formatDate(doc.receivedDate)}</td>
+                                <td style={{ textAlign: 'left' }}>
                                   <span className={`status-badge ${doc.status === 'New' ? 'new' : 'prepared'}`}>
                                     {doc.status === 'New' ? 'New' : 'Prepared'}
                                   </span>
                                 </td>
-                                <td>
+                                <td style={{ textAlign: 'left' }}>
                                   <div className="action-buttons">
                                     <button className="doc-action-btn view" title="View" onClick={() => openDocumentViewer(doc)}>
                                       <FaEye />
@@ -2914,27 +2910,34 @@ Total documents: ${documents.length}
                         </div>
                       )}
                     </div>
-                  )}
-                  
-                  {activeDocTab === 'signed' && (
+                  </div>
+
+                  {/* Signed Documents Section */}
+                  <div className="document-section">
+                    <div className="section-header">
+                      <h4 className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FaCheckCircle className="section-icon" />
+                        Signed Documents
+                      </h4>
+                    </div>
                     <div className="document-list">
                       {signedDocs.length > 0 ? (
                         <table className="documents-table">
                           <thead>
                             <tr>
-                              <th>Document Type</th>
-                              <th>Document ID</th>
-                              <th>File Name</th>
-                              <th>Date Signed</th>
-                              <th>Actions</th>
+                              <th style={{ textAlign: 'left' }}>Document Type</th>
+                              <th style={{ textAlign: 'left' }}>Document ID</th>
+                              <th style={{ textAlign: 'left' }}>File Name</th>
+                              <th style={{ textAlign: 'left' }}>Date Signed</th>
+                              <th style={{ textAlign: 'left' }}>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
                             {signedDocs.map((doc, index) => (
                               <tr key={index}>
-                                <td>{doc.type || 'Unspecified Document'}</td>
-                                <td>{doc.id}</td>
-                                <td>
+                                <td style={{ textAlign: 'left' }}>{doc.type || 'Unspecified Document'}</td>
+                                <td style={{ textAlign: 'left' }}>{doc.id}</td>
+                                <td style={{ textAlign: 'left' }}>
                                   <div className="file-name-cell">
                                     <span className="file-icon-wrapper">
                                       {doc.fileName && doc.fileName.endsWith('.pdf') ? (
@@ -2948,8 +2951,8 @@ Total documents: ${documents.length}
                                     {doc.fileName || 'Signed Document'}
                                   </div>
                                 </td>
-                                <td>{formatDate(doc.signedDate)}</td>
-                                <td>
+                                <td style={{ textAlign: 'left' }}>{formatDate(doc.signedDate)}</td>
+                                <td style={{ textAlign: 'left' }}>
                                   <div className="action-buttons">
                                     <button className="doc-action-btn view" title="View" onClick={() => openDocumentViewer(doc)}>
                                       <FaEye />
@@ -2970,7 +2973,7 @@ Total documents: ${documents.length}
                         </div>
                       )}
                     </div>
-                  )}
+                  </div>
                   
                   <div className="documents-summary">
                     <div className="document-stats">
@@ -3139,18 +3142,18 @@ Total documents: ${documents.length}
                     <table className="document-table">
                       <thead>
                         <tr>
-                          <th>Document Type</th>
-                          <th>Document ID</th>
-                          <th>File Name</th>
-                          <th>Date Received</th>
-                          <th>Status</th>
-                          <th>Actions</th>
+                          <th style={{ textAlign: 'left' }}>Document Type</th>
+                          <th style={{ textAlign: 'left' }}>Document ID</th>
+                          <th style={{ textAlign: 'left' }}>File Name</th>
+                          <th style={{ textAlign: 'left' }}>Date Received</th>
+                          <th style={{ textAlign: 'left' }}>Status</th>
+                          <th style={{ textAlign: 'left' }}>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {filteredNewPreparedDocs.map(doc => (
                           <tr key={doc.id} className={`status-${doc.status.toLowerCase()}`}>
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <div className="select-wrapper">
                                 <FaFileAlt className="select-icon" />
                                 <select 
@@ -3165,12 +3168,12 @@ Total documents: ${documents.length}
                                 </select>
                               </div>
                             </td>
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <div className="cell-with-icon">
                                 <DocIdInput docId={doc.id} onUpdate={updateDocId} />
                               </div>
                             </td>
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <div className="cell-with-icon">
                                 {getFileIconByName(doc.fileName)}
                                 <span 
@@ -3182,13 +3185,13 @@ Total documents: ${documents.length}
                                 </span>
                               </div>
                             </td>
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <div className="cell-with-icon">
                                 <FaCalendar className="cell-icon" />
                                 {formatDate(doc.receivedDate)}
                               </div>
                             </td>
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <button 
                                 className={`status-toggle-button ${doc.status.toLowerCase()}`}
                                 onClick={() => toggleDocPrepared(doc.id)}
@@ -3207,7 +3210,7 @@ Total documents: ${documents.length}
                                 )}
                               </button>
                             </td>
-                            <td>
+                            <td style={{ textAlign: 'left' }}>
                               <div className="actions-cell">
                                 <button 
                                   className="action-icon-button"
@@ -3267,28 +3270,28 @@ Total documents: ${documents.length}
                   <table className="document-table">
                     <thead>
                       <tr>
-                        <th>Document Type</th>
-                        <th>Document ID</th>
-                        <th>File Name</th>
-                        <th>Date Signed</th>
-                        <th>Actions</th>
+                        <th style={{ textAlign: 'left' }}>Document Type</th>
+                        <th style={{ textAlign: 'left' }}>Document ID</th>
+                        <th style={{ textAlign: 'left' }}>File Name</th>
+                        <th style={{ textAlign: 'left' }}>Date Signed</th>
+                        <th style={{ textAlign: 'left' }}>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredSignedDocs.map(doc => (
                         <tr key={doc.id} className="status-signed">
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             <div className="cell-with-icon">
                               <FaFileAlt className="cell-icon" />
                               {doc.type}
                             </div>
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             <div className="cell-with-icon">
                               <DocIdInput docId={doc.id} onUpdate={updateDocId} />
                             </div>
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             <div className="cell-with-icon">
                               {getFileIconByName(doc.fileName)}
                               <span 
@@ -3300,13 +3303,13 @@ Total documents: ${documents.length}
                               </span>
                             </div>
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             <div className="cell-with-icon">
                               <FaCalendar className="cell-icon" />
                               {formatDate(doc.signedDate)}
                             </div>
                           </td>
-                          <td>
+                          <td style={{ textAlign: 'left' }}>
                             <div className="actions-cell">
                               <button 
                                 className="action-icon-button"

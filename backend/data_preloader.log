@@ -7234,3 +7234,390 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-16 02:22:05,809 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 02:22:05] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-16 02:36:44,664 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 02:36:44] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-16 02:36:44,909 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 02:36:44] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 03:44:02,268 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 03:44:02] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 03:44:02,520 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 03:44:02] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 03:58:51,846 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 03:58:51] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 03:58:52,120 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 03:58:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:00:04,521 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:00:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:00:04,772 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:00:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:26:46,900 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:26:46] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:26:47,024 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:26:47] "GET /api/map?t=1744757806508&noCache=true&stableView=true?t%3D1744757806508&_show_states=true&_show_counties=true&_show_msas=true&_t=1744757806510 HTTP/1.1" 200 -
+2025-04-16 04:26:47,152 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:26:47] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:26:51,365 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:26:51] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:26:51,714 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:26:51,716 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744757811403')])
+2025-04-16 04:26:51,719 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:26:51,721 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:26:51,723 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:26:51,726 - statistical_area_zoom - INFO - Loading map data...
+2025-04-16 04:26:51,731 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-16 04:26:51,733 - data_preloader - INFO - Loading all cached data...
+2025-04-16 04:26:52,126 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-16 04:26:52,162 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-16 04:26:52,164 - statistical_area_zoom - INFO - Data loaded in 0.44 seconds
+2025-04-16 04:26:52,166 - statistical_area_zoom - INFO - Normalized area name: baltimore-columbia-towson
+2025-04-16 04:26:52,252 - statistical_area_zoom - INFO - Trying to match city name: baltimore
+2025-04-16 04:26:52,278 - statistical_area_zoom - INFO - Found fuzzy city match: Baltimore-Columbia-Towson, MD
+2025-04-16 04:26:52,281 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-16 04:26:52,283 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-16 04:26:52,300 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Baltimore-Columbia-Towson
+2025-04-16 04:26:52,302 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Baltimore-Columbia-Towson
+2025-04-16 04:26:52,338 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-16 04:26:52,340 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-16 04:26:52,342 - statistical_area_zoom - INFO - Center: 39.30548862978562, -76.55072995470198
+2025-04-16 04:26:52,344 - statistical_area_zoom - INFO - Bounds: -77.311536, 38.711099, -75.747761, 39.721367
+2025-04-16 04:26:53,807 - statistical_area_zoom - INFO - Map saved to C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:26:53,809 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:26:53,810 - __main__ - INFO - Request completed in 2.09 seconds
+2025-04-16 04:26:54,143 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:26:54] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744757811403 HTTP/1.1" 200 -
+2025-04-16 04:26:54,195 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:26:54,196 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744757811403'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744757814151')])
+2025-04-16 04:26:54,199 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:26:54,200 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:26:54,201 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:26:54,202 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.0 hours)
+2025-04-16 04:26:54,204 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:26:54,205 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:26:54,205 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:26:54,207 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:26:54] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744757811403&_show_states=true&_show_counties=true&_show_msas=true&_t=1744757814151 HTTP/1.1" 200 -
+2025-04-16 04:38:43,100 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:38:43] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:38:43,338 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:38:43,342 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758523112')])
+2025-04-16 04:38:43,345 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:38:43,349 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:38:43,354 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:43,362 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:38:43,369 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:38:43,371 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:43,374 - __main__ - INFO - Request completed in 0.03 seconds
+2025-04-16 04:38:43,383 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:38:43] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758523112 HTTP/1.1" 200 -
+2025-04-16 04:38:43,789 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:38:43,793 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758523112'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758523413')])
+2025-04-16 04:38:43,795 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:38:43,797 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:38:43,799 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:43,802 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:38:43,805 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:38:43,808 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:43,812 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-16 04:38:43,820 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:38:43] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758523112&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758523413 HTTP/1.1" 200 -
+2025-04-16 04:38:51,893 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:38:51] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:38:52,212 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:38:52,217 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758531897')])
+2025-04-16 04:38:52,220 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:38:52,223 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:38:52,227 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:52,230 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:38:52,234 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:38:52,235 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:52,239 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-16 04:38:52,244 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:38:52] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758531897 HTTP/1.1" 200 -
+2025-04-16 04:38:52,328 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:38:52,330 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758531897'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758532275')])
+2025-04-16 04:38:52,331 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:38:52,331 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:38:52,332 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:52,333 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:38:52,334 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:38:52,336 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:38:52,336 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:38:52,338 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:38:52] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758531897&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758532275 HTTP/1.1" 200 -
+2025-04-16 04:39:08,391 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:08] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:39:08,722 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:39:08,724 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758548396')])
+2025-04-16 04:39:08,726 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:39:08,727 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:39:08,729 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:08,734 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:39:08,738 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:39:08,740 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:08,741 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:39:08,745 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:08] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758548396 HTTP/1.1" 200 -
+2025-04-16 04:39:09,143 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:39:09,145 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758548396'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758548762')])
+2025-04-16 04:39:09,148 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:39:09,150 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:39:09,152 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:09,154 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:39:09,156 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:39:09,158 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:09,161 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:39:09,169 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:09] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758548396&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758548762 HTTP/1.1" 200 -
+2025-04-16 04:39:15,427 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:39:15,765 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:39:15,768 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758555451')])
+2025-04-16 04:39:15,769 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:39:15,771 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:39:15,773 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:15,774 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:39:15,777 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:39:15,779 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:15,781 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:39:15,786 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:15] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758555451 HTTP/1.1" 200 -
+2025-04-16 04:39:15,857 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:39:15,860 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758555451'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758555800')])
+2025-04-16 04:39:15,864 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:39:15,866 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:39:15,868 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:15,871 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:39:15,873 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:39:15,875 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:39:15,876 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:39:15,882 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:15] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758555451&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758555800 HTTP/1.1" 200 -
+2025-04-16 04:40:28,532 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:40:28] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:40:28,781 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:40:28,783 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758628546')])
+2025-04-16 04:40:28,783 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:40:28,786 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:40:28,790 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:40:28,795 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:40:28,796 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:40:28,797 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:40:28,798 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-16 04:40:28,805 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:40:28] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758628546 HTTP/1.1" 200 -
+2025-04-16 04:40:29,183 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:40:29,186 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758628546'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758628820')])
+2025-04-16 04:40:29,188 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:40:29,191 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:40:29,196 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:40:29,199 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.2 hours)
+2025-04-16 04:40:29,201 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:40:29,213 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:40:29,219 - __main__ - INFO - Request completed in 0.03 seconds
+2025-04-16 04:40:29,229 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:40:29] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758628546&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758628820 HTTP/1.1" 200 -
+2025-04-16 04:43:29,450 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:43:29] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:43:29,703 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:43:29,705 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758809460')])
+2025-04-16 04:43:29,707 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:43:29,708 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:43:29,710 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:29,712 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:43:29,714 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:43:29,716 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:29,718 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:43:29,722 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:43:29] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758809460 HTTP/1.1" 200 -
+2025-04-16 04:43:30,139 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:43:30,141 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758809460'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758809738')])
+2025-04-16 04:43:30,143 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:43:30,144 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:43:30,148 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:30,151 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:43:30,153 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:43:30,155 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:30,157 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:43:30,161 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:43:30] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758809460&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758809738 HTTP/1.1" 200 -
+2025-04-16 04:43:52,440 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:43:52] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:43:52,767 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:43:52,769 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758832445')])
+2025-04-16 04:43:52,771 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:43:52,772 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:43:52,774 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:52,776 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:43:52,778 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:43:52,779 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:52,781 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:43:52,787 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:43:52] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758832445 HTTP/1.1" 200 -
+2025-04-16 04:43:52,882 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:43:52,883 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758832445'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758832800')])
+2025-04-16 04:43:52,885 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:43:52,886 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:43:52,888 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:52,890 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:43:52,891 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:43:52,893 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:43:52,894 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:43:52,897 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:43:52] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758832445&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758832800 HTTP/1.1" 200 -
+2025-04-16 04:45:12,890 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:45:12] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:45:13,124 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:45:13,126 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758912905')])
+2025-04-16 04:45:13,128 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:45:13,129 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:45:13,131 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:13,133 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:45:13,135 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:45:13,137 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:13,139 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:45:13,143 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:45:13] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758912905 HTTP/1.1" 200 -
+2025-04-16 04:45:13,604 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:45:13,604 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758912905'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758913163')])
+2025-04-16 04:45:13,605 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:45:13,605 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:45:13,606 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:13,607 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:45:13,607 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:45:13,608 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:13,608 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-16 04:45:13,610 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:45:13] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758912905&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758913163 HTTP/1.1" 200 -
+2025-04-16 04:45:58,124 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:45:58] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:45:58,486 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:45:58,488 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758958169')])
+2025-04-16 04:45:58,489 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:45:58,492 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:45:58,493 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:58,498 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:45:58,500 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:45:58,503 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:58,504 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:45:58,509 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:45:58] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758958169 HTTP/1.1" 200 -
+2025-04-16 04:45:58,619 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:45:58,621 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758958169'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758958533')])
+2025-04-16 04:45:58,622 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:45:58,624 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:45:58,624 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:58,625 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:45:58,626 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:45:58,627 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:45:58,628 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:45:58,631 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:45:58] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758958169&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758958533 HTTP/1.1" 200 -
+2025-04-16 04:46:01,628 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:46:01] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:46:01,967 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:46:01,970 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758961651')])
+2025-04-16 04:46:01,978 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:46:01,985 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:46:01,989 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:46:01,992 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:46:01,997 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:46:02,005 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:46:02,008 - __main__ - INFO - Request completed in 0.03 seconds
+2025-04-16 04:46:02,015 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:46:02] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758961651 HTTP/1.1" 200 -
+2025-04-16 04:46:02,383 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:46:02,384 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744758961651'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744758962027')])
+2025-04-16 04:46:02,385 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:46:02,385 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:46:02,386 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:46:02,387 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.3 hours)
+2025-04-16 04:46:02,388 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:46:02,388 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:46:02,389 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-16 04:46:02,392 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:46:02] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744758961651&_show_states=true&_show_counties=true&_show_msas=true&_t=1744758962027 HTTP/1.1" 200 -
+2025-04-16 04:47:57,575 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:47:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:47:58,308 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:47:58] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:48:48,819 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:48:48] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:48:49,076 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:48:49,078 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759128829')])
+2025-04-16 04:48:49,080 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:48:49,082 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:48:49,083 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:48:49,087 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.4 hours)
+2025-04-16 04:48:49,090 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:48:49,093 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:48:49,096 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-16 04:48:49,101 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:48:49] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759128829 HTTP/1.1" 200 -
+2025-04-16 04:48:49,514 - __main__ - INFO - Map request for area: Baltimore-Columbia-Towson
+2025-04-16 04:48:49,516 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759128829'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744759129123')])
+2025-04-16 04:48:49,518 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:48:49,521 - statistical_area_zoom - INFO - Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:48:49,524 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:48:49,529 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html (age: 0.4 hours)
+2025-04-16 04:48:49,531 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:48:49,534 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Baltimore_Columbia_Towson_lightweight.html
+2025-04-16 04:48:49,535 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-16 04:48:49,546 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:48:49] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759128829&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759129123 HTTP/1.1" 200 -
+2025-04-16 04:48:59,335 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:48:59] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:48:59,715 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:48:59] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:49:02,591 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:02] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:49:02,667 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:02] "GET /api/map?t=1744759142567&noCache=true&stableView=true?t%3D1744759142567&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759142568 HTTP/1.1" 200 -
+2025-04-16 04:49:02,909 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:02] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:49:04,612 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:04] "GET /api/map?t=1744759144209&noCache=true&stableView=true?t%3D1744759144209&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759144210 HTTP/1.1" 200 -
+2025-04-16 04:49:09,347 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:09] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:49:09,757 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:49:09,759 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759149431')])
+2025-04-16 04:49:09,762 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:49:09,763 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:49:09,764 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:49:09,766 - statistical_area_zoom - INFO - Loading map data...
+2025-04-16 04:49:09,774 - statistical_area_zoom - INFO - Data loaded in 0.01 seconds
+2025-04-16 04:49:09,776 - statistical_area_zoom - INFO - Normalized area name: billings
+2025-04-16 04:49:09,792 - statistical_area_zoom - INFO - Trying to match city name: billings
+2025-04-16 04:49:09,800 - statistical_area_zoom - INFO - Found exact city match: Billings, MT
+2025-04-16 04:49:09,802 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-16 04:49:09,805 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-16 04:49:09,813 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Billings
+2025-04-16 04:49:09,815 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Billings
+2025-04-16 04:49:09,832 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-16 04:49:09,833 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-16 04:49:09,841 - statistical_area_zoom - INFO - Center: 45.63977236825949, -108.82241550732994
+2025-04-16 04:49:09,844 - statistical_area_zoom - INFO - Bounds: -110.064581, 44.999904, -107.462651, 46.496043
+2025-04-16 04:49:11,196 - statistical_area_zoom - INFO - Map saved to C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:49:11,197 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:49:11,198 - __main__ - INFO - Request completed in 1.44 seconds
+2025-04-16 04:49:11,474 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:11] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759149431 HTTP/1.1" 200 -
+2025-04-16 04:49:11,525 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:49:11,526 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759149431'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744759151484')])
+2025-04-16 04:49:11,527 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:49:11,528 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:49:11,529 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:49:11,530 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.0 hours)
+2025-04-16 04:49:11,531 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:49:11,532 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:49:11,532 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:49:11,536 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:11] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759149431&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759151484 HTTP/1.1" 200 -
+2025-04-16 04:50:11,784 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:50:11] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:50:12,027 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:50:12,030 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759211805')])
+2025-04-16 04:50:12,032 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:50:12,034 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:50:12,035 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:50:12,038 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.0 hours)
+2025-04-16 04:50:12,040 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:50:12,042 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:50:12,044 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:50:12,050 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:50:12] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759211805 HTTP/1.1" 200 -
+2025-04-16 04:50:12,447 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:50:12,448 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759211805'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744759212072')])
+2025-04-16 04:50:12,451 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:50:12,452 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:50:12,453 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:50:12,454 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.0 hours)
+2025-04-16 04:50:12,456 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:50:12,457 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:50:12,458 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:50:12,462 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:50:12] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759211805&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759212072 HTTP/1.1" 200 -
+2025-04-16 04:52:21,616 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:52:21] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:52:21,870 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:52:21,902 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759341624')])
+2025-04-16 04:52:21,904 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:52:21,905 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:52:21,906 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:21,908 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.1 hours)
+2025-04-16 04:52:21,910 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:52:21,915 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:21,917 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:52:21,923 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:52:21] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759341624 HTTP/1.1" 200 -
+2025-04-16 04:52:22,324 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:52:22,328 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759341624'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744759341939')])
+2025-04-16 04:52:22,330 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:52:22,333 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:52:22,335 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:22,338 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.1 hours)
+2025-04-16 04:52:22,340 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:52:22,344 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:22,349 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-16 04:52:22,355 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:52:22] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759341624&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759341939 HTTP/1.1" 200 -
+2025-04-16 04:52:29,967 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:52:29] "GET /api/health HTTP/1.1" 200 -
+2025-04-16 04:52:30,299 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:52:30,301 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759349983')])
+2025-04-16 04:52:30,302 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:52:30,304 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:52:30,305 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:30,307 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.1 hours)
+2025-04-16 04:52:30,310 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
+2025-04-16 04:52:30,312 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:30,313 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:52:30,318 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:52:30] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759349983 HTTP/1.1" 200 -
+2025-04-16 04:52:30,384 - __main__ - INFO - Map request for area: Billings
+2025-04-16 04:52:30,386 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744759349983'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744759350331')])
+2025-04-16 04:52:30,388 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-16 04:52:30,389 - statistical_area_zoom - INFO - Generating map for statistical area: Billings with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-16 04:52:30,391 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:30,393 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html (age: 0.1 hours)
+2025-04-16 04:52:30,394 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-16 04:52:30,396 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Billings_lightweight.html
+2025-04-16 04:52:30,398 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-16 04:52:30,402 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:52:30] "GET /api/statistical-area-map/Billings?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744759349983&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759350331 HTTP/1.1" 200 -
+2025-04-16 04:55:43,848 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:55:44,118 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:44] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:55:44,164 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:44] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:55:44,278 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:44] "GET /api/map?t=1744759544140&noCache=true&stableView=true?t%3D1744759544140&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759544153 HTTP/1.1" 200 -
+2025-04-16 04:55:44,444 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:44] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-16 04:55:45,634 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:45] "GET /api/map?t=1744759545594&noCache=true&stableView=true?t%3D1744759545594&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759545596 HTTP/1.1" 200 -

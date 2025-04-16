@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_317aaa2ec63c6f1855d64eb5ac761b41 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div style="position: fixed; 
+                        top: 10px; left: 50px; width: 300px; height: auto;
+                        background-color: white; border-radius: 8px;
+                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0; color: #1F2937;">Statistical Area: Chicago–Naperville–Elgin</h4>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    This is a simplified view of the Chicago–Naperville–Elgin area.
+                </p>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    This static map is shown when the interactive map cannot be loaded.
+                </p>
+            </div>
+        
+    
+            <div class="folium-map" id="map_317aaa2ec63c6f1855d64eb5ac761b41" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_317aaa2ec63c6f1855d64eb5ac761b41 = L.map(
+                "map_317aaa2ec63c6f1855d64eb5ac761b41",
+                {
+                    center: [41.8781, -87.6298],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 9,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7a22cb42d36a47c74a26c37ed34276d9 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7a22cb42d36a47c74a26c37ed34276d9.addTo(map_317aaa2ec63c6f1855d64eb5ac761b41);
+        
+    
+            var marker_3f1b7272bc513753e5a6e89f2d3a3c52 = L.marker(
+                [41.8781, -87.6298],
+                {
+}
+            ).addTo(map_317aaa2ec63c6f1855d64eb5ac761b41);
+        
+    
+            var icon_5f6338ddaa3745896c94e00b17b12053 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_3f1b7272bc513753e5a6e89f2d3a3c52.setIcon(icon_5f6338ddaa3745896c94e00b17b12053);
+        
+    
+        var popup_892b9b814c03db047467b7d357e9726f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f133a8205aba86f34281aa4c954949ac = $(`<div id="html_f133a8205aba86f34281aa4c954949ac" style="width: 100.0%; height: 100.0%;">Statistical Area: Chicago–Naperville–Elgin</div>`)[0];
+                popup_892b9b814c03db047467b7d357e9726f.setContent(html_f133a8205aba86f34281aa4c954949ac);
+            
+        
+
+        marker_3f1b7272bc513753e5a6e89f2d3a3c52.bindPopup(popup_892b9b814c03db047467b7d357e9726f)
+        ;
+
+        
+    
+    
+            var circle_cf973d32f40c357cae37ed7e19de0319 = L.circle(
+                [41.8781, -87.6298],
+                {"bubblingMouseEvents": true, "color": "#4F46E5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4F46E5", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 20000, "stroke": true, "weight": 3}
+            ).addTo(map_317aaa2ec63c6f1855d64eb5ac761b41);
+        
+</script>
+</html>
