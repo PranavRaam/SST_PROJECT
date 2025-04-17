@@ -404,8 +404,8 @@ const generateEpisodeData = () => {
   return [
     {
       id: 1,
-      startDate: '2023-04-01',
-      socDate: '2023-03-28',  // SOC date should be a few days before the start date
+      startDate: '2023-03-30',  // Changed from '2023-04-01' to be only 2 days after SOC
+      socDate: '2023-03-28',
       endDate: '2023-06-30',
       status: 'complete',
       diagnosis: 'Hypertension',
@@ -415,8 +415,8 @@ const generateEpisodeData = () => {
     },
     {
       id: 2,
-      startDate: '2023-07-01',
-      socDate: '2023-06-28',  // SOC date should be a few days before the start date
+      startDate: '2023-06-30',  // Changed from '2023-07-01' to be only 2 days after SOC
+      socDate: '2023-06-28',
       endDate: '2023-09-30',
       status: 'active',
       diagnosis: 'Type 2 Diabetes',
