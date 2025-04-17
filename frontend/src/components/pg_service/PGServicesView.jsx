@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PatientDetailView from './PatientDetailView';
 import PatientFormComponent from '../patients/PatientFormComponent';
 import './PGServicesView.css';
@@ -6,6 +7,14 @@ import '../patients/PatientFormComponent.css';
 
 const PGServicesView = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const location = useLocation();
+
+  // Check for selected patient in location state when component mounts
+  useEffect(() => {
+    if (location.state && location.state.selectedPatient) {
+      setSelectedPatient(location.state.selectedPatient);
+    }
+  }, [location.state]);
 
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);

@@ -132,7 +132,7 @@ export const getStatisticsForArea = (agencies, statisticalArea) => {
 };
 
 // Function to transform agency data for funnel display
-export const transformAgencyDataForFunnel = (agencies, type) => {
+export const transformAgencyDataForFunnel = (agencies, type, stages) => {
   // Filter by PG or HHAH
   const { pgs, hhahs } = categorizeAgencies(agencies);
   const agenciesToProcess = type === 'pg' ? pgs : hhahs;
@@ -141,21 +141,7 @@ export const transformAgencyDataForFunnel = (agencies, type) => {
   // This is a simplified approach - in a real app you'd have business logic to determine stages
   
   if (type === 'pg') {
-    // PG funnel stages
-    const stages = [
-      "Total Potential Patients",
-      "Active Interest",
-      "Initial Contact",
-      "In Assessment",
-      "Ready for Service",
-      "Service Started",
-      "Active Treatment",
-      "Ready for Discharge",
-      "Discharged",
-      "Post-Discharge"
-    ];
-    
-    // Create random distribution of PGs across stages
+    // Create empty assignments for all stages
     const assignments = {};
     stages.forEach(stage => {
       assignments[stage] = [];
@@ -170,15 +156,6 @@ export const transformAgencyDataForFunnel = (agencies, type) => {
     
     return assignments;
   } else {
-    // HHAH funnel stages
-    const stages = [
-      "Freemium",
-      "Not Using",
-      "Order360 Lite",
-      "Order360 Full",
-      "Upsold (Fully subscribed)"
-    ];
-    
     // Create assignments based on actual HHAH data
     const assignments = {};
     stages.forEach(stage => {
@@ -188,8 +165,13 @@ export const transformAgencyDataForFunnel = (agencies, type) => {
     // Distribute HHAHs based on their actual type
     agenciesToProcess.forEach(agency => {
       const stage = agency['Agency Type'] || 'Not Using'; // Default to 'Not Using' if no type specified
-      if (assignments[stage]) {
+      if (assignments[stage] !== undefined) {
         assignments[stage].push(agency['Agency Name']);
+      } else {
+        // If the stage doesn't match any in our predefined stages, put in 'Not Using'
+        if (assignments['Not Using'] !== undefined) {
+          assignments['Not Using'].push(agency['Agency Name']);
+        }
       }
     });
     

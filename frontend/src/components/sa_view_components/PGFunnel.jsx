@@ -1,24 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
-import { FunnelChart, Funnel, Tooltip, LabelList } from "recharts";
 import { FunnelDataContext } from './FunnelDataContext';
 import "../sa_view_css/PGFunnel.css"; // Importing CSS
 
-// Fixed values that match the image
-const initialData = [
-  { name: "They exist but they haven't heard of us", value: 60, fill: "#FF7272" },
-  { name: "They've now heard of us but that's it", value: 20, fill: "#FFA5A5" },
-  { name: "Enough interest that they're interacting with our content", value: 15, fill: "#7986CB" },
-  { name: "Enough interest that they're now talking to us", value: 5, fill: "#FF9E80" },
-  { name: "They've had a demo", value: 0, fill: "#FFCCBC" },
-  { name: "In the buying process", value: 0, fill: "#C5CAE9" },
-  { name: "Deal is so hot your hands will burn if you touch it", value: 0, fill: "#FFAB91" },
-  { name: "On the platform", value: 0, fill: "#FFCCBC" },
-  { name: "In the upselling zone", value: 0, fill: "#D1C4E9" },
-  { name: "Upsold to CPOs/CCMs/RPMs/other services", value: 0, fill: "#B39DDB" }
+// Patient journey funnel stages
+const pgFunnelStages = [
+  { name: "They exist but they haven't heard of us", value: 60, fill: "#2980B9" },
+  { name: "They've now heard of us but that's it", value: 55, fill: "#3498DB" },
+  { name: "Enough interest that they're interacting with our content", value: 50, fill: "#45B7D1" },
+  { name: "Enough interest that they're now talking to us", value: 40, fill: "#F39C12" },
+  { name: "They've had a demo", value: 30, fill: "#E67E22" },
+  { name: "In the buying process", value: 25, fill: "#D35400" },
+  { name: "Deal is so hot your hands will burn if you touch it", value: 20, fill: "#E74C3C" },
+  { name: "On the platform", value: 15, fill: "#C0392B" },
+  { name: "In the upselling zone", value: 10, fill: "#E57373" },
+  { name: "Upsold to CPOs/CCMs/RPMs/other services", value: 5, fill: "#B71C1C" }
 ];
 
 // For display in the center of each section
-const displayValues = [1000, 800, 600, 400, 300, 200, 150, 100, 75, 50];
+const displayValues = [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100];
 
 // Generate PG names for the mock data view
 const pgNames = [
@@ -32,6 +31,8 @@ const PGFunnel = () => {
   const [expandedStage, setExpandedStage] = useState(null);
   const [showMoveOptions, setShowMoveOptions] = useState(false);
   const [selectedPG, setSelectedPG] = useState(null);
+  const [funnelData, setFunnelData] = useState(pgFunnelStages);
+  const [hoveredSection, setHoveredSection] = useState(null);
   
   // Logging for debugging
   useEffect(() => {
@@ -39,28 +40,56 @@ const PGFunnel = () => {
       dataCount: pgData?.length,
       area: currentArea,
       funnelData: pgFunnelData?.length,
-      hasAssignments: !!pgAssignments
+      hasAssignments: !!pgAssignments,
+      moveFunctionAvailable: !!movePgToStage
     });
-  }, [pgFunnelData, pgAssignments, pgData, currentArea]);
-
-  // Always use initialData for display to match the image
-  const displayData = initialData;
+    
+    console.log("PG Assignments:", pgAssignments);
+    
+    // Use real data if available
+    if (pgFunnelData && pgFunnelData.length > 0) {
+      setFunnelData(pgFunnelData);
+    }
+  }, [pgFunnelData, pgAssignments, pgData, currentArea, movePgToStage]);
 
   const handleFunnelClick = (entry) => {
     if (entry.value === 0) return;
+    console.log("Clicked funnel stage:", entry.name);
     setExpandedStage(entry.name);
     setShowMoveOptions(false);
     setSelectedPG(null);
   };
 
   const handleMovePG = (pg) => {
+    console.log("Selected PG for move:", pg);
     setSelectedPG(pg);
     setShowMoveOptions(true);
   };
 
   const handleMoveToStage = (targetStage) => {
-    if (!selectedPG || !targetStage || !movePgToStage) return;
-    movePgToStage(selectedPG, expandedStage, targetStage);
+    console.log("Moving PG:", {
+      pg: selectedPG,
+      from: expandedStage,
+      to: targetStage,
+      moveFunctionAvailable: !!movePgToStage
+    });
+    
+    if (!selectedPG || !targetStage || !movePgToStage) {
+      console.error("Cannot move PG - missing required data:", {
+        selectedPG,
+        targetStage,
+        moveFunctionAvailable: !!movePgToStage
+      });
+      return;
+    }
+    
+    try {
+      movePgToStage(selectedPG, expandedStage, targetStage);
+      console.log("PG moved successfully");
+    } catch (error) {
+      console.error("Error moving PG:", error);
+    }
+    
     setShowMoveOptions(false);
     setSelectedPG(null);
   };
@@ -75,29 +104,28 @@ const PGFunnel = () => {
   const getPGNamesForStage = (stageName) => {
     // Use real data if available, otherwise use mock data
     if (pgAssignments && pgAssignments[stageName] && pgAssignments[stageName].length > 0) {
+      console.log(`Found ${pgAssignments[stageName].length} PGs in stage "${stageName}"`);
       return pgAssignments[stageName];
     }
     
     // Use a subset of mock names based on stage
-    const stageIndex = initialData.findIndex(item => item.name === stageName);
+    const stageIndex = funnelData.findIndex(item => item.name === stageName);
     if (stageIndex >= 0) {
-      const count = Math.max(1, Math.floor(initialData[stageIndex].value / 100));
+      const count = Math.max(1, Math.floor(funnelData[stageIndex].value / 100));
+      console.log(`Using ${count} mock PG names for stage "${stageName}"`);
       return pgNames.slice(0, count);
     }
     
+    console.log(`No PGs found for stage "${stageName}", using default mock data`);
     return pgNames.slice(0, 3);
   };
 
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip">
-          <p className="tooltip-label">{payload[0].payload.name}</p>
-          <p className="tooltip-value">{payload[0].payload.value}</p>
-        </div>
-      );
-    }
-    return null;
+  const handleMouseOver = (index) => {
+    setHoveredSection(index);
+  };
+
+  const handleMouseOut = () => {
+    setHoveredSection(null);
   };
 
   return (
@@ -122,7 +150,7 @@ const PGFunnel = () => {
           {showMoveOptions && (
             <div className="move-options">
               <h5>Move {selectedPG} to:</h5>
-              {displayData
+              {funnelData
                 .filter(stage => stage.name !== expandedStage)
                 .map((stage, index) => (
                   <button
@@ -138,120 +166,147 @@ const PGFunnel = () => {
         </div>
       ) : (
         <div className="funnel-chart-wrapper">
-          <svg width="400" height="550">
+          <svg width="400" height="650">
             {/* Main funnel shape (inverted triangle) */}
             <g>
               {/* First section */}
-              <path d="M100,50 L300,50 L285,100 L115,100 Z" 
-                    fill="#FF7272" 
+              <path d="M50,50 L350,50 L340,100 L60,100 Z" 
+                    fill={funnelData[0]?.fill || "#2980B9"} 
                     stroke="#fff" 
                     strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[0])} />
+                    onClick={() => handleFunnelClick(funnelData[0])}
+                    onMouseOver={() => handleMouseOver(0)}
+                    onMouseOut={handleMouseOut} />
               <text x="200" y="75" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[0]}
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[0] || funnelData[0]?.value || 1}
               </text>
               
               {/* Second section */}
-              <path d="M115,100 L285,100 L275,150 L125,150 Z" 
-                    fill="#FFA5A5" 
+              <path d="M60,100 L340,100 L330,150 L70,150 Z" 
+                    fill={funnelData[1]?.fill || "#3498DB"} 
                     stroke="#fff" 
                     strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[1])} />
+                    onClick={() => handleFunnelClick(funnelData[1])}
+                    onMouseOver={() => handleMouseOver(1)}
+                    onMouseOut={handleMouseOut} />
               <text x="200" y="125" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[1]}
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[1] || funnelData[1]?.value || 1}
               </text>
               
               {/* Third section */}
-              <path d="M125,150 L275,150 L265,200 L135,200 Z" 
-                    fill="#7986CB" 
+              <path d="M70,150 L330,150 L320,200 L80,200 Z" 
+                    fill={funnelData[2]?.fill || "#45B7D1"} 
                     stroke="#fff" 
                     strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[2])} />
+                    onClick={() => handleFunnelClick(funnelData[2])}
+                    onMouseOver={() => handleMouseOver(2)}
+                    onMouseOut={handleMouseOut} />
               <text x="200" y="175" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[2]}
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[2] || funnelData[2]?.value || 1}
               </text>
               
               {/* Fourth section */}
-              <path d="M135,200 L265,200 L255,250 L145,250 Z" 
-                    fill="#FF9E80" 
+              <path d="M80,200 L320,200 L310,250 L90,250 Z" 
+                    fill={funnelData[3]?.fill || "#F39C12"} 
                     stroke="#fff" 
                     strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[3])} />
+                    onClick={() => handleFunnelClick(funnelData[3])}
+                    onMouseOver={() => handleMouseOver(3)}
+                    onMouseOut={handleMouseOut} />
               <text x="200" y="225" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[3]}
-              </text>
-
-              {/* Fifth section */}
-              <path d="M145,250 L255,250 L245,300 L155,300 Z" 
-                    fill="#FFCCBC" 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[4])} />
-              <text x="200" y="275" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[4]}
-              </text>
-
-              {/* Sixth section */}
-              <path d="M155,300 L245,300 L235,350 L165,350 Z" 
-                    fill="#C5CAE9" 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[5])} />
-              <text x="200" y="325" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[5]}
-              </text>
-
-              {/* Seventh section */}
-              <path d="M165,350 L235,350 L225,400 L175,400 Z" 
-                    fill="#FFCCBC" 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[6])} />
-              <text x="200" y="375" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[6]}
-              </text>
-
-              {/* Eighth section */}
-              <path d="M175,400 L225,400 L215,450 L185,450 Z" 
-                    fill="#FFCCBC" 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[7])} />
-              <text x="200" y="425" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[7]}
-              </text>
-
-              {/* Ninth section */}
-              <path d="M185,450 L215,450 L205,500 L195,500 Z" 
-                    fill="#D1C4E9" 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[8])} />
-              <text x="200" y="475" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[8]}
-              </text>
-
-              {/* Tenth section */}
-              <path d="M195,500 L205,500 L203,525 L197,525 Z" 
-                    fill="#D1C4E9" 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(displayData[9])} />
-              <text x="200" y="515" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[9]}
+                {displayValues[3] || funnelData[3]?.value || 1}
+              </text>
+              
+              {/* Fifth section */}
+              <path d="M90,250 L310,250 L300,300 L100,300 Z" 
+                    fill={funnelData[4]?.fill || "#E67E22"} 
+                    stroke="#fff" 
+                    strokeWidth="1"
+                    onClick={() => handleFunnelClick(funnelData[4])}
+                    onMouseOver={() => handleMouseOver(4)}
+                    onMouseOut={handleMouseOut} />
+              <text x="200" y="275" textAnchor="middle" 
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[4] || funnelData[4]?.value || 1}
+              </text>
+              
+              {/* Sixth section */}
+              <path d="M100,300 L300,300 L290,350 L110,350 Z" 
+                    fill={funnelData[5]?.fill || "#D35400"} 
+                    stroke="#fff" 
+                    strokeWidth="1"
+                    onClick={() => handleFunnelClick(funnelData[5])}
+                    onMouseOver={() => handleMouseOver(5)}
+                    onMouseOut={handleMouseOut} />
+              <text x="200" y="325" textAnchor="middle" 
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[5] || funnelData[5]?.value || 1}
+              </text>
+              
+              {/* Seventh section */}
+              <path d="M110,350 L290,350 L280,400 L120,400 Z" 
+                    fill={funnelData[6]?.fill || "#E74C3C"} 
+                    stroke="#fff" 
+                    strokeWidth="1"
+                    onClick={() => handleFunnelClick(funnelData[6])}
+                    onMouseOver={() => handleMouseOver(6)}
+                    onMouseOut={handleMouseOut} />
+              <text x="200" y="375" textAnchor="middle" 
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[6] || funnelData[6]?.value || 1}
+              </text>
+              
+              {/* Eighth section */}
+              <path d="M120,400 L280,400 L270,450 L130,450 Z" 
+                    fill={funnelData[7]?.fill || "#C0392B"} 
+                    stroke="#fff" 
+                    strokeWidth="1"
+                    onClick={() => handleFunnelClick(funnelData[7])}
+                    onMouseOver={() => handleMouseOver(7)}
+                    onMouseOut={handleMouseOut} />
+              <text x="200" y="425" textAnchor="middle" 
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[7] || funnelData[7]?.value || 1}
+              </text>
+              
+              {/* Ninth section */}
+              <path d="M130,450 L270,450 L260,500 L140,500 Z" 
+                    fill={funnelData[8]?.fill || "#E57373"} 
+                    stroke="#fff" 
+                    strokeWidth="1"
+                    onClick={() => handleFunnelClick(funnelData[8])}
+                    onMouseOver={() => handleMouseOver(8)}
+                    onMouseOut={handleMouseOut} />
+              <text x="200" y="475" textAnchor="middle" 
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[8] || funnelData[8]?.value || 1}
+              </text>
+              
+              {/* Tenth section */}
+              <path d="M140,500 L260,500 L250,550 L150,550 Z" 
+                    fill={funnelData[9]?.fill || "#B71C1C"} 
+                    stroke="#fff" 
+                    strokeWidth="1"
+                    onClick={() => handleFunnelClick(funnelData[9])}
+                    onMouseOver={() => handleMouseOver(9)}
+                    onMouseOut={handleMouseOut} />
+              <text x="200" y="525" textAnchor="middle" 
+                    fill="#fff" fontSize="14" fontWeight="bold">
+                {displayValues[9] || funnelData[9]?.value || 1}
               </text>
             </g>
           </svg>
+          
+          {/* Tooltip showing stage name on hover */}
+          {hoveredSection !== null && (
+            <div className="stage-tooltip">
+              {funnelData[hoveredSection]?.name}
+            </div>
+          )}
         </div>
       )}
     </div>

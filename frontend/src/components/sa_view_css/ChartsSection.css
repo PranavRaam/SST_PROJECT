@@ -1,29 +1,49 @@
 /* Charts section layout */
 .charts-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    padding: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px; 
+    margin-top: 20px;
+    padding: 15px 15px 25px 15px;
     background-color: #f8f9fc;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-    margin-top: 0;
     width: 100%;
     max-width: 100%;
-    min-height: 600px;
+    min-height: 500px;
     overflow: visible;
+}
+
+/* Set specific widths for the charts to ensure they appear side by side */
+.charts-section > div:first-child {
+    flex-basis: calc(33% - 15px);
+    min-width: 300px;
+}
+
+.charts-section > div:not(:first-child) {
+    flex-basis: calc(33% - 15px);
+    min-width: 300px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
     .charts-section {
-        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+    }
+    
+    .charts-section > div {
+        flex-basis: calc(50% - 15px);
     }
 }
 
 @media (max-width: 768px) {
     .charts-section {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+    }
+    
+    .charts-section > div {
+        flex-basis: 100%;
     }
 }
 
@@ -31,9 +51,7 @@
 .charts-section > div {
     animation: fadeIn 0.6s ease-in-out;
     transition: all 0.3s ease;
-    width: 100%;
     overflow: visible !important;
-    min-height: 550px;
 }
 
 .charts-section > div:hover {

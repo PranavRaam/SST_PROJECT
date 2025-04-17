@@ -1,78 +1,83 @@
 .hhah-funnel-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 400px;
-    min-height: 500px;
-    margin: 20px;
-    overflow: visible !important;
     position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .funnel-title {
     text-align: center;
-    font-size: 18px;
-    font-weight: 500;
     color: #333;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     position: relative;
 }
 
 .funnel-title::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
+    width: 60px;
     height: 3px;
-    background-color: #E53935;
+    background-color: #E74C3C;
+    border-radius: 3px;
 }
 
 .funnel-chart-wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
-    overflow: visible !important;
-    min-height: 450px;
+    margin-top: 1.5rem;
 }
 
-/* Fix for the trapezoid shape and styling */
-.recharts-funnel-trapezoid {
+/* Add subtle hover effect to the SVG paths */
+.funnel-chart-wrapper path {
+    transition: opacity 0.2s ease, filter 0.2s ease;
     cursor: pointer;
-    transition: filter 0.3s ease, transform 0.2s ease;
-    stroke: rgba(255, 255, 255, 0.5) !important;
-    stroke-width: 1 !important;
 }
 
-.recharts-funnel-trapezoid:hover {
+.funnel-chart-wrapper path:hover {
+    opacity: 0.9;
     filter: brightness(1.1);
-    transform: scale(1.02);
-    z-index: 10;
+}
+
+.funnel-legend {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+.legend-text {
+    font-size: 12px;
+    color: #333;
 }
 
 /* Force SVG to display completely */
 svg {
     overflow: visible !important;
     display: block;
-}
-
-/* Force proper funnel shape */
-.recharts-wrapper {
-    overflow: visible !important;
-}
-
-.recharts-funnel {
-    overflow: visible !important;
-}
-
-.recharts-layer.recharts-funnel-trapezoids {
-    overflow: visible !important;
-}
-
-/* Make funnel nicely centered */
-.recharts-funnel-item {
-    transform-origin: center center !important;
 }
 
 /* Tooltip styling */
@@ -128,45 +133,41 @@ svg {
 
 /* Expanded list view */
 .expanded-list {
-    width: 100%;
-    padding: 15px;
-    background-color: #fdf2f0;
+    background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
 .expanded-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #fadbd8;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
 }
 
 .expanded-header h4 {
     margin: 0;
+    color: #2c3e50;
     font-size: 1.2rem;
-    color: #C0392B;
-    font-weight: 600;
 }
 
 .back-button {
-    background: none;
-    border: none;
-    color: #E74C3C;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 6px 12px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    transition: all 0.2s;
+    padding: 0.4rem 0.8rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .back-button:hover {
-    background-color: #FADBD8;
-    color: #C0392B;
+    background-color: #e8e8e8;
+    color: #000;
 }
 
 /* HHAH entries in expanded view */
@@ -174,72 +175,85 @@ svg {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
     background-color: white;
     border-radius: 6px;
-    margin-bottom: 8px;
-    border-left: 3px solid #E74C3C;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.1s ease;
 }
 
 .hhah-entry:hover {
-    transform: translateX(2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+    transform: translateX(3px);
+    background-color: #f5f5f5;
 }
 
 .hhah-entry button {
-    background-color: #E74C3C;
+    background-color: #e74c3c;
     color: white;
     border: none;
-    padding: 5px 10px;
     border-radius: 4px;
+    padding: 0.3rem 0.8rem;
     cursor: pointer;
     transition: background-color 0.2s;
-    font-weight: 500;
-    font-size: 13px;
 }
 
 .hhah-entry button:hover {
-    background-color: #C0392B;
+    background-color: #c0392b;
 }
 
 /* Move options */
 .move-options {
-    background-color: white;
-    padding: 15px;
+    background-color: #f0f0f0;
     border-radius: 8px;
-    margin-top: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border: 1px solid #fadbd8;
+    padding: 1rem;
+    margin-top: 1rem;
 }
 
 .move-options h5 {
     margin-top: 0;
-    margin-bottom: 12px;
-    font-size: 14px;
-    color: #7b8a8b;
-    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: #333;
 }
 
 .move-option-button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background-color: #fdf2f0;
-    color: #E74C3C;
-    border: 1px solid #fadbd8;
-    padding: 8px 12px;
-    margin-bottom: 6px;
+    margin: 0.3rem;
+    padding: 0.5rem 1rem;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 14px;
+    transition: background-color 0.2s;
 }
 
 .move-option-button:hover {
-    background-color: #FADBD8;
-    border-color: #E74C3C;
+    background-color: #8e44ad;
+}
+
+/* Stage tooltip styles */
+.stage-tooltip {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(52, 73, 94, 0.9);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    z-index: 100;
+    max-width: 200px;
+    text-align: center;
+}
+
+/* Make clickable areas have a pointer cursor */
+svg path {
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+svg path:hover {
+    filter: brightness(1.1);
 }
 
 /* Responsive adjustments */

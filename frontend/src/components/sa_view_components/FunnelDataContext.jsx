@@ -9,6 +9,24 @@ import {
 // Create the context
 const FunnelDataContext = createContext();
 
+// Define funnel stages for both PG and HHAH for consistent usage across components
+export const PG_STAGES = [
+  "Total Potential Patients",
+  "Active Interest",
+  "Initial Contact",
+  "In Assessment",
+  "Ready for Service",
+  "Service Started"
+];
+
+export const HHAH_STAGES = [
+  "Freemium",
+  "Not Using",
+  "Order360 Lite",
+  "Order360 Full",
+  "Upsold (Fully subscribed)"
+];
+
 // Create the provider component
 const FunnelDataProvider = ({ children }) => {
   const [allAgencies, setAllAgencies] = useState([]);
@@ -61,46 +79,43 @@ const FunnelDataProvider = ({ children }) => {
     setPgData(pgs);
     setHhahData(hhahs);
 
-    // Create initial funnel data based on actual HHAH data
+    // Create initial funnel data based on actual data
     const createFunnelData = (type, agencies) => {
       if (type === 'pg') {
-        return [
-          { name: "Total Potential Patients", value: pgs.length * 5, fill: "#2980B9" },
-          { name: "Active Interest", value: pgs.length * 4, fill: "#45B7D1" },
-          { name: "Initial Contact", value: pgs.length * 3, fill: "#F39C12" },
-          { name: "In Assessment", value: pgs.length * 2.5, fill: "#E67E22" },
-          { name: "Ready for Service", value: pgs.length * 2, fill: "#E74C3C" },
-          { name: "Service Started", value: pgs.length * 1.5, fill: "#E57373" },
-          { name: "Active Treatment", value: pgs.length, fill: "#4CAF50" },
-          { name: "Ready for Discharge", value: pgs.length * 0.7, fill: "#795548" },
-          { name: "Discharged", value: pgs.length * 0.4, fill: "#9C27B0" },
-          { name: "Post-Discharge", value: pgs.length * 0.2, fill: "#F48FB1" }
-        ];
+        // Use the PG_STAGES for consistency
+        return PG_STAGES.map((stage, index) => {
+          // Calculate a value that decreases through the funnel
+          const value = Math.max(1, Math.floor(pgs.length * (1 - index * 0.15)));
+          // Use consistent colors
+          const colors = ["#2980B9", "#45B7D1", "#F39C12", "#E67E22", "#E74C3C", "#E57373"];
+          return { 
+            name: stage, 
+            value: value, 
+            fill: colors[index] || "#9C27B0"
+          };
+        });
       } else {
-        // Initialize counts for each stage
-        const stageCounts = {
-          "Freemium": 0,
-          "Not Using": 0,
-          "Order360 Lite": 0,
-          "Order360 Full": 0,
-          "Upsold (Fully subscribed)": 0
-        };
+        // Initialize counts for each stage for HHAH funnel
+        const stageCounts = {};
+        HHAH_STAGES.forEach(stage => {
+          stageCounts[stage] = 0;
+        });
 
         // Count HHAHs in each stage
         agencies.forEach(agency => {
           const stage = agency['Agency Type'] || 'Not Using'; // Default to 'Not Using' if no type specified
-          if (stageCounts[stage]) {
+          if (stageCounts[stage] !== undefined) {
             stageCounts[stage]++;
           }
         });
 
-        return [
-          { name: "Freemium", value: stageCounts["Freemium"], fill: "#C0392B" },
-          { name: "Not Using", value: stageCounts["Not Using"], fill: "#E74C3C" },
-          { name: "Order360 Lite", value: stageCounts["Order360 Lite"], fill: "#9B59B6" },
-          { name: "Order360 Full", value: stageCounts["Order360 Full"], fill: "#F1C40F" },
-          { name: "Upsold (Fully subscribed)", value: stageCounts["Upsold (Fully subscribed)"], fill: "#2ECC71" }
-        ];
+        // Create funnel data from counts
+        const colors = ["#C0392B", "#E74C3C", "#9B59B6", "#F1C40F", "#2ECC71"];
+        return HHAH_STAGES.map((stage, index) => ({
+          name: stage,
+          value: stageCounts[stage] || Math.max(1, Math.floor(hhahs.length * (1 - index * 0.2))),
+          fill: colors[index] || "#2ECC71"
+        }));
       }
     };
 
@@ -108,8 +123,8 @@ const FunnelDataProvider = ({ children }) => {
     setHhahFunnelData(createFunnelData('hhah', hhahs));
 
     // Transform agency data into funnel assignments
-    const pgAssignmentsData = transformAgencyDataForFunnel(areaAgencies, 'pg');
-    const hhahAssignmentsData = transformAgencyDataForFunnel(areaAgencies, 'hhah');
+    const pgAssignmentsData = transformAgencyDataForFunnel(areaAgencies, 'pg', PG_STAGES);
+    const hhahAssignmentsData = transformAgencyDataForFunnel(areaAgencies, 'hhah', HHAH_STAGES);
     
     console.log(`Created funnel assignments for ${Object.values(pgAssignmentsData).flat().length} PGs and ${Object.values(hhahAssignmentsData).flat().length} HHAHs`);
     
@@ -123,7 +138,9 @@ const FunnelDataProvider = ({ children }) => {
     const newAssignments = { ...pgAssignments };
     
     // Remove from current stage
-    newAssignments[fromStage] = newAssignments[fromStage].filter(pg => pg !== pgName);
+    if (newAssignments[fromStage]) {
+      newAssignments[fromStage] = newAssignments[fromStage].filter(pg => pg !== pgName);
+    }
     
     // Add to new stage
     if (!newAssignments[toStage]) {
@@ -141,19 +158,9 @@ const FunnelDataProvider = ({ children }) => {
     const toIndex = newFunnelData.findIndex(item => item.name === toStage);
     
     if (fromIndex !== -1 && toIndex !== -1) {
-      // Adjust counts for visualization
-      // If moving forward in the funnel, increase counts
-      if (fromIndex < toIndex) {
-        for (let i = fromIndex + 1; i <= toIndex; i++) {
-          newFunnelData[i].value += 1;
-        }
-      } 
-      // If moving backward in the funnel, decrease counts
-      else if (fromIndex > toIndex) {
-        for (let i = toIndex + 1; i <= fromIndex; i++) {
-          newFunnelData[i].value = Math.max(1, newFunnelData[i].value - 1);
-        }
-      }
+      // Update stage counts based on assignments
+      newFunnelData[fromIndex].value = Math.max(1, (newAssignments[fromStage]?.length || 0));
+      newFunnelData[toIndex].value = Math.max(1, (newAssignments[toStage]?.length || 0));
       
       setPgFunnelData(newFunnelData);
     }
@@ -164,7 +171,9 @@ const FunnelDataProvider = ({ children }) => {
     const newAssignments = { ...hhahAssignments };
     
     // Remove from current stage
-    newAssignments[fromStage] = newAssignments[fromStage].filter(hhah => hhah !== hhahName);
+    if (newAssignments[fromStage]) {
+      newAssignments[fromStage] = newAssignments[fromStage].filter(hhah => hhah !== hhahName);
+    }
     
     // Add to new stage
     if (!newAssignments[toStage]) {
@@ -183,11 +192,39 @@ const FunnelDataProvider = ({ children }) => {
     
     if (fromIndex !== -1 && toIndex !== -1) {
       // Update the values based on actual counts
-      newFunnelData[fromIndex].value = newAssignments[fromStage]?.length || 0;
-      newFunnelData[toIndex].value = newAssignments[toStage]?.length || 0;
+      newFunnelData[fromIndex].value = Math.max(1, (newAssignments[fromStage]?.length || 0));
+      newFunnelData[toIndex].value = Math.max(1, (newAssignments[toStage]?.length || 0));
       
       setHhahFunnelData(newFunnelData);
     }
+  };
+  
+  // Function to add a new PG and update funnel data
+  const updatePgFunnelData = (newFunnelData, pgName, stage) => {
+    // Update funnel data visualization
+    setPgFunnelData(newFunnelData);
+    
+    // Update assignments
+    const newAssignments = { ...pgAssignments };
+    if (!newAssignments[stage]) {
+      newAssignments[stage] = [];
+    }
+    newAssignments[stage].push(pgName);
+    setPgAssignments(newAssignments);
+  };
+  
+  // Function to add a new HHAH and update funnel data
+  const updateHhahFunnelData = (newFunnelData, hhahName, stage) => {
+    // Update funnel data visualization
+    setHhahFunnelData(newFunnelData);
+    
+    // Update assignments
+    const newAssignments = { ...hhahAssignments };
+    if (!newAssignments[stage]) {
+      newAssignments[stage] = [];
+    }
+    newAssignments[stage].push(hhahName);
+    setHhahAssignments(newAssignments);
   };
 
   return (
@@ -196,13 +233,17 @@ const FunnelDataProvider = ({ children }) => {
         currentArea,
         setCurrentArea,
         pgData,
+        setPgData,
         hhahData,
+        setHhahData,
         pgFunnelData,
         hhahFunnelData,
         pgAssignments,
         hhahAssignments,
         movePgToStage,
         moveHhahToStage,
+        updatePgFunnelData,
+        updateHhahFunnelData,
         isLoading
       }}
     >

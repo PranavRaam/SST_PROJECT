@@ -305,9 +305,36 @@ const VivIntegratedServicesStatusMatrix = () => {
   const navigate = useNavigate();
 
   const handlePatientClick = (patient) => {
-    navigate(`/patient-view/${encodeURIComponent(patient.id)}`, {
-      state: { patientData: patient }
-    });
+    // Transform the patient data to match the format expected by PatientDetailView
+    const transformedPatient = {
+      id: patient.id,
+      ptName: patient.ptName,
+      patientFirstName: patient.ptName.split(' ')[0],
+      patientLastName: patient.ptName.split(' ')[1] || '',
+      dob: patient.dob,
+      pg: patient.pg,
+      hhah: patient.hhah,
+      renderingProvider: patient.renderingProvider,
+      renderingPractitioner: patient.renderingProvider,
+      patientSOC: patient.soc,
+      patientEpisodeFrom: patient.episodeFrom,
+      patientEpisodeTo: patient.episodeTo,
+      patientRemarks: patient.remarks,
+      cpoMinsCaptured: patient.pgServices.cpoMinsCaptured,
+      docsPrepared: patient.pgServices.docsPrepared,
+      newCpoDocsCreated: patient.pgServices.cpoDocsCreated,
+      signed485: patient.hhahServices.signed485,
+      docsSigned: patient.hhahServices.docsSigned
+    };
+    
+    // Navigate to the appropriate service view with the transformed patient data
+    if (patient.pg.includes('Premier') || patient.pg.includes('Sunshine')) {
+      // Navigate to PG service view with this patient
+      navigate('/pg-services', { state: { selectedPatient: transformedPatient } });
+    } else {
+      // Navigate to HHAH service view with this patient
+      navigate('/hhah-services', { state: { selectedPatient: transformedPatient } });
+    }
   };
 
   return (

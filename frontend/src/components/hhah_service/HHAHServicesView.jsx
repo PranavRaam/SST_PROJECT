@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import ServicesTable from './ServicesTable';
 import PatientDetailView from '../pg_service/PatientDetailView';
@@ -254,6 +255,15 @@ const HHAHServicesView = () => {
   const [signedFilter, setSignedFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPatient, setSelectedPatient] = useState(null);
+
+  const location = useLocation();
+
+  // Check for selected patient in location state when component mounts
+  useEffect(() => {
+    if (location.state && location.state.selectedPatient) {
+      setSelectedPatient(location.state.selectedPatient);
+    }
+  }, [location.state]);
 
   const handleSearch = (term) => {
     setSearchTerm(term);

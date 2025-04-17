@@ -7621,3 +7621,421 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-16 04:55:44,278 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:44] "GET /api/map?t=1744759544140&noCache=true&stableView=true?t%3D1744759544140&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759544153 HTTP/1.1" 200 -
 2025-04-16 04:55:44,444 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:44] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-16 04:55:45,634 - werkzeug - INFO - 127.0.0.1 - - [16/Apr/2025 04:55:45] "GET /api/map?t=1744759545594&noCache=true&stableView=true?t%3D1744759545594&_show_states=true&_show_counties=true&_show_msas=true&_t=1744759545596 HTTP/1.1" 200 -
+2025-04-17 09:15:39,348 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 09:15:39,351 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 09:15:39,369 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-17 09:15:39,369 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-17 09:15:39,370 - werkzeug - INFO -  * Restarting with stat
+2025-04-17 09:15:39,981 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 09:15:39,985 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 09:15:39,997 - werkzeug - WARNING -  * Debugger is active!
+2025-04-17 09:15:39,998 - werkzeug - INFO -  * Debugger PIN: 201-509-233
+2025-04-17 09:16:04,230 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:16:04,235 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:16:04,264 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:04] "GET /api/map?t=1744861564241&noCache=true&stableView=true?t%3D1744861564241&_show_states=true&_show_counties=true&_show_msas=true&_t=1744861564242 HTTP/1.1" 200 -
+2025-04-17 09:16:04,284 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:16:04,291 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:16:04,382 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:04] "GET /api/map?t=1744861564305&noCache=true&stableView=true?t%3D1744861564305&_show_states=true&_show_counties=true&_show_msas=true&_t=1744861564306 HTTP/1.1" 200 -
+2025-04-17 09:16:05,075 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:05] "GET /api/map?t=1744861565061&noCache=true&stableView=true?t%3D1744861565061&_show_states=true&_show_counties=true&_show_msas=true&_t=1744861565061 HTTP/1.1" 200 -
+2025-04-17 09:16:07,516 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:07] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:16:07,523 - __main__ - INFO - Map request for area: Ames
+2025-04-17 09:16:07,523 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744861567521')])
+2025-04-17 09:16:07,523 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:16:07,523 - statistical_area_zoom - INFO - Generating map for statistical area: Ames with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:16:07,523 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:07,524 - statistical_area_zoom - INFO - Cached map is 65.1 hours old, regenerating...
+2025-04-17 09:16:07,524 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 09:16:07,524 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-17 09:16:07,524 - data_preloader - INFO - Loading all cached data...
+2025-04-17 09:16:07,540 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-17 09:16:07,542 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-17 09:16:07,542 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-17 09:16:07,542 - statistical_area_zoom - INFO - Normalized area name: ames
+2025-04-17 09:16:07,547 - statistical_area_zoom - INFO - Trying to match city name: ames
+2025-04-17 09:16:07,549 - statistical_area_zoom - INFO - Found exact city match: Ames, IA
+2025-04-17 09:16:07,549 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 09:16:07,549 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 09:16:07,550 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Ames
+2025-04-17 09:16:07,550 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Ames
+2025-04-17 09:16:07,551 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 09:16:07,551 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 09:16:07,551 - statistical_area_zoom - INFO - Center: 42.036284780361115, -93.69827109738026
+2025-04-17 09:16:07,551 - statistical_area_zoom - INFO - Bounds: -94.164704, 41.862711, -93.231682, 42.20992
+2025-04-17 09:16:07,735 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:07,736 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:07,736 - __main__ - INFO - Request completed in 0.21 seconds
+2025-04-17 09:16:07,736 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:07] "GET /api/statistical-area-map/Ames?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744861567521 HTTP/1.1" 200 -
+2025-04-17 09:16:07,755 - __main__ - INFO - Map request for area: Ames
+2025-04-17 09:16:07,756 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744861567521'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744861567741')])
+2025-04-17 09:16:07,756 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:16:07,756 - statistical_area_zoom - INFO - Generating map for statistical area: Ames with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:16:07,756 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:07,756 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html (age: 0.0 hours)
+2025-04-17 09:16:07,756 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:16:07,756 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:07,756 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:16:07,756 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:07] "GET /api/statistical-area-map/Ames?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744861567521&_show_states=true&_show_counties=true&_show_msas=true&_t=1744861567741 HTTP/1.1" 200 -
+2025-04-17 09:16:12,483 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:12] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:16:12,491 - __main__ - INFO - Map request for area: Ames
+2025-04-17 09:16:12,491 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744861572487')])
+2025-04-17 09:16:12,491 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:16:12,491 - statistical_area_zoom - INFO - Generating map for statistical area: Ames with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:16:12,491 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:12,491 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html (age: 0.0 hours)
+2025-04-17 09:16:12,491 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:16:12,491 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:12,491 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:16:12,491 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:12] "GET /api/statistical-area-map/Ames?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744861572487 HTTP/1.1" 200 -
+2025-04-17 09:16:12,507 - __main__ - INFO - Map request for area: Ames
+2025-04-17 09:16:12,507 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744861572487'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744861572498')])
+2025-04-17 09:16:12,507 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:16:12,507 - statistical_area_zoom - INFO - Generating map for statistical area: Ames with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:16:12,507 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:12,507 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html (age: 0.0 hours)
+2025-04-17 09:16:12,507 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:16:12,508 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ames_lightweight.html
+2025-04-17 09:16:12,508 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:16:12,508 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:16:12] "GET /api/statistical-area-map/Ames?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744861572487&_show_states=true&_show_counties=true&_show_msas=true&_t=1744861572498 HTTP/1.1" 200 -
+2025-04-17 09:24:52,851 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 09:24:52,856 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 09:24:52,870 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-17 09:24:52,870 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-17 09:24:52,871 - werkzeug - INFO -  * Restarting with stat
+2025-04-17 09:24:53,559 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 09:24:53,563 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 09:24:53,576 - werkzeug - WARNING -  * Debugger is active!
+2025-04-17 09:24:53,576 - werkzeug - INFO -  * Debugger PIN: 201-509-233
+2025-04-17 09:27:41,941 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:27:41,946 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:27:41,976 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:41] "GET /api/map?t=1744862261951&noCache=true&stableView=true?t%3D1744862261951&_show_states=true&_show_counties=true&_show_msas=true&_t=1744862261952 HTTP/1.1" 200 -
+2025-04-17 09:27:41,991 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:27:41,995 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 09:27:42,052 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:42] "GET /api/map?t=1744862262017&noCache=true&stableView=true?t%3D1744862262017&_show_states=true&_show_counties=true&_show_msas=true&_t=1744862262019 HTTP/1.1" 200 -
+2025-04-17 09:27:42,843 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:42] "GET /api/map?t=1744862262826&noCache=true&stableView=true?t%3D1744862262826&_show_states=true&_show_counties=true&_show_msas=true&_t=1744862262827 HTTP/1.1" 200 -
+2025-04-17 09:27:45,102 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:45] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:27:45,112 - __main__ - INFO - Map request for area: Bellingham
+2025-04-17 09:27:45,112 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744862265109')])
+2025-04-17 09:27:45,112 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:27:45,112 - statistical_area_zoom - INFO - Generating map for statistical area: Bellingham with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:27:45,113 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-17 09:27:45,113 - statistical_area_zoom - INFO - Cached map is 79.9 hours old, regenerating...
+2025-04-17 09:27:45,113 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 09:27:45,113 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-17 09:27:45,113 - data_preloader - INFO - Loading all cached data...
+2025-04-17 09:27:45,133 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-17 09:27:45,134 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-17 09:27:45,134 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-17 09:27:45,134 - statistical_area_zoom - INFO - Normalized area name: bellingham
+2025-04-17 09:27:45,137 - statistical_area_zoom - INFO - Trying to match city name: bellingham
+2025-04-17 09:27:45,138 - statistical_area_zoom - INFO - Found exact city match: Bellingham, WA
+2025-04-17 09:27:45,139 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 09:27:45,139 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 09:27:45,139 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bellingham
+2025-04-17 09:27:45,139 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bellingham
+2025-04-17 09:27:45,140 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 09:27:45,140 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 09:27:45,140 - statistical_area_zoom - INFO - Center: 48.82975917756058, -121.87404608505845
+2025-04-17 09:27:45,140 - statistical_area_zoom - INFO - Bounds: -123.32224, 48.625687, -120.655857, 49.002072
+2025-04-17 09:27:45,287 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-17 09:27:45,287 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-17 09:27:45,287 - __main__ - INFO - Request completed in 0.17 seconds
+2025-04-17 09:27:45,288 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:45] "GET /api/statistical-area-map/Bellingham?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744862265109 HTTP/1.1" 200 -
+2025-04-17 09:27:45,317 - __main__ - INFO - Map request for area: Bellingham
+2025-04-17 09:27:45,317 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744862265109'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744862265294')])
+2025-04-17 09:27:45,317 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:27:45,317 - statistical_area_zoom - INFO - Generating map for statistical area: Bellingham with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:27:45,317 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-17 09:27:45,318 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html (age: 0.0 hours)
+2025-04-17 09:27:45,318 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:27:45,318 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bellingham_lightweight.html
+2025-04-17 09:27:45,318 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:27:45,318 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:27:45] "GET /api/statistical-area-map/Bellingham?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744862265109&_show_states=true&_show_counties=true&_show_msas=true&_t=1744862265294 HTTP/1.1" 200 -
+2025-04-17 09:41:38,463 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:41:38] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:41:38,469 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:41:38,469 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744863098466')])
+2025-04-17 09:41:38,470 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:41:38,470 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:41:38,470 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:41:38,470 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 09:41:38,470 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-17 09:41:38,470 - statistical_area_zoom - INFO - Normalized area name: casper
+2025-04-17 09:41:38,471 - statistical_area_zoom - INFO - Trying to match city name: casper
+2025-04-17 09:41:38,472 - statistical_area_zoom - INFO - Found exact city match: Casper, WY
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Casper
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Casper
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Center: 42.9635898722682, -106.7986698818188
+2025-04-17 09:41:38,473 - statistical_area_zoom - INFO - Bounds: -107.543526, 42.433218, -106.072904, 43.501362
+2025-04-17 09:41:38,609 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:41:38,609 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:41:38,609 - __main__ - INFO - Request completed in 0.14 seconds
+2025-04-17 09:41:38,610 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:41:38] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744863098466 HTTP/1.1" 200 -
+2025-04-17 09:41:38,626 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:41:38,626 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744863098466'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744863098616')])
+2025-04-17 09:41:38,626 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:41:38,626 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:41:38,627 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:41:38,627 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.0 hours)
+2025-04-17 09:41:38,627 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:41:38,627 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:41:38,627 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:41:38,627 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:41:38] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744863098466&_show_states=true&_show_counties=true&_show_msas=true&_t=1744863098616 HTTP/1.1" 200 -
+2025-04-17 09:57:53,558 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:57:53] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:57:53,562 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:57:53,562 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864073561')])
+2025-04-17 09:57:53,562 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:57:53,562 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:57:53,562 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:53,563 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 09:57:53,563 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:57:53,563 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:53,563 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:57:53,563 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:57:53] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864073561 HTTP/1.1" 200 -
+2025-04-17 09:57:53,590 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:57:53,590 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864073561'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864073574')])
+2025-04-17 09:57:53,590 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:57:53,590 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:57:53,590 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:53,590 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 09:57:53,590 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:57:53,590 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:53,590 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:57:53,591 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:57:53] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864073561&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864073574 HTTP/1.1" 200 -
+2025-04-17 09:57:58,142 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:57:58] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:57:58,151 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:57:58,151 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864078147')])
+2025-04-17 09:57:58,151 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:57:58,151 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:57:58,151 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:58,151 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 09:57:58,151 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:57:58,152 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:58,152 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:57:58,152 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:57:58] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864078147 HTTP/1.1" 200 -
+2025-04-17 09:57:58,167 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:57:58,167 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864078147'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864078157')])
+2025-04-17 09:57:58,167 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:57:58,167 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:57:58,167 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:58,167 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 09:57:58,168 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:57:58,168 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:57:58,168 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:57:58,168 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:57:58] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864078147&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864078157 HTTP/1.1" 200 -
+2025-04-17 09:58:02,247 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:58:02] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 09:58:02,256 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:58:02,256 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864082251')])
+2025-04-17 09:58:02,256 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:58:02,256 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:58:02,256 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:58:02,256 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 09:58:02,256 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:58:02,256 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:58:02,256 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:58:02,257 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:58:02] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864082251 HTTP/1.1" 200 -
+2025-04-17 09:58:02,291 - __main__ - INFO - Map request for area: Casper
+2025-04-17 09:58:02,291 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864082251'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864082268')])
+2025-04-17 09:58:02,291 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 09:58:02,292 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 09:58:02,292 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:58:02,292 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 09:58:02,292 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 09:58:02,292 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 09:58:02,292 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 09:58:02,293 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 09:58:02] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864082251&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864082268 HTTP/1.1" 200 -
+2025-04-17 10:01:03,226 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:01:03] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:01:03,232 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:01:03,232 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864263230')])
+2025-04-17 10:01:03,232 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:01:03,232 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:01:03,232 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:03,232 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 10:01:03,232 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:01:03,232 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:03,232 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:01:03,233 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:01:03] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864263230 HTTP/1.1" 200 -
+2025-04-17 10:01:03,248 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:01:03,248 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864263230'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864263238')])
+2025-04-17 10:01:03,248 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:01:03,248 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:01:03,249 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:03,249 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 10:01:03,249 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:01:03,249 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:03,249 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:01:03,249 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:01:03] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864263230&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864263238 HTTP/1.1" 200 -
+2025-04-17 10:01:15,211 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:01:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:01:15,216 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:01:15,216 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864275214')])
+2025-04-17 10:01:15,216 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:01:15,216 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:01:15,216 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:15,216 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 10:01:15,216 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:01:15,217 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:15,217 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:01:15,217 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:01:15] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864275214 HTTP/1.1" 200 -
+2025-04-17 10:01:15,236 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:01:15,236 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864275214'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864275223')])
+2025-04-17 10:01:15,236 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:01:15,236 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:01:15,236 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:15,236 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.3 hours)
+2025-04-17 10:01:15,236 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:01:15,236 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:01:15,236 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:01:15,237 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:01:15] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864275214&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864275223 HTTP/1.1" 200 -
+2025-04-17 10:04:15,009 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:04:15,016 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:04:15,016 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864455013')])
+2025-04-17 10:04:15,016 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:04:15,016 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:04:15,016 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:15,016 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.4 hours)
+2025-04-17 10:04:15,016 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:04:15,016 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:15,016 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:04:15,016 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:15] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864455013 HTTP/1.1" 200 -
+2025-04-17 10:04:15,032 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:04:15,032 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864455013'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864455022')])
+2025-04-17 10:04:15,032 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:04:15,032 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:04:15,032 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:15,033 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.4 hours)
+2025-04-17 10:04:15,033 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:04:15,033 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:15,033 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:04:15,033 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:15] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864455013&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864455022 HTTP/1.1" 200 -
+2025-04-17 10:04:18,752 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:18] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:04:18,758 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:04:18,758 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864458756')])
+2025-04-17 10:04:18,758 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:04:18,758 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:04:18,758 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:18,759 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.4 hours)
+2025-04-17 10:04:18,759 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:04:18,759 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:18,759 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:04:18,759 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:18] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864458756 HTTP/1.1" 200 -
+2025-04-17 10:04:18,773 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:04:18,773 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864458756'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864458764')])
+2025-04-17 10:04:18,773 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:04:18,773 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:04:18,773 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:18,773 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.4 hours)
+2025-04-17 10:04:18,773 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:04:18,773 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:18,773 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:04:18,774 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:18] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864458756&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864458764 HTTP/1.1" 200 -
+2025-04-17 10:04:41,886 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:41] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:04:41,892 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:04:41,892 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864481890')])
+2025-04-17 10:04:41,892 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:04:41,892 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:04:41,892 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:41,892 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.4 hours)
+2025-04-17 10:04:41,892 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:04:41,892 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:41,892 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:04:41,893 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:41] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864481890 HTTP/1.1" 200 -
+2025-04-17 10:04:41,908 - __main__ - INFO - Map request for area: Casper
+2025-04-17 10:04:41,909 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864481890'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864481898')])
+2025-04-17 10:04:41,909 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:04:41,909 - statistical_area_zoom - INFO - Generating map for statistical area: Casper with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:04:41,909 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:41,909 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html (age: 0.4 hours)
+2025-04-17 10:04:41,909 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:04:41,909 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Casper_lightweight.html
+2025-04-17 10:04:41,909 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:04:41,909 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:04:41] "GET /api/statistical-area-map/Casper?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864481890&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864481898 HTTP/1.1" 200 -
+2025-04-17 10:07:49,710 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 10:07:49,714 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 10:07:49,735 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 10:07:49,746 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:49] "GET /api/map?t=1744864669726&noCache=true&stableView=true?t%3D1744864669726&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864669726 HTTP/1.1" 200 -
+2025-04-17 10:07:49,746 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:49] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 10:07:49,756 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:49] "GET /api/map?t=1744864669735&noCache=true&stableView=true?t%3D1744864669735&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864669738 HTTP/1.1" 200 -
+2025-04-17 10:07:50,277 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:07:50] "GET /api/map?t=1744864670269&noCache=true&stableView=true?t%3D1744864670269&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864670270 HTTP/1.1" 200 -
+2025-04-17 10:08:00,156 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:08:00] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:08:00,191 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-17 10:08:00,192 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864680186')])
+2025-04-17 10:08:00,192 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:08:00,192 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:08:00,192 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:00,192 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 10:08:00,192 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-17 10:08:00,192 - statistical_area_zoom - INFO - Normalized area name: ann arbor
+2025-04-17 10:08:00,195 - statistical_area_zoom - INFO - Trying to match city name: ann arbor
+2025-04-17 10:08:00,197 - statistical_area_zoom - INFO - Found exact city match: Ann Arbor, MI
+2025-04-17 10:08:00,197 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 10:08:00,197 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 10:08:00,198 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Ann Arbor
+2025-04-17 10:08:00,198 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Ann Arbor
+2025-04-17 10:08:00,198 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 10:08:00,198 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 10:08:00,198 - statistical_area_zoom - INFO - Center: 42.25356155593904, -83.83852805599241
+2025-04-17 10:08:00,198 - statistical_area_zoom - INFO - Bounds: -84.131963, 42.071577, -83.539396, 42.435166
+2025-04-17 10:08:00,423 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:00,423 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:00,423 - __main__ - INFO - Request completed in 0.23 seconds
+2025-04-17 10:08:00,424 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:08:00] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864680186 HTTP/1.1" 200 -
+2025-04-17 10:08:00,453 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-17 10:08:00,453 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864680186'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864680433')])
+2025-04-17 10:08:00,453 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:08:00,453 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:08:00,453 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:00,453 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html (age: 0.0 hours)
+2025-04-17 10:08:00,453 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:08:00,453 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:00,453 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:08:00,454 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:08:00] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864680186&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864680433 HTTP/1.1" 200 -
+2025-04-17 10:08:10,189 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:08:10] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:08:10,197 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-17 10:08:10,197 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864690194')])
+2025-04-17 10:08:10,197 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:08:10,197 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:08:10,197 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:10,197 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html (age: 0.0 hours)
+2025-04-17 10:08:10,197 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:08:10,197 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:10,197 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:08:10,198 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:08:10] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864690194 HTTP/1.1" 200 -
+2025-04-17 10:08:10,212 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-17 10:08:10,213 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744864690194'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744864690203')])
+2025-04-17 10:08:10,213 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:08:10,213 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:08:10,213 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:10,213 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html (age: 0.0 hours)
+2025-04-17 10:08:10,213 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:08:10,213 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:08:10,213 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:08:10,214 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:08:10] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744864690194&_show_states=true&_show_counties=true&_show_msas=true&_t=1744864690203 HTTP/1.1" 200 -
+2025-04-17 10:30:57,515 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:30:57] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 10:30:57,522 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-17 10:30:57,522 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744866057519')])
+2025-04-17 10:30:57,522 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:30:57,522 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:30:57,522 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:30:57,522 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html (age: 0.4 hours)
+2025-04-17 10:30:57,522 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:30:57,522 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:30:57,522 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:30:57,523 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:30:57] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744866057519 HTTP/1.1" 200 -
+2025-04-17 10:30:57,540 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-17 10:30:57,541 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744866057519'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744866057529')])
+2025-04-17 10:30:57,541 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 10:30:57,541 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 10:30:57,541 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:30:57,541 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html (age: 0.4 hours)
+2025-04-17 10:30:57,541 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 10:30:57,541 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-17 10:30:57,541 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 10:30:57,541 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:30:57] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744866057519&_show_states=true&_show_counties=true&_show_msas=true&_t=1744866057529 HTTP/1.1" 200 -
