@@ -1,20 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
-import { FunnelDataContext } from './FunnelDataContext';
+import { FunnelDataContext, PG_STAGES } from './FunnelDataContext';
 import "../sa_view_css/PGFunnel.css"; // Importing CSS
 
-// Patient journey funnel stages
-const pgFunnelStages = [
-  { name: "They exist but they haven't heard of us", value: 60, fill: "#2980B9" },
-  { name: "They've now heard of us but that's it", value: 55, fill: "#3498DB" },
-  { name: "Enough interest that they're interacting with our content", value: 50, fill: "#45B7D1" },
-  { name: "Enough interest that they're now talking to us", value: 40, fill: "#F39C12" },
-  { name: "They've had a demo", value: 30, fill: "#E67E22" },
-  { name: "In the buying process", value: 25, fill: "#D35400" },
-  { name: "Deal is so hot your hands will burn if you touch it", value: 20, fill: "#E74C3C" },
-  { name: "On the platform", value: 15, fill: "#C0392B" },
-  { name: "In the upselling zone", value: 10, fill: "#E57373" },
-  { name: "Upsold to CPOs/CCMs/RPMs/other services", value: 5, fill: "#B71C1C" }
-];
+// Patient journey funnel stages - initialize using the same values from the context
+const pgFunnelStages = PG_STAGES.map((name, index) => {
+  // Values and colors from original definition
+  const values = [60, 55, 50, 40, 30, 25, 20, 15, 10, 5];
+  const fills = [
+    "#2980B9", "#3498DB", "#45B7D1", "#F39C12", 
+    "#E67E22", "#D35400", "#E74C3C", "#C0392B", 
+    "#E57373", "#B71C1C"
+  ];
+  
+  return {
+    name,
+    value: values[index],
+    fill: fills[index]
+  };
+});
 
 // For display in the center of each section
 const displayValues = [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100];
@@ -33,6 +36,7 @@ const PGFunnel = () => {
   const [selectedPG, setSelectedPG] = useState(null);
   const [funnelData, setFunnelData] = useState(pgFunnelStages);
   const [hoveredSection, setHoveredSection] = useState(null);
+  const [moveStatus, setMoveStatus] = useState(null); // New state for tracking move status
   
   // Logging for debugging
   useEffect(() => {
@@ -58,12 +62,14 @@ const PGFunnel = () => {
     setExpandedStage(entry.name);
     setShowMoveOptions(false);
     setSelectedPG(null);
+    setMoveStatus(null); // Reset move status when changing stages
   };
 
   const handleMovePG = (pg) => {
     console.log("Selected PG for move:", pg);
     setSelectedPG(pg);
     setShowMoveOptions(true);
+    setMoveStatus(null); // Reset move status when selecting a new PG
   };
 
   const handleMoveToStage = (targetStage) => {
@@ -80,24 +86,41 @@ const PGFunnel = () => {
         targetStage,
         moveFunctionAvailable: !!movePgToStage
       });
+      setMoveStatus({
+        success: false,
+        message: "Error: Cannot move PG due to missing data. Please try again."
+      });
       return;
     }
     
     try {
       movePgToStage(selectedPG, expandedStage, targetStage);
       console.log("PG moved successfully");
+      setMoveStatus({
+        success: true,
+        message: `Successfully moved ${selectedPG} to "${targetStage}"`
+      });
+      
+      // Auto-close move options after successful move after a delay
+      setTimeout(() => {
+        setShowMoveOptions(false);
+        setSelectedPG(null);
+      }, 2000);
+      
     } catch (error) {
       console.error("Error moving PG:", error);
+      setMoveStatus({
+        success: false,
+        message: `Error moving PG: ${error.message || 'Unknown error'}`
+      });
     }
-    
-    setShowMoveOptions(false);
-    setSelectedPG(null);
   };
 
   const handleBack = () => {
     setExpandedStage(null);
     setShowMoveOptions(false);
     setSelectedPG(null);
+    setMoveStatus(null); // Reset move status when going back
   };
 
   // Get PG names for the expanded stage view
@@ -150,6 +173,11 @@ const PGFunnel = () => {
           {showMoveOptions && (
             <div className="move-options">
               <h5>Move {selectedPG} to:</h5>
+              {moveStatus && (
+                <div className={`move-status ${moveStatus.success ? 'success' : 'error'}`}>
+                  {moveStatus.message}
+                </div>
+              )}
               {funnelData
                 .filter(stage => stage.name !== expandedStage)
                 .map((stage, index) => (
@@ -157,6 +185,8 @@ const PGFunnel = () => {
                     key={index}
                     onClick={() => handleMoveToStage(stage.name)}
                     className="move-option-button"
+                    style={{ backgroundColor: stage.fill }}
+                    disabled={moveStatus?.success}
                   >
                     {stage.name}
                   </button>

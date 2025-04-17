@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FunnelDataContext } from './FunnelDataContext';
+import { FunnelDataContext, HHAH_STAGES } from './FunnelDataContext';
 import '../sa_view_css/HHAHListingTable.css';
 import combinedData from '../../assets/data/combined_data.json';
 
 const HHAHListingTable = () => {
-  const { currentArea } = useContext(FunnelDataContext);
+  const { currentArea, hhahData, hhahAssignments } = useContext(FunnelDataContext);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,10 +18,47 @@ const HHAHListingTable = () => {
     });
   };
 
+  // Get an agency's current funnel stage from the assignments
+  const getAgencyStage = (agencyName) => {
+    if (!hhahAssignments) return "Not Using"; // Default value
+    
+    for (const [stage, agencies] of Object.entries(hhahAssignments)) {
+      if (agencies.includes(agencyName)) {
+        return stage;
+      }
+    }
+    
+    return "Not Using"; // Default if not found in any stage
+  };
+
   useEffect(() => {
     console.log('Current Area:', currentArea);
-    console.log('Combined Data:', combinedData);
+    console.log('HHAH Data from Context:', hhahData?.length);
+    console.log('HHAH Assignments:', hhahAssignments);
     
+    // Check if we have data from the context first (preferred source)
+    if (currentArea && hhahData && hhahData.length > 0) {
+      console.log('Using HHAH data from context');
+      const dataWithSyncedStatus = hhahData.map(agency => {
+        // Make a copy of the agency data
+        const updatedAgency = { ...agency };
+        
+        // Check if this agency has an assignment in the funnel
+        const currentStage = getAgencyStage(agency['Agency Name']);
+        if (currentStage && currentStage !== agency['Agency Type']) {
+          // Update the agency type to match its funnel stage
+          updatedAgency['Agency Type'] = currentStage;
+        }
+        
+        return updatedAgency;
+      });
+      
+      setFilteredData(dataWithSyncedStatus);
+      return;
+    }
+    
+    // Fallback to combined data if context data not available
+    console.log('Falling back to combined data source');
     // Extract all HHAH data from the nested structure
     const allHHAHData = [
       ...(combinedData.West_Details || []),
@@ -30,7 +67,6 @@ const HHAHListingTable = () => {
     ];
 
     console.log('All HHAH Data Length:', allHHAHData.length);
-    console.log('First few items in HHAH data:', allHHAHData.slice(0, 3));
     
     if (currentArea) {
       setIsLoading(true);
@@ -38,23 +74,15 @@ const HHAHListingTable = () => {
       const filtered = allHHAHData.filter(item => {
         const itemArea = item['Metropolitan (or Micropolitan) Area']?.toLowerCase() || '';
         const selectedArea = currentArea.toLowerCase();
-        const matches = itemArea === selectedArea;
-        console.log('Checking item:', {
-          name: item['Agency Name'],
-          itemArea,
-          selectedArea,
-          matches
-        });
-        return matches;
+        return itemArea === selectedArea;
       });
       console.log('Filtered Data Length:', filtered.length);
-      console.log('Filtered Data:', filtered);
       setFilteredData(filtered);
       setIsLoading(false);
     } else {
       setFilteredData([]);
     }
-  }, [currentArea]);
+  }, [currentArea, hhahData, hhahAssignments]);
 
   if (isLoading) {
     return <div className="loading-message">Loading HHAH data...</div>;
@@ -82,6 +110,28 @@ const HHAHListingTable = () => {
     );
   }
 
+  // Helper function to get appropriate CSS class based on agency stage
+  const getStatusClass = (status) => {
+    const statusMap = {
+      "Freemium": "status-freemium",
+      "Not Using": "status-not-using",
+      "Order360 Lite": "status-lite",
+      "Order360 Full": "status-full",
+      "Upsold (Fully subscribed)": "status-upsold"
+    };
+    
+    return statusMap[status] || "status-default";
+  };
+
+  // Helper function to get a shorter display name if needed
+  const getShortStatusName = (status) => {
+    const nameMap = {
+      "Upsold (Fully subscribed)": "Fully Subscribed"
+    };
+    
+    return nameMap[status] || status;
+  };
+
   return (
     <div className="table-container">
       <div className="note-banner">
@@ -106,7 +156,11 @@ const HHAHListingTable = () => {
               <td>{hhah['Agency Name']}</td>
               <td>{hhah['Address'] || 'N/A'}, {hhah['City'] || 'N/A'}, {hhah['State'] || 'N/A'} {hhah['Zipcode'] || 'N/A'}</td>
               <td>{hhah['Telephone'] || 'N/A'}</td>
-              <td>{hhah['Agency Type'] || 'Not Specified'}</td>
+              <td>
+                <div className={getStatusClass(hhah['Agency Type'])}>
+                  {getShortStatusName(hhah['Agency Type'] || 'Not Specified')}
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

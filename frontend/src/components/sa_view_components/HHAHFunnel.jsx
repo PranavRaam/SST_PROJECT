@@ -1,17 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
-import { FunnelDataContext } from './FunnelDataContext';
+import { FunnelDataContext, HHAH_STAGES } from './FunnelDataContext';
 import "../sa_view_css/HHAHFunnel.css";
 import combinedData from '../../assets/data/combined_data.json';
 
-// Subscription status funnel stages
-const hhahFunnelStages = [
-  { name: "They exist but they haven't heard of us", value: 60, fill: "#C0392B" },
-  { name: "They've now heard of us but that's it", value: 50, fill: "#E74C3C" },
-  { name: "Enough interest that they're interacting with our content", value: 40, fill: "#D35400" },
-  { name: "Enough interest that they're now talking to us", value: 30, fill: "#9B59B6" },
-  { name: "99 cent model", value: 20, fill: "#F1C40F" },
-  { name: "Upsold (Fully subscribed)", value: 10, fill: "#2ECC71" }
-];
+// Subscription status funnel stages - initialize using the same values from the context
+const hhahFunnelStages = HHAH_STAGES.map((name, index) => {
+  // Values from original definition
+  const values = [60, 50, 40, 30, 20, 10];
+  const fills = ["#C0392B", "#E74C3C", "#D35400", "#9B59B6", "#F1C40F", "#2ECC71"];
+  
+  // Use values and colors if we have enough entries, or provide defaults
+  return {
+    name,
+    value: index < values.length ? values[index] : 10,
+    fill: index < fills.length ? fills[index] : "#2ECC71"
+  };
+});
 
 // Display values for the funnel sections
 const displayValues = [800, 600, 400, 250, 150, 50];

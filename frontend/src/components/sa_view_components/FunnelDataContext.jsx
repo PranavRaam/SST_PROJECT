@@ -3,7 +3,8 @@ import {
   fetchAgencyData, 
   getAgenciesByStatisticalArea, 
   categorizeAgencies, 
-  transformAgencyDataForFunnel 
+  transformAgencyDataForFunnel,
+  updateAgencyData 
 } from '../../utils/csvDataService';
 
 // Create the context
@@ -11,12 +12,16 @@ const FunnelDataContext = createContext();
 
 // Define funnel stages for both PG and HHAH for consistent usage across components
 export const PG_STAGES = [
-  "Total Potential Patients",
-  "Active Interest",
-  "Initial Contact",
-  "In Assessment",
-  "Ready for Service",
-  "Service Started"
+  "They exist but they haven't heard of us",
+  "They've now heard of us but that's it",
+  "Enough interest that they're interacting with our content",
+  "Enough interest that they're now talking to us",
+  "They've had a demo",
+  "In the buying process",
+  "Deal is so hot your hands will burn if you touch it",
+  "On the platform",
+  "In the upselling zone",
+  "Upsold to CPOs/CCMs/RPMs/other services"
 ];
 
 export const HHAH_STAGES = [
@@ -86,8 +91,12 @@ const FunnelDataProvider = ({ children }) => {
         return PG_STAGES.map((stage, index) => {
           // Calculate a value that decreases through the funnel
           const value = Math.max(1, Math.floor(pgs.length * (1 - index * 0.15)));
-          // Use consistent colors
-          const colors = ["#2980B9", "#45B7D1", "#F39C12", "#E67E22", "#E74C3C", "#E57373"];
+          // Use consistent colors matching PGFunnel.jsx
+          const colors = [
+            "#2980B9", "#3498DB", "#45B7D1", "#F39C12", 
+            "#E67E22", "#D35400", "#E74C3C", "#C0392B", 
+            "#E57373", "#B71C1C"
+          ];
           return { 
             name: stage, 
             value: value, 
@@ -150,6 +159,15 @@ const FunnelDataProvider = ({ children }) => {
     
     setPgAssignments(newAssignments);
     
+    // Update PG data with new status
+    const updatedPGs = [...pgData];
+    const pgIndex = updatedPGs.findIndex(pg => pg['Agency Name'] === pgName);
+    if (pgIndex !== -1) {
+      // Update the PG's status to match its new funnel stage
+      updatedPGs[pgIndex]['Agency Type'] = toStage;
+      setPgData(updatedPGs);
+    }
+    
     // Update funnel data visualization
     const newFunnelData = [...pgFunnelData];
     
@@ -182,6 +200,18 @@ const FunnelDataProvider = ({ children }) => {
     newAssignments[toStage].push(hhahName);
     
     setHhahAssignments(newAssignments);
+    
+    // Update agency data with new status
+    const updatedAgencies = updateAgencyData(hhahName, toStage, allAgencies);
+    setAllAgencies(updatedAgencies);
+    
+    // Find the specific agency we just updated
+    const updatedHhahs = [...hhahData];
+    const hhahIndex = updatedHhahs.findIndex(hhah => hhah['Agency Name'] === hhahName);
+    if (hhahIndex !== -1) {
+      updatedHhahs[hhahIndex]['Agency Type'] = toStage;
+      setHhahData(updatedHhahs);
+    }
     
     // Update funnel data visualization
     const newFunnelData = [...hhahFunnelData];

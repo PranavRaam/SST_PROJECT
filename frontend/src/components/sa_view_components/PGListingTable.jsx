@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FunnelDataContext } from './FunnelDataContext';
+import { FunnelDataContext, PG_STAGES } from './FunnelDataContext';
 import '../sa_view_css/PGListingTable.css';
 
-// Dummy data for PG listing
+// Dummy data fallback for PG listing
 const dummyPGData = [
   {
     name: "PG Alpha",
@@ -12,7 +12,7 @@ const dummyPGData = [
     state: "NY",
     zipcode: "10001",
     phone: "(555) 123-4567",
-    status: "Active"
+    status: "They exist but they haven't heard of us"
   },
   {
     name: "PG Beta",
@@ -21,7 +21,7 @@ const dummyPGData = [
     state: "CA",
     zipcode: "90001",
     phone: "(555) 234-5678",
-    status: "Active"
+    status: "They've now heard of us but that's it"
   },
   {
     name: "PG Gamma",
@@ -30,7 +30,7 @@ const dummyPGData = [
     state: "IL",
     zipcode: "60601",
     phone: "(555) 345-6789",
-    status: "Inactive"
+    status: "Enough interest that they're interacting with our content"
   },
   {
     name: "PG Delta",
@@ -39,7 +39,7 @@ const dummyPGData = [
     state: "TX",
     zipcode: "77001",
     phone: "(555) 456-7890",
-    status: "Active"
+    status: "On the platform"
   },
   {
     name: "PG Epsilon",
@@ -48,13 +48,44 @@ const dummyPGData = [
     state: "AZ",
     zipcode: "85001",
     phone: "(555) 567-8901",
-    status: "Active"
+    status: "Deal is so hot your hands will burn if you touch it"
   }
 ];
 
 const PGListingTable = () => {
-  const { currentArea, isLoading } = useContext(FunnelDataContext);
+  const { currentArea, isLoading, pgData, pgAssignments } = useContext(FunnelDataContext);
+  const [displayData, setDisplayData] = useState(dummyPGData);
   const navigate = useNavigate();
+
+  // Get PG funnel stage (status) from assignments
+  const getPgStage = (pgName) => {
+    if (!pgAssignments) return "Not assigned";
+    
+    for (const [stage, pgs] of Object.entries(pgAssignments)) {
+      if (pgs.includes(pgName)) {
+        return stage;
+      }
+    }
+    
+    return PG_STAGES[0]; // Default to first stage if not found
+  };
+
+  useEffect(() => {
+    // Build the real PG data from pgData and pgAssignments
+    if (pgData && pgData.length > 0) {
+      const realPgData = pgData.map(pg => ({
+        name: pg['Agency Name'],
+        address: pg['Address'] || "123 Business Rd",
+        city: pg['City'] || "Health City",
+        state: pg['State'] || "TX",
+        zipcode: pg['Zipcode'] || "12345",
+        phone: pg['Telephone'] || "(555) 123-4567",
+        status: getPgStage(pg['Agency Name'])
+      }));
+      
+      setDisplayData(realPgData.length > 0 ? realPgData : dummyPGData);
+    }
+  }, [pgData, pgAssignments]);
 
   const handleRowClick = (pg) => {
     navigate(`/pg-view/${encodeURIComponent(pg.name)}`, {
@@ -67,9 +98,36 @@ const PGListingTable = () => {
   useEffect(() => {
     console.log('PGListingTable rendered with:', {
       currentArea,
-      isLoading
+      isLoading,
+      pgDataCount: pgData?.length,
+      hasAssignments: !!pgAssignments
     });
-  }, [currentArea, isLoading]);
+  }, [currentArea, isLoading, pgData, pgAssignments]);
+
+  // Helper function to get the stage class
+  const getStageClass = (stageName) => {
+    const stageIndex = PG_STAGES.indexOf(stageName);
+    if (stageIndex === -1) return "pg-stage-unknown";
+    return `pg-stage-${stageIndex + 1}`;
+  };
+
+  // Get a shorter display name for the status
+  const getShortStatusName = (stageName) => {
+    const stageMap = {
+      "They exist but they haven't heard of us": "Haven't heard of us",
+      "They've now heard of us but that's it": "Heard of us",
+      "Enough interest that they're interacting with our content": "Interacting with content",
+      "Enough interest that they're now talking to us": "Talking to us",
+      "They've had a demo": "Had demo",
+      "In the buying process": "Buying process",
+      "Deal is so hot your hands will burn if you touch it": "Hot deal",
+      "On the platform": "On platform",
+      "In the upselling zone": "Upselling zone",
+      "Upsold to CPOs/CCMs/RPMs/other services": "Upsold"
+    };
+
+    return stageMap[stageName] || stageName;
+  };
 
   if (isLoading) {
     return <div className="loading-message">Loading PG data...</div>;
@@ -98,7 +156,7 @@ const PGListingTable = () => {
           </tr>
         </thead>
         <tbody>
-          {dummyPGData.map((pg, index) => (
+          {displayData.map((pg, index) => (
             <tr 
               key={index} 
               className="pg-clickable-row"
@@ -107,7 +165,11 @@ const PGListingTable = () => {
               <td>{pg.name}</td>
               <td>{pg.address}, {pg.city}, {pg.state} {pg.zipcode}</td>
               <td>{pg.phone}</td>
-              <td>{pg.status}</td>
+              <td>
+                <div className={`pg-status ${getStageClass(pg.status)}`}>
+                  {getShortStatusName(pg.status)}
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

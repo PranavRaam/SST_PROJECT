@@ -177,4 +177,25 @@ export const transformAgencyDataForFunnel = (agencies, type, stages) => {
     
     return assignments;
   }
+};
+
+// Function to update agency data (status/type)
+export const updateAgencyData = (agencyName, newStatus, agencies) => {
+  // Create a copy of the agencies array to avoid direct mutation
+  const updatedAgencies = [...agencies];
+  
+  // Find the agency by name
+  const agencyIndex = updatedAgencies.findIndex(
+    agency => agency['Agency Name'] === agencyName
+  );
+  
+  // If found, update its status/type
+  if (agencyIndex !== -1) {
+    updatedAgencies[agencyIndex]['Agency Type'] = newStatus;
+    console.log(`Updated agency ${agencyName} status to ${newStatus}`);
+  } else {
+    console.warn(`Agency ${agencyName} not found for status update`);
+  }
+  
+  return updatedAgencies;
 }; 

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { FunnelDataContext } from './FunnelDataContext';
+import { FunnelDataContext, PG_STAGES } from './FunnelDataContext';
 import '../sa_view_css/AddForm.css';
 
 const AddPGForm = ({ onClose }) => {
@@ -7,21 +7,11 @@ const AddPGForm = ({ onClose }) => {
   const [patients, setPatients] = useState('');
   const [remaining, setRemaining] = useState('');
   const [outcomes, setOutcomes] = useState('');
-  const [funnelStage, setFunnelStage] = useState('Total Potential Patients');
+  const [funnelStage, setFunnelStage] = useState(PG_STAGES[0]);
   const { pgData, setPgData, pgFunnelData, updatePgFunnelData } = useContext(FunnelDataContext) || {};
 
-  const pgStages = [
-    "Total Potential Patients",
-    "Active Interest",
-    "Initial Contact",
-    "In Assessment",
-    "Ready for Service",
-    "Service Started", 
-    "Active Treatment",
-    "Ready for Discharge",
-    "Discharged",
-    "Post-Discharge"
-  ];
+  // Use the stages from the FunnelDataContext
+  const pgStages = PG_STAGES;
 
   const handleSubmit = (e) => {
     e.preventDefault();

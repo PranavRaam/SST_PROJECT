@@ -8039,3 +8039,589 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-17 10:30:57,541 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
 2025-04-17 10:30:57,541 - __main__ - INFO - Request completed in 0.00 seconds
 2025-04-17 10:30:57,541 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 10:30:57] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744866057519&_show_states=true&_show_counties=true&_show_msas=true&_t=1744866057529 HTTP/1.1" 200 -
+2025-04-17 13:02:45,285 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 13:02:45,289 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 13:02:45,306 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-17 13:02:45,306 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-17 13:02:45,307 - werkzeug - INFO -  * Restarting with stat
+2025-04-17 13:02:45,844 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 13:02:45,847 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 13:02:45,858 - werkzeug - WARNING -  * Debugger is active!
+2025-04-17 13:02:45,859 - werkzeug - INFO -  * Debugger PIN: 403-952-549
+2025-04-17 13:03:00,840 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:03:00,845 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:03:00,866 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:03:00,870 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:03:00,878 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:00] "GET /api/map?t=1744875180855&noCache=true&stableView=true?t%3D1744875180855&_show_states=true&_show_counties=true&_show_msas=true&_t=1744875180856 HTTP/1.1" 200 -
+2025-04-17 13:03:01,485 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:01] "GET /api/map?t=1744875181472&noCache=true&stableView=true?t%3D1744875181472&_show_states=true&_show_counties=true&_show_msas=true&_t=1744875181473 HTTP/1.1" 200 -
+2025-04-17 13:03:06,421 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:06] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 13:03:06,427 - __main__ - INFO - Map request for area: Albany-Schenectady-Troy
+2025-04-17 13:03:06,427 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744875186425')])
+2025-04-17 13:03:06,427 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 13:03:06,428 - statistical_area_zoom - INFO - Generating map for statistical area: Albany-Schenectady-Troy with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 13:03:06,428 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-17 13:03:06,428 - statistical_area_zoom - INFO - Cached map is 83.5 hours old, regenerating...
+2025-04-17 13:03:06,428 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 13:03:06,428 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-17 13:03:06,428 - data_preloader - INFO - Loading all cached data...
+2025-04-17 13:03:06,443 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-17 13:03:06,445 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-17 13:03:06,445 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-17 13:03:06,445 - statistical_area_zoom - INFO - Normalized area name: albany-schenectady-troy
+2025-04-17 13:03:06,450 - statistical_area_zoom - INFO - Trying to match city name: albany
+2025-04-17 13:03:06,451 - statistical_area_zoom - INFO - Found exact city match: Albany, GA
+2025-04-17 13:03:06,451 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 13:03:06,451 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 13:03:06,451 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Albany-Schenectady-Troy
+2025-04-17 13:03:06,452 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Albany-Schenectady-Troy
+2025-04-17 13:03:06,452 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 13:03:06,452 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 13:03:06,452 - statistical_area_zoom - INFO - Center: 31.646759182348596, -84.11528437079876
+2025-04-17 13:03:06,452 - statistical_area_zoom - INFO - Bounds: -84.603086, 31.318412, -83.649384, 31.967456
+2025-04-17 13:03:06,580 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-17 13:03:06,581 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-17 13:03:06,581 - __main__ - INFO - Request completed in 0.15 seconds
+2025-04-17 13:03:06,581 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:06] "GET /api/statistical-area-map/Albany-Schenectady-Troy?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744875186425 HTTP/1.1" 200 -
+2025-04-17 13:03:06,600 - __main__ - INFO - Map request for area: Albany-Schenectady-Troy
+2025-04-17 13:03:06,600 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744875186425'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744875186586')])
+2025-04-17 13:03:06,600 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 13:03:06,600 - statistical_area_zoom - INFO - Generating map for statistical area: Albany-Schenectady-Troy with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 13:03:06,600 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-17 13:03:06,600 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html (age: 0.0 hours)
+2025-04-17 13:03:06,600 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 13:03:06,600 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-17 13:03:06,600 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 13:03:06,601 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:03:06] "GET /api/statistical-area-map/Albany-Schenectady-Troy?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744875186425&_show_states=true&_show_counties=true&_show_msas=true&_t=1744875186586 HTTP/1.1" 200 -
+2025-04-17 13:20:03,789 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:20:03] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:20:03,795 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:20:03] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:37:22,944 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:37:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:38:26,939 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:38:26] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 13:38:27,932 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 13:38:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 14:59:41,184 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 14:59:41,191 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 14:59:41,223 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 14:59:41,236 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:41] "GET /api/map?t=1744882181208&noCache=true&stableView=true?t%3D1744882181209&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882181210 HTTP/1.1" 200 -
+2025-04-17 14:59:41,237 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:41] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 14:59:42,182 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:42] "GET /api/map?t=1744882182169&noCache=true&stableView=true?t%3D1744882182169&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882182170 HTTP/1.1" 200 -
+2025-04-17 14:59:45,828 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:45] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 14:59:45,842 - __main__ - INFO - Map request for area: Atlantic City-Hammonton, NJ
+2025-04-17 14:59:45,842 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882185839')])
+2025-04-17 14:59:45,843 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 14:59:45,843 - statistical_area_zoom - INFO - Generating map for statistical area: Atlantic City-Hammonton, NJ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 14:59:45,843 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 14:59:45,843 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 14:59:45,843 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-17 14:59:45,843 - statistical_area_zoom - INFO - Normalized area name: atlantic city-hammonton, nj
+2025-04-17 14:59:45,846 - statistical_area_zoom - INFO - Found exact match: Atlantic City-Hammonton, NJ
+2025-04-17 14:59:45,846 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 14:59:45,846 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 14:59:45,847 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Atlantic City-Hammonton, NJ
+2025-04-17 14:59:45,847 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Atlantic City-Hammonton, NJ
+2025-04-17 14:59:45,848 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 14:59:45,848 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 14:59:45,848 - statistical_area_zoom - INFO - Center: 39.2837908386414, -74.73893336501736
+2025-04-17 14:59:45,848 - statistical_area_zoom - INFO - Bounds: -75.168462, 38.788657, -74.232062, 39.729775
+2025-04-17 14:59:46,077 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 14:59:46,077 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 14:59:46,077 - __main__ - INFO - Request completed in 0.23 seconds
+2025-04-17 14:59:46,078 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:46] "GET /api/statistical-area-map/Atlantic%20City-Hammonton,%20NJ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882185839 HTTP/1.1" 200 -
+2025-04-17 14:59:46,103 - __main__ - INFO - Map request for area: Atlantic City-Hammonton, NJ
+2025-04-17 14:59:46,103 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882185839'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744882186084')])
+2025-04-17 14:59:46,103 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 14:59:46,103 - statistical_area_zoom - INFO - Generating map for statistical area: Atlantic City-Hammonton, NJ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 14:59:46,103 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 14:59:46,103 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html (age: 0.0 hours)
+2025-04-17 14:59:46,103 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 14:59:46,103 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 14:59:46,104 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 14:59:46,104 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 14:59:46] "GET /api/statistical-area-map/Atlantic%20City-Hammonton,%20NJ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882185839&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882186084 HTTP/1.1" 200 -
+2025-04-17 15:03:32,843 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:03:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:03:33,407 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:03:33] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:06:55,701 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:06:55] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:07:00,426 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:07:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:07:00,941 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:07:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:08:02,972 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:08:02] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:08:06,227 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:08:06] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:08:06,786 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:08:06] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:08:50,204 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:08:50] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:08:50,220 - __main__ - INFO - Map request for area: Atlantic City-Hammonton, NJ
+2025-04-17 15:08:50,220 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882730216')])
+2025-04-17 15:08:50,220 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:08:50,220 - statistical_area_zoom - INFO - Generating map for statistical area: Atlantic City-Hammonton, NJ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:08:50,221 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 15:08:50,221 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html (age: 0.2 hours)
+2025-04-17 15:08:50,221 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:08:50,221 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 15:08:50,221 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:08:50,222 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:08:50] "GET /api/statistical-area-map/Atlantic%20City-Hammonton,%20NJ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882730216 HTTP/1.1" 200 -
+2025-04-17 15:08:50,256 - __main__ - INFO - Map request for area: Atlantic City-Hammonton, NJ
+2025-04-17 15:08:50,257 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882730216'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744882730233')])
+2025-04-17 15:08:50,257 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:08:50,257 - statistical_area_zoom - INFO - Generating map for statistical area: Atlantic City-Hammonton, NJ with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:08:50,257 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 15:08:50,257 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html (age: 0.2 hours)
+2025-04-17 15:08:50,257 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:08:50,257 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Atlantic_City_Hammonton_NJ_lightweight.html
+2025-04-17 15:08:50,257 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:08:50,258 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:08:50] "GET /api/statistical-area-map/Atlantic%20City-Hammonton,%20NJ?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882730216&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882730233 HTTP/1.1" 200 -
+2025-04-17 15:10:43,258 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:10:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:10:43,264 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:10:43] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:11:13,300 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:13] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:11:13,314 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:13] "GET /api/map?t=1744882873277&noCache=true&stableView=true?t%3D1744882873277&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882873278 HTTP/1.1" 200 -
+2025-04-17 15:11:13,315 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:13] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:11:14,282 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:14] "GET /api/map?t=1744882874264&noCache=true&stableView=true?t%3D1744882874264&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882874266 HTTP/1.1" 200 -
+2025-04-17 15:11:18,766 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:18] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:11:18,779 - __main__ - INFO - Map request for area: Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:11:18,779 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882878776')])
+2025-04-17 15:11:18,779 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:11:18,779 - statistical_area_zoom - INFO - Generating map for statistical area: Sacramento-Roseville-Arden-Arcade with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:11:18,779 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:18,779 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 15:11:18,780 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-17 15:11:18,780 - statistical_area_zoom - INFO - Normalized area name: sacramento-roseville-arden-arcade
+2025-04-17 15:11:18,782 - statistical_area_zoom - INFO - Trying to match city name: sacramento
+2025-04-17 15:11:18,785 - statistical_area_zoom - INFO - Found fuzzy city match: Sacramento-Roseville-Folsom, CA
+2025-04-17 15:11:18,785 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 15:11:18,785 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 15:11:18,785 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:11:18,786 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:11:18,787 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 15:11:18,787 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 15:11:18,787 - statistical_area_zoom - INFO - Center: 38.78103083392782, -120.99621749354974
+2025-04-17 15:11:18,787 - statistical_area_zoom - INFO - Bounds: -122.422048, 38.018917, -119.877287, 39.316496
+2025-04-17 15:11:18,997 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:18,997 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:18,997 - __main__ - INFO - Request completed in 0.22 seconds
+2025-04-17 15:11:18,998 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:18] "GET /api/statistical-area-map/Sacramento-Roseville-Arden-Arcade?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882878776 HTTP/1.1" 200 -
+2025-04-17 15:11:19,031 - __main__ - INFO - Map request for area: Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:11:19,031 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882878776'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744882879006')])
+2025-04-17 15:11:19,031 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:11:19,031 - statistical_area_zoom - INFO - Generating map for statistical area: Sacramento-Roseville-Arden-Arcade with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:11:19,031 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:19,031 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html (age: 0.0 hours)
+2025-04-17 15:11:19,031 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:11:19,031 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:19,031 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:11:19,032 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:19] "GET /api/statistical-area-map/Sacramento-Roseville-Arden-Arcade?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882878776&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882879006 HTTP/1.1" 200 -
+2025-04-17 15:11:52,096 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:11:52,212 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:52] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:11:52,230 - __main__ - INFO - Map request for area: Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:11:52,230 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882912228')])
+2025-04-17 15:11:52,231 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:11:52,231 - statistical_area_zoom - INFO - Generating map for statistical area: Sacramento-Roseville-Arden-Arcade with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:11:52,231 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:52,231 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html (age: 0.0 hours)
+2025-04-17 15:11:52,231 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:11:52,231 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:52,231 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:11:52,231 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:52] "GET /api/statistical-area-map/Sacramento-Roseville-Arden-Arcade?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882912228 HTTP/1.1" 200 -
+2025-04-17 15:11:52,259 - __main__ - INFO - Map request for area: Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:11:52,259 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744882912228'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744882912244')])
+2025-04-17 15:11:52,259 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:11:52,259 - statistical_area_zoom - INFO - Generating map for statistical area: Sacramento-Roseville-Arden-Arcade with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:11:52,260 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:52,260 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html (age: 0.0 hours)
+2025-04-17 15:11:52,260 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:11:52,260 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:11:52,260 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:11:52,260 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:52] "GET /api/statistical-area-map/Sacramento-Roseville-Arden-Arcade?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744882912228&_show_states=true&_show_counties=true&_show_msas=true&_t=1744882912244 HTTP/1.1" 200 -
+2025-04-17 15:11:52,601 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:11:52] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:14:23,843 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:23] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:14:23,853 - __main__ - INFO - Map request for area: Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:14:23,853 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883063850')])
+2025-04-17 15:14:23,853 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:14:23,853 - statistical_area_zoom - INFO - Generating map for statistical area: Sacramento-Roseville-Arden-Arcade with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:14:23,853 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:14:23,853 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html (age: 0.1 hours)
+2025-04-17 15:14:23,853 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:14:23,853 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:14:23,853 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:14:23,854 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:23] "GET /api/statistical-area-map/Sacramento-Roseville-Arden-Arcade?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883063850 HTTP/1.1" 200 -
+2025-04-17 15:14:23,888 - __main__ - INFO - Map request for area: Sacramento-Roseville-Arden-Arcade
+2025-04-17 15:14:23,889 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883063850'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883063867')])
+2025-04-17 15:14:23,889 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:14:23,889 - statistical_area_zoom - INFO - Generating map for statistical area: Sacramento-Roseville-Arden-Arcade with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:14:23,889 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:14:23,889 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html (age: 0.1 hours)
+2025-04-17 15:14:23,889 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:14:23,889 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Sacramento_Roseville_Arden_Arcade_lightweight.html
+2025-04-17 15:14:23,889 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:14:23,890 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:23] "GET /api/statistical-area-map/Sacramento-Roseville-Arden-Arcade?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883063850&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883063867 HTTP/1.1" 200 -
+2025-04-17 15:14:37,882 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:14:37,889 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:37] "GET /api/map?t=1744883077869&noCache=true&stableView=true?t%3D1744883077869&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883077870 HTTP/1.1" 200 -
+2025-04-17 15:14:37,891 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:14:38,775 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:38] "GET /api/map?t=1744883078758&noCache=true&stableView=true?t%3D1744883078758&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883078759 HTTP/1.1" 200 -
+2025-04-17 15:14:44,393 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:44] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:14:44,402 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:14:44,402 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883084398')])
+2025-04-17 15:14:44,402 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:14:44,402 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:14:44,402 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:14:44,402 - statistical_area_zoom - INFO - Cached map is 85.7 hours old, regenerating...
+2025-04-17 15:14:44,402 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 15:14:44,402 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-17 15:14:44,402 - statistical_area_zoom - INFO - Normalized area name: lubbock
+2025-04-17 15:14:44,404 - statistical_area_zoom - INFO - Trying to match city name: lubbock
+2025-04-17 15:14:44,405 - statistical_area_zoom - INFO - Found exact city match: Lubbock, TX
+2025-04-17 15:14:44,405 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 15:14:44,405 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 15:14:44,406 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Lubbock
+2025-04-17 15:14:44,406 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Lubbock
+2025-04-17 15:14:44,407 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 15:14:44,407 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 15:14:44,407 - statistical_area_zoom - INFO - Center: 33.465531819400034, -101.8823098890895
+2025-04-17 15:14:44,407 - statistical_area_zoom - INFO - Bounds: -103.056485, 32.959702, -101.03866, 33.833625
+2025-04-17 15:14:44,610 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:14:44,610 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:14:44,610 - __main__ - INFO - Request completed in 0.21 seconds
+2025-04-17 15:14:44,611 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:44] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883084398 HTTP/1.1" 200 -
+2025-04-17 15:14:44,635 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:14:44,635 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883084398'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883084617')])
+2025-04-17 15:14:44,635 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:14:44,635 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:14:44,635 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:14:44,636 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:14:44,636 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:14:44,636 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:14:44,636 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:14:44,637 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:14:44] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883084398&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883084617 HTTP/1.1" 200 -
+2025-04-17 15:16:57,541 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:57] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:16:57,680 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:57] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:16:57,688 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:16:57,688 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883217685')])
+2025-04-17 15:16:57,689 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:16:57,689 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:16:57,689 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:57,689 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:16:57,689 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:16:57,689 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:57,689 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:16:57,690 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:57] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883217685 HTTP/1.1" 200 -
+2025-04-17 15:16:57,719 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:16:57,719 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883217685'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883217702')])
+2025-04-17 15:16:57,719 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:16:57,719 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:16:57,719 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:57,720 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:16:57,720 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:16:57,720 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:57,720 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:16:57,720 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:57] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883217685&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883217702 HTTP/1.1" 200 -
+2025-04-17 15:16:59,065 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:59] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:16:59,171 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:59] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:16:59,179 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:16:59,179 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883219176')])
+2025-04-17 15:16:59,179 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:16:59,179 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:16:59,179 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:59,179 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:16:59,179 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:16:59,179 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:59,179 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:16:59,180 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:59] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883219176 HTTP/1.1" 200 -
+2025-04-17 15:16:59,203 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:16:59,203 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883219176'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883219188')])
+2025-04-17 15:16:59,203 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:16:59,203 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:16:59,203 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:59,203 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:16:59,203 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:16:59,203 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:16:59,203 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:16:59,204 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:16:59] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883219176&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883219188 HTTP/1.1" 200 -
+2025-04-17 15:17:11,725 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:11] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:17:11,845 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:11] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:17:11,853 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:17:11,853 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883231850')])
+2025-04-17 15:17:11,853 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:17:11,853 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:17:11,853 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:17:11,853 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:17:11,853 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:17:11,853 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:17:11,853 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:17:11,854 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:11] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883231850 HTTP/1.1" 200 -
+2025-04-17 15:17:11,883 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:17:11,883 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883231850'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883231862')])
+2025-04-17 15:17:11,884 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:17:11,884 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:17:11,884 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:17:11,884 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.0 hours)
+2025-04-17 15:17:11,884 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:17:11,884 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:17:11,884 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:17:11,885 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:11] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883231850&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883231862 HTTP/1.1" 200 -
+2025-04-17 15:17:14,591 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:14] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:17:14,596 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:14] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:17:14,608 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:14] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:17:14,615 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:14] "GET /api/map?t=1744883234600&noCache=true&stableView=true?t%3D1744883234600&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883234600 HTTP/1.1" 200 -
+2025-04-17 15:17:14,618 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:14] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:17:14,625 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:14] "GET /api/map?t=1744883234609&noCache=true&stableView=true?t%3D1744883234609&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883234610 HTTP/1.1" 200 -
+2025-04-17 15:17:15,370 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:15] "GET /api/map?t=1744883235359&noCache=true&stableView=true?t%3D1744883235359&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883235360 HTTP/1.1" 200 -
+2025-04-17 15:17:45,005 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:45] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:17:45,017 - __main__ - INFO - Map request for area: Anchorage
+2025-04-17 15:17:45,017 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883265014')])
+2025-04-17 15:17:45,017 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:17:45,017 - statistical_area_zoom - INFO - Generating map for statistical area: Anchorage with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:17:45,017 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-17 15:17:45,017 - statistical_area_zoom - INFO - Cached map is 85.7 hours old, regenerating...
+2025-04-17 15:17:45,017 - statistical_area_zoom - INFO - Loading map data...
+2025-04-17 15:17:45,017 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-17 15:17:45,017 - statistical_area_zoom - INFO - Normalized area name: anchorage
+2025-04-17 15:17:45,019 - statistical_area_zoom - INFO - Trying to match city name: anchorage
+2025-04-17 15:17:45,021 - statistical_area_zoom - INFO - Found exact city match: Anchorage, AK
+2025-04-17 15:17:45,021 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 15:17:45,021 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-17 15:17:45,021 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anchorage
+2025-04-17 15:17:45,022 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anchorage
+2025-04-17 15:17:45,022 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 15:17:45,022 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-17 15:17:45,023 - statistical_area_zoom - INFO - Center: 62.223817936287546, -149.55378677182418
+2025-04-17 15:17:45,023 - statistical_area_zoom - INFO - Bounds: -153.001881, 60.732987, -146.423984, 63.477639
+2025-04-17 15:17:45,311 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-17 15:17:45,311 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-17 15:17:45,311 - __main__ - INFO - Request completed in 0.29 seconds
+2025-04-17 15:17:45,312 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:45] "GET /api/statistical-area-map/Anchorage?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883265014 HTTP/1.1" 200 -
+2025-04-17 15:17:45,335 - __main__ - INFO - Map request for area: Anchorage
+2025-04-17 15:17:45,335 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883265014'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883265320')])
+2025-04-17 15:17:45,336 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:17:45,336 - statistical_area_zoom - INFO - Generating map for statistical area: Anchorage with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:17:45,336 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-17 15:17:45,336 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anchorage_lightweight.html (age: 0.0 hours)
+2025-04-17 15:17:45,336 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:17:45,336 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anchorage_lightweight.html
+2025-04-17 15:17:45,336 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:17:45,337 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:17:45] "GET /api/statistical-area-map/Anchorage?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883265014&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883265320 HTTP/1.1" 200 -
+2025-04-17 15:20:21,548 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:21,552 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:21,581 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:21] "GET /api/map?t=1744883421555&noCache=true&stableView=true?t%3D1744883421555&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883421556 HTTP/1.1" 200 -
+2025-04-17 15:20:21,590 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:21,597 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:21,617 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:21] "GET /api/map?t=1744883421591&noCache=true&stableView=true?t%3D1744883421591&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883421593 HTTP/1.1" 200 -
+2025-04-17 15:20:22,411 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:22] "GET /api/map?t=1744883422400&noCache=true&stableView=true?t%3D1744883422400&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883422400 HTTP/1.1" 200 -
+2025-04-17 15:20:37,484 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:37,492 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:37] "GET /api/map?t=1744883437468&noCache=true&stableView=true?t%3D1744883437468&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883437469 HTTP/1.1" 200 -
+2025-04-17 15:20:37,494 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:37,502 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:37] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:37,595 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:37] "GET /api/map?t=1744883437579&noCache=true&stableView=true?t%3D1744883437579&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883437580 HTTP/1.1" 200 -
+2025-04-17 15:20:38,410 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:38] "GET /api/map?t=1744883438399&noCache=true&stableView=true?t%3D1744883438399&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883438399 HTTP/1.1" 200 -
+2025-04-17 15:20:39,529 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:39,537 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:39] "GET /api/map?t=1744883439515&noCache=true&stableView=true?t%3D1744883439515&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883439515 HTTP/1.1" 200 -
+2025-04-17 15:20:39,539 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:39,546 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:20:39,620 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:39] "GET /api/map?t=1744883439607&noCache=true&stableView=true?t%3D1744883439607&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883439608 HTTP/1.1" 200 -
+2025-04-17 15:20:40,282 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:20:40] "GET /api/map?t=1744883440267&noCache=true&stableView=true?t%3D1744883440267&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883440267 HTTP/1.1" 200 -
+2025-04-17 15:23:18,852 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:18] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:23:18,864 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:18] "GET /api/map?t=1744883598835&noCache=true&stableView=true?t%3D1744883598835&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883598836 HTTP/1.1" 200 -
+2025-04-17 15:23:18,865 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:18] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:23:18,873 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:18] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:23:18,983 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:18] "GET /api/map?t=1744883598966&noCache=true&stableView=true?t%3D1744883598966&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883598968 HTTP/1.1" 200 -
+2025-04-17 15:23:19,811 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:19] "GET /api/map?t=1744883599799&noCache=true&stableView=true?t%3D1744883599799&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883599799 HTTP/1.1" 200 -
+2025-04-17 15:23:20,923 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:23:20,930 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:20] "GET /api/map?t=1744883600910&noCache=true&stableView=true?t%3D1744883600910&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883600910 HTTP/1.1" 200 -
+2025-04-17 15:23:20,932 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:23:20,938 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:23:21,013 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:21] "GET /api/map?t=1744883600999&noCache=true&stableView=true?t%3D1744883600999&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883601000 HTTP/1.1" 200 -
+2025-04-17 15:23:21,709 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:23:21] "GET /api/map?t=1744883601693&noCache=true&stableView=true?t%3D1744883601693&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883601693 HTTP/1.1" 200 -
+2025-04-17 15:27:21,092 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:21,097 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:21,134 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:21] "GET /api/map?t=1744883841111&noCache=true&stableView=true?t%3D1744883841111&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883841112 HTTP/1.1" 200 -
+2025-04-17 15:27:21,175 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:21,180 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:21] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:21,249 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:21] "GET /api/map?t=1744883841193&noCache=true&stableView=true?t%3D1744883841193&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883841196 HTTP/1.1" 200 -
+2025-04-17 15:27:22,143 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:22] "GET /api/map?t=1744883842128&noCache=true&stableView=true?t%3D1744883842128&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883842129 HTTP/1.1" 200 -
+2025-04-17 15:27:32,409 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:32,416 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:32,461 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:32] "GET /api/map?t=1744883852434&noCache=true&stableView=true?t%3D1744883852434&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883852436 HTTP/1.1" 200 -
+2025-04-17 15:27:32,491 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:32,501 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:32] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:27:32,512 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:32] "GET /api/map?t=1744883852484&noCache=true&stableView=true?t%3D1744883852484&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883852486 HTTP/1.1" 200 -
+2025-04-17 15:27:33,290 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:33] "GET /api/map?t=1744883853271&noCache=true&stableView=true?t%3D1744883853271&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883853272 HTTP/1.1" 200 -
+2025-04-17 15:27:39,437 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:39] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:27:39,445 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:27:39,445 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883859442')])
+2025-04-17 15:27:39,446 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:27:39,446 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:27:39,446 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:27:39,446 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.2 hours)
+2025-04-17 15:27:39,446 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:27:39,446 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:27:39,446 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:27:39,447 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:39] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883859442 HTTP/1.1" 200 -
+2025-04-17 15:27:39,481 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:27:39,481 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883859442'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883859462')])
+2025-04-17 15:27:39,482 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:27:39,482 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:27:39,482 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:27:39,482 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.2 hours)
+2025-04-17 15:27:39,482 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:27:39,482 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:27:39,482 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:27:39,483 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:27:39] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883859442&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883859462 HTTP/1.1" 200 -
+2025-04-17 15:28:15,899 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:28:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:28:15,906 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:28:15,906 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883895903')])
+2025-04-17 15:28:15,906 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:28:15,906 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:28:15,906 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:15,906 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.2 hours)
+2025-04-17 15:28:15,906 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:28:15,906 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:15,906 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:28:15,907 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:28:15] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883895903 HTTP/1.1" 200 -
+2025-04-17 15:28:15,928 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:28:15,928 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883895903'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883895915')])
+2025-04-17 15:28:15,928 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:28:15,928 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:28:15,928 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:15,929 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.2 hours)
+2025-04-17 15:28:15,929 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:28:15,929 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:15,929 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:28:15,930 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:28:15] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883895903&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883895915 HTTP/1.1" 200 -
+2025-04-17 15:28:20,426 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:28:20] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:28:20,434 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:28:20,434 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883900431')])
+2025-04-17 15:28:20,434 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:28:20,434 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:28:20,434 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:20,434 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.2 hours)
+2025-04-17 15:28:20,434 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:28:20,434 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:20,435 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:28:20,435 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:28:20] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883900431 HTTP/1.1" 200 -
+2025-04-17 15:28:20,466 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:28:20,466 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744883900431'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744883900447')])
+2025-04-17 15:28:20,467 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:28:20,467 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:28:20,467 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:20,467 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.2 hours)
+2025-04-17 15:28:20,467 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:28:20,467 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:28:20,467 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:28:20,468 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:28:20] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744883900431&_show_states=true&_show_counties=true&_show_msas=true&_t=1744883900447 HTTP/1.1" 200 -
+2025-04-17 15:43:58,633 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 15:43:58,636 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 15:43:58,654 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-17 15:43:58,654 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-17 15:43:58,654 - werkzeug - INFO -  * Restarting with stat
+2025-04-17 15:43:59,203 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-17 15:43:59,206 - __main__ - INFO - Checking for cached data at startup
+2025-04-17 15:43:59,219 - werkzeug - WARNING -  * Debugger is active!
+2025-04-17 15:43:59,220 - werkzeug - INFO -  * Debugger PIN: 483-199-226
+2025-04-17 15:44:25,326 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:44:25,331 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:44:25,358 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map?t=1744884865337&noCache=true&stableView=true?t%3D1744884865337&_show_states=true&_show_counties=true&_show_msas=true&_t=1744884865338 HTTP/1.1" 200 -
+2025-04-17 15:44:25,373 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:44:25,377 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:44:25,439 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map?t=1744884865395&noCache=true&stableView=true?t%3D1744884865395&_show_states=true&_show_counties=true&_show_msas=true&_t=1744884865396 HTTP/1.1" 200 -
+2025-04-17 15:44:25,982 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:25] "GET /api/map?t=1744884865972&noCache=true&stableView=true?t%3D1744884865972&_show_states=true&_show_counties=true&_show_msas=true&_t=1744884865972 HTTP/1.1" 200 -
+2025-04-17 15:44:30,685 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:30] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:44:30,692 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:44:30,693 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744884870690')])
+2025-04-17 15:44:30,693 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:44:30,693 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:44:30,693 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:44:30,693 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.5 hours)
+2025-04-17 15:44:30,693 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:44:30,693 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:44:30,693 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:44:30,694 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:30] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744884870690 HTTP/1.1" 200 -
+2025-04-17 15:44:30,718 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:44:30,719 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744884870690'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744884870705')])
+2025-04-17 15:44:30,719 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:44:30,719 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:44:30,719 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:44:30,719 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.5 hours)
+2025-04-17 15:44:30,719 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:44:30,719 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:44:30,719 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:44:30,719 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:44:30] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744884870690&_show_states=true&_show_counties=true&_show_msas=true&_t=1744884870705 HTTP/1.1" 200 -
+2025-04-17 15:45:07,690 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:45:07] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:45:07,697 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:45:07,697 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744884907695')])
+2025-04-17 15:45:07,697 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:45:07,698 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:45:07,698 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:45:07,698 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.5 hours)
+2025-04-17 15:45:07,698 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:45:07,698 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:45:07,698 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:45:07,698 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:45:07] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744884907695 HTTP/1.1" 200 -
+2025-04-17 15:45:07,716 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:45:07,716 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744884907695'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744884907705')])
+2025-04-17 15:45:07,716 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:45:07,716 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:45:07,716 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:45:07,716 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.5 hours)
+2025-04-17 15:45:07,716 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:45:07,716 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:45:07,716 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:45:07,717 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:45:07] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744884907695&_show_states=true&_show_counties=true&_show_msas=true&_t=1744884907705 HTTP/1.1" 200 -
+2025-04-17 15:45:27,607 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:45:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:45:27,612 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:45:27] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:50:04,242 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:50:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:50:04,248 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:50:04] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:52:39,099 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:52:39,110 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:39] "GET /api/map?t=1744885359085&noCache=true&stableView=true?t%3D1744885359085&_show_states=true&_show_counties=true&_show_msas=true&_t=1744885359085 HTTP/1.1" 200 -
+2025-04-17 15:52:39,112 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 15:52:39,791 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:39] "GET /api/map?t=1744885359780&noCache=true&stableView=true?t%3D1744885359780&_show_states=true&_show_counties=true&_show_msas=true&_t=1744885359780 HTTP/1.1" 200 -
+2025-04-17 15:52:47,092 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:47] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 15:52:47,103 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:52:47,104 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744885367101')])
+2025-04-17 15:52:47,104 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:52:47,104 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:52:47,104 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:52:47,104 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.6 hours)
+2025-04-17 15:52:47,104 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:52:47,104 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:52:47,104 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:52:47,104 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:47] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744885367101 HTTP/1.1" 200 -
+2025-04-17 15:52:47,139 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 15:52:47,139 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744885367101'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744885367122')])
+2025-04-17 15:52:47,139 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 15:52:47,139 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 15:52:47,139 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:52:47,139 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.6 hours)
+2025-04-17 15:52:47,139 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 15:52:47,139 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 15:52:47,139 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 15:52:47,140 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 15:52:47] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744885367101&_show_states=true&_show_counties=true&_show_msas=true&_t=1744885367122 HTTP/1.1" 200 -
+2025-04-17 16:01:24,640 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:01:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:01:24,646 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:01:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:08:08,077 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:08:08,083 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:08:08,099 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:08:08,107 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map?t=1744886288091&noCache=true&stableView=true?t%3D1744886288091&_show_states=true&_show_counties=true&_show_msas=true&_t=1744886288091 HTTP/1.1" 200 -
+2025-04-17 16:08:08,109 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:08:08,118 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map?t=1744886288098&noCache=true&stableView=true?t%3D1744886288098&_show_states=true&_show_counties=true&_show_msas=true&_t=1744886288100 HTTP/1.1" 200 -
+2025-04-17 16:08:08,722 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:08] "GET /api/map?t=1744886288707&noCache=true&stableView=true?t%3D1744886288707&_show_states=true&_show_counties=true&_show_msas=true&_t=1744886288708 HTTP/1.1" 200 -
+2025-04-17 16:08:13,982 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:13] "GET /api/health HTTP/1.1" 200 -
+2025-04-17 16:08:13,989 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 16:08:13,989 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744886293987')])
+2025-04-17 16:08:13,989 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 16:08:13,989 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 16:08:13,989 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 16:08:13,989 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.9 hours)
+2025-04-17 16:08:13,989 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 16:08:13,989 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 16:08:13,989 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 16:08:13,990 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:13] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744886293987 HTTP/1.1" 200 -
+2025-04-17 16:08:14,012 - __main__ - INFO - Map request for area: Lubbock
+2025-04-17 16:08:14,012 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1744886293987'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1744886294000')])
+2025-04-17 16:08:14,012 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-17 16:08:14,012 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-17 16:08:14,012 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 16:08:14,012 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html (age: 0.9 hours)
+2025-04-17 16:08:14,012 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-17 16:08:14,012 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-17 16:08:14,012 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-17 16:08:14,013 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:14] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744886293987&_show_states=true&_show_counties=true&_show_msas=true&_t=1744886294000 HTTP/1.1" 200 -
+2025-04-17 16:38:05,655 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:38:05] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:38:05,660 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:38:05] "GET /api/map-status HTTP/1.1" 200 -

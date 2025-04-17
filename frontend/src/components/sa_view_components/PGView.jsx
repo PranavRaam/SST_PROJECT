@@ -43,6 +43,10 @@ const PGView = () => {
   const [validationStatus, setValidationStatus] = useState('');
   const [showValidationModal, setShowValidationModal] = useState(false);
   
+  // Add these state variables at the top of the component where other state variables are defined
+  const [dateFilterType, setDateFilterType] = useState('custom'); // 'custom', 'week', 'month', 'quarter'
+  const [useDateFilterForBilling, setUseDateFilterForBilling] = useState(false);
+  
   // Add useEffect to check if we're coming from a physician view
   useEffect(() => {
     if (location.state?.fromPhysician) {
@@ -684,14 +688,25 @@ const PGView = () => {
     }
   ];
 
+  // Add this useEffect hook to debug pgName
+  useEffect(() => {
+    console.log("Current PG Name:", pgName);
+  }, [pgName]);
+
+  // Update the getFilteredClaims function
   const getFilteredClaims = () => {
-    // First, get only patients from the selected PG
-    const pgPatients = getPatientsByPG(pgName);
+    // Normalize pgName for consistent comparison (lowercase)
+    const normalizedPgName = pgName ? pgName.toLowerCase() : '';
+    console.log("Getting filtered claims for PG:", normalizedPgName);
+    
+    // First, get only patients from the selected PG using the mock function
+    const pgPatients = getMockPatientsByPG(normalizedPgName);
+    console.log("PG Patients found:", pgPatients.length);
     
     // Convert patient data to claims format
     const pgClaims = pgPatients.map(patient => ({
       id: patient.id,
-      remarks: patient.patientRemarks,
+      remarks: patient.patientRemarks || '',
       sNo: patient.patientId,
       fullName: `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName || ''}`,
       firstName: patient.patientFirstName,
@@ -700,206 +715,322 @@ const PGView = () => {
       dob: patient.patientDOB,
       hhaName: patient.hhah,
       insuranceType: patient.patientInsurance,
-      primaryDiagnosisCode: patient.primaryDiagnosisCodes[0],
+      primaryDiagnosisCode: patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes[0] : '',
+      secondaryDiagnosisCodes: patient.secondaryDiagnosisCodes || [],
+      totalIcdCodes: (patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes.length : 0) + 
+                    (patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes.length : 0),
       soc: patient.patientSOC,
       episodeFrom: patient.patientEpisodeFrom,
       episodeTo: patient.patientEpisodeTo,
       minutesCaptured: patient.cpoMinsCaptured,
       billingCode: patient.billingCode,
-      line1DosFrom: patient.patientEpisodeFrom,
-      line1DosTo: patient.patientEpisodeTo,
+      line1DosFrom: '',
+      line1DosTo: '',
       line1Charges: patient.charges,
       line1Pos: patient.pos,
       line1Units: patient.units,
       providersName: patient.physicianName,
+      certStatus: patient.certStatus,
+      recertStatus: patient.recertStatus,
+      certSignedDate: patient.certSignedDate,
+      recertSignedDate: patient.recertSignedDate,
       docType: patient.certStatus === 'Document Signed' ? 'CERT' : 
                patient.recertStatus === 'Document Signed' ? 'RECERT' : 
-               patient.cpoMinsCaptured >= 30 ? 'CPO' : ''
+               patient.cpoMinsCaptured >= 30 ? 'CPO' : '',
+      // track if patient is in EHR (assume true for demo)
+      patientInEHR: true
     }));
 
     // If showCertClaimsOnly is true, return only validated CERT claims
     if (showCertClaimsOnly) {
-      return pgClaims.filter(claim => claim.docType === 'CERT' || claim.docType === 'RECERT');
+      return certValidatedClaims.length > 0 ? certValidatedClaims : [];
     }
     
     // If showCpoClaimsOnly is true, return only validated CPO claims
     if (showCpoClaimsOnly) {
-      return pgClaims.filter(claim => claim.docType === 'CPO');
+      return cpoValidatedClaims.length > 0 ? cpoValidatedClaims : [];
     }
     
     // If there are filtered claims, use those
     if (filteredClaims.length > 0) {
-      return filteredClaims.filter(claim => 
-        pgClaims.some(pgClaim => pgClaim.id === claim.id)
-      );
+      return filteredClaims;
     }
 
-    return pgClaims;
+    // If no validation has been done, just return the PG claims
+    if (certValidatedClaims.length === 0 && cpoValidatedClaims.length === 0) {
+      return pgClaims;
+    }
+
+    // If validation has been done, return combined validated claims
+    return [...certValidatedClaims, ...cpoValidatedClaims];
   };
 
-  // Validate CERT/RECERT claims based on business rules
-  const validateCertClaims = () => {
-    setValidationStatus('Validating CERT/RECERT claims...');
+  // Add a date parsing helper function
+  const parseDateString = (dateStr) => {
+    if (!dateStr) return null;
     
-    // Get all patients from dummy data
-    const patients = [...dummyClaims];
-    const validClaims = [];
-    
-    // Format dates based on billing month/year
-    const billingMonthStart = `${billingMonth}/01/${billingYear}`;
-    const lastDay = new Date(parseInt(billingYear), parseInt(billingMonth), 0).getDate();
-    const billingMonthEnd = `${billingMonth}/${lastDay}/${billingYear}`;
-    
-    patients.forEach(patient => {
-      // Clone patient data for modification
-      const clonedPatient = { ...patient };
-      
-      // Extract all diagnosis codes
-      const diagnosisCodes = [
-        patient.primaryDiagnosisCode,
-        patient.secondaryDiagnosisCode1,
-        patient.secondaryDiagnosisCode2,
-        patient.secondaryDiagnosisCode3,
-        patient.secondaryDiagnosisCode4,
-        patient.secondaryDiagnosisCode5
-      ].filter(code => code && code.trim() !== '');
-      
-      // CERT/RECERT Validation Logic:
-      // 1. CERT/RECERT Present or not for that episode
-      // 2. Cert date signed in Billing Month
-      // 3. min. 3 ICD codes
-      // 4. Patient should be in EHR
-      
-      // For demonstration, make some claims qualify as CERT claims
-      // In a real implementation, these would check against actual data
-      
-      // For our demo data, we'll include patients with odd ID numbers as CERT/RECERT
-      // This ensures we don't overlap with CPO claims (which use even ID numbers)
-      const shouldIncludeAsCERT = (
-        patient.id % 2 === 1 && 
-        diagnosisCodes.length >= 2
-      );
-      
-      // Determine if CERT or RECERT
-      const docType = patient.id % 4 === 1 ? 'CERT' : 'RECERT';
-      
-      // Apply validation rules (for demonstration)
-      if (shouldIncludeAsCERT) {
-        clonedPatient.docType = docType;
-        
-        // Simulate signed date in billing month
-        const signedDay = (patient.id * 2) % 28 + 1; // Random day between 1-28 based on ID
-        clonedPatient.signedDate = `${billingMonth}/${signedDay.toString().padStart(2, '0')}/${billingYear}`;
-        
-        // For demo, all patients are in EHR
-        clonedPatient.patientInEHR = true;
-        clonedPatient.diagnosisCodesCount = diagnosisCodes.length;
-        
-        // Set billing values according to rules
-        clonedPatient.line1DosFrom = patient.episodeFrom;
-        clonedPatient.line1DosTo = patient.episodeFrom;
-        clonedPatient.line1Charges = patient.billingCode === '179' ? 40 : 60;
-        clonedPatient.line1Units = 1;
-        clonedPatient.line1Pos = 11;
-        
-        validClaims.push(clonedPatient);
+    try {
+      // Handle MM/DD/YYYY format
+      if (dateStr.includes('/')) {
+        const [month, day, year] = dateStr.split('/');
+        return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
       }
-    });
-    
-    setCertValidatedClaims(validClaims);
-    setValidationStatus(`Found ${validClaims.length} valid CERT/RECERT claims for ${billingMonth}/${billingYear}`);
-    return validClaims;
-  };
-  
-  // Validate CPO claims based on business rules
-  const validateCpoClaims = () => {
-    setValidationStatus('Validating CPO claims...');
-    
-    // Get all patients from dummy data
-    const patients = [...dummyClaims];
-    const validClaims = [];
-    
-    // Format dates based on billing month/year
-    const billingMonthStart = `${billingMonth}/01/${billingYear}`;
-    const lastDay = new Date(parseInt(billingYear), parseInt(billingMonth), 0).getDate();
-    const billingMonthEnd = `${billingMonth}/${lastDay}/${billingYear}`;
-    
-    patients.forEach(patient => {
-      // Clone patient data for modification
-      const clonedPatient = { ...patient };
       
-      // Extract all diagnosis codes
-      const diagnosisCodes = [
-        patient.primaryDiagnosisCode,
-        patient.secondaryDiagnosisCode1,
-        patient.secondaryDiagnosisCode2,
-        patient.secondaryDiagnosisCode3,
-        patient.secondaryDiagnosisCode4,
-        patient.secondaryDiagnosisCode5
-      ].filter(code => code && code.trim() !== '');
-      
-      // CPO Validation Logic:
-      // 1. >=1 day active in billing month (Episode End Date)
-      // 2. min. 3 ICD codes
-      // 3. =>30min CPO(pdocs + conversations) completion in billing month
-      // 4. Patient should be in EHR
-      
-      // For demonstration, make more claims qualify as CPO claims
-      // In a real implementation, these would check against actual data
-      
-      // Check if patient meets criteria for CPO claim
-      // For demo, we'll use more lenient criteria to ensure some CPO claims appear
-      const meets_cpo_criteria = (
-        // Patient has sufficient CPO minutes (this field exists in our data)
-        patient.minutesCaptured >= 30 &&
-        // Patient has sufficient diagnosis codes (this also exists)
-        diagnosisCodes.length >= 2 &&
-        // For demo purposes, assume all patients are in EHR
-        true
-      );
-      
-      // Override date-specific checks for demonstration
-      // For our demo data, explicitly include certain patients as CPO
-      // In a real app, this would properly check date ranges
-      const shouldIncludeAsCPO = (
-        // Include patients with even id numbers
-        patient.id % 2 === 0 &&
-        // And sufficient minutes
-        patient.minutesCaptured >= 30
-      );
-      
-      // Apply validation rules (more lenient for demonstration)
-      if (meets_cpo_criteria && shouldIncludeAsCPO) {
-        clonedPatient.docType = 'CPO';
-        clonedPatient.patientInEHR = true;
-        clonedPatient.diagnosisCodesCount = diagnosisCodes.length;
-        
-        // Set DOS dates according to rules
-        // For demonstration, set DOS to billing month
-        clonedPatient.line1DosFrom = `${billingMonth}/01/${billingYear}`;
-        clonedPatient.line1DosTo = `${billingMonth}/${lastDay}/${billingYear}`;
-        
-        // Set other fields
-        clonedPatient.billingCode = 'G0181';
-        clonedPatient.line1Charges = 113;
-        clonedPatient.line1Units = 1;
-        clonedPatient.line1Pos = 11;
-        
-        validClaims.push(clonedPatient);
+      // Handle YYYY-MM-DD format
+      if (dateStr.includes('-')) {
+        const [year, month, day] = dateStr.split('-');
+        return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
       }
-    });
-    
-    setCpoValidatedClaims(validClaims);
-    setValidationStatus(`Found ${validClaims.length} valid CPO claims for ${billingMonth}/${billingYear}`);
-    return validClaims;
+      
+      // If it's not in a recognized format, try direct parsing
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        console.warn(`Failed to parse date: ${dateStr}`);
+        return null;
+      }
+      return date;
+    } catch (error) {
+      console.error(`Error parsing date ${dateStr}:`, error);
+      return null;
+    }
   };
-  
-  // Validate both CERT and CPO claims
+
+  // Update the validateAllClaims function to show modal first
   const validateAllClaims = () => {
+    // First show the validation modal
     setShowValidationModal(true);
-    const certClaims = validateCertClaims();
-    const cpoClaims = validateCpoClaims();
-    setValidationStatus(`Validation complete: ${certClaims.length} CERT/RECERT claims and ${cpoClaims.length} CPO claims found for ${billingMonth}/${billingYear}`);
+    setValidationStatus('Validating all claims for billing window...');
+    
+    // Get all patients from the PG using the mock function
+    const pgPatients = getMockPatientsByPG(pgName);
+    
+    // Parse billing month/year for date comparisons
+    const billingYearInt = parseInt(billingYear);
+    const billingMonthInt = parseInt(billingMonth);
+    
+    // Create billing window start and end dates
+    const billingStartDate = new Date(billingYearInt, billingMonthInt - 1, 1); // First day of month
+    const billingEndDate = new Date(billingYearInt, billingMonthInt, 0); // Last day of month
+    
+    console.log("Validating claims for billing window:", 
+      formatDateForDisplay(billingStartDate), "to", formatDateForDisplay(billingEndDate));
+    
+    // Arrays to store valid claims by type
+    const validatedCertClaims = [];
+    const validatedCpoClaims = [];
+    
+    // Process each patient
+    pgPatients.forEach(patient => {
+      // Step 1: Check if patient has episodes
+      if (!patient.patientEpisodeFrom || !patient.patientEpisodeTo) {
+        console.log(`Patient ${patient.patientId} has no episode data, skipping`);
+        return;
+      }
+      
+      // Parse episode dates
+      const episodeStartDate = parseDateString(patient.patientEpisodeFrom);
+      const episodeEndDate = parseDateString(patient.patientEpisodeTo);
+      
+      if (!episodeStartDate || !episodeEndDate) {
+        console.log(`Patient ${patient.patientId} has invalid episode dates, skipping`);
+        return;
+      }
+      
+      // Step 2: Check if episode overlaps with billing window
+      // (episode_start <= billing_end AND episode_end >= billing_start)
+      const episodeOverlapsBillingWindow = 
+        episodeStartDate <= billingEndDate && 
+        episodeEndDate >= billingStartDate;
+      
+      if (!episodeOverlapsBillingWindow) {
+        console.log(`Patient ${patient.patientId} episode doesn't overlap with billing window, skipping`);
+        return;
+      }
+      
+      // Step 3: Calculate days active in billing window
+      const activeStartDate = episodeStartDate > billingStartDate ? episodeStartDate : billingStartDate;
+      const activeEndDate = episodeEndDate < billingEndDate ? episodeEndDate : billingEndDate;
+      
+      // Calculate the difference in days
+      const msPerDay = 1000 * 60 * 60 * 24;
+      const activeDays = Math.round((activeEndDate - activeStartDate) / msPerDay) + 1;
+      
+      if (activeDays < 1) {
+        console.log(`Patient ${patient.patientId} has less than 1 day active in billing window, skipping`);
+        return;
+      }
+      
+      console.log(`Patient ${patient.patientId} has ${activeDays} active days in billing window`);
+      
+      // Step 4: Check ICD codes (must have 1 primary + 2 secondary)
+      const primaryCodesCount = patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes.length : 0;
+      const secondaryCodesCount = patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes.length : 0;
+      
+      if (primaryCodesCount < 1 || secondaryCodesCount < 2) {
+        console.log(`Patient ${patient.patientId} has insufficient ICD codes (primary: ${primaryCodesCount}, secondary: ${secondaryCodesCount}), skipping`);
+        return;
+      }
+      
+      // Step 5: Check if patient is in EHR
+      const patientInEHR = patient.patientInEHR !== false; // Assume true unless explicitly false
+      
+      if (!patientInEHR) {
+        console.log(`Patient ${patient.patientId} is not in EHR, skipping`);
+        return;
+      }
+      
+      // Step 6: Check CERT/RECERT document status and signed date
+      const hasCert = patient.certStatus === 'Document Signed';
+      const hasRecert = patient.recertStatus === 'Document Signed';
+      
+      // Get signed dates
+      const certSignedDate = hasCert ? parseDateString(patient.certSignedDate) : null;
+      const recertSignedDate = hasRecert ? parseDateString(patient.recertSignedDate) : null;
+      
+      // Check if certification docs were signed within billing window
+      const certSignedInWindow = certSignedDate && 
+        certSignedDate >= billingStartDate && 
+        certSignedDate <= billingEndDate;
+      
+      const recertSignedInWindow = recertSignedDate && 
+        recertSignedDate >= billingStartDate && 
+        recertSignedDate <= billingEndDate;
+      
+      // Create billing entries for CERT/RECERT if eligible
+      if (certSignedInWindow || recertSignedInWindow) {
+        // Create base patient details for claims
+        const basePatientClaim = {
+          id: `${patient.id}-${new Date().getTime()}`,
+          remarks: patient.patientRemarks || '',
+          sNo: patient.patientId,
+          fullName: `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName || ''}`,
+          firstName: patient.patientFirstName,
+          middleName: patient.patientMiddleName,
+          lastName: patient.patientLastName,
+          dob: patient.patientDOB,
+          hhaName: patient.hhah,
+          insuranceType: patient.patientInsurance,
+          primaryDiagnosisCode: patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes[0] : '',
+          secondaryDiagnosisCode1: patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes[0] : '',
+          secondaryDiagnosisCode2: patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes[1] : '',
+          soc: patient.patientSOC,
+          episodeFrom: patient.patientEpisodeFrom,
+          episodeTo: patient.patientEpisodeTo,
+          providersName: patient.physicianName,
+          patientInEHR: patientInEHR,
+          line1POS: '12',
+          line1Units: 1
+        };
+        
+        // If CERT was signed in window, create a 180 billing entry
+        if (certSignedInWindow) {
+          const certClaim = {
+            ...basePatientClaim,
+            id: `${patient.id}-cert-${new Date().getTime()}`,
+            remarks: 'CERT signed',
+            docType: 'CERT',
+            signedDate: patient.certSignedDate,
+            billingCode: '180', // Certification code
+            line1DosFrom: formatDateForDisplay(certSignedDate),
+            line1DosTo: formatDateForDisplay(certSignedDate),
+            line1Charges: calculateCharges('180'),
+            minutesCaptured: 0
+          };
+          
+          validatedCertClaims.push(certClaim);
+          console.log(`Added CERT claim for patient ${patient.patientId}`);
+        }
+        
+        // If RECERT was signed in window, create a 179 billing entry
+        if (recertSignedInWindow) {
+          const recertClaim = {
+            ...basePatientClaim,
+            id: `${patient.id}-recert-${new Date().getTime()}`,
+            remarks: 'RECERT signed',
+            docType: 'RECERT',
+            signedDate: patient.recertSignedDate,
+            billingCode: '179', // Recertification code
+            line1DosFrom: formatDateForDisplay(recertSignedDate),
+            line1DosTo: formatDateForDisplay(recertSignedDate),
+            line1Charges: calculateCharges('179'),
+            minutesCaptured: 0
+          };
+          
+          validatedCertClaims.push(recertClaim);
+          console.log(`Added RECERT claim for patient ${patient.patientId}`);
+        }
+      } else {
+        console.log(`Patient ${patient.patientId} has no certification documents signed within billing window`);
+      }
+      
+      // Step 7: Check CPO eligibility
+      const hasMinimumCpoMinutes = patient.cpoMinsCaptured >= 30;
+      
+      if (hasMinimumCpoMinutes) {
+        // Create CPO claim (billing code 181)
+        const cpoClaim = {
+          id: `${patient.id}-cpo-${new Date().getTime()}`,
+          remarks: 'CPO completed',
+          sNo: patient.patientId,
+          fullName: `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName || ''}`,
+          firstName: patient.patientFirstName,
+          middleName: patient.patientMiddleName,
+          lastName: patient.patientLastName,
+          dob: patient.patientDOB,
+          hhaName: patient.hhah,
+          insuranceType: patient.patientInsurance,
+          primaryDiagnosisCode: patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes[0] : '',
+          secondaryDiagnosisCode1: patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes[0] : '',
+          secondaryDiagnosisCode2: patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes[1] : '',
+          soc: patient.patientSOC,
+          episodeFrom: patient.patientEpisodeFrom,
+          episodeTo: patient.patientEpisodeTo,
+          providersName: patient.physicianName,
+          patientInEHR: patientInEHR,
+          docType: 'CPO',
+          billingCode: '181', // CPO billing code
+          minutesCaptured: patient.cpoMinsCaptured,
+          line1DosFrom: formatDateForDisplay(billingStartDate),
+          line1DosTo: formatDateForDisplay(billingEndDate),
+          line1Charges: calculateCharges('181'),
+          line1POS: '12',
+          line1Units: 1
+        };
+        
+        validatedCpoClaims.push(cpoClaim);
+        console.log(`Added CPO claim for patient ${patient.patientId} with ${patient.cpoMinsCaptured} minutes`);
+      } else {
+        console.log(`Patient ${patient.patientId} has insufficient CPO minutes (${patient.cpoMinsCaptured}), skipping CPO claim`);
+      }
+    });
+    
+    // Update state with validated claims
+    setCertValidatedClaims(validatedCertClaims);
+    setCpoValidatedClaims(validatedCpoClaims);
+    
+    // Set validation status message
+    const totalValidClaims = validatedCertClaims.length + validatedCpoClaims.length;
+    setValidationStatus(`Validation complete: ${totalValidClaims} eligible claims found (${validatedCertClaims.length} CERT/RECERT, ${validatedCpoClaims.length} CPO)`);
+    
+    // Do NOT close modal after validation - allow user to see results
+    // setShowValidationModal(false);
+  };
+
+  // Helper function to calculate charges based on billing code
+  const calculateCharges = (billingCode) => {
+    // Base charge amount by billing code
+    const baseCharges = {
+      '179': 120, // Recertification
+      '180': 150, // Initial certification
+      '181': 110  // Care plan oversight
+    };
+    
+    // Get base charge for the code
+    const baseCharge = baseCharges[billingCode] || 100;
+    
+    // Add some random variation for realistic charges
+    const variation = (Math.random() * 10 - 5).toFixed(2); // +/- $5
+    return (baseCharge + parseFloat(variation)).toFixed(2);
   };
 
   const filterClaimsByDateRange = () => {
@@ -921,23 +1052,63 @@ const PGView = () => {
     const endDate = parseDate(selectedDateRange.end);
     
     if (!startDate || !endDate) {
-      alert("Please select valid episode start dates");
+      alert("Please select valid dates for billing window");
       return;
     }
     
     // Set end date to end of day
     endDate.setHours(23, 59, 59, 999);
     
-    const filtered = dummyClaims.filter(claim => {
-      // Parse episode start date which could be in either format
-      const episodeStartDate = parseDate(claim.episodeFrom);
-      if (!episodeStartDate) return false;
-      
-      return episodeStartDate >= startDate && episodeStartDate <= endDate;
-    });
+    // First, get patients from the PG using the mock function
+    const pgPatients = getMockPatientsByPG(pgName);
     
-    setFilteredClaims(filtered);
+    // Get all patients, then filter later if needed
+    const allClaims = pgPatients.map(patient => ({
+      id: patient.id,
+      remarks: patient.patientRemarks || '',
+      sNo: patient.patientId,
+      fullName: `${patient.patientLastName}, ${patient.patientFirstName} ${patient.patientMiddleName || ''}`,
+      firstName: patient.patientFirstName,
+      middleName: patient.patientMiddleName,
+      lastName: patient.patientLastName,
+      dob: patient.patientDOB,
+      hhaName: patient.hhah,
+      insuranceType: patient.patientInsurance,
+      primaryDiagnosisCode: patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes[0] : '',
+      secondaryDiagnosisCodes: patient.secondaryDiagnosisCodes || [],
+      totalIcdCodes: (patient.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes.length : 0) + 
+                 (patient.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes.length : 0),
+      soc: patient.patientSOC,
+      episodeFrom: patient.patientEpisodeFrom,
+      episodeTo: patient.patientEpisodeTo,
+      minutesCaptured: patient.cpoMinsCaptured,
+      billingCode: patient.billingCode,
+      line1DosFrom: '',
+      line1DosTo: '',
+      line1Charges: patient.charges,
+      line1Pos: patient.pos,
+      line1Units: patient.units,
+      providersName: patient.physicianName,
+      certStatus: patient.certStatus,
+      recertStatus: patient.recertStatus,
+      certSignedDate: patient.certSignedDate,
+      recertSignedDate: patient.recertSignedDate,
+      docType: ''
+    }));
+    
+    setFilteredClaims(allClaims);
     setShowDateRangeFilter(false);
+    
+    // Always set the billing dates from the date filter
+    const startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0');
+    const startYear = startDate.getFullYear().toString();
+    
+    // Update billing month and year
+    setBillingMonth(startMonth);
+    setBillingYear(startYear);
+    
+    // Automatically trigger the validate claims workflow
+    validateAllClaims();
   };
 
   const formatDownloadDate = (dateStr) => {
@@ -964,7 +1135,7 @@ const PGView = () => {
     try {
       // Get current date for file naming
       const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1;
+      const currentMonth = currentDate.getMonth(); // 0-indexed
       const currentYear = currentDate.getFullYear();
       
       // Format month names
@@ -973,14 +1144,16 @@ const PGView = () => {
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
       ];
       
-      const currentShortMonth = shortMonthNames[currentMonth - 1];
+      // Get current and previous month
+      const currentShortMonth = shortMonthNames[currentMonth];
+      const prevShortMonth = shortMonthNames[(currentMonth - 1 + 12) % 12]; // Previous month
       
       // Prepare claims based on filters
       const preparedClaims = getFilteredClaims();
       
-      // Generate filename (include claim type if specific claim type is selected)
-      const claimType = showCertClaimsOnly ? 'CERT' : showCpoClaimsOnly ? 'CPO' : 'All';
-      const fileName = `${currentShortMonth} ${currentYear} Billing - ${pgName || 'Sample PG'} - ${claimType} Claims`;
+      // Generate filename
+      // Format: "Jan 2025 PG Name - Data (December Month data)"
+      const fileName = `${currentShortMonth} ${currentYear} ${pgName} - Data (${prevShortMonth} Month data)`;
       
       if (format === 'csv') {
         // Prepare CSV content
@@ -1194,7 +1367,7 @@ const PGView = () => {
         <h4>Claims</h4>
         <div className="claims-filters">
           <div className="filter-group" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-            {/* Existing date range filter button */}
+            {/* Button to open date filter modal */}
             <button 
               className="filter-button"
               onClick={() => setShowDateRangeFilter(true)}
@@ -1205,7 +1378,7 @@ const PGView = () => {
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              Date Range Filter
+              Set Billing Window
             </button>
             
             {/* Add claim validation button */}
@@ -1318,25 +1491,6 @@ const PGView = () => {
                     <option value="2026">2026</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <h4>Validation Rules:</h4>
-                  <div style={{ margin: '10px 0', padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
-                    <p><strong>CERT/RECERT Validation:</strong></p>
-                    <ul style={{ paddingLeft: '20px' }}>
-                      <li>CERT/RECERT Present for the episode</li>
-                      <li>Cert date signed in Billing Month</li>
-                      <li>Minimum 3 ICD codes</li>
-                      <li>Patient should be in EHR</li>
-                    </ul>
-                    <p><strong>CPO Validation:</strong></p>
-                    <ul style={{ paddingLeft: '20px' }}>
-                      <li>≥1 day active in Billing Month</li>
-                      <li>Minimum 3 ICD codes</li>
-                      <li>≥30min CPO completion in Billing Month</li>
-                      <li>Patient should be in EHR</li>
-                    </ul>
-                  </div>
-                </div>
                 <div className="form-actions">
                   <button 
                     className="submit-button"
@@ -1367,62 +1521,167 @@ const PGView = () => {
             <div className="modal-overlay">
               <div className="modal-content" data-type="date-range">
                 <div className="modal-header">
-                  <h2>Filter Episodes by Date Range</h2>
+                  <h2>Set Billing Window</h2>
                   <button className="close-button" onClick={() => setShowDateRangeFilter(false)}>×</button>
                 </div>
                 <div className="form-group">
-                  <label>Episode Start Date (From)</label>
+                  <label>Billing Period Presets</label>
+                  <div className="button-group" style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+                    <button 
+                      className={`period-button ${dateFilterType === 'thisWeek' ? 'active' : ''}`}
+                      onClick={() => handleDateRangePreset('thisWeek')}
+                      style={{ 
+                        padding: '8px 12px', 
+                        border: `1px solid ${dateFilterType === 'thisWeek' ? '#4F46E5' : '#e2e8f0'}`,
+                        backgroundColor: dateFilterType === 'thisWeek' ? '#EBF4FF' : '#f8fafc',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      This Week
+                    </button>
+                    <button 
+                      className={`period-button ${dateFilterType === 'thisMonth' ? 'active' : ''}`}
+                      onClick={() => handleDateRangePreset('thisMonth')}
+                      style={{ 
+                        padding: '8px 12px', 
+                        border: `1px solid ${dateFilterType === 'thisMonth' ? '#4F46E5' : '#e2e8f0'}`,
+                        backgroundColor: dateFilterType === 'thisMonth' ? '#EBF4FF' : '#f8fafc',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      This Month
+                    </button>
+                    <button 
+                      className={`period-button ${dateFilterType === 'lastMonth' ? 'active' : ''}`}
+                      onClick={() => handleDateRangePreset('lastMonth')}
+                      style={{ 
+                        padding: '8px 12px', 
+                        border: `1px solid ${dateFilterType === 'lastMonth' ? '#4F46E5' : '#e2e8f0'}`,
+                        backgroundColor: dateFilterType === 'lastMonth' ? '#EBF4FF' : '#f8fafc',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Last Month
+                    </button>
+                    <button 
+                      className={`period-button ${dateFilterType === 'thisQuarter' ? 'active' : ''}`}
+                      onClick={() => handleDateRangePreset('thisQuarter')}
+                      style={{ 
+                        padding: '8px 12px', 
+                        border: `1px solid ${dateFilterType === 'thisQuarter' ? '#4F46E5' : '#e2e8f0'}`,
+                        backgroundColor: dateFilterType === 'thisQuarter' ? '#EBF4FF' : '#f8fafc',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      This Quarter
+                    </button>
+                    <button 
+                      className={`period-button ${dateFilterType === 'custom' ? 'active' : ''}`}
+                      onClick={() => {
+                        setDateFilterType('custom');
+                        setSelectedDateRange({ start: '', end: '' });
+                      }}
+                      style={{ 
+                        padding: '8px 12px', 
+                        border: `1px solid ${dateFilterType === 'custom' ? '#4F46E5' : '#e2e8f0'}`,
+                        backgroundColor: dateFilterType === 'custom' ? '#EBF4FF' : '#f8fafc',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Custom
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label>Billing Start Date</label>
                   <input
                     type="date"
                     className="date-input"
                     name="start"
                     value={selectedDateRange.start}
                     onChange={handleDateRangeChange}
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Episode Start Date (To)</label>
+                  <label>Billing End Date</label>
                   <input
                     type="date"
                     className="date-input"
                     name="end"
                     value={selectedDateRange.end}
                     onChange={handleDateRangeChange}
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}
                   />
                 </div>
-                <div className="form-group">
-                  <label>Quick Select</label>
-                  <div className="button-group">
-                    <button 
-                      className={`period-button ${selectedPeriod === 'all' ? 'active' : ''}`}
-                      onClick={() => handlePeriodChange('all')}
-                    >
-                      All Episodes
-                    </button>
+                <div className="form-group" style={{ marginTop: '15px' }}>
+                  <div style={{ padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '4px', fontSize: '14px' }}>
+                    Note: The first month in your date range will be used for billing validation. 
+                    Eligible patients based on this date range will appear in the claims table.
                   </div>
                 </div>
-                <div className="form-actions">
+                <div className="form-actions" style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+                    <button 
+                    className="cancel-button"
+                    onClick={() => setShowDateRangeFilter(false)}
+                    style={{ 
+                      padding: '8px 16px', 
+                      backgroundColor: '#f8fafc', 
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '4px',
+                      marginRight: '10px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Cancel
+                    </button>
                   <button 
                     className="submit-button"
                     onClick={filterClaimsByDateRange}
                     disabled={!selectedDateRange.start || !selectedDateRange.end}
+                    style={{ 
+                      padding: '8px 16px', 
+                      backgroundColor: (!selectedDateRange.start || !selectedDateRange.end) ? '#cbd5e0' : '#4F46E5', 
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: (!selectedDateRange.start || !selectedDateRange.end) ? 'not-allowed' : 'pointer'
+                    }}
                   >
-                    Apply Filter
+                    Apply Billing Window
                   </button>
                 </div>
               </div>
             </div>
           )}
-
-          {/* Always show filtered results count and export buttons */}
-          <div className="filtered-results" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <h3 style={{ margin: 0 }}>
-              {filteredClaims.length > 0 
-                ? `Filtered Claims: ${filteredClaims.length}` 
-                : `Total Claims: ${getFilteredClaims().length}`}
-            </h3>
-            <div className="export-buttons" style={{ display: 'flex', gap: '10px' }}>
-              <button className="download-button" onClick={() => handleDownloadClaims('csv')}>
+          
+          {/* Download options and total claims */}
+          <div className="claims-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
+            <div className="total-claims">
+              <span>Total Claims: {getFilteredClaims().length || 0}</span>
+            </div>
+            <div className="download-options" style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                className="download-button"
+                onClick={() => handleDownloadClaims('csv')}
+                style={{ 
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#4F46E5', 
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '0.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  cursor: 'pointer'
+                }}
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
@@ -1430,7 +1689,21 @@ const PGView = () => {
                 </svg>
                 Download CSV
               </button>
-              <button className="download-button" onClick={() => handleDownloadClaims('pdf')}>
+              <button
+                className="download-button"
+                onClick={() => handleDownloadClaims('pdf')}
+                style={{ 
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#6366F1', 
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '0.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  cursor: 'pointer'
+                }}
+              >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
@@ -1442,107 +1715,225 @@ const PGView = () => {
           </div>
         </div>
       </div>
-
-      <div className="table-container" style={{ maxWidth: '100%', overflowX: 'auto', position: 'relative' }}>
+      
+      {/* Sample Data Table */}
+      <div className="table-container" style={{ overflowX: 'auto', marginTop: '1rem' }}>
         <table className="claims-table">
           <thead>
             <tr>
-              <th onClick={() => handleSortClick('remarks')}>
-                Remarks {sortConfig.key === 'remarks' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('sNo')}>
-                S. No. {sortConfig.key === 'sNo' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('fullName')}>
-                FULL Name {sortConfig.key === 'fullName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('firstName')}>
-                First Name {sortConfig.key === 'firstName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('middleName')}>
-                Middle Name {sortConfig.key === 'middleName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('lastName')}>
-                Last Name {sortConfig.key === 'lastName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('dob')}>
-                DOB {sortConfig.key === 'dob' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('hhaName')}>
-                HHA NAME {sortConfig.key === 'hhaName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('insuranceType')}>
-                Insurance {sortConfig.key === 'insuranceType' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('primaryDiagnosisCode')}>
-                Primary Diagnosis {sortConfig.key === 'primaryDiagnosisCode' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('soc')}>
-                SOC {sortConfig.key === 'soc' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('episodeFrom')}>
-                Episode From {sortConfig.key === 'episodeFrom' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('episodeTo')}>
-                Episode To {sortConfig.key === 'episodeTo' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('minutesCaptured')}>
-                Minutes {sortConfig.key === 'minutesCaptured' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('billingCode')}>
-                Billing Code {sortConfig.key === 'billingCode' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('line1DosFrom')}>
-                DOS From {sortConfig.key === 'line1DosFrom' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('line1DosTo')}>
-                DOS To {sortConfig.key === 'line1DosTo' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('line1Charges')}>
-                Charges {sortConfig.key === 'line1Charges' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('line1Pos')}>
-                POS {sortConfig.key === 'line1Pos' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('line1Units')}>
-                Units {sortConfig.key === 'line1Units' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
-              <th onClick={() => handleSortClick('providersName')}>
-                Provider {sortConfig.key === 'providersName' && <span>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>}
-              </th>
+              <th>Remarks</th>
+              <th>S. No.</th>
+              <th>FULL Name</th>
+              <th>First Name</th>
+              <th>Middle Name</th>
+              <th>Last Name</th>
+              <th>DOB</th>
+              <th>HHA NAME</th>
+              <th>INSURANCE TYPE</th>
+              <th>PRIMARY DIAGNOSIS CODE</th>
+              <th>SECONDARY DIAGNOSIS CODE 1</th>
+              <th>SECONDARY DIAGNOSIS CODE 2</th>
+              <th>SOC</th>
+              <th>Episode From</th>
+              <th>Episode to</th>
+              <th>Minutes Captured</th>
+              <th>Billing Code</th>
+              <th>LINE 1 DOS FROM</th>
+              <th>LINE 1 DOS TO</th>
+              <th>Line 1 $Charges</th>
+              <th>Line 1 POS</th>
+              <th>Line 1 Units</th>
+              <th>Provider's Name</th>
             </tr>
           </thead>
           <tbody>
-            {(getFilteredClaims()).map(claim => (
-              <tr key={`claim-${claim.id}`}>
-                <td>{claim.remarks}</td>
-                <td>{claim.sNo}</td>
-                <td>{claim.fullName}</td>
-                <td>{claim.firstName}</td>
-                <td>{claim.middleName}</td>
-                <td>{claim.lastName}</td>
-                <td>{claim.dob}</td>
-                <td>{claim.hhaName}</td>
-                <td>{claim.insuranceType}</td>
-                <td>{claim.primaryDiagnosisCode}</td>
-                <td>{claim.soc}</td>
-                <td>{claim.episodeFrom}</td>
-                <td>{claim.episodeTo}</td>
-                <td>{claim.minutesCaptured}</td>
-                <td>{claim.billingCode}</td>
-                <td>{claim.line1DosFrom}</td>
-                <td>{claim.line1DosTo}</td>
-                <td>{claim.line1Charges}</td>
-                <td>{claim.line1Pos}</td>
-                <td>{claim.line1Units}</td>
-                <td>{claim.providersName}</td>
-              </tr>
-            ))}
+            {/* Sample data row 1 */}
+            <tr>
+              <td>CERT signed</td>
+              <td>1001</td>
+              <td>Smith, John A</td>
+              <td>John</td>
+              <td>A</td>
+              <td>Smith</td>
+              <td>05/12/1962</td>
+              <td>CaringHands HHA</td>
+              <td>Medicare</td>
+              <td>I10</td>
+              <td>I50.9</td>
+              <td>E11.9</td>
+              <td>01/15/2024</td>
+              <td>01/15/2024</td>
+              <td>07/14/2024</td>
+              <td>45</td>
+              <td>179</td>
+              <td>04/10/2024</td>
+              <td>04/10/2024</td>
+              <td>$120.58</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. Sarah Johnson</td>
+            </tr>
+            {/* Sample data row 2 */}
+            <tr>
+              <td>ICD incomplete</td>
+              <td>1002</td>
+              <td>Johnson, Mary E</td>
+              <td>Mary</td>
+              <td>E</td>
+              <td>Johnson</td>
+              <td>08/23/1955</td>
+              <td>HomeHealth Plus</td>
+              <td>Medicare</td>
+              <td>E11.9</td>
+              <td>I10</td>
+              <td></td>
+              <td>02/03/2024</td>
+              <td>02/03/2024</td>
+              <td>08/02/2024</td>
+              <td>0</td>
+              <td>180</td>
+              <td>04/15/2024</td>
+              <td>04/15/2024</td>
+              <td>$178.43</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. Robert Chen</td>
+            </tr>
+            {/* Sample data row 3 */}
+            <tr>
+              <td>CPO completed</td>
+              <td>1003</td>
+              <td>Williams, Robert J</td>
+              <td>Robert</td>
+              <td>J</td>
+              <td>Williams</td>
+              <td>11/04/1970</td>
+              <td>Comfort Care Services</td>
+              <td>Medicaid</td>
+              <td>J44.9</td>
+              <td>I50.9</td>
+              <td>F32.9</td>
+              <td>01/20/2024</td>
+              <td>01/20/2024</td>
+              <td>07/19/2024</td>
+              <td>37</td>
+              <td>181</td>
+              <td>04/05/2024</td>
+              <td>04/05/2024</td>
+              <td>$110.36</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. Maria Garcia</td>
+            </tr>
+            {/* Sample data row 4 */}
+            <tr>
+              <td>RECERT pending</td>
+              <td>1004</td>
+              <td>Brown, Patricia L</td>
+              <td>Patricia</td>
+              <td>L</td>
+              <td>Brown</td>
+              <td>03/17/1948</td>
+              <td>Elite Home Health</td>
+              <td>Medicare</td>
+              <td>I50.9</td>
+              <td>J44.9</td>
+              <td>I10</td>
+              <td>03/05/2024</td>
+              <td>03/05/2024</td>
+              <td>09/04/2024</td>
+              <td>0</td>
+              <td>179</td>
+              <td>04/12/2024</td>
+              <td>04/12/2024</td>
+              <td>$125.94</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. James Wilson</td>
+            </tr>
+            {/* Sample data row 5 */}
+            <tr>
+              <td>CPO not eligible</td>
+              <td>1005</td>
+              <td>Davis, Jennifer A</td>
+              <td>Jennifer</td>
+              <td>A</td>
+              <td>Davis</td>
+              <td>07/29/1965</td>
+              <td>HomeHealth Plus</td>
+              <td>Medicare</td>
+              <td>M17.0</td>
+              <td>M54.5</td>
+              <td>G89.4</td>
+              <td>02/14/2024</td>
+              <td>02/14/2024</td>
+              <td>08/13/2024</td>
+              <td>22</td>
+              <td>180</td>
+              <td>04/18/2024</td>
+              <td>04/18/2024</td>
+              <td>$148.96</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. Emily Brown</td>
+            </tr>
+            {/* Sample data row 6 */}
+            <tr>
+              <td>Billing active</td>
+              <td>1006</td>
+              <td>Anderson, Thomas R</td>
+              <td>Thomas</td>
+              <td>R</td>
+              <td>Anderson</td>
+              <td>09/03/1957</td>
+              <td>CaringHands HHA</td>
+              <td>Medicare</td>
+              <td>I48.91</td>
+              <td>I25.10</td>
+              <td>E78.5</td>
+              <td>01/10/2024</td>
+              <td>01/10/2024</td>
+              <td>07/09/2024</td>
+              <td>30</td>
+              <td>181</td>
+              <td>04/03/2024</td>
+              <td>04/03/2024</td>
+              <td>$115.28</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. Michael Lee</td>
+            </tr>
+            {/* Sample data row 7 */}
+            <tr>
+              <td>Outside window</td>
+              <td>1007</td>
+              <td>Garcia, Maria L</td>
+              <td>Maria</td>
+              <td>L</td>
+              <td>Garcia</td>
+              <td>12/15/1968</td>
+              <td>Elite Home Health</td>
+              <td>Medicaid</td>
+              <td>G20</td>
+              <td>G21.11</td>
+              <td>F32.9</td>
+              <td>03/20/2024</td>
+              <td>03/20/2024</td>
+              <td>09/19/2024</td>
+              <td>32</td>
+              <td>180</td>
+              <td>03/20/2024</td>
+              <td>03/20/2024</td>
+              <td>$170.52</td>
+              <td>12</td>
+              <td>1</td>
+              <td>Dr. Lisa Patel</td>
+            </tr>
           </tbody>
         </table>
       </div>
       
-      {/* Add a legend to explain claim types */}
+      {/* Claims Legend */}
       {(certValidatedClaims.length > 0 || cpoValidatedClaims.length > 0) && (
         <div className="claims-legend" style={{ 
           margin: '20px 0', 
@@ -1590,6 +1981,16 @@ const PGView = () => {
           </div>
         </div>
       )}
+      
+      {/* Data Source */}
+      <div style={{ 
+        textAlign: 'center', 
+        marginTop: '2rem', 
+        color: '#718096', 
+        fontSize: '0.8rem' 
+      }}>
+        Data source: US Census TIGER/Line Shapefiles 2023
+      </div>
     </div>
   );
 
@@ -3389,8 +3790,35 @@ Operations Team
   // Update date formatting function to use American format
   const formatDate = (dateString) => {
     if (!dateString) return '';
-    const date = new Date(dateString);
-    return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;
+    
+    try {
+      // Log the input date string for debugging
+      console.log(`Formatting date: ${dateString}`);
+      
+      // For MM/DD/YYYY format
+      if (dateString.includes('/')) {
+        const [month, day, year] = dateString.split('/');
+        return `${month}/${day}/${year}`;
+      }
+      
+      // For YYYY-MM-DD format
+      if (dateString.includes('-')) {
+        const [year, month, day] = dateString.split('-');
+        return `${month}/${day}/${year}`;
+      }
+      
+      // If it's a Date object or other format
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        console.warn(`Invalid date: ${dateString}`);
+        return dateString; // Return as is if invalid
+      }
+      
+      return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;
+    } catch (error) {
+      console.error(`Error formatting date ${dateString}:`, error);
+      return dateString; // Return as is in case of error
+    }
   };
 
   const getHighRapportCount = () => {
@@ -3467,6 +3895,170 @@ Operations Team
     const day = dateObj.getDate().toString().padStart(2, '0');
     const year = dateObj.getFullYear();
     return `${month}/${day}/${year}`;
+  };
+
+  // Add a helper function to set date range presets
+  const handleDateRangePreset = (preset) => {
+    const today = new Date();
+    let startDate = new Date();
+    let endDate = new Date();
+    
+    switch(preset) {
+      case 'thisWeek':
+        // Start from Sunday of current week
+        startDate = new Date(today);
+        startDate.setDate(today.getDate() - today.getDay());
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 6);
+        break;
+      case 'thisMonth':
+        // Start from first day of current month
+        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        break;
+      case 'lastMonth':
+        // Start from first day of previous month
+        startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+        break;
+      case 'thisQuarter':
+        // Start from first day of current quarter
+        const quarter = Math.floor(today.getMonth() / 3);
+        startDate = new Date(today.getFullYear(), quarter * 3, 1);
+        endDate = new Date(today.getFullYear(), quarter * 3 + 3, 0);
+        break;
+      case 'custom':
+      default:
+        // Leave dates as is for custom selection
+        return;
+    }
+    
+    // Update the date range state with the new dates in ISO format
+    setSelectedDateRange({
+      start: startDate.toISOString().split('T')[0],
+      end: endDate.toISOString().split('T')[0]
+    });
+    
+    setDateFilterType(preset);
+  };
+
+  // Function to retrieve mock patients by PG (practice group) for demonstration purposes
+  const getMockPatientsByPG = (pgNameParam) => {
+    console.log(`Getting mock patients for PG: "${pgNameParam}"`);
+    
+    // We need to normalize pgName for consistent comparison
+    const normalizedPgName = pgNameParam ? pgNameParam.toLowerCase().trim() : '';
+    
+    // Add some mock patient data with explicit PG assignments
+    // In a real application, this would come from an API
+    const allPatients = [
+      {
+        id: "VT001",
+        patientId: "VT001",
+        patientFirstName: "John",
+        patientMiddleName: "A",
+        patientLastName: "Smith",
+        patientDOB: "05/12/1962",
+        hhah: "CaringHands HHA",
+        patientInsurance: "Medicare",
+        patientPG: "enhabit - lubbock", // Explicitly assign to this PG
+        primaryDiagnosisCodes: ["I10"],
+        secondaryDiagnosisCodes: ["I50.9", "E11.9", "J44.9"],
+        patientSOC: "01/15/2024",
+        patientEpisodeFrom: "01/15/2024",
+        patientEpisodeTo: "07/14/2024",
+        cpoMinsCaptured: 45,
+        billingCode: "179",
+        certStatus: "Document Signed",
+        certSignedDate: "04/10/2024",
+        recertStatus: "Not Required",
+        recertSignedDate: "",
+        physicianName: "Dr. Sarah Johnson",
+        patientInEHR: true
+      },
+      {
+        id: "VT002",
+        patientId: "VT002",
+        patientFirstName: "Mary",
+        patientMiddleName: "L",
+        patientLastName: "Johnson",
+        patientDOB: "08/22/1945",
+        hhah: "XYZ Home Care",
+        patientInsurance: "Medicaid",
+        patientPG: "enhabit - lubbock", // Explicitly assign to this PG
+        primaryDiagnosisCodes: ["E11.9"],
+        secondaryDiagnosisCodes: ["I10", "M54.5", "J45.909"],
+        patientSOC: "02/01/2024",
+        patientEpisodeFrom: "02/01/2024",
+        patientEpisodeTo: "08/01/2024",
+        cpoMinsCaptured: 0,
+        billingCode: "180",
+        certStatus: "Document Signed",
+        certSignedDate: "04/15/2024",
+        recertStatus: "Not Required",
+        recertSignedDate: "",
+        physicianName: "Dr. Michael Brown",
+        patientInEHR: true
+      },
+      {
+        id: "VT003",
+        patientId: "VT003",
+        patientFirstName: "Maria",
+        patientMiddleName: "E",
+        patientLastName: "Gonzalez",
+        patientDOB: "07/14/1968",
+        hhah: "Phoenix Home Health",
+        patientInsurance: "Medicare",
+        patientPG: "enhabit - lubbock", // Explicitly assign to this PG
+        primaryDiagnosisCodes: ["I50.9"],
+        secondaryDiagnosisCodes: ["I48.91", "I10", "E11.9"],
+        patientSOC: "01/30/2024",
+        patientEpisodeFrom: "01/30/2024",
+        patientEpisodeTo: "07/30/2024",
+        cpoMinsCaptured: 35,
+        billingCode: "181",
+        certStatus: "Document not received",
+        certSignedDate: "",
+        recertStatus: "Document Signed",
+        recertSignedDate: "04/05/2024",
+        physicianName: "Dr. James Peterson",
+        patientInEHR: true
+      },
+      {
+        id: "VT004",
+        patientId: "VT004",
+        patientFirstName: "Robert",
+        patientMiddleName: "J",
+        patientLastName: "Williams",
+        patientDOB: "11/03/1968",
+        hhah: "Comfort Care Services",
+        patientInsurance: "Aetna",
+        patientPG: "enhabit - lubbock", // Explicitly assign to this PG
+        primaryDiagnosisCodes: ["L89.313"],
+        secondaryDiagnosisCodes: ["E11.9", "I10", "M81.0"],
+        patientSOC: "01/28/2024",
+        patientEpisodeFrom: "01/28/2024",
+        patientEpisodeTo: "07/28/2024",
+        cpoMinsCaptured: 40,
+        billingCode: "179",
+        certStatus: "Document Signed",
+        certSignedDate: "04/10/2024",
+        recertStatus: "Not Required",
+        recertSignedDate: "",
+        physicianName: "Dr. Jessica Miller",
+        patientInEHR: true
+      }
+    ];
+    
+    // Filter patients by PG
+    const filteredPatients = allPatients.filter(patient => {
+      const patientPG = patient.patientPG ? patient.patientPG.toLowerCase().trim() : '';
+      console.log(`Checking patient ${patient.patientId}, PG: "${patientPG}" against "${normalizedPgName}"`);
+      return patientPG === normalizedPgName;
+    });
+    
+    console.log(`Found ${filteredPatients.length} patients for PG: ${pgNameParam}`);
+    return filteredPatients;
   };
 
   return (

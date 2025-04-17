@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { FunnelDataContext } from './FunnelDataContext';
+import { FunnelDataContext, HHAH_STAGES } from './FunnelDataContext';
 import '../sa_view_css/AddForm.css';
 
 const AddHHAHForm = ({ onClose }) => {
@@ -7,18 +7,11 @@ const AddHHAHForm = ({ onClose }) => {
   const [patients, setPatients] = useState('');
   const [unbilled, setUnbilled] = useState('');
   const [outcomes, setOutcomes] = useState('');
-  const [funnelStage, setFunnelStage] = useState('Total Patient Base');
+  const [funnelStage, setFunnelStage] = useState(HHAH_STAGES[0]);
   const { hhahData, setHhahData, hhahFunnelData, updateHhahFunnelData } = useContext(FunnelDataContext) || {};
 
-  const hhahStages = [
-    "Total Patient Base",
-    "Eligible Patients",
-    "Assessment Ready",
-    "Service Ready",
-    "In Treatment",
-    "Near Completion",
-    "Complete"
-  ];
+  // Use the stages from the FunnelDataContext
+  const hhahStages = HHAH_STAGES;
 
   const handleSubmit = (e) => {
     e.preventDefault();
