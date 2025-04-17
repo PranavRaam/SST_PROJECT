@@ -8625,3 +8625,7 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-17 16:08:14,013 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:08:14] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744886293987&_show_states=true&_show_counties=true&_show_msas=true&_t=1744886294000 HTTP/1.1" 200 -
 2025-04-17 16:38:05,655 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:38:05] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-17 16:38:05,660 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:38:05] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:43:39,662 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:43:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:43:39,672 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:43:39] "GET /api/map?t=1744888419642&noCache=true&stableView=true?t%3D1744888419642&_show_states=true&_show_counties=true&_show_msas=true&_t=1744888419644 HTTP/1.1" 200 -
+2025-04-17 16:43:39,673 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:43:39] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-17 16:43:40,394 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 16:43:40] "GET /api/map?t=1744888420382&noCache=true&stableView=true?t%3D1744888420382&_show_states=true&_show_counties=true&_show_msas=true&_t=1744888420383 HTTP/1.1" 200 -
