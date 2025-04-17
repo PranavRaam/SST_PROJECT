@@ -158,7 +158,7 @@ const PGListingTable = () => {
         <tbody>
           {displayData.map((pg, index) => (
             <tr 
-              key={index} 
+              key={`pg-${pg.name}-${index}`} 
               className="pg-clickable-row"
               onClick={() => handleRowClick(pg)}
             >

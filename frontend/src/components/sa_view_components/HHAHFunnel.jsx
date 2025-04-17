@@ -17,9 +17,6 @@ const hhahFunnelStages = HHAH_STAGES.map((name, index) => {
   };
 });
 
-// Display values for the funnel sections
-const displayValues = [800, 600, 400, 250, 150, 50];
-
 const HHAHFunnel = () => {
   const { currentArea, hhahAssignments, moveHhahToStage, hhahFunnelData } = useContext(FunnelDataContext) || {};
   const [expandedStage, setExpandedStage] = useState(null);
@@ -210,7 +207,7 @@ const HHAHFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="175" y="85" textAnchor="middle" 
                     fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[0] || funnelData[0]?.value || 1}
+                {funnelData[0]?.value || 0}
               </text>
               
               {/* Second section */}
@@ -223,7 +220,7 @@ const HHAHFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="175" y="155" textAnchor="middle" 
                     fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[1] || funnelData[1]?.value || 1}
+                {funnelData[1]?.value || 0}
               </text>
               
               {/* Third section */}
@@ -236,7 +233,7 @@ const HHAHFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="175" y="225" textAnchor="middle" 
                     fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[2] || funnelData[2]?.value || 1}
+                {funnelData[2]?.value || 0}
               </text>
               
               {/* Fourth section */}
@@ -249,7 +246,7 @@ const HHAHFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="175" y="295" textAnchor="middle" 
                     fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[3] || funnelData[3]?.value || 1}
+                {funnelData[3]?.value || 0}
               </text>
               
               {/* Fifth section */}
@@ -262,7 +259,7 @@ const HHAHFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="175" y="365" textAnchor="middle" 
                     fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[4] || funnelData[4]?.value || 1}
+                {funnelData[4]?.value || 0}
               </text>
               
               {/* Sixth section */}
@@ -275,7 +272,7 @@ const HHAHFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="175" y="435" textAnchor="middle" 
                     fill="#fff" fontSize="16" fontWeight="bold">
-                {displayValues[5] || funnelData[5]?.value || 1}
+                {funnelData[5]?.value || 0}
               </text>
             </g>
           </svg>

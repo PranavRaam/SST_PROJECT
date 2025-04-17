@@ -71,19 +71,8 @@ import {
   FaExclamationCircle,
   FaSearchPlus,
   FaSearchMinus,
-  FaRedo,
-  FaComment
+  FaRedo
 } from 'react-icons/fa';
-
-// Standard remarks values used across the application
-const standardRemarks = [
-  'CERT signed',
-  'ICD incomplete',
-  'CPO completed',
-  'RECERT pending',
-  'CPO not eligible',
-  'Billing active'
-];
 
 // Helper functions
 const getStatusIcon = (status) => {
@@ -2093,25 +2082,6 @@ Total documents: ${documents.length}
     navigate(-1); // Go back to the previous page
   };
 
-  // After the other helper functions at the top of the file
-  // ... existing code ...
-
-  const getRemarkClass = (remark) => {
-    if (!remark) return '';
-    
-    const classMap = {
-      'CERT signed': 'cert-signed',
-      'CPO completed': 'cpo-completed',
-      'ICD incomplete': 'icd-incomplete',
-      'RECERT pending': 'recert-pending',
-      'CPO not eligible': 'cpo-not-eligible',
-      'Billing active': 'billing-active'
-    };
-    return classMap[remark] || '';
-  };
-
-  // ... rest of the existing code ...
-
   return (
     <div className="patient-detail-view">
       <div className="detail-header">
@@ -2501,28 +2471,6 @@ Total documents: ${documents.length}
                     <div className="cpo-minutes-display">
                       <span>{patientInfo.cpoMinsCaptured} minutes</span>
                     </div>
-                  )}
-                </div>
-                
-                <div className="info-item">
-                  <label>
-                    <FaComment className="field-icon" />
-                    Remarks:
-                  </label>
-                  {isEditing ? (
-                    <select 
-                      value={patientInfo.remarks} 
-                      onChange={(e) => handleInfoChange('remarks', e.target.value)}
-                      className="info-select"
-                    >
-                      {standardRemarks.map((remark, index) => (
-                        <option key={index} value={remark}>{remark}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <span className={`remarks-badge ${getRemarkClass(patientInfo.remarks)}`}>
-                      {patientInfo.remarks}
-                    </span>
                   )}
                 </div>
                 

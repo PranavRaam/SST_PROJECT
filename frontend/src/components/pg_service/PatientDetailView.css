@@ -4020,3 +4020,49 @@ button.upload-documents-btn:hover {
   font-size: 0.875rem;
   color: var(--text-secondary);
 }
+
+/* Add CSS for the remarks badge */
+.remarks-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background-color: #E9F3FF;
+  color: #1E40AF;
+  border: 1px solid #BFDBFE;
+  transition: all 0.2s ease;
+}
+
+/* Create specific modifier classes that will be added to the remarks spans */
+.remarks-badge.cert-signed,
+.remarks-badge.cpo-completed {
+  background-color: #DCFCE7;
+  color: #166534;
+  border-color: #86EFAC;
+}
+
+.remarks-badge.icd-incomplete,
+.remarks-badge.recert-pending {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border-color: #FDE68A;
+}
+
+.remarks-badge.cpo-not-eligible {
+  background-color: #FEE2E2;
+  color: #991B1B;
+  border-color: #FECACA;
+}
+
+.remarks-badge.billing-active {
+  background-color: #E0E7FF;
+  color: #3730A3;
+  border-color: #C7D2FE;
+}
+
+/* Hover effect for remarks badge */
+.remarks-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

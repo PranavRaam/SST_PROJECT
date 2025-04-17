@@ -33,9 +33,9 @@ export const HHAH_STAGES = [
 ];
 
 // Create the provider component
-const FunnelDataProvider = ({ children }) => {
+const FunnelDataProvider = ({ children, initialArea }) => {
   const [allAgencies, setAllAgencies] = useState([]);
-  const [currentArea, setCurrentArea] = useState('');
+  const [currentArea, setCurrentArea] = useState(initialArea || '');
   const [pgData, setPgData] = useState([]);
   const [hhahData, setHhahData] = useState([]);
   const [pgFunnelData, setPgFunnelData] = useState([]);
@@ -43,6 +43,14 @@ const FunnelDataProvider = ({ children }) => {
   const [pgAssignments, setPgAssignments] = useState({});
   const [hhahAssignments, setHhahAssignments] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
+  // Update currentArea when initialArea changes
+  useEffect(() => {
+    if (initialArea) {
+      console.log('FunnelDataProvider: Setting initial area:', initialArea);
+      setCurrentArea(initialArea);
+    }
+  }, [initialArea]);
 
   // Fetch CSV data on component mount
   useEffect(() => {
@@ -87,22 +95,33 @@ const FunnelDataProvider = ({ children }) => {
     // Create initial funnel data based on actual data
     const createFunnelData = (type, agencies) => {
       if (type === 'pg') {
-        // Use the PG_STAGES for consistency
-        return PG_STAGES.map((stage, index) => {
-          // Calculate a value that decreases through the funnel
-          const value = Math.max(1, Math.floor(pgs.length * (1 - index * 0.15)));
-          // Use consistent colors matching PGFunnel.jsx
-          const colors = [
-            "#2980B9", "#3498DB", "#45B7D1", "#F39C12", 
-            "#E67E22", "#D35400", "#E74C3C", "#C0392B", 
-            "#E57373", "#B71C1C"
-          ];
-          return { 
-            name: stage, 
-            value: value, 
-            fill: colors[index] || "#9C27B0"
-          };
+        // Initialize counts for each PG stage
+        const stageCounts = {};
+        PG_STAGES.forEach(stage => {
+          stageCounts[stage] = 0;
         });
+        
+        // Count PGs in each stage
+        agencies.forEach(agency => {
+          const stage = agency['Agency Type'] || PG_STAGES[0]; // Default to first stage if no type
+          if (stageCounts[stage] !== undefined) {
+            stageCounts[stage]++;
+          }
+        });
+        
+        // Use consistent colors matching PGFunnel.jsx
+        const colors = [
+          "#2980B9", "#3498DB", "#45B7D1", "#F39C12", 
+          "#E67E22", "#D35400", "#E74C3C", "#C0392B", 
+          "#E57373", "#B71C1C"
+        ];
+        
+        // Create funnel data with actual counts
+        return PG_STAGES.map((stage, index) => ({
+          name: stage, 
+          value: stageCounts[stage] || 0,
+          fill: colors[index] || "#9C27B0"
+        }));
       } else {
         // Initialize counts for each stage for HHAH funnel
         const stageCounts = {};
@@ -122,7 +141,7 @@ const FunnelDataProvider = ({ children }) => {
         const colors = ["#C0392B", "#E74C3C", "#9B59B6", "#F1C40F", "#2ECC71"];
         return HHAH_STAGES.map((stage, index) => ({
           name: stage,
-          value: stageCounts[stage] || Math.max(1, Math.floor(hhahs.length * (1 - index * 0.2))),
+          value: stageCounts[stage] || 0,
           fill: colors[index] || "#2ECC71"
         }));
       }
@@ -177,8 +196,8 @@ const FunnelDataProvider = ({ children }) => {
     
     if (fromIndex !== -1 && toIndex !== -1) {
       // Update stage counts based on assignments
-      newFunnelData[fromIndex].value = Math.max(1, (newAssignments[fromStage]?.length || 0));
-      newFunnelData[toIndex].value = Math.max(1, (newAssignments[toStage]?.length || 0));
+      newFunnelData[fromIndex].value = newAssignments[fromStage]?.length || 0;
+      newFunnelData[toIndex].value = newAssignments[toStage]?.length || 0;
       
       setPgFunnelData(newFunnelData);
     }
@@ -222,8 +241,8 @@ const FunnelDataProvider = ({ children }) => {
     
     if (fromIndex !== -1 && toIndex !== -1) {
       // Update the values based on actual counts
-      newFunnelData[fromIndex].value = Math.max(1, (newAssignments[fromStage]?.length || 0));
-      newFunnelData[toIndex].value = Math.max(1, (newAssignments[toStage]?.length || 0));
+      newFunnelData[fromIndex].value = newAssignments[fromStage]?.length || 0;
+      newFunnelData[toIndex].value = newAssignments[toStage]?.length || 0;
       
       setHhahFunnelData(newFunnelData);
     }

@@ -113,8 +113,8 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
               </tr>
             </thead>
             <tbody>
-              ${allStatisticalAreas.map(area => `
-                <tr>
+              ${allStatisticalAreas.map((area, index) => `
+                <tr data-key="${area}-${index}">
                   <td>${area}</td>
                   <td>${formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
                   <td>${formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
@@ -264,8 +264,8 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
                 </tr>
               </thead>
               <tbody>
-                {filteredAreas.map(area => (
-                  <tr key={area} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
+                {filteredAreas.map((area, index) => (
+                  <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
                     <td className="area-name">{area}</td>
                     <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
                     <td>{formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
@@ -302,7 +302,7 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
                       const percentage = (area[selectedMetric] / areaTotals[selectedMetric] * 100).toFixed(1);
                       return (
                         <div 
-                          key={index}
+                          key={`chart-segment-${area.name}-${index}`}
                           className="pie-segment" 
                           style={{ 
                             width: `${percentage}%`, 
@@ -318,7 +318,7 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
                     {areaChartData.slice(0, 6).map((area, index) => (
                       <div 
                         className="legend-item" 
-                        key={index}
+                        key={`legend-${area.name}-${index}`}
                         onClick={() => handleStatisticalAreaClick(area.name)}
                       >
                         <div className="legend-color" style={{ backgroundColor: `var(--chart-color-${index + 1})` }}></div>
@@ -395,10 +395,10 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
               <div className="comparison-card">
                 <h4>Top Statistical Areas</h4>
                 <div className="top-areas-container">
-                  {Object.entries(metricLabels).map(([metricKey, metricLabel]) => {
+                  {Object.entries(metricLabels).map(([metricKey, metricLabel], index) => {
                     const topArea = [...areaChartData].sort((a, b) => b[metricKey] - a[metricKey])[0];
                     return (
-                      <div className="top-area-item" key={metricKey} onClick={() => handleStatisticalAreaClick(topArea.name)}>
+                      <div className="top-area-item" key={`top-area-${metricKey}-${index}`} onClick={() => handleStatisticalAreaClick(topArea.name)}>
                         <div className="top-area-metric" style={{ backgroundColor: getMetricColor(metricKey) }}>
                           {metricLabel}
                         </div>

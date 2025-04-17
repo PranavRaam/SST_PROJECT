@@ -13,9 +13,9 @@ import PhysicianView from './components/sa_view_components/PhysicianView'
 import NPPView from './components/sa_view_components/NPPView'
 import OfficeStaffView from './components/sa_view_components/OfficeStaffView'
 import PatientDetailView from './components/pg_service/PatientDetailView'
+import PGTest from './components/PGTest'
 import { divisionalGroupToRegions, divisionalGroupToStatisticalAreas } from './utils/regionMapping'
 import { getApiUrl } from './config'
-import { FunnelDataProvider } from './components/sa_view_components/FunnelDataContext'
 import './App.css'
 import { PatientProvider } from './context/PatientContext'
 
@@ -194,108 +194,107 @@ function App() {
   return (
     <BrowserRouter future={{ v7_relativeSplatPath: true }}>
       <PatientProvider>
-        <FunnelDataProvider>
-          <div className="dashboard-container">
-            <Navigation />
-            
-            <div className="dashboard-content">
-              <Routes>
-                <Route path="/" element={
-                  <>
-                    {mapStatus.isLoading ? (
-                      <div className="loading-overlay">
-                        <div className="spinner"></div>
-                        <p>Loading dashboard data...</p>
+        <div className="dashboard-container">
+          <Navigation />
+          
+          <div className="dashboard-content">
+            <Routes>
+              <Route path="/" element={
+                <>
+                  {mapStatus.isLoading ? (
+                    <div className="loading-overlay">
+                      <div className="spinner"></div>
+                      <p>Loading dashboard data...</p>
+                    </div>
+                  ) : mapStatus.generationInProgress ? (
+                    <div className="map-processing">
+                      <div className="content-card">
+                        <h2>Generating Map</h2>
+                        <div className="progress-container">
+                          <div className="progress-bar"></div>
+                        </div>
+                        <p>The map is being prepared in the background.</p>
                       </div>
-                    ) : mapStatus.generationInProgress ? (
-                      <div className="map-processing">
-                        <div className="content-card">
-                          <h2>Generating Map</h2>
-                          <div className="progress-container">
-                            <div className="progress-bar"></div>
-                          </div>
-                          <p>The map is being prepared in the background.</p>
+                    </div>
+                  ) : isTransitioning ? (
+                    <div className="loading-overlay">
+                      <div className="spinner"></div>
+                      <p>Loading view...</p>
+                    </div>
+                  ) : selectedDivisionalGroup && selectedStatisticalArea ? (
+                    <div className="dashboard-detail-view">
+                      <StatisticalAreaDetailView 
+                        statisticalArea={selectedStatisticalArea}
+                        divisionalGroup={selectedDivisionalGroup}
+                        onBack={handleBackToRegionView}
+                      />
+                    </div>
+                  ) : selectedDivisionalGroup ? (
+                    <div className="dashboard-detail-view">
+                      <RegionDetailView 
+                        divisionalGroup={selectedDivisionalGroup}
+                        regions={divisionalGroupToRegions[selectedDivisionalGroup] || []}
+                        statisticalAreas={divisionalGroupToStatisticalAreas[selectedDivisionalGroup] || []}
+                        onBack={handleBackToOverview}
+                        onSelectStatisticalArea={handleSelectStatisticalArea}
+                      />
+                    </div>
+                  ) : (
+                    <div className="dashboard-grid">
+                      <div className="dashboard-card map-card">
+                        <div className="card-header">
+                          <h2>Regional Distribution Map</h2>
+                        </div>
+                        <div className="card-content">
+                          {mapStatus.isGenerated ? (
+                            <div className="map-container-wrapper">
+                              <MapViewer />
+                              <ControlPanel />
+                            </div>
+                          ) : (
+                            <div className="map-not-generated-inner">
+                              <h3>Map Visualization</h3>
+                              <p>Click the button below to generate the map.</p>
+                              <button onClick={generateMap} className="primary-button">
+                                Generate Map
+                              </button>
+                              {mapStatus.error && <p className="error-message">{mapStatus.error}</p>}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    ) : isTransitioning ? (
-                      <div className="loading-overlay">
-                        <div className="spinner"></div>
-                        <p>Loading view...</p>
-                      </div>
-                    ) : selectedDivisionalGroup && selectedStatisticalArea ? (
-                      <div className="dashboard-detail-view">
-                        <StatisticalAreaDetailView 
-                          statisticalArea={selectedStatisticalArea}
-                          divisionalGroup={selectedDivisionalGroup}
-                          onBack={handleBackToRegionView}
-                        />
-                      </div>
-                    ) : selectedDivisionalGroup ? (
-                      <div className="dashboard-detail-view">
-                        <RegionDetailView 
-                          divisionalGroup={selectedDivisionalGroup}
-                          regions={divisionalGroupToRegions[selectedDivisionalGroup] || []}
-                          statisticalAreas={divisionalGroupToStatisticalAreas[selectedDivisionalGroup] || []}
-                          onBack={handleBackToOverview}
-                          onSelectStatisticalArea={handleSelectStatisticalArea}
-                        />
-                      </div>
-                    ) : (
-                      <div className="dashboard-grid">
-                        <div className="dashboard-card map-card">
-                          <div className="card-header">
-                            <h2>Regional Distribution Map</h2>
-                          </div>
-                          <div className="card-content">
-                            {mapStatus.isGenerated ? (
-                              <div className="map-container-wrapper">
-                                <MapViewer />
-                                <ControlPanel />
-                              </div>
-                            ) : (
-                              <div className="map-not-generated-inner">
-                                <h3>Map Visualization</h3>
-                                <p>Click the button below to generate the map.</p>
-                                <button onClick={generateMap} className="primary-button">
-                                  Generate Map
-                                </button>
-                                {mapStatus.error && <p className="error-message">{mapStatus.error}</p>}
-                              </div>
-                            )}
-                          </div>
+                      
+                      <div className="dashboard-card data-card">
+                        <div className="card-header">
+                          <h2>Divisional Group Leaderboard</h2>
                         </div>
-                        
-                        <div className="dashboard-card data-card">
-                          <div className="card-header">
-                            <h2>Divisional Group Leaderboard</h2>
-                          </div>
-                          <div className="card-content">
-                            <DataTable 
-                              data={divisionalData} 
-                              onRowClick={handleRowClick}
-                            />
-                          </div>
+                        <div className="card-content">
+                          <DataTable 
+                            data={divisionalData} 
+                            onRowClick={handleRowClick}
+                          />
                         </div>
                       </div>
-                    )}
-                  </>
-                } />
-                <Route path="/pg-services" element={<PgServiceView />} />
-                <Route path="/hhah-services" element={<HHAHServiceView />} />
-                <Route path="/pg-view/:pgName" element={<PGView />} />
-                <Route path="/hhah-view/:hhahName" element={<HHAHView />} />
-                <Route path="/physician/:id" element={<PhysicianView />} />
-                <Route path="/npp/:nppId" element={<NPPView />} />
-                <Route path="/office-staff/:staffId" element={<OfficeStaffView />} />
-                <Route path="/integrated-services" element={<PatientDetailView />} />
-              </Routes>
-            </div>
-            
-            <footer className="dashboard-footer">
-              <p>Data source: US Census TIGER/Line Shapefiles 2023</p>
-            </footer>
+                    </div>
+                  )}
+                </>
+              } />
+              <Route path="/pg-services" element={<PgServiceView />} />
+              <Route path="/hhah-services" element={<HHAHServiceView />} />
+              <Route path="/pg-view/:pgName" element={<PGView />} />
+              <Route path="/hhah-view/:hhahName" element={<HHAHView />} />
+              <Route path="/physician/:id" element={<PhysicianView />} />
+              <Route path="/npp/:nppId" element={<NPPView />} />
+              <Route path="/office-staff/:staffId" element={<OfficeStaffView />} />
+              <Route path="/integrated-services" element={<PatientDetailView />} />
+              <Route path="/pg-test" element={<PGTest />} />
+            </Routes>
           </div>
-        </FunnelDataProvider>
+          
+          <footer className="dashboard-footer">
+            <p>Data source: US Census TIGER/Line Shapefiles 2023</p>
+          </footer>
+        </div>
       </PatientProvider>
     </BrowserRouter>
   )

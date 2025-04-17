@@ -19,9 +19,6 @@ const pgFunnelStages = PG_STAGES.map((name, index) => {
   };
 });
 
-// For display in the center of each section
-const displayValues = [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100];
-
 // Generate PG names for the mock data view
 const pgNames = [
   "PG Alpha", "PG Beta", "PG Gamma", "PG Delta", "PG Epsilon",
@@ -209,7 +206,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="75" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[0] || funnelData[0]?.value || 1}
+                {funnelData[0]?.value || 0}
               </text>
               
               {/* Second section */}
@@ -222,7 +219,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="125" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[1] || funnelData[1]?.value || 1}
+                {funnelData[1]?.value || 0}
               </text>
               
               {/* Third section */}
@@ -235,7 +232,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="175" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[2] || funnelData[2]?.value || 1}
+                {funnelData[2]?.value || 0}
               </text>
               
               {/* Fourth section */}
@@ -248,7 +245,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="225" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[3] || funnelData[3]?.value || 1}
+                {funnelData[3]?.value || 0}
               </text>
               
               {/* Fifth section */}
@@ -261,7 +258,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="275" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[4] || funnelData[4]?.value || 1}
+                {funnelData[4]?.value || 0}
               </text>
               
               {/* Sixth section */}
@@ -274,7 +271,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="325" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[5] || funnelData[5]?.value || 1}
+                {funnelData[5]?.value || 0}
               </text>
               
               {/* Seventh section */}
@@ -287,7 +284,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="375" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[6] || funnelData[6]?.value || 1}
+                {funnelData[6]?.value || 0}
               </text>
               
               {/* Eighth section */}
@@ -300,7 +297,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="425" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[7] || funnelData[7]?.value || 1}
+                {funnelData[7]?.value || 0}
               </text>
               
               {/* Ninth section */}
@@ -313,7 +310,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="475" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[8] || funnelData[8]?.value || 1}
+                {funnelData[8]?.value || 0}
               </text>
               
               {/* Tenth section */}
@@ -326,7 +323,7 @@ const PGFunnel = () => {
                     onMouseOut={handleMouseOut} />
               <text x="200" y="525" textAnchor="middle" 
                     fill="#fff" fontSize="14" fontWeight="bold">
-                {displayValues[9] || funnelData[9]?.value || 1}
+                {funnelData[9]?.value || 0}
               </text>
             </g>
           </svg>

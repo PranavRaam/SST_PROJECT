@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getApiUrl } from '../config'; // Import the API URL helper
 import './StatisticalAreaDetailView.css';
 import { fetchAgencyData, getStatisticsForArea } from '../utils/csvDataService';
@@ -9,7 +9,7 @@ import NavigationButtons from './sa_view_components/NavigationButtons';
 import Listings from './sa_view_components/Listings';
 import ChartsSection from './sa_view_components/ChartsSection';
 import VivIntegratedServicesStatusMatrix from './sa_view_components/VivIntegratedServicesStatusMatrix';
-import { FunnelDataContext, FunnelDataProvider } from './sa_view_components/FunnelDataContext';
+import { FunnelDataProvider } from './sa_view_components/FunnelDataContext';
 
 // Import CSS files
 import './sa_view_css/MapPlaceholder.css';
@@ -37,18 +37,16 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
   });
   const [agencies, setAgencies] = useState([]);
   const iframeRef = useRef(null);
-  const { setCurrentArea } = useContext(FunnelDataContext) || {};
 
   // Debug log when component mounts or updates
   useEffect(() => {
     console.log('StatisticalAreaDetailView rendered with:', {
       statisticalArea,
-      divisionalGroup,
-      contextAvailable: !!setCurrentArea
+      divisionalGroup
     });
-  }, [statisticalArea, divisionalGroup, setCurrentArea]);
+  }, [statisticalArea, divisionalGroup]);
 
-  // Load the agency data and set the current area in the context
+  // Load the agency data
   useEffect(() => {
     const loadAgencyData = async () => {
       try {
@@ -63,21 +61,13 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         const areaStats = getStatisticsForArea(agencyData, statisticalArea);
         console.log(`Statistics for ${statisticalArea}:`, areaStats);
         setStats(areaStats);
-        
-        // Set the current area in the context if the context is available
-        if (setCurrentArea) {
-          console.log(`Setting current area in context: ${statisticalArea}`);
-          setCurrentArea(statisticalArea);
-        } else {
-          console.warn('FunnelDataContext not available - setCurrentArea is undefined');
-        }
       } catch (error) {
         console.error('Error loading agency data:', error);
       }
     };
     
     loadAgencyData();
-  }, [statisticalArea, setCurrentArea]);
+  }, [statisticalArea]);
 
   useEffect(() => {
     // Check data cache status first
@@ -332,13 +322,22 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
           </div>
         </div>
         
-        {/* Integration of sa_view_page components */}
-        <div className="sa-view-integration">
-          <NavigationButtons />
-          <VivIntegratedServicesStatusMatrix />
-          <Listings />
-          <ChartsSection />
-        </div>
+        {/* Wrap the integration content with the FunnelDataProvider */}
+        <FunnelDataProvider initialArea={statisticalArea}>
+          <div className="sa-view-integration">
+            {/* Navigation buttons for PG and HHAH services */}
+            <NavigationButtons />
+            
+            {/* Viv Integrated Services Statistics table */}
+            <VivIntegratedServicesStatusMatrix />
+            
+            {/* Listings section with tables */}
+            <Listings />
+            
+            {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
+            <ChartsSection />
+          </div>
+        </FunnelDataProvider>
       </div>
     );
   }
@@ -435,20 +434,22 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         </div>
       </div>
       
-      {/* Integration of sa_view_page components */}
-      <div className="sa-view-integration">
-        {/* Navigation buttons for PG and HHAH services */}
-        <NavigationButtons />
-        
-        {/* Viv Integrated Services Statistics table */}
-        <VivIntegratedServicesStatusMatrix />
-        
-        {/* Listings section with tables */}
-        <Listings />
-        
-        {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
-        <ChartsSection />
-      </div>
+      {/* Wrap the integration content with the FunnelDataProvider */}
+      <FunnelDataProvider initialArea={statisticalArea}>
+        <div className="sa-view-integration">
+          {/* Navigation buttons for PG and HHAH services */}
+          <NavigationButtons />
+          
+          {/* Viv Integrated Services Statistics table */}
+          <VivIntegratedServicesStatusMatrix />
+          
+          {/* Listings section with tables */}
+          <Listings />
+          
+          {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
+          <ChartsSection />
+        </div>
+      </FunnelDataProvider>
     </div>
   );
 };

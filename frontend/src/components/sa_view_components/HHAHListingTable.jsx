@@ -149,7 +149,7 @@ const HHAHListingTable = () => {
         <tbody>
           {filteredData.map((hhah, index) => (
             <tr 
-              key={index} 
+              key={`agency-${hhah['Agency Name']}-${index}`} 
               className="hhah-clickable-row"
               onClick={() => handleRowClick(hhah)}
             >
