@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './PatientDetailView.css';
@@ -426,7 +427,14 @@ const generateEpisodeData = () => {
   ];
 };
 
-const PatientDetailView = ({ patient, onBack }) => {
+const PatientDetailView = ({ patient: propPatient }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const routePatient = location.state?.patientData;
+  
+  // Use route patient data if available, otherwise use prop patient data
+  const patient = routePatient || propPatient;
+
   // State for active tab and document type select
   const [activeTab, setActiveTab] = useState('patientInfo');
   const [activeDocumentTab, setActiveDocumentTab] = useState('newPrepared');
@@ -461,24 +469,24 @@ const PatientDetailView = ({ patient, onBack }) => {
     dob: patient?.patientDOB || patient?.dob || '',
     gender: patient?.gender || 'Not specified',
     status: patient?.status || 'active',
-    phone: patient?.contactNumber || '',
-    email: patient?.email || '',
-    address: patient?.address || generateDummyAddress(),
-    insurance: patient?.patientInsurance || '',
+    phone: patient?.patientContact?.phone || patient?.contactNumber || '',
+    email: patient?.patientContact?.email || patient?.email || '',
+    address: patient?.patientContact?.address || patient?.address || '',
+    insurance: patient?.insurance || patient?.patientInsurance || '',
     insuranceId: patient?.insuranceId || '',
     pg: patient?.pg || '',
     hhah: patient?.hhah || '',
-    admissionDate: patient?.patientSOC || '',
-    episodeFrom: patient?.patientEpisodeFrom || '',
-    episodeTo: patient?.patientEpisodeTo || '',
+    admissionDate: patient?.patientSOC || patient?.soc || '',
+    episodeFrom: patient?.patientEpisodeFrom || patient?.episodeFrom || '',
+    episodeTo: patient?.patientEpisodeTo || patient?.episodeTo || '',
     dischargeDate: patient?.dischargeDate || '',
-    primaryDiagnosis: patient?.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes.join(", ") : '',
-    secondaryDiagnosis: patient?.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes.join(", ") : '',
-    primaryPhysician: patient?.physicianName || '',
+    primaryDiagnosis: patient?.primaryDiagnosis || (patient?.primaryDiagnosisCodes ? patient.primaryDiagnosisCodes.join(", ") : ''),
+    secondaryDiagnosis: patient?.secondaryDiagnosis || (patient?.secondaryDiagnosisCodes ? patient.secondaryDiagnosisCodes.join(", ") : ''),
+    primaryPhysician: patient?.physician || patient?.physicianName || '',
     specialist: patient?.specialist || '',
     allergies: patient?.allergies || '',
     medications: patient?.medications || '',
-    renderingPractitioner: patient?.renderingPractitioner || '',
+    renderingPractitioner: patient?.renderingProvider || patient?.renderingPractitioner || '',
     hasEHR: patient?.patientInEHR === 'yes' || false,
     cpoMinsCaptured: patient?.cpoMinsCaptured || 0,
     newDocs: patient?.newDocs || 0,
@@ -2070,10 +2078,14 @@ Total documents: ${documents.length}
     handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', formattedDate);
   };
 
+  const handleBack = () => {
+    navigate(-1); // Go back to the previous page
+  };
+
   return (
     <div className="patient-detail-view">
       <div className="detail-header">
-        <button className="back-button" onClick={onBack}>
+        <button className="back-button" onClick={handleBack}>
           <FaArrowLeft className="back-icon" />
           Back to Patients
         </button>
