@@ -16,6 +16,15 @@ const mockData = [
     episodeFrom: "2024-01-15",
     episodeTo: "2024-03-15",
     remarks: "Regular follow-up",
+    primaryDiagnosis: ["I10 ", "E11.9 "],
+    secondaryDiagnosis: ["E78.5 ", "I25.10 "],
+    insurance: "Medicare",
+    physician: "Dr. Sarah Johnson",
+    patientContact: {
+      phone: "(555) 123-4567",
+      email: "john.smith@example.com",
+      address: "123 Main St, Indianapolis, IN 46201"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: true,
@@ -37,6 +46,15 @@ const mockData = [
     episodeFrom: "2024-02-01",
     episodeTo: "2024-04-01",
     remarks: "New admission",
+    primaryDiagnosis: ["I50.9 ", "J44.9 "],
+    secondaryDiagnosis: ["I27.0 ", "E87.2 "],
+    insurance: "Medicare Advantage",
+    physician: "Dr. Michael Chen",
+    patientContact: {
+      phone: "(555) 234-5678",
+      email: "mary.johnson@example.com",
+      address: "456 Oak Ave, Carmel, IN 46032"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: false,
@@ -58,6 +76,15 @@ const mockData = [
     episodeFrom: "2024-01-20",
     episodeTo: "2024-03-20",
     remarks: "Chronic care",
+    primaryDiagnosis: ["M17.9 ", "M81.0 "],
+    secondaryDiagnosis: ["M54.5 "],
+    insurance: "Private Insurance",
+    physician: "Dr. Emily White",
+    patientContact: {
+      phone: "(555) 345-6789",
+      email: "robert.davis@example.com",
+      address: "789 Pine St, Fishers, IN 46038"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: true,
@@ -79,6 +106,15 @@ const mockData = [
     episodeFrom: "2024-02-05",
     episodeTo: "2024-04-05",
     remarks: "Post-surgery care",
+    primaryDiagnosis: ["Z47.1 ", "M17.9 "],
+    secondaryDiagnosis: ["Z79.899 "],
+    insurance: "Medicare",
+    physician: "Dr. Sarah Johnson",
+    patientContact: {
+      phone: "(555) 456-7890",
+      email: "patricia.brown@example.com",
+      address: "321 Elm St, Noblesville, IN 46060"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: true,
@@ -100,6 +136,15 @@ const mockData = [
     episodeFrom: "2024-01-25",
     episodeTo: "2024-03-25",
     remarks: "Medication review",
+    primaryDiagnosis: ["G20 ", "G25.0 "],
+    secondaryDiagnosis: ["F02.80 "],
+    insurance: "Medicare",
+    physician: "Dr. David Lee",
+    patientContact: {
+      phone: "(555) 567-8901",
+      email: "james.wilson@example.com",
+      address: "654 Maple Dr, Westfield, IN 46074"
+    },
     pgServices: {
       docsPrepared: false,
       cpoDocsCreated: false,
@@ -121,6 +166,15 @@ const mockData = [
     episodeFrom: "2024-02-10",
     episodeTo: "2024-04-10",
     remarks: "Routine checkup",
+    primaryDiagnosis: ["N18.9 "],
+    secondaryDiagnosis: ["D64.9 ", "E87.2 "],
+    insurance: "Medicare",
+    physician: "Dr. Michael Chen",
+    patientContact: {
+      phone: "(555) 678-9012",
+      email: "linda.martinez@example.com",
+      address: "987 Cedar Ln, Zionsville, IN 46077"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: true,
@@ -142,6 +196,15 @@ const mockData = [
     episodeFrom: "2024-01-30",
     episodeTo: "2024-03-30",
     remarks: "Follow-up required",
+    primaryDiagnosis: ["G30.9 "],
+    secondaryDiagnosis: ["F03.90 ", "F32.9 "],
+    insurance: "Medicare Advantage",
+    physician: "Dr. Emily White",
+    patientContact: {
+      phone: "(555) 789-0123",
+      email: "william.taylor@example.com",
+      address: "741 Birch St, Brownsburg, IN 46112"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: false,
@@ -163,6 +226,15 @@ const mockData = [
     episodeFrom: "2024-02-15",
     episodeTo: "2024-04-15",
     remarks: "Initial assessment",
+    primaryDiagnosis: ["I63.9 ", "I10 "],
+    secondaryDiagnosis: ["I69.90 "],
+    insurance: "Private Insurance",
+    physician: "Dr. David Lee",
+    patientContact: {
+      phone: "(555) 890-1234",
+      email: "elizabeth.anderson@example.com",
+      address: "852 Walnut Dr, Avon, IN 46123"
+    },
     pgServices: {
       docsPrepared: true,
       cpoDocsCreated: true,
@@ -305,36 +377,9 @@ const VivIntegratedServicesStatusMatrix = () => {
   const navigate = useNavigate();
 
   const handlePatientClick = (patient) => {
-    // Transform the patient data to match the format expected by PatientDetailView
-    const transformedPatient = {
-      id: patient.id,
-      ptName: patient.ptName,
-      patientFirstName: patient.ptName.split(' ')[0],
-      patientLastName: patient.ptName.split(' ')[1] || '',
-      dob: patient.dob,
-      pg: patient.pg,
-      hhah: patient.hhah,
-      renderingProvider: patient.renderingProvider,
-      renderingPractitioner: patient.renderingProvider,
-      patientSOC: patient.soc,
-      patientEpisodeFrom: patient.episodeFrom,
-      patientEpisodeTo: patient.episodeTo,
-      patientRemarks: patient.remarks,
-      cpoMinsCaptured: patient.pgServices.cpoMinsCaptured,
-      docsPrepared: patient.pgServices.docsPrepared,
-      newCpoDocsCreated: patient.pgServices.cpoDocsCreated,
-      signed485: patient.hhahServices.signed485,
-      docsSigned: patient.hhahServices.docsSigned
-    };
-    
-    // Navigate to the appropriate service view with the transformed patient data
-    if (patient.pg.includes('Premier') || patient.pg.includes('Sunshine')) {
-      // Navigate to PG service view with this patient
-      navigate('/pg-services', { state: { selectedPatient: transformedPatient } });
-    } else {
-      // Navigate to HHAH service view with this patient
-      navigate('/hhah-services', { state: { selectedPatient: transformedPatient } });
-    }
+    navigate('/integrated-services', {
+      state: { patientData: patient }
+    });
   };
 
   return (
@@ -352,6 +397,8 @@ const VivIntegratedServicesStatusMatrix = () => {
               <th style={backupStyles.th}>Episode From</th>
               <th style={backupStyles.th}>Episode To</th>
               <th style={backupStyles.th}>Remarks</th>
+              <th style={backupStyles.th}>Primary Diagnosis</th>
+              <th style={backupStyles.th}>Secondary Diagnosis</th>
               <th 
                 colSpan="3" 
                 className="viv-ism-service-header pg-services"
@@ -400,6 +447,8 @@ const VivIntegratedServicesStatusMatrix = () => {
                 <td style={backupStyles.td}>{row.episodeFrom}</td>
                 <td style={backupStyles.td}>{row.episodeTo}</td>
                 <td style={backupStyles.td}>{row.remarks}</td>
+                <td style={backupStyles.td}>{Array.isArray(row.primaryDiagnosis) ? row.primaryDiagnosis.join(', ') : row.primaryDiagnosis}</td>
+                <td style={backupStyles.td}>{Array.isArray(row.secondaryDiagnosis) ? row.secondaryDiagnosis.join(', ') : row.secondaryDiagnosis}</td>
                 <td style={backupStyles.td}><StatusIcon status={row.pgServices.docsPrepared} /></td>
                 <td style={backupStyles.td}><StatusIcon status={row.pgServices.cpoDocsCreated} /></td>
                 <td style={backupStyles.td}><StatusIcon value={row.pgServices.cpoMinsCaptured} /></td>

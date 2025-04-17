@@ -250,7 +250,7 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
                 placeholder="Search statistical areas..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
+                className="search-inputt"
               />
             </div>
             <table className="region-stats-table">
