@@ -1458,23 +1458,27 @@ const PGView = () => {
                 
                 <div className="form-group">
                   <label>Billing Start Date</label>
-                  <input
-                    type="date"
+                  <DatePicker
+                    selected={selectedDateRange.start ? new Date(selectedDateRange.start) : null}
+                    onChange={(date) => handleDateRangeChange({ target: { name: 'start', value: date ? date.toISOString().split('T')[0] : '' }})}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="mm-dd-yyyy"
                     className="date-input"
-                    name="start"
-                    value={selectedDateRange.start}
-                    onChange={handleDateRangeChange}
+                    isClearable
+                    autoComplete="off"
                     style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}
                   />
                 </div>
                 <div className="form-group">
                   <label>Billing End Date</label>
-                  <input
-                    type="date"
+                  <DatePicker
+                    selected={selectedDateRange.end ? new Date(selectedDateRange.end) : null}
+                    onChange={(date) => handleDateRangeChange({ target: { name: 'end', value: date ? date.toISOString().split('T')[0] : '' }})}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="mm-dd-yyyy"
                     className="date-input"
-                    name="end"
-                    value={selectedDateRange.end}
-                    onChange={handleDateRangeChange}
+                    isClearable
+                    autoComplete="off"
                     style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #e2e8f0' }}
                   />
                 </div>
@@ -1528,24 +1532,35 @@ const PGView = () => {
           )}
           
           {/* Download options and total claims remain unchanged */}
-          <div className="claims-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
-            <div className="total-claims">
-              <span>Total Claims: {getFilteredClaims().length || 0}</span>
-            </div>
-            <div className="download-options" style={{ display: 'flex', gap: '0.5rem' }}>
+          <div className="claims-actions" style={{ 
+            display: 'flex', 
+            justifyContent: 'flex-start', 
+            alignItems: 'center',
+            gap: '1rem',
+            padding: '1rem 0'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              gap: '0.5rem',
+              marginLeft: 'auto'
+            }}>
+              <span style={{ color: '#4a5568', fontSize: '0.875rem' }}>
+                Total Claims: {getFilteredClaims().length || 0}
+              </span>
               <button
-                className="download-button"
                 onClick={() => handleDownloadClaims('csv')}
                 style={{ 
                   padding: '0.5rem 1rem',
-                  backgroundColor: '#4F46E5', 
+                  backgroundColor: '#4F46E5',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '0.25rem',
+                  borderRadius: '0.375rem',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontSize: '0.875rem'
                 }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1556,18 +1571,18 @@ const PGView = () => {
                 Download CSV
               </button>
               <button
-                className="download-button"
                 onClick={() => handleDownloadClaims('pdf')}
                 style={{ 
                   padding: '0.5rem 1rem',
-                  backgroundColor: '#6366F1', 
+                  backgroundColor: '#6366F1',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '0.25rem',
+                  borderRadius: '0.375rem',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontSize: '0.875rem'
                 }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1594,7 +1609,7 @@ const PGView = () => {
               <th>Middle Name</th>
               <th>Last Name</th>
               <th>DOB</th>
-              <th>HHA NAME</th>
+              <th>HHAH NAME</th>
               <th>INSURANCE TYPE</th>
               <th>PRIMARY DIAGNOSIS CODE</th>
               <th>SECONDARY DIAGNOSIS CODE 1</th>

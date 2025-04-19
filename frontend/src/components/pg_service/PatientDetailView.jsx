@@ -2582,20 +2582,24 @@ Total documents: ${documents.length}
                 <div className="date-filter">
                   <label>Filter episodes:</label>
                   <div className="filter-inputs">
-                    <input 
-                      type="date" 
-                      value={episodeFilterDates.start}
-                      onChange={(e) => handleEpisodeDateFilterChange('start', e.target.value)}
-                      placeholder="Start date"
+                    <DatePicker
+                      selected={episodeFilterDates.start ? new Date(episodeFilterDates.start) : null}
+                      onChange={(date) => handleEpisodeDateFilterChange('start', date ? date.toISOString().split('T')[0] : '')}
+                      dateFormat="MM/dd/yyyy"
+                      placeholderText="mm-dd-yyyy"
                       className="date-input"
+                      isClearable
+                      autoComplete="off"
                     />
                     <span className="date-separator">to</span>
-                    <input 
-                      type="date" 
-                      value={episodeFilterDates.end}
-                      onChange={(e) => handleEpisodeDateFilterChange('end', e.target.value)}
-                      placeholder="End date"
+                    <DatePicker
+                      selected={episodeFilterDates.end ? new Date(episodeFilterDates.end) : null}
+                      onChange={(date) => handleEpisodeDateFilterChange('end', date ? date.toISOString().split('T')[0] : '')}
+                      dateFormat="MM/dd/yyyy"
+                      placeholderText="mm-dd-yyyy"
                       className="date-input"
+                      isClearable
+                      autoComplete="off"
                     />
                     <button 
                       className="filter-reset-button"
