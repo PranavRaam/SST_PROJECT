@@ -415,8 +415,8 @@ const generateEpisodeData = () => {
   return [
     {
       id: 1,
-      startDate: '2023-03-30',  // Changed from '2023-04-01' to be only 2 days after SOC
       socDate: '2023-03-28',
+      startDate: '2023-03-30',  // 2 days after SOC
       endDate: '2023-06-30',
       status: 'complete',
       diagnosis: 'Hypertension',
@@ -426,14 +426,25 @@ const generateEpisodeData = () => {
     },
     {
       id: 2,
-      startDate: '2023-06-30',  // Changed from '2023-07-01' to be only 2 days after SOC
       socDate: '2023-06-28',
+      startDate: '2023-06-30',  // 2 days after SOC
       endDate: '2023-09-30',
       status: 'active',
       diagnosis: 'Type 2 Diabetes',
       provider: 'Dr. Robert Chen',
       notes: 'Patient is currently in this episode.',
       documents: createMockDocumentsForEpisode(2)
+    },
+    {
+      id: 3,
+      socDate: '2023-10-15',
+      startDate: '2023-10-17',  // 2 days after SOC
+      endDate: '2023-12-31',
+      status: 'scheduled',
+      diagnosis: 'Follow-up care',
+      provider: 'Dr. Sarah Johnson',
+      notes: 'Scheduled follow-up episode.',
+      documents: createMockDocumentsForEpisode(3)
     }
   ];
 };
@@ -468,6 +479,12 @@ const PatientDetailView = ({ patient: propPatient }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  
+  // State for signed document date entry
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [uploadedSignedFiles, setUploadedSignedFiles] = useState([]);
+  const [currentSignedFileIndex, setCurrentSignedFileIndex] = useState(0);
+  const [signedDate, setSignedDate] = useState('');
   
   // Refs
   const fileInputRef = useRef(null);
@@ -1577,6 +1594,10 @@ Total documents: ${documents.length}
   
   // Updated filter function to properly filter by date
   const handleEpisodeDateFilterChange = (field, value) => {
+    console.log(`Updating date filter: ${field} with value: ${value}`);
+    
+    // The HTML date input provides values in YYYY-MM-DD format regardless of display format
+    // We'll store it in this format internally as it's standard for date operations
     setEpisodeFilterDates(prev => ({
       ...prev,
       [field]: value
@@ -2046,31 +2067,67 @@ Total documents: ${documents.length}
     const files = e.target.files;
     if (!files || files.length === 0) return;
     
-    // Show uploading notification
-    showNotification('info', 'Uploading Signed Documents', 'Your signed documents are being uploaded...');
+    // Store the files for processing
+    setUploadedSignedFiles(Array.from(files));
     
-    // Process the files
-    Array.from(files).forEach(file => {
-      const newSignedDoc = {
-        id: `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
-        type: 'Signed Document',
-        fileName: file.name,
-        size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-        signedDate: new Date().toISOString().split('T')[0],
-        signedBy: 'Current User',
-        file: file // Store the actual file for potential preview
-      };
-      
-      // Add to signed documents
-      setSignedDocs(prev => [...prev, newSignedDoc]);
-    });
+    // Start with the first file
+    setCurrentSignedFileIndex(0);
+    
+    // Set initial date to today in yyyy-MM-dd format
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // yyyy-MM-dd format
+    setSignedDate(formattedDate);
+    
+    // Show date selection modal
+    setShowDateModal(true);
     
     // Clear file input
     if (e.target) {
       e.target.value = '';
     }
+  };
+
+  const processSignedDocument = () => {
+    // Get current file being processed
+    const file = uploadedSignedFiles[currentSignedFileIndex];
     
-    showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully');
+    // Create the signed document object with selected date
+    const newSignedDoc = {
+      id: `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
+      type: 'Signed Document',
+      fileName: file.name,
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+      signedDate: signedDate, // This should now be in the correct format
+      signedBy: 'Current User',
+      file: file // Store the actual file for potential preview
+    };
+    
+    // Log to ensure date is in correct format
+    console.log('Document being processed with date:', signedDate);
+    
+    // Add to signed documents
+    setSignedDocs(prev => [...prev, newSignedDoc]);
+    
+    // Move to next file or close modal if done
+    if (currentSignedFileIndex < uploadedSignedFiles.length - 1) {
+      setCurrentSignedFileIndex(prev => prev + 1);
+      // Keep the same date for the next file unless changed by user
+    } else {
+      // All files processed, close modal and show success notification
+      setShowDateModal(false);
+      showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully with custom dates.');
+      
+      // Clear uploaded files
+      setUploadedSignedFiles([]);
+      setCurrentSignedFileIndex(0);
+    }
+  };
+
+  const cancelSignedDocumentUpload = () => {
+    setShowDateModal(false);
+    setUploadedSignedFiles([]);
+    setCurrentSignedFileIndex(0);
+    showNotification('info', 'Upload Cancelled', 'Signed document upload was cancelled');
   };
 
   const handleDateChange = (date, field) => {
@@ -2582,24 +2639,18 @@ Total documents: ${documents.length}
                 <div className="date-filter">
                   <label>Filter episodes:</label>
                   <div className="filter-inputs">
-                    <DatePicker
-                      selected={episodeFilterDates.start ? new Date(episodeFilterDates.start) : null}
-                      onChange={(date) => handleEpisodeDateFilterChange('start', date ? date.toISOString().split('T')[0] : '')}
-                      dateFormat="MM/dd/yyyy"
-                      placeholderText="mm-dd-yyyy"
+                    <input 
+                      type="date"
+                      value={episodeFilterDates.start}
+                      onChange={(e) => handleEpisodeDateFilterChange('start', e.target.value)}
                       className="date-input"
-                      isClearable
-                      autoComplete="off"
                     />
-                    <span className="date-separator">to</span>
-                    <DatePicker
-                      selected={episodeFilterDates.end ? new Date(episodeFilterDates.end) : null}
-                      onChange={(date) => handleEpisodeDateFilterChange('end', date ? date.toISOString().split('T')[0] : '')}
-                      dateFormat="MM/dd/yyyy"
-                      placeholderText="mm-dd-yyyy"
+                    <span>to</span>
+                    <input 
+                      type="date"
+                      value={episodeFilterDates.end}
+                      onChange={(e) => handleEpisodeDateFilterChange('end', e.target.value)}
                       className="date-input"
-                      isClearable
-                      autoComplete="off"
                     />
                     <button 
                       className="filter-reset-button"
@@ -4121,6 +4172,68 @@ Total documents: ${documents.length}
               >
                 Close
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showDateModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Enter Signed Date</h3>
+            </div>
+            <div className="modal-body">
+              <p>Please enter the date when document was signed:</p>
+              <p><strong>Document:</strong> {uploadedSignedFiles[currentSignedFileIndex]?.name}</p>
+              <div className="form-group">
+                <label htmlFor="signedDate">Signed Date:</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <input 
+                    type="date" 
+                    id="signedDate"
+                    value={signedDate}
+                    onChange={(e) => {
+                      console.log("Date changed to:", e.target.value);
+                      setSignedDate(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      // Allow editing with keyboard
+                      e.stopPropagation();
+                    }}
+                    className="form-control"
+                    max={new Date().toISOString().split('T')[0]} // Today as max date
+                    style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                  />
+                  {/* Alternative calendar icon for better UX */}
+                  <FaCalendarAlt 
+                    style={{ cursor: 'pointer', fontSize: '20px' }} 
+                    onClick={() => {
+                      // Focus the date input when calendar icon is clicked
+                      document.getElementById('signedDate')?.focus();
+                      document.getElementById('signedDate')?.showPicker?.();
+                    }}
+                  />
+                </div>
+                <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
+                  Format: YYYY-MM-DD (e.g., 2023-09-15)
+                </small>
+              </div>
+              <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                <button 
+                  className="action-button primary" 
+                  onClick={processSignedDocument}
+                  style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#4a90e2', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                >
+                  <FaCheck /> Confirm
+                </button>
+                <button 
+                  className="action-button secondary" 
+                  onClick={cancelSignedDocumentUpload}
+                  style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#f5f5f5', color: '#333', border: '1px solid #ccc', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                >
+                  <FaTimes /> Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>

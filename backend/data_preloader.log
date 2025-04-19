@@ -8683,65 +8683,106 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-17 18:55:00,261 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Amarillo_lightweight.html
 2025-04-17 18:55:00,263 - __main__ - INFO - Request completed in 0.01 seconds
 2025-04-17 18:55:00,267 - werkzeug - INFO - 127.0.0.1 - - [17/Apr/2025 18:55:00] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1744896299465&_show_states=true&_show_counties=true&_show_msas=true&_t=1744896299856 HTTP/1.1" 200 -
-2025-04-19 20:59:20,974 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\data_cache
-2025-04-19 20:59:20,991 - __main__ - INFO - Checking for cached data at startup
-2025-04-19 20:59:21,144 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-04-19 20:55:47,733 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-19 20:55:47,736 - __main__ - INFO - Checking for cached data at startup
+2025-04-19 20:55:47,754 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.0.178:5000
-2025-04-19 20:59:21,145 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
-2025-04-19 20:59:21,150 - werkzeug - INFO -  * Restarting with stat
-2025-04-19 20:59:25,132 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\data_cache
-2025-04-19 20:59:25,145 - __main__ - INFO - Checking for cached data at startup
-2025-04-19 20:59:25,184 - werkzeug - WARNING -  * Debugger is active!
-2025-04-19 20:59:25,196 - werkzeug - INFO -  * Debugger PIN: 650-118-331
-2025-04-19 21:02:02,174 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:02:02] "GET /api/map-status HTTP/1.1" 200 -
-2025-04-19 21:02:02,441 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:02:02] "GET /api/map-status HTTP/1.1" 200 -
-2025-04-19 21:02:02,524 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:02:02] "GET /api/map-status HTTP/1.1" 200 -
-2025-04-19 21:02:02,859 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:02:02] "GET /api/map-status HTTP/1.1" 200 -
-2025-04-19 21:02:05,305 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:02:05] "GET /api/map?t=1745076722538&noCache=true&stableView=true?t%3D1745076722539&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076722552 HTTP/1.1" 200 -
-2025-04-19 21:02:11,792 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:02:11] "GET /api/map?t=1745076731359&noCache=true&stableView=true?t%3D1745076731359&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076731361 HTTP/1.1" 200 -
-2025-04-19 21:03:18,046 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:03:18] "GET /api/health HTTP/1.1" 200 -
-2025-04-19 21:03:18,298 - __main__ - INFO - Map request for area: Bakersfield
-2025-04-19 21:03:18,302 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745076798056')])
-2025-04-19 21:03:18,306 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
-2025-04-19 21:03:18,310 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
-2025-04-19 21:03:18,312 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:03:18,314 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html (age: 0.1 hours)
-2025-04-19 21:03:18,317 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
-2025-04-19 21:03:18,324 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:03:18,325 - __main__ - INFO - Request completed in 0.02 seconds
-2025-04-19 21:03:18,374 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:03:18] "GET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745076798056 HTTP/1.1" 200 -
-2025-04-19 21:03:18,792 - __main__ - INFO - Map request for area: Bakersfield
-2025-04-19 21:03:18,793 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745076798056'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1745076798392')])
-2025-04-19 21:03:18,795 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
-2025-04-19 21:03:18,796 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
-2025-04-19 21:03:18,798 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:03:18,799 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html (age: 0.1 hours)
-2025-04-19 21:03:18,803 - statistical_area_zoom - INFO - Map retrieval completed in 0.01 seconds (from cache)
-2025-04-19 21:03:18,807 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:03:18,809 - __main__ - INFO - Request completed in 0.01 seconds
-2025-04-19 21:03:18,815 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:03:18] "GET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745076798056&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076798392 HTTP/1.1" 200 -
-2025-04-19 21:08:00,331 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:08:00] "GET /api/health HTTP/1.1" 200 -
-2025-04-19 21:08:00,561 - __main__ - INFO - Map request for area: Bakersfield
-2025-04-19 21:08:00,565 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745077080338')])
-2025-04-19 21:08:00,568 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
-2025-04-19 21:08:00,570 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
-2025-04-19 21:08:00,571 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:08:00,573 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html (age: 0.2 hours)
-2025-04-19 21:08:00,575 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
-2025-04-19 21:08:00,577 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:08:00,581 - __main__ - INFO - Request completed in 0.01 seconds
-2025-04-19 21:08:00,588 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:08:00] "GET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745077080338 HTTP/1.1" 200 -
-2025-04-19 21:08:01,011 - __main__ - INFO - Map request for area: Bakersfield
-2025-04-19 21:08:01,014 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745077080338'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1745077080614')])
-2025-04-19 21:08:01,016 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
-2025-04-19 21:08:01,017 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
-2025-04-19 21:08:01,019 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:08:01,020 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html (age: 0.2 hours)
-2025-04-19 21:08:01,023 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
-2025-04-19 21:08:01,026 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Bakersfield_lightweight.html
-2025-04-19 21:08:01,028 - __main__ - INFO - Request completed in 0.01 seconds
-2025-04-19 21:08:01,033 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:08:01] "GET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745077080338&_show_states=true&_show_counties=true&_show_msas=true&_t=1745077080614 HTTP/1.1" 200 -
-2025-04-19 21:16:10,998 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:16:10] "GET /api/map-status HTTP/1.1" 200 -
-2025-04-19 21:16:11,258 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:16:11] "GET /api/map-status HTTP/1.1" 200 -
+ * Running on http://192.168.31.91:5000
+2025-04-19 20:55:47,754 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-19 20:55:47,755 - werkzeug - INFO -  * Restarting with stat
+2025-04-19 20:55:48,308 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-19 20:55:48,311 - __main__ - INFO - Checking for cached data at startup
+2025-04-19 20:55:48,323 - werkzeug - WARNING -  * Debugger is active!
+2025-04-19 20:55:48,324 - werkzeug - INFO -  * Debugger PIN: 580-339-908
+2025-04-19 20:56:03,036 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 20:56:03,038 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 20:56:03,053 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 20:56:03,057 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 20:56:03,063 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map?t=1745076363043&noCache=true&stableView=true?t%3D1745076363043&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076363043 HTTP/1.1" 200 -
+2025-04-19 20:56:03,073 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map?t=1745076363052&noCache=true&stableView=true?t%3D1745076363052&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076363056 HTTP/1.1" 200 -
+2025-04-19 20:56:03,627 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:03] "GET /api/map?t=1745076363618&noCache=true&stableView=true?t%3D1745076363618&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076363619 HTTP/1.1" 200 -
+2025-04-19 20:56:10,862 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:10] "GET /api/health HTTP/1.1" 200 -
+2025-04-19 20:56:10,869 - __main__ - INFO - Map request for area: Bakersfield
+2025-04-19 20:56:10,869 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745076370866')])
+2025-04-19 20:56:10,870 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-19 20:56:10,870 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-19 20:56:10,870 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-19 20:56:10,870 - statistical_area_zoom - INFO - Cached map is 42.6 hours old, regenerating...
+2025-04-19 20:56:10,870 - statistical_area_zoom - INFO - Loading map data...
+2025-04-19 20:56:10,870 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-19 20:56:10,870 - data_preloader - INFO - Loading all cached data...
+2025-04-19 20:56:10,887 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-19 20:56:10,889 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-19 20:56:10,889 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-19 20:56:10,889 - statistical_area_zoom - INFO - Normalized area name: bakersfield
+2025-04-19 20:56:10,893 - statistical_area_zoom - INFO - Trying to match city name: bakersfield
+2025-04-19 20:56:10,895 - statistical_area_zoom - INFO - Found fuzzy city match: Bakersfield-Delano, CA
+2025-04-19 20:56:10,895 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-19 20:56:10,895 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-19 20:56:10,896 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bakersfield
+2025-04-19 20:56:10,896 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bakersfield
+2025-04-19 20:56:10,897 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-19 20:56:10,897 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-19 20:56:10,897 - statistical_area_zoom - INFO - Center: 35.341596705293135, -118.73051829877349
+2025-04-19 20:56:10,897 - statistical_area_zoom - INFO - Bounds: -120.194369, 34.788655, -117.616518, 35.798359
+2025-04-19 20:56:11,027 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-19 20:56:11,028 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-19 20:56:11,028 - __main__ - INFO - Request completed in 0.16 seconds
+2025-04-19 20:56:11,028 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:11] "GET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745076370866 HTTP/1.1" 200 -
+2025-04-19 20:56:11,047 - __main__ - INFO - Map request for area: Bakersfield
+2025-04-19 20:56:11,047 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745076370866'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1745076371034')])
+2025-04-19 20:56:11,047 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-19 20:56:11,047 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-19 20:56:11,047 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-19 20:56:11,047 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html (age: 0.0 hours)
+2025-04-19 20:56:11,047 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-19 20:56:11,047 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-19 20:56:11,047 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-19 20:56:11,048 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 20:56:11] "GET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745076370866&_show_states=true&_show_counties=true&_show_msas=true&_t=1745076371034 HTTP/1.1" 200 -
+2025-04-19 21:00:28,792 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:00:28] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:00:28,795 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:00:28] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:15:40,773 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:15:40,785 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:40] "GET /api/map?t=1745077540759&noCache=true&stableView=true?t%3D1745077540759&_show_states=true&_show_counties=true&_show_msas=true&_t=1745077540761 HTTP/1.1" 200 -
+2025-04-19 21:15:40,786 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:15:41,353 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:41] "GET /api/map?t=1745077541339&noCache=true&stableView=true?t%3D1745077541339&_show_states=true&_show_counties=true&_show_msas=true&_t=1745077541340 HTTP/1.1" 200 -
+2025-04-19 21:15:43,224 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:43] "GET /api/health HTTP/1.1" 200 -
+2025-04-19 21:15:43,230 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-19 21:15:43,230 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745077543227')])
+2025-04-19 21:15:43,230 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-19 21:15:43,230 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-19 21:15:43,230 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-19 21:15:43,230 - statistical_area_zoom - INFO - Cached map is 59.1 hours old, regenerating...
+2025-04-19 21:15:43,230 - statistical_area_zoom - INFO - Loading map data...
+2025-04-19 21:15:43,230 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-19 21:15:43,230 - statistical_area_zoom - INFO - Normalized area name: ann arbor
+2025-04-19 21:15:43,231 - statistical_area_zoom - INFO - Trying to match city name: ann arbor
+2025-04-19 21:15:43,232 - statistical_area_zoom - INFO - Found exact city match: Ann Arbor, MI
+2025-04-19 21:15:43,232 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-19 21:15:43,232 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-19 21:15:43,232 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Ann Arbor
+2025-04-19 21:15:43,232 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Ann Arbor
+2025-04-19 21:15:43,232 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-19 21:15:43,233 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-19 21:15:43,233 - statistical_area_zoom - INFO - Center: 42.25356155593904, -83.83852805599241
+2025-04-19 21:15:43,233 - statistical_area_zoom - INFO - Bounds: -84.131963, 42.071577, -83.539396, 42.435166
+2025-04-19 21:15:43,338 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-19 21:15:43,339 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-19 21:15:43,339 - __main__ - INFO - Request completed in 0.11 seconds
+2025-04-19 21:15:43,339 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:43] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745077543227 HTTP/1.1" 200 -
+2025-04-19 21:15:43,357 - __main__ - INFO - Map request for area: Ann Arbor
+2025-04-19 21:15:43,358 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745077543227'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1745077543347')])
+2025-04-19 21:15:43,358 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-19 21:15:43,358 - statistical_area_zoom - INFO - Generating map for statistical area: Ann Arbor with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-19 21:15:43,358 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-19 21:15:43,358 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html (age: 0.0 hours)
+2025-04-19 21:15:43,358 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-19 21:15:43,358 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Ann_Arbor_lightweight.html
+2025-04-19 21:15:43,358 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-19 21:15:43,358 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:15:43] "GET /api/statistical-area-map/Ann%20Arbor?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745077543227&_show_states=true&_show_counties=true&_show_msas=true&_t=1745077543347 HTTP/1.1" 200 -
+2025-04-19 21:27:16,916 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:27:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:27:16,920 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:27:16] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:33:00,870 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:33:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:33:00,873 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:33:00] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:37:22,585 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:37:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-19 21:37:22,589 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:37:22] "GET /api/map-status HTTP/1.1" 200 -
