@@ -486,6 +486,13 @@ const PatientDetailView = ({ patient: propPatient }) => {
   const [currentSignedFileIndex, setCurrentSignedFileIndex] = useState(0);
   const [signedDate, setSignedDate] = useState('');
   
+  // State for new document date entry
+  const [showNewDocDateModal, setShowNewDocDateModal] = useState(false);
+  const [uploadedNewFiles, setUploadedNewFiles] = useState([]);
+  const [currentNewFileIndex, setCurrentNewFileIndex] = useState(0);
+  const [newDocDate, setNewDocDate] = useState('');
+  const [newDocType, setNewDocType] = useState('');
+  
   // Refs
   const fileInputRef = useRef(null);
   
@@ -729,38 +736,81 @@ const PatientDetailView = ({ patient: propPatient }) => {
   const uploadFiles = useCallback(async (files) => {
     if (!files || files.length === 0) return;
     
-    // Show uploading notification
-    showNotification('info', 'Uploading Files', 'Your files are being uploaded...');
+    // Store the files for processing with date selection
+    setUploadedNewFiles(Array.from(files));
     
-    const newFiles = Array.from(files).map(file => ({
-      id: `DOC-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
-      type: '',
-      status: 'New',
-      receivedDate: new Date().toISOString().split('T')[0],
-      fileName: file.name,
-      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-      uploadedBy: 'Current User',
-      file: file // Store the actual file for potential preview
-    }));
+    // Start with the first file
+    setCurrentNewFileIndex(0);
+    
+    // Set initial date to today
+    setNewDocDate(new Date().toISOString().split('T')[0]);
+    
+    // Show date selection modal
+    setShowNewDocDateModal(true);
+  }, []);
 
-    // Simulate file upload
-    for (const file of newFiles) {
-      try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Add the file to the newPreparedDocs list
-        setNewPreparedDocs(prev => [...prev, file]);
-        
-        showNotification('success', 'File Uploaded', `${file.fileName} uploaded successfully`);
-      } catch (error) {
-        showNotification('error', 'Upload Failed', `Failed to upload ${file.fileName}`);
+  // Function to process a new document with the selected date
+  const processNewDocument = () => {
+    const file = uploadedNewFiles[currentNewFileIndex];
+    
+    if (!file) {
+      setShowNewDocDateModal(false);
+      setUploadedNewFiles([]);
+      setCurrentNewFileIndex(0);
+      return;
+    }
+    
+    // Create a new document object
+    const newDocument = {
+      id: `new-doc-${Date.now()}-${currentNewFileIndex}`, // Generate a unique ID
+      status: "New",
+      receivedDate: newDocDate,
+      fileName: file.name,
+      fileSize: file.size,
+      type: '', // Empty type for new documents
+      uploadedBy: "Current User",
+      uploadedDate: new Date().toISOString().split("T")[0],
+      uploader: { name: "Current User" },
+    };
+    
+    // Add the document to the preparedDocuments list
+    setNewPreparedDocs(prevDocs => [...prevDocs, newDocument]);
+    
+    // Show notification
+    showNotification({
+      type: "success",
+      message: `Document ${file.name} added successfully`,
+    });
+    
+    // Move to the next file or close the modal if we're done
+    if (currentNewFileIndex < uploadedNewFiles.length - 1) {
+      setCurrentNewFileIndex(currentNewFileIndex + 1);
+    } else {
+      // All files processed, close the modal
+      setShowNewDocDateModal(false);
+      setUploadedNewFiles([]);
+      setCurrentNewFileIndex(0);
+      
+      // Reset the file input
+      const fileInput = document.getElementById("new-document-upload");
+      if (fileInput) {
+        fileInput.value = "";
       }
     }
+  };
+
+  // Function to cancel new document upload
+  const cancelNewDocumentUpload = useCallback(() => {
+    setShowNewDocDateModal(false);
+    setUploadedNewFiles([]);
+    setCurrentNewFileIndex(0);
     
     // Clear file input
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    
+    showNotification('info', 'Upload Cancelled', 'Document upload was cancelled');
   }, [showNotification]);
 
   const handleFileInputChange = useCallback((event) => {
@@ -921,21 +971,21 @@ const PatientDetailView = ({ patient: propPatient }) => {
     );
   };
   
-  // Document type options
+  // Update the document types array with the new values
   const documentTypes = [
-    'Evaluation',
-    'Re-evaluation',
-    'Position Order',
-    'Recertification',
+    'CERT',
+    'RECERT',
+    'Verbal Order',
+    'Physician Order',
+    'F2F',
     'Discharge Summary',
-    'Progress Note',
-    'Treatment Plan',
-    'Referral',
-    'Lab Results',
-    'Medical History',
-    'Medication List',
-    'Consent Form',
-    'Insurance Documentation',
+    'Medication Interactions',
+    'Physical Therapy',
+    'Ocuupational Therapy',
+    'Lab records',
+    'Missed visit notes',
+    'PT Evaluation',
+    'OT Evaluation',
     'Other'
   ];
 
@@ -2078,6 +2128,9 @@ Total documents: ${documents.length}
     const formattedDate = today.toISOString().split('T')[0]; // yyyy-MM-dd format
     setSignedDate(formattedDate);
     
+    // Reset document type for the first file
+    setSignedDocType('');
+    
     // Show date selection modal
     setShowDateModal(true);
     
@@ -2091,10 +2144,16 @@ Total documents: ${documents.length}
     // Get current file being processed
     const file = uploadedSignedFiles[currentSignedFileIndex];
     
-    // Create the signed document object with selected date
+    // Check if document type is selected
+    if (!signedDocType) {
+      showNotification('warning', 'Document Type Required', 'Please select a document type');
+      return;
+    }
+    
+    // Create the signed document object with selected date and type
     const newSignedDoc = {
       id: `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
-      type: 'Signed Document',
+      type: signedDocType, // Use the selected document type
       fileName: file.name,
       size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
       signedDate: signedDate, // This should now be in the correct format
@@ -2103,7 +2162,7 @@ Total documents: ${documents.length}
     };
     
     // Log to ensure date is in correct format
-    console.log('Document being processed with date:', signedDate);
+    console.log('Document being processed with date:', signedDate, 'and type:', signedDocType);
     
     // Add to signed documents
     setSignedDocs(prev => [...prev, newSignedDoc]);
@@ -2111,15 +2170,17 @@ Total documents: ${documents.length}
     // Move to next file or close modal if done
     if (currentSignedFileIndex < uploadedSignedFiles.length - 1) {
       setCurrentSignedFileIndex(prev => prev + 1);
-      // Keep the same date for the next file unless changed by user
+      // Reset document type for the next file
+      setSignedDocType('');
     } else {
       // All files processed, close modal and show success notification
       setShowDateModal(false);
-      showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully with custom dates.');
+      showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully with custom dates and types.');
       
       // Clear uploaded files
       setUploadedSignedFiles([]);
       setCurrentSignedFileIndex(0);
+      setSignedDocType('');
     }
   };
 
@@ -2127,6 +2188,7 @@ Total documents: ${documents.length}
     setShowDateModal(false);
     setUploadedSignedFiles([]);
     setCurrentSignedFileIndex(0);
+    setSignedDocType('');
     showNotification('info', 'Upload Cancelled', 'Signed document upload was cancelled');
   };
 
@@ -2168,6 +2230,9 @@ Total documents: ${documents.length}
   };
 
   // ... rest of the existing code ...
+
+  // Add state for signed document type selection
+  const [signedDocType, setSignedDocType] = useState('');
 
   return (
     <div className="patient-detail-view">
@@ -4180,13 +4245,32 @@ Total documents: ${documents.length}
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
-              <h3>Enter Signed Date</h3>
+              <h3>Document Details</h3>
             </div>
             <div className="modal-body">
-              <p>Please enter the date when document was signed:</p>
               <p><strong>Document:</strong> {uploadedSignedFiles[currentSignedFileIndex]?.name}</p>
+              
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label htmlFor="signedDocType" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Type:</label>
+                <select 
+                  id="signedDocType"
+                  value={signedDocType}
+                  onChange={(e) => {
+                    console.log("Signed document type changed to:", e.target.value);
+                    setSignedDocType(e.target.value);
+                  }}
+                  className="form-control"
+                  style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                >
+                  <option value="">Select Document Type</option>
+                  {documentTypes.map((type, index) => (
+                    <option key={index} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+              
               <div className="form-group">
-                <label htmlFor="signedDate">Signed Date:</label>
+                <label htmlFor="signedDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Signed Date:</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <input 
                     type="date" 
@@ -4215,20 +4299,103 @@ Total documents: ${documents.length}
                   />
                 </div>
                 <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
-                  Format: YYYY-MM-DD (e.g., 2023-09-15)
+                  Format: MM/DD/YYYY
                 </small>
               </div>
               <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                 <button 
                   className="action-button primary" 
                   onClick={processSignedDocument}
-                  style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#4a90e2', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                  disabled={!signedDocType} // Disable if no document type is selected
+                  style={{ 
+                    padding: '8px 16px', 
+                    borderRadius: '4px', 
+                    backgroundColor: signedDocType ? '#4a90e2' : '#cccccc', 
+                    color: 'white', 
+                    border: 'none', 
+                    cursor: signedDocType ? 'pointer' : 'not-allowed', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '5px' 
+                  }}
                 >
                   <FaCheck /> Confirm
                 </button>
                 <button 
                   className="action-button secondary" 
                   onClick={cancelSignedDocumentUpload}
+                  style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#f5f5f5', color: '#333', border: '1px solid #ccc', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                >
+                  <FaTimes /> Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {showNewDocDateModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Document Details</h3>
+            </div>
+            <div className="modal-body">
+              <p><strong>Document:</strong> {uploadedNewFiles[currentNewFileIndex]?.name}</p>
+              
+              <div className="form-group">
+                <label htmlFor="newDocDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Date:</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <input 
+                    type="date" 
+                    id="newDocDate"
+                    value={newDocDate}
+                    onChange={(e) => {
+                      console.log("Date changed to:", e.target.value);
+                      setNewDocDate(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      // Allow editing with keyboard
+                      e.stopPropagation();
+                    }}
+                    className="form-control"
+                    max={new Date().toISOString().split('T')[0]} // Today as max date
+                    style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                  />
+                  {/* Alternative calendar icon for better UX */}
+                  <FaCalendarAlt 
+                    style={{ cursor: 'pointer', fontSize: '20px' }} 
+                    onClick={() => {
+                      // Focus the date input when calendar icon is clicked
+                      document.getElementById('newDocDate')?.focus();
+                      document.getElementById('newDocDate')?.showPicker?.();
+                    }}
+                  />
+                </div>
+                <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
+                  Format: MM/DD/YYYY
+                </small>
+              </div>
+              <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                <button 
+                  className="action-button primary" 
+                  onClick={processNewDocument}
+                  style={{ 
+                    padding: '8px 16px', 
+                    borderRadius: '4px', 
+                    backgroundColor: '#4a90e2', 
+                    color: 'white', 
+                    border: 'none', 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '5px' 
+                  }}
+                >
+                  <FaCheck /> Confirm
+                </button>
+                <button 
+                  className="action-button secondary" 
+                  onClick={cancelNewDocumentUpload}
                   style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#f5f5f5', color: '#333', border: '1px solid #ccc', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
                 >
                   <FaTimes /> Cancel
