@@ -4066,3 +4066,188 @@ button.upload-documents-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.doc-id-input {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  width: 150px;
+  transition: var(--transition);
+}
+
+.doc-id-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.file-replacement-section {
+  margin-right: 1rem;
+}
+
+.save-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.save-button {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.save-button:hover {
+  background-color: var(--success-dark);
+  border-color: var(--success-dark);
+}
+
+.action-button.save-button {
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.action-button.save-button .action-icon {
+  font-size: 1rem;
+}
+
+.document-viewer-headerr {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.document-viewer-infoo {
+  flex: 1;
+}
+
+.document-viewer-infoo h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.document-metaa {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.document-meta-itemm {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.meta-iconn {
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.doc-id-inputt {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  width: 150px;
+  transition: var(--transition);
+}
+
+.doc-id-inputt:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.doc-type-selectt {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  background: white;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.doc-type-selectt:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.document-viewer-actionss {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.file-replacement-sectionn {
+  margin-right: 1rem;
+}
+
+.hidden-file-inputt {
+  display: none;
+}
+
+.action-buttonn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.action-buttonn.primaryy {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.action-buttonn.primaryy:hover {
+  background: var(--primary-dark);
+}
+
+.action-buttonn.secondaryy {
+  background: white;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.action-buttonn.secondaryy:hover {
+  background: var(--secondary-light);
+  color: var(--primary-dark);
+}
+
+.save-actionss {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.save-buttonn {
+  background-color: var(--success-color) !important;
+  border-color: var(--success-color) !important;
+}
+
+.save-buttonn:hover {
+  background-color: var(--success-dark) !important;
+  border-color: var(--success-dark) !important;
+}
+
+.action-iconn {
+  font-size: 1rem;
+}

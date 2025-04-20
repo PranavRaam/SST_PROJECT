@@ -406,8 +406,8 @@ const PGView = () => {
     // Convert ISO date from input to American format for internal storage
     if (value) {
       // For the UI inputs we keep the ISO format, but convert for display elsewhere
-      setSelectedDateRange(prev => ({
-        ...prev,
+    setSelectedDateRange(prev => ({
+      ...prev,
         [name]: value
       }));
     } else {
@@ -791,7 +791,7 @@ const PGView = () => {
       patientInEHR: true
     }));
 
-    return pgClaims;
+      return pgClaims;
   };
 
   // Add a date parsing helper function
@@ -932,21 +932,21 @@ const PGView = () => {
       };
       
       // Always create at least one claim for demo purposes
-      // Create a CERT claim
-      const certClaim = {
-        ...basePatientClaim,
+        // Create a CERT claim
+        const certClaim = {
+          ...basePatientClaim,
         id: `${processedPatient.id || patient.patientId}-cert-${new Date().getTime()}`,
-        remarks: 'CERT signed',
-        docType: 'CERT',
+          remarks: 'CERT signed',
+          docType: 'CERT',
         signedDate: processedPatient.certSignedDate,
         billingCode: processedPatient.billingCode || 'G0180',
         line1DosFrom: processedPatient.patientEpisodeFrom,
         line1DosTo: processedPatient.patientEpisodeFrom,
         line1Charges: processedPatient.charges || 180,
-        minutesCaptured: 0
-      };
-      
-      validatedCertClaims.push(certClaim);
+          minutesCaptured: 0
+        };
+        
+        validatedCertClaims.push(certClaim);
       console.log(`  - Added CERT claim for patient ${processedPatient.patientId || patient.patientId}`);
       
       // Check CPO eligibility - needs at least 30 minutes
@@ -1003,7 +1003,7 @@ const PGView = () => {
       
       // Handle American format (MM/DD/YYYY)
       if (dateStr.includes('/')) {
-        const [month, day, year] = dateStr.split('/');
+      const [month, day, year] = dateStr.split('/');
         return new Date(year, parseInt(month) - 1, day);
       }
       
@@ -1566,7 +1566,7 @@ const PGView = () => {
                 onClick={() => handleDownloadClaims('csv')}
                 style={{ 
                   padding: '0.5rem 1rem',
-                  backgroundColor: '#4F46E5',
+                  backgroundColor: '#4F46E5', 
                   color: 'white',
                   border: 'none',
                   borderRadius: '0.375rem',
@@ -1588,7 +1588,7 @@ const PGView = () => {
                 onClick={() => handleDownloadClaims('pdf')}
                 style={{ 
                   padding: '0.5rem 1rem',
-                  backgroundColor: '#6366F1',
+                  backgroundColor: '#6366F1', 
                   color: 'white',
                   border: 'none',
                   borderRadius: '0.375rem',
