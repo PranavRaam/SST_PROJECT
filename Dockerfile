@@ -16,7 +16,7 @@ ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
 
 # Copy requirements and install Python dependencies
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy only the backend files to reduce image size
@@ -62,9 +62,9 @@ COPY --from=backend /app/backend ./
 # Copy entrypoint
 COPY --from=backend /app/entrypoint.sh /app/
 
-# Install Python and required packages
+# Install Python and required packages with specific versions to avoid compatibility issues
 RUN apk add --no-cache python3 py3-pip && \
-    pip3 install --no-cache-dir flask gunicorn flask-cors
+    pip3 install --no-cache-dir flask==2.0.1 gunicorn==20.1.0 flask-cors==3.0.10 psutil==5.9.0
 
 # Expose the port
 EXPOSE 80
@@ -72,7 +72,9 @@ EXPOSE 80
 # Create a custom entrypoint script
 RUN echo '#!/bin/sh\n\
 # Start backend in background\n\
-cd /app/backend && gunicorn app:app --bind 0.0.0.0:5000 --workers 4 &\n\
+cd /app/backend && gunicorn --config=gunicorn.conf.py app:app --bind 0.0.0.0:5000 &\n\
+# Wait for backend to start\n\
+sleep 5\n\
 # Start nginx in foreground\n\
 nginx -g "daemon off;"' > /start.sh && \
 chmod +x /start.sh

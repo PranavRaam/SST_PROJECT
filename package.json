@@ -2,11 +2,24 @@
   "name": "prototype-railway",
   "version": "1.0.0",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "private": true,
   "scripts": {
-    "start": "cd backend && python -m gunicorn app:app --bind 0.0.0.0:$PORT",
-    "build": "cd backend && pip install -r requirements.txt"
-  }
+    "start": "cd backend && python -m gunicorn app:app --config=gunicorn.conf.py",
+    "build": "cd backend && pip install -r requirements.txt && cd ../frontend && npm install && npm run build",
+    "dev:backend": "cd backend && python app.py",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "postinstall": "[ -d \"node_modules\" ] || npm install concurrently --no-save"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "frontend/node_modules"
+  ]
 } 

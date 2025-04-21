@@ -8932,3 +8932,45 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-21 10:11:05,668 - __main__ - INFO - Checking for cached data at startup
 2025-04-21 10:11:05,692 - werkzeug - WARNING -  * Debugger is active!
 2025-04-21 10:11:05,692 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:13:46,143 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-21 10:13:46,489 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:13:48,240 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:13:48,253 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:13:48,315 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:13:48,315 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:14:06,384 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-21 10:14:06,688 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:14:08,410 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:14:08,419 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:14:08,445 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:14:08,445 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:15:28,722 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/gunicorn.conf.py', reloading
+2025-04-21 10:15:29,170 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:15:31,366 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:15:31,376 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:15:31,410 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:15:31,410 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:15:42,461 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-21 10:15:42,796 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:15:44,250 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:15:44,259 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:15:44,286 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:15:44,286 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:16:44,502 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-21 10:16:45,036 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:16:49,068 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:16:49,083 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:16:49,128 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:16:49,129 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:17:04,199 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-21 10:17:04,773 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:17:09,049 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:17:09,115 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:17:09,209 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:17:09,212 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 10:17:24,307 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-21 10:17:25,121 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 10:17:27,950 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 10:17:27,966 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 10:17:27,994 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 10:17:27,994 - werkzeug - INFO -  * Debugger PIN: 928-661-346

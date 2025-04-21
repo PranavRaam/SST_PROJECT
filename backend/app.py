@@ -13,17 +13,21 @@ import data_preloader
 import gzip
 import functools
 from io import BytesIO
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if it exists
+load_dotenv()
 
 app = Flask(__name__)
+
+# Get CORS settings from environment
+cors_origins = os.environ.get('CORS_ORIGINS', 'https://sst-frontend-swart.vercel.app,http://localhost:3000,https://sst-project.onrender.com').split(',')
+logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
+
 # Enable CORS with specific options for production
 CORS(app, 
     resources={r"/api/*": {
-        "origins": [
-            "https://sst-frontend-swart.vercel.app", 
-            "http://localhost:3000",
-            "https://sst-project.onrender.com",
-            "*.onrender.com"
-        ],
+        "origins": cors_origins,
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
@@ -52,7 +56,7 @@ map_data = None
 
 # Memory cache for API responses
 response_cache = {}
-CACHE_TIMEOUT = 3600  # Cache timeout in seconds (1 hour)
+CACHE_TIMEOUT = int(os.environ.get('CACHE_TIMEOUT', 3600))  # Cache timeout in seconds (default: 1 hour)
 
 # Initialize performance monitoring variables
 request_count = 0
@@ -64,19 +68,21 @@ def optimize_map_generation():
     """Apply memory optimization techniques to the map generation process"""
     import gc
     import os
-    import psutil
     
     # Force garbage collection to free memory
     gc.collect()
     
-    # Get current process memory info
-    process = psutil.Process(os.getpid())
-    memory_before = process.memory_info().rss / 1024 / 1024  # Convert to MB
-    
-    logger.info(f"Memory usage before optimization: {memory_before:.2f} MB")
-    
-    # Return the current memory usage for tracking
-    return memory_before
+    try:
+        import psutil
+        # Get current process memory info
+        process = psutil.Process(os.getpid())
+        memory_before = process.memory_info().rss / 1024 / 1024  # Convert to MB
+        logger.info(f"Memory usage before optimization: {memory_before:.2f} MB")
+        return memory_before
+    except ImportError:
+        # If psutil is not available, just log and continue
+        logger.warning("psutil package not available, skipping memory optimization")
+        return 0
 
 # Simple in-memory cache decorator
 def cache_response(timeout=CACHE_TIMEOUT):
@@ -154,16 +160,8 @@ def add_cors_headers(response):
     # Add CORS headers to all responses
     origin = request.headers.get('Origin', '')
     
-    # List of allowed origins
-    allowed_origins = [
-        'https://sst-frontend-swart.vercel.app', 
-        'http://localhost:3000',
-        'https://sst-project.onrender.com',
-        'https://your-frontend-domain.vercel.app'
-    ]
-    
     # Allow specific origins only when credentials are involved
-    if origin in allowed_origins:
+    if origin in cors_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
     elif not response.headers.get('Access-Control-Allow-Credentials'):
@@ -178,7 +176,7 @@ def add_cors_headers(response):
     if response.mimetype == 'text/html':
         response.headers['X-Frame-Options'] = 'ALLOW-FROM http://localhost:3000'
         response.headers['Content-Security-Policy'] = "frame-ancestors *"
-        response.headers['Access-Control-Allow-Origin'] = origin if origin in allowed_origins else '*'
+        response.headers['Access-Control-Allow-Origin'] = origin if origin in cors_origins else '*'
     
     return response
 
@@ -188,16 +186,8 @@ def options_statistical_area_map(area_name):
     response = Response()
     origin = request.headers.get('Origin', '')
     
-    # List of allowed origins
-    allowed_origins = [
-        'https://sst-frontend-swart.vercel.app', 
-        'http://localhost:3000',
-        'https://sst-project.onrender.com',
-        'https://your-frontend-domain.vercel.app'
-    ]
-    
     # Allow specific origins when credentials are involved
-    if origin in allowed_origins:
+    if origin in cors_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
     else:
@@ -546,6 +536,7 @@ def health_check():
             "message": "Backend server is operational",
             "timestamp": time.time(),
             "cors_enabled": True,
+            "cors_origins": cors_origins,
             "cache_dir_exists": os.path.exists(CACHE_DIR),
             "cached_maps": len([f for f in os.listdir(CACHE_DIR) if f.endswith('.html')]) if os.path.exists(CACHE_DIR) else 0,
             "data_cache_exists": data_cache_exists,
@@ -554,14 +545,8 @@ def health_check():
     
     # Set CORS headers
     origin = request.headers.get('Origin', '')
-    allowed_origins = [
-        'https://sst-frontend-swart.vercel.app', 
-        'http://localhost:3000',
-        'https://sst-project.onrender.com',
-        'https://your-frontend-domain.vercel.app'
-    ]
     
-    if origin in allowed_origins:
+    if origin in cors_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
     else:
