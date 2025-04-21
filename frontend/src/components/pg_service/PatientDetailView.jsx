@@ -72,7 +72,8 @@ import {
   FaSearchPlus,
   FaSearchMinus,
   FaRedo,
-  FaComment
+  FaComment,
+  FaCaretDown
 } from 'react-icons/fa';
 
 // Standard remarks values used across the application
@@ -360,6 +361,101 @@ const DocIdInput = ({ docId, onUpdate }) => {
   );
 };
 
+// New DocTypeInput component for document type selection with dropdown
+const DocTypeInput = ({ docType, onUpdate, categories }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedType, setSelectedType] = useState(docType || '');
+  const dropdownRef = useRef(null);
+  
+  // Reset selected type if docType changes from outside
+  useEffect(() => {
+    setSelectedType(docType || '');
+  }, [docType]);
+  
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsEditing(false);
+      }
+    }
+    
+    // Add event listener when editing
+    if (isEditing) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    // Clean up
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isEditing]);
+  
+  const handleClick = () => {
+    setIsEditing(true);
+  };
+  
+  const handleSelect = (type) => {
+    setSelectedType(type);
+    onUpdate(docType, type);
+    setIsEditing(false);
+  };
+  
+  return (
+    <div 
+      className={`doc-type-field ${isEditing ? 'editing' : ''}`} 
+      onClick={handleClick}
+      style={{ position: 'relative', cursor: 'pointer' }}
+      title="Click to select document type"
+      ref={dropdownRef}
+    >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <FaFileAlt style={{ marginRight: '5px', color: '#666' }} />
+        <span>{selectedType || 'Select Type'}</span>
+        <FaCaretDown style={{ marginLeft: '5px', fontSize: '12px', color: '#666' }} />
+      </div>
+      
+      {isEditing && (
+        <div 
+          className="type-dropdown"
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            width: '100%',
+            maxHeight: '200px',
+            overflowY: 'auto',
+            backgroundColor: 'white',
+            border: '1px solid #ddd',
+            borderRadius: '4px',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+            zIndex: 10
+          }}
+        >
+          {categories.map((type, index) => (
+            <div 
+              key={index}
+              className="type-option"
+              onClick={() => handleSelect(type)}
+              style={{
+                padding: '8px 12px',
+                cursor: 'pointer',
+                borderBottom: index < categories.length - 1 ? '1px solid #eee' : 'none',
+                backgroundColor: selectedType === type ? '#f0f8ff' : 'white',
+                hoverBackgroundColor: '#f5f5f5'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = selectedType === type ? '#f0f8ff' : 'white'}
+            >
+              {type}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Add this function to filter episodes by date range
 const filterEpisodesByDateRange = (episodes, startDate, endDate) => {
   if (!startDate && !endDate) return episodes;
@@ -492,6 +588,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
   const [currentNewFileIndex, setCurrentNewFileIndex] = useState(0);
   const [newDocDate, setNewDocDate] = useState('');
   const [newDocType, setNewDocType] = useState('');
+  const [newDocId, setNewDocId] = useState('');
   
   // Refs
   const fileInputRef = useRef(null);
@@ -742,7 +839,9 @@ const PatientDetailView = ({ patient: propPatient }) => {
     // Start with the first file
     setCurrentNewFileIndex(0);
     
-    // Set initial date to today
+    // Reset input fields
+    setNewDocId('');
+    setNewDocType('');
     setNewDocDate(new Date().toISOString().split('T')[0]);
     
     // Show date selection modal
@@ -760,14 +859,17 @@ const PatientDetailView = ({ patient: propPatient }) => {
       return;
     }
     
+    // Use custom document ID if provided, otherwise generate a unique ID
+    const documentId = newDocId || `DOC-${Date.now().toString().slice(-6)}`;
+    
     // Create a new document object
     const newDocument = {
-      id: `new-doc-${Date.now()}-${currentNewFileIndex}`, // Generate a unique ID
+      id: documentId,
       status: "New",
       receivedDate: newDocDate,
       fileName: file.name,
       fileSize: file.size,
-      type: '', // Empty type for new documents
+      type: newDocType || '', // Use custom document type if provided
       uploadedBy: "Current User",
       uploadedDate: new Date().toISOString().split("T")[0],
       uploader: { name: "Current User" },
@@ -781,6 +883,10 @@ const PatientDetailView = ({ patient: propPatient }) => {
       type: "success",
       message: `Document ${file.name} added successfully`,
     });
+    
+    // Clear the input fields
+    setNewDocId('');
+    setNewDocType('');
     
     // Move to the next file or close the modal if we're done
     if (currentNewFileIndex < uploadedNewFiles.length - 1) {
@@ -804,6 +910,8 @@ const PatientDetailView = ({ patient: propPatient }) => {
     setShowNewDocDateModal(false);
     setUploadedNewFiles([]);
     setCurrentNewFileIndex(0);
+    setNewDocId('');
+    setNewDocType('');
     
     // Clear file input
     if (fileInputRef.current) {
@@ -1144,17 +1252,17 @@ const PatientDetailView = ({ patient: propPatient }) => {
   // Function to update document viewer document
   const updateViewerDocument = (field, value) => {
     if (selectedDocument) {
-      if (selectedDocument.status) {
+    if (selectedDocument.status) {
         // For new/prepared documents
-        setNewPreparedDocs(prevDocs => 
-          prevDocs.map(doc => 
+      setNewPreparedDocs(prevDocs => 
+        prevDocs.map(doc => 
             doc.id === selectedDocument.id ? { ...doc, [field]: value } : doc
-          )
-        );
+        )
+      );
       } else if (selectedDocument.signedDate) {
         // For signed documents
-        setSignedDocs(prevDocs => 
-          prevDocs.map(doc => 
+      setSignedDocs(prevDocs => 
+        prevDocs.map(doc => 
             doc.id === selectedDocument.id ? { ...doc, [field]: value } : doc
           )
         );
@@ -1173,7 +1281,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
   const saveDocumentChanges = () => {
     if (selectedDocument) {
       showNotification('success', 'Document Updated', 'Document changes have been saved successfully.');
-      setIsEditingDocumentDetails(false);
+    setIsEditingDocumentDetails(false);
       setViewerOpen(false);
       setSelectedDocument(null);
     }
@@ -1620,7 +1728,22 @@ Total documents: ${documents.length}
   const [filteredEpisodes, setFilteredEpisodes] = useState([]);
   const [expandedEpisode, setExpandedEpisode] = useState(null);
   const [cpoMinutesEditing, setCpoMinutesEditing] = useState(null);
-  const [documentCategories, setDocumentCategories] = useState(['Evaluation', 'Treatment', 'Assessment', 'Plan of Care']);
+  const [documentCategories, setDocumentCategories] = useState([
+    'CERT',
+    'RECERT',
+    'Verbal Order',
+    'Physician Order',
+    'F2F',
+    'Discharge Summary',
+    'Medication Interactions',
+    'Physical Therapy',
+    'Occupational Therapy',
+    'Lab records',
+    'Missed visit notes',
+    'PT Evaluation',
+    'OT Evaluation',
+    'Other'
+  ]);
   const [showEpisodeModal, setShowEpisodeModal] = useState(false);
   const [showDocumentsModal, setShowDocumentsModal] = useState(false);
   const [currentEpisodeDocuments, setCurrentEpisodeDocuments] = useState([]);
@@ -2161,7 +2284,7 @@ Total documents: ${documents.length}
     
     // Create the signed document object with selected date and type
     const newSignedDoc = {
-      id: `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
+      id: signedDocId || `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
       type: signedDocType, // Use the selected document type
       fileName: file.name,
       size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
@@ -2172,6 +2295,7 @@ Total documents: ${documents.length}
     
     // Log to ensure date is in correct format
     console.log('Document being processed with date:', signedDate, 'and type:', signedDocType);
+    console.log('Document ID:', signedDocId);
     
     // Add to signed documents
     setSignedDocs(prev => [...prev, newSignedDoc]);
@@ -2181,6 +2305,7 @@ Total documents: ${documents.length}
       setCurrentSignedFileIndex(prev => prev + 1);
       // Reset document type for the next file
       setSignedDocType('');
+      setSignedDocId('');
     } else {
       // All files processed, close modal and show success notification
       setShowDateModal(false);
@@ -2190,6 +2315,7 @@ Total documents: ${documents.length}
       setUploadedSignedFiles([]);
       setCurrentSignedFileIndex(0);
       setSignedDocType('');
+      setSignedDocId('');
     }
   };
 
@@ -2198,6 +2324,7 @@ Total documents: ${documents.length}
     setUploadedSignedFiles([]);
     setCurrentSignedFileIndex(0);
     setSignedDocType('');
+    setSignedDocId('');
     showNotification('info', 'Upload Cancelled', 'Signed document upload was cancelled');
   };
 
@@ -2242,6 +2369,7 @@ Total documents: ${documents.length}
 
   // Add state for signed document type selection
   const [signedDocType, setSignedDocType] = useState('');
+  const [signedDocId, setSignedDocId] = useState('');
 
   const handleDeleteDocument = (doc) => {
     if (window.confirm('Are you sure you want to delete this document?')) {
@@ -3055,18 +3183,14 @@ Total documents: ${documents.length}
                             {newPreparedDocs.map((doc, index) => (
                               <tr key={index}>
                                 <td style={{ textAlign: 'left' }}>
-                                  <select 
-                                    className="document-type-select"
-                                    value={doc.type || ''}
-                                    onChange={(e) => handleUpdateDocumentType(doc.id, true, e.target.value)}
-                                  >
-                                    <option value="">Select Type</option>
-                                    {documentCategories.map((category, idx) => (
-                                      <option key={idx} value={category}>{category}</option>
-                                    ))}
-                                  </select>
+                                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <FaFileAlt style={{ marginRight: '8px', color: '#666' }} />
+                                    <span style={{ color: '#333' }}>{doc.type || 'Unspecified Document'}</span>
+                                  </div>
                                 </td>
-                                <td style={{ textAlign: 'left' }}>{doc.id}</td>
+                                <td style={{ textAlign: 'left' }}>
+                                  <DocIdInput docId={doc.id} onUpdate={updateDocId} />
+                                </td>
                                 <td style={{ textAlign: 'left' }}>
                                   <div className="file-name-cell">
                                     <span className="file-icon-wrapper">
@@ -3385,18 +3509,9 @@ Total documents: ${documents.length}
                         {filteredNewPreparedDocs.map(doc => (
                           <tr key={doc.id} className={`status-${doc.status.toLowerCase()}`}>
                             <td style={{ textAlign: 'left' }}>
-                              <div className="select-wrapper">
-                                <FaFileAlt className="select-icon" />
-                                <select 
-                                  value={doc.type} 
-                                  onChange={(e) => updateDocType(doc.id, e.target.value)}
-                                  className="doc-type-select"
-                                >
-                                  <option value="">Select Type</option>
-                                  {documentTypes.map(type => (
-                                    <option key={type} value={type}>{type}</option>
-                                  ))}
-                                </select>
+                              <div className="cell-with-icon">
+                                <FaFileAlt className="cell-icon" />
+                                {doc.type || "Unspecified Document"}
                               </div>
                             </td>
                             <td style={{ textAlign: 'left' }}>
@@ -3532,7 +3647,7 @@ Total documents: ${documents.length}
                           <td style={{ textAlign: 'left' }}>
                             <div className="cell-with-icon">
                               <FaFileAlt className="cell-icon" />
-                              {doc.type}
+                              {doc.type || "Unspecified Document"}
                             </div>
                           </td>
                           <td style={{ textAlign: 'left' }}>
@@ -3878,15 +3993,15 @@ Total documents: ${documents.length}
                         <select 
                           value={selectedDocument.type || ''} 
                           onChange={(e) => updateViewerDocument('type', e.target.value)}
-                          className="doc-type-selectt"
+                          className="doc-type-inputt"
                         >
-                          <option value="">Select Type</option>
-                          {documentTypes.map(type => (
-                            <option key={type} value={type}>{type}</option>
+                          <option value="">Select Document Type</option>
+                          {documentCategories.map((type, index) => (
+                            <option key={index} value={type}>{type}</option>
                           ))}
                         </select>
                       ) : (
-                        selectedDocument.type || "Not specified"
+                        selectedDocument.type || "Unspecified Document"
                       )}
                     </span>
                   )}
@@ -3965,6 +4080,19 @@ Total documents: ${documents.length}
               <p><strong>Document:</strong> {uploadedSignedFiles[currentSignedFileIndex]?.name}</p>
               
               <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label htmlFor="signedDocId" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document ID:</label>
+                <input 
+                  type="text"
+                  id="signedDocId"
+                  value={signedDocId || `DOC-${Date.now().toString().slice(-6)}`}
+                  onChange={(e) => setSignedDocId(e.target.value)}
+                  className="form-control"
+                  placeholder="Enter document ID (e.g. DOC-123456)"
+                  style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                />
+              </div>
+              
+              <div className="form-group" style={{ marginBottom: '15px' }}>
                 <label htmlFor="signedDocType" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Type:</label>
                 <select 
                   id="signedDocType"
@@ -3977,7 +4105,7 @@ Total documents: ${documents.length}
                   style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
                 >
                   <option value="">Select Document Type</option>
-                  {documentTypes.map((type, index) => (
+                  {documentCategories.map((type, index) => (
                     <option key={index} value={type}>{type}</option>
                   ))}
                 </select>
@@ -4056,8 +4184,37 @@ Total documents: ${documents.length}
             <div className="modal-body">
               <p><strong>Document:</strong> {uploadedNewFiles[currentNewFileIndex]?.name}</p>
               
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label htmlFor="newDocId" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document ID:</label>
+                <input 
+                  type="text"
+                  id="newDocId"
+                  value={newDocId || `DOC-${Date.now().toString().slice(-6)}`}
+                  onChange={(e) => setNewDocId(e.target.value)}
+                  className="form-control"
+                  placeholder="Enter document ID (e.g. DOC-123456)"
+                  style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                />
+              </div>
+              
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label htmlFor="newDocType" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Type:</label>
+                <select 
+                  id="newDocType"
+                  value={newDocType || ''}
+                  onChange={(e) => setNewDocType(e.target.value)}
+                  className="form-control"
+                  style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                >
+                  <option value="">Select Document Type</option>
+                  {documentCategories.map((type, index) => (
+                    <option key={index} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+              
               <div className="form-group">
-                <label htmlFor="newDocDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Date:</label>
+                <label htmlFor="newDocDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Received Date:</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <input 
                     type="date" 

@@ -8786,3 +8786,116 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-19 21:33:00,873 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:33:00] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-19 21:37:22,585 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:37:22] "GET /api/map-status HTTP/1.1" 200 -
 2025-04-19 21:37:22,589 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 21:37:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 08:15:45,066 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 08:15:45,070 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 08:15:45,089 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-21 08:15:45,089 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-21 08:15:45,090 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 08:15:45,782 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 08:15:45,787 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 08:15:45,800 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 08:15:45,801 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 08:16:20,422 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 08:16:20,425 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 08:16:20,436 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 08:16:20,439 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:20] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 08:16:21,249 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:21] "GET /api/map?t=1745203580436&noCache=true&stableView=true?t%3D1745203580436&_show_states=true&_show_counties=true&_show_msas=true&_t=1745203580441 HTTP/1.1" 200 -
+2025-04-21 08:16:22,314 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:22] "GET /api/map?t=1745203582304&noCache=true&stableView=true?t%3D1745203582304&_show_states=true&_show_counties=true&_show_msas=true&_t=1745203582304 HTTP/1.1" 200 -
+2025-04-21 08:16:24,382 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:24] "GET /api/health HTTP/1.1" 200 -
+2025-04-21 08:16:24,389 - __main__ - INFO - Map request for area: Amarillo
+2025-04-21 08:16:24,390 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745203584388')])
+2025-04-21 08:16:24,390 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-21 08:16:24,390 - statistical_area_zoom - INFO - Generating map for statistical area: Amarillo with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-21 08:16:24,390 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Amarillo_lightweight.html
+2025-04-21 08:16:24,390 - statistical_area_zoom - INFO - Cached map is 78.3 hours old, regenerating...
+2025-04-21 08:16:24,390 - statistical_area_zoom - INFO - Loading map data...
+2025-04-21 08:16:24,390 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-21 08:16:24,390 - data_preloader - INFO - Loading all cached data...
+2025-04-21 08:16:24,404 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-21 08:16:24,405 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-21 08:16:24,405 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-21 08:16:24,405 - statistical_area_zoom - INFO - Normalized area name: amarillo
+2025-04-21 08:16:24,409 - statistical_area_zoom - INFO - Trying to match city name: amarillo
+2025-04-21 08:16:24,411 - statistical_area_zoom - INFO - Found exact city match: Amarillo, TX
+2025-04-21 08:16:24,411 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-21 08:16:24,411 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-21 08:16:24,411 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Amarillo
+2025-04-21 08:16:24,412 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Amarillo
+2025-04-21 08:16:24,412 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-21 08:16:24,413 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-21 08:16:24,413 - statistical_area_zoom - INFO - Center: 35.24911323330244, -101.90956056279622
+2025-04-21 08:16:24,413 - statistical_area_zoom - INFO - Bounds: -103.042511, 34.747417, -101.086068, 35.625267
+2025-04-21 08:16:24,581 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Amarillo_lightweight.html
+2025-04-21 08:16:24,581 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Amarillo_lightweight.html
+2025-04-21 08:16:24,581 - __main__ - INFO - Request completed in 0.19 seconds
+2025-04-21 08:16:24,582 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:24] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745203584388 HTTP/1.1" 200 -
+2025-04-21 08:16:24,604 - __main__ - INFO - Map request for area: Amarillo
+2025-04-21 08:16:24,605 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745203584388'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1745203584589')])
+2025-04-21 08:16:24,605 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-21 08:16:24,605 - statistical_area_zoom - INFO - Generating map for statistical area: Amarillo with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-21 08:16:24,605 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Amarillo_lightweight.html
+2025-04-21 08:16:24,605 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Amarillo_lightweight.html (age: 0.0 hours)
+2025-04-21 08:16:24,605 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-21 08:16:24,605 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Amarillo_lightweight.html
+2025-04-21 08:16:24,605 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-21 08:16:24,606 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:16:24] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745203584388&_show_states=true&_show_counties=true&_show_msas=true&_t=1745203584589 HTTP/1.1" 200 -
+2025-04-21 08:27:31,152 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 08:27:31,157 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 08:27:31,174 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-21 08:27:31,174 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-21 08:27:31,175 - werkzeug - INFO -  * Restarting with stat
+2025-04-21 08:27:31,957 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-21 08:27:31,962 - __main__ - INFO - Checking for cached data at startup
+2025-04-21 08:27:31,977 - werkzeug - WARNING -  * Debugger is active!
+2025-04-21 08:27:31,977 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-21 08:27:40,666 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:27:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 08:27:40,674 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 08:27:40] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 09:40:24,589 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 09:40:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 09:40:24,594 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 09:40:24] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 10:02:22,808 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 10:02:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 10:02:22,840 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 10:02:22] "GET /api/map?t=1745209942786&noCache=true&stableView=true?t%3D1745209942786&_show_states=true&_show_counties=true&_show_msas=true&_t=1745209942787 HTTP/1.1" 200 -
+2025-04-21 10:02:22,840 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 10:02:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-21 10:02:26,304 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 10:02:26] "GET /api/health HTTP/1.1" 200 -
+2025-04-21 10:02:26,350 - __main__ - INFO - Map request for area: Anderson
+2025-04-21 10:02:26,350 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745209946345')])
+2025-04-21 10:02:26,350 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-21 10:02:26,351 - statistical_area_zoom - INFO - Generating map for statistical area: Anderson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-21 10:02:26,351 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anderson_lightweight.html
+2025-04-21 10:02:26,351 - statistical_area_zoom - INFO - Cached map is 84.1 hours old, regenerating...
+2025-04-21 10:02:26,351 - statistical_area_zoom - INFO - Loading map data...
+2025-04-21 10:02:26,351 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-21 10:02:26,351 - data_preloader - INFO - Loading all cached data...
+2025-04-21 10:02:26,402 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-21 10:02:26,403 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-21 10:02:26,403 - statistical_area_zoom - INFO - Data loaded in 0.05 seconds
+2025-04-21 10:02:26,404 - statistical_area_zoom - INFO - Normalized area name: anderson
+2025-04-21 10:02:26,413 - statistical_area_zoom - INFO - Trying to match city name: anderson
+2025-04-21 10:02:26,423 - statistical_area_zoom - INFO - Found partial match: Greenville-Anderson-Greer, SC
+2025-04-21 10:02:26,424 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-21 10:02:26,424 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-21 10:02:26,424 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anderson
+2025-04-21 10:02:26,425 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Anderson
+2025-04-21 10:02:26,427 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-21 10:02:26,428 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-21 10:02:26,428 - statistical_area_zoom - INFO - Center: 34.684362594054, -82.41383916389809
+2025-04-21 10:02:26,428 - statistical_area_zoom - INFO - Bounds: -82.992232, 34.203148, -81.643552, 35.215224
+2025-04-21 10:02:26,787 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anderson_lightweight.html
+2025-04-21 10:02:26,788 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anderson_lightweight.html
+2025-04-21 10:02:26,788 - __main__ - INFO - Request completed in 0.44 seconds
+2025-04-21 10:02:26,789 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 10:02:26] "GET /api/statistical-area-map/Anderson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745209946345 HTTP/1.1" 200 -
+2025-04-21 10:02:26,838 - __main__ - INFO - Map request for area: Anderson
+2025-04-21 10:02:26,838 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745209946345'), ('_show_states', 'true'), ('_show_counties', 'true'), ('_show_msas', 'true'), ('_t', '1745209946805')])
+2025-04-21 10:02:26,839 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-21 10:02:26,839 - statistical_area_zoom - INFO - Generating map for statistical area: Anderson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-21 10:02:26,839 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anderson_lightweight.html
+2025-04-21 10:02:26,839 - statistical_area_zoom - INFO - Using cached map from /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anderson_lightweight.html (age: 0.0 hours)
+2025-04-21 10:02:26,839 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-21 10:02:26,839 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Anderson_lightweight.html
+2025-04-21 10:02:26,839 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-21 10:02:26,840 - werkzeug - INFO - 127.0.0.1 - - [21/Apr/2025 10:02:26] "GET /api/statistical-area-map/Anderson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745209946345&_show_states=true&_show_counties=true&_show_msas=true&_t=1745209946805 HTTP/1.1" 200 -
