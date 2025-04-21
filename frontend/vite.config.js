@@ -15,12 +15,10 @@ export default defineConfig({
   },
   build: {
     cssCodeSplit: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
+    minify: 'esbuild',
+    esbuildOptions: {
+      target: 'es2015',
+      drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : undefined,
     },
     rollupOptions: {
       output: {

@@ -38,6 +38,9 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm ci --only=production
 
+# Explicitly install terser to ensure it's available for the build
+RUN npm install --no-save terser@5.26.0
+
 # Copy frontend source code
 COPY frontend/ ./
 

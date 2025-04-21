@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "start": "cd backend && python -m gunicorn app:app --config=gunicorn.conf.py",
-    "build": "cd backend && pip install -r requirements.txt && cd ../frontend && npm install && npm run build",
+    "build": "cd backend && pip install -r requirements.txt && cd ../frontend && npm install && npm install terser --no-save && npm run build",
     "dev:backend": "cd backend && python app.py",
     "dev:frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",

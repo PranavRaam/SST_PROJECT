@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node ./scripts/post-build.js",
-    "vercel-build": "vite build && node ./scripts/post-build.js",
+    "vercel-build": "npm install terser && vite build && node ./scripts/post-build.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "postbuild": "node ./scripts/validate-assets.js"
@@ -36,6 +36,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "terser": "^5.26.0",
     "vite": "^4.4.5"
   }
 }
