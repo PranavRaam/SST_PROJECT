@@ -10,6 +10,9 @@ import sys
 from statistical_area_zoom import generate_statistical_area_map
 import re
 import data_preloader
+import gzip
+import functools
+from io import BytesIO
 
 app = Flask(__name__)
 # Enable CORS with specific options for production
@@ -47,10 +50,103 @@ map_generation_lock = threading.Lock()
 map_generation_in_progress = False
 map_data = None
 
+# Memory cache for API responses
+response_cache = {}
+CACHE_TIMEOUT = 3600  # Cache timeout in seconds (1 hour)
+
+# Initialize performance monitoring variables
+request_count = 0
+request_times = {}
+memory_usage = {}
+
+# Memory optimization for map generation
+def optimize_map_generation():
+    """Apply memory optimization techniques to the map generation process"""
+    import gc
+    import os
+    import psutil
+    
+    # Force garbage collection to free memory
+    gc.collect()
+    
+    # Get current process memory info
+    process = psutil.Process(os.getpid())
+    memory_before = process.memory_info().rss / 1024 / 1024  # Convert to MB
+    
+    logger.info(f"Memory usage before optimization: {memory_before:.2f} MB")
+    
+    # Return the current memory usage for tracking
+    return memory_before
+
+# Simple in-memory cache decorator
+def cache_response(timeout=CACHE_TIMEOUT):
+    def decorator(f):
+        @functools.wraps(f)
+        def wrapper(*args, **kwargs):
+            cache_key = f.__name__ + str(args) + str(kwargs)
+            current_time = time.time()
+            
+            # Check if result is in cache and not expired
+            if cache_key in response_cache:
+                result, timestamp = response_cache[cache_key]
+                if current_time - timestamp < timeout:
+                    return result
+            
+            # Calculate new result and store in cache
+            result = f(*args, **kwargs)
+            response_cache[cache_key] = (result, current_time)
+            return result
+        return wrapper
+    return decorator
+
 # Ensure cache directory exists
 if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
     logger.info(f"Created cache directory: {CACHE_DIR}")
+
+# Function to determine if a response should be compressed
+def should_compress(response):
+    content_type = response.headers.get('Content-Type', '')
+    content_length = response.headers.get('Content-Length', 0)
+    try:
+        content_length = int(content_length)
+    except (ValueError, TypeError):
+        content_length = 0
+    
+    # Only compress text-based responses over a certain size
+    return (
+        content_length > 1024 and  # Only compress responses larger than 1KB
+        ('text/' in content_type or 
+         'application/json' in content_type or 
+         'application/javascript' in content_type)
+    )
+
+# Compression middleware
+@app.after_request
+def compress_response(response):
+    # Check if client accepts gzip
+    accept_encoding = request.headers.get('Accept-Encoding', '')
+    
+    if 'gzip' in accept_encoding and should_compress(response):
+        response_data = response.get_data()
+        
+        if response_data:
+            # Compress the response
+            gzip_buffer = BytesIO()
+            gzip_file = gzip.GzipFile(mode='wb', fileobj=gzip_buffer)
+            gzip_file.write(response_data)
+            gzip_file.close()
+            
+            # Replace the response with compressed data
+            response.set_data(gzip_buffer.getvalue())
+            response.headers['Content-Encoding'] = 'gzip'
+            response.headers['Content-Length'] = len(response.get_data())
+            
+    # Add cache headers for appropriate routes
+    if request.path.startswith('/api/map') or request.path.startswith('/api/regions'):
+        response.headers['Cache-Control'] = 'public, max-age=3600'  # Cache for 1 hour
+    
+    return response
 
 # Custom middleware to handle CORS for HTML responses
 @app.after_request
@@ -115,16 +211,26 @@ def options_statistical_area_map(area_name):
 
 @app.route('/api/generate-map', methods=['GET'])
 def generate_map():
-    global map_generation_in_progress
+    global map_generation_in_progress, request_count
+    
+    # Increment request counter
+    request_count += 1
+    request_id = f"req_{request_count}"
+    request_times[request_id] = {"start": time.time()}
     
     # Check if map already exists
     if os.path.exists(MAP_FILE):
         logger.info(f"Map already exists at {MAP_FILE}")
+        request_times[request_id]["end"] = time.time()
         return jsonify({
             "success": True,
             "mapPath": "/api/map",
             "message": "Map already exists"
         })
+    
+    # Apply memory optimization to make map generation more efficient
+    mem_usage = optimize_map_generation()
+    memory_usage[request_id] = {"before": mem_usage}
     
     # Start map generation in background thread if not already in progress
     if not map_generation_in_progress:
@@ -137,20 +243,35 @@ def generate_map():
                 # Generate the map using the main.py functions
                 start_time = time.time()
                 logger.info("Starting map generation")
+                
+                # Apply memory optimization before generation
+                optimize_map_generation()
+                
                 main.main()
+                
                 elapsed_time = time.time() - start_time
                 logger.info(f"Map generation completed in {elapsed_time:.2f} seconds")
+                
+                # Post-generation memory optimization
+                post_mem = optimize_map_generation()
+                memory_usage[request_id]["after"] = post_mem
+                
             except Exception as e:
                 logger.error(f"Error during map generation: {e}")
             finally:
                 with map_generation_lock:
                     map_generation_in_progress = False
+                
+                # Final GC collection to clean up
+                import gc
+                gc.collect()
         
         thread = threading.Thread(target=generate_map_task)
         thread.daemon = True
         thread.start()
         logger.info("Map generation thread started")
     
+    request_times[request_id]["end"] = time.time()
     return jsonify({
         "success": True,
         "mapPath": "/api/map",
@@ -159,6 +280,7 @@ def generate_map():
     })
 
 @app.route('/api/map-status', methods=['GET'])
+@cache_response(timeout=5)  # Short cache time as status changes frequently
 def map_status():
     return jsonify({
         "exists": os.path.exists(MAP_FILE),
@@ -271,6 +393,7 @@ def get_map():
         return "Map not found", 404
 
 @app.route('/api/regions', methods=['GET'])
+@cache_response(timeout=3600)  # Cache for 1 hour since regions rarely change
 def get_regions():
     # Fetch region data
     _, _, _, regions = main.define_regions()
@@ -323,6 +446,7 @@ def get_static_fallback_map(area_name):
         }), 500
 
 @app.route('/api/statistical-area-map/<area_name>', methods=['GET'])
+@cache_response(timeout=3600)  # Cache for 1 hour
 def get_statistical_area_map(area_name):
     """Get a map for a specific statistical area"""
     try:

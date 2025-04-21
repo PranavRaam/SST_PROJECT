@@ -15,14 +15,26 @@ export default defineConfig({
   },
   build: {
     cssCodeSplit: false,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
-        manualChunks: undefined,
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          charts: ['recharts'],
+          maps: ['leaflet', 'react-leaflet', 'mapbox-gl'],
+        },
         assetFileNames: 'assets/[name].[hash].[ext]'
       },
       preserveEntrySignatures: 'strict'
     },
-    assetsInlineLimit: 0
+    assetsInlineLimit: 4096, // 4kb - small files will be inlined as base64
+    sourcemap: false, // Disable sourcemap in production for smaller bundle
   },
   css: {
     postcss: {

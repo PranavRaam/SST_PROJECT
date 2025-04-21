@@ -11,3 +11,4 @@ gunicorn
 python-dotenv
 geopy
 pyshp
+psutil

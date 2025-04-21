@@ -5,14 +5,41 @@
   "routes": [
     {
       "src": "/assets/(.*)",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" },
+      "headers": { 
+        "cache-control": "public, max-age=31536000, immutable", 
+        "Access-Control-Allow-Origin": "*"
+      },
       "dest": "/frontend/dist/assets/$1"
+    },
+    {
+      "src": "/(.*\\.js)",
+      "headers": { 
+        "cache-control": "public, max-age=31536000, immutable",
+        "content-type": "application/javascript; charset=utf-8",
+        "x-content-type-options": "nosniff"
+      },
+      "dest": "/frontend/dist/$1"
     },
     {
       "src": "/(.*\\.css)",
       "headers": { 
         "cache-control": "public, max-age=31536000, immutable",
-        "content-type": "text/css" 
+        "content-type": "text/css",
+        "x-content-type-options": "nosniff" 
+      },
+      "dest": "/frontend/dist/$1"
+    },
+    {
+      "src": "/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp))",
+      "headers": { 
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "dest": "/frontend/dist/$1"
+    },
+    {
+      "src": "/(.*\\.(woff|woff2|ttf|otf|eot))",
+      "headers": { 
+        "cache-control": "public, max-age=31536000, immutable"
       },
       "dest": "/frontend/dist/$1"
     },
@@ -24,12 +51,41 @@
       },
       "dest": "/frontend/dist/override-styles.css"
     },
+    { 
+      "src": "/api/(.*)",
+      "dest": "https://sst-project.onrender.com/api/$1",
+      "headers": {
+        "cache-control": "public, max-age=3600"
+      }
+    },
     {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate"
+      },
       "dest": "/frontend/dist/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { 
+          "key": "X-Content-Type-Options", 
+          "value": "nosniff" 
+        },
+        { 
+          "key": "X-Frame-Options", 
+          "value": "SAMEORIGIN" 
+        },
+        { 
+          "key": "X-XSS-Protection", 
+          "value": "1; mode=block" 
+        }
+      ]
     }
   ]
 } 

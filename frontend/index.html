@@ -5,7 +5,21 @@
     <link rel="icon" type="image/svg+xml" href="/src/assets/map-icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Healthcare Services Dashboard with US 20-Region Classification Map" />
+    <meta http-equiv="Cache-Control" content="max-age=86400" />
     <title>Healthcare Services Dashboard</title>
+    <!-- DNS prefetching -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <!-- Preconnect to critical domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/src/assets/map-icon.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style">
+    
     <!-- Console suppression to prevent excessive warnings -->
     <script src="/console-suppress.js"></script>
     <!-- Map fix scripts to address the show_states error -->
@@ -24,10 +38,11 @@
     <script src="/map-state-fix.js"></script>
     <script src="/map-inject.js"></script>
     <script src="/iframe-patch.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     <!-- CSS override styles for production environment -->
     <link rel="stylesheet" href="/override-styles.css">
     <style>
@@ -67,9 +82,9 @@
     <script type="module" src="/src/main.jsx"></script>
     
     <!-- Add map check script last to verify everything is working -->
-    <script src="/map-check.js"></script>
+    <script defer src="/map-check.js"></script>
     
     <!-- Add map diagnostic script for troubleshooting deployed environments -->
-    <script type="module" src="/map-diagnostic.js"></script>
+    <script type="module" defer src="/map-diagnostic.js"></script>
   </body>
 </html>
