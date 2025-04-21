@@ -132,6 +132,7 @@ const getTodayMinusDays = (days) => {
 const formatDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
+  // Always use en-US locale for consistent MM/DD/YYYY formatting
   return date.toLocaleDateString('en-US', { 
     year: 'numeric', 
     month: 'short', 
@@ -862,16 +863,23 @@ const PatientDetailView = ({ patient: propPatient }) => {
     // Use custom document ID if provided, otherwise generate a unique ID
     const documentId = newDocId || `DOC-${Date.now().toString().slice(-6)}`;
     
+    // Ensure date is in consistent format (MM/DD/YYYY)
+    const formattedDate = newDocDate ? new Date(newDocDate).toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    }).replace(/\//g, '-') : new Date().toLocaleDateString('en-US').replace(/\//g, '-');
+    
     // Create a new document object
     const newDocument = {
       id: documentId,
       status: "New",
-      receivedDate: newDocDate,
+      receivedDate: formattedDate,
       fileName: file.name,
       fileSize: file.size,
       type: newDocType || '', // Use custom document type if provided
       uploadedBy: "Current User",
-      uploadedDate: new Date().toISOString().split("T")[0],
+      uploadedDate: new Date().toLocaleDateString('en-US').replace(/\//g, '-'),
       uploader: { name: "Current User" },
     };
     
@@ -2282,19 +2290,26 @@ Total documents: ${documents.length}
       return;
     }
     
+    // Ensure date is in consistent format (MM/DD/YYYY)
+    const formattedDate = signedDate ? new Date(signedDate).toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    }).replace(/\//g, '-') : new Date().toLocaleDateString('en-US').replace(/\//g, '-');
+    
     // Create the signed document object with selected date and type
     const newSignedDoc = {
       id: signedDocId || `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
       type: signedDocType, // Use the selected document type
       fileName: file.name,
       size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-      signedDate: signedDate, // This should now be in the correct format
+      signedDate: formattedDate, // This should now be in the correct format
       signedBy: 'Current User',
       file: file // Store the actual file for potential preview
     };
     
     // Log to ensure date is in correct format
-    console.log('Document being processed with date:', signedDate, 'and type:', signedDocType);
+    console.log('Document being processed with date:', formattedDate, 'and type:', signedDocType);
     console.log('Document ID:', signedDocId);
     
     // Add to signed documents
@@ -2334,7 +2349,7 @@ Total documents: ${documents.length}
       [field]: date
     }));
     
-    // Update your existing filter state/logic here
+    // Always format dates in US format (MM/DD/YYYY) and ensure consistent delimiter
     const formattedDate = date ? date.toLocaleDateString('en-US', {
       month: '2-digit',
       day: '2-digit',
@@ -3432,21 +3447,29 @@ Total documents: ${documents.length}
                     <DatePicker
                       selected={dateRange.startDate}
                       onChange={(date) => handleDateChange(date, 'startDate')}
-                      dateFormat="MM-dd-yyyy"
-                      placeholderText="mm-dd-yyyy"
+                      dateFormat="MM/dd/yyyy"
+                      placeholderText="MM/DD/YYYY"
                       className="pdv-doc-date-input-unique"
                       isClearable
                       autoComplete="off"
+                      locale="en-US"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
                     />
                     <span>to</span>
                     <DatePicker
                       selected={dateRange.endDate}
                       onChange={(date) => handleDateChange(date, 'endDate')}
-                      dateFormat="MM-dd-yyyy"
-                      placeholderText="mm-dd-yyyy"
+                      dateFormat="MM/dd/yyyy"
+                      placeholderText="MM/DD/YYYY"
                       className="pdv-doc-date-input-unique"
                       isClearable
                       autoComplete="off"
+                      locale="en-US"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
                     />
                   </div>
                 </div>
@@ -4129,6 +4152,9 @@ Total documents: ${documents.length}
                     className="form-control"
                     max={new Date().toISOString().split('T')[0]} // Today as max date
                     style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                    // Force US date format on all browsers/environments
+                    data-date-format="mm/dd/yyyy"
+                    lang="en-US"
                   />
                   {/* Alternative calendar icon for better UX */}
                   <FaCalendarAlt 
@@ -4141,7 +4167,7 @@ Total documents: ${documents.length}
                   />
                 </div>
                 <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
-                  Format: MM/DD/YYYY
+                  Format: MM/DD/YYYY (Month/Day/Year)
                 </small>
               </div>
               <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
@@ -4231,6 +4257,9 @@ Total documents: ${documents.length}
                     className="form-control"
                     max={new Date().toISOString().split('T')[0]} // Today as max date
                     style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                    // Force US date format on all browsers/environments
+                    data-date-format="mm/dd/yyyy"
+                    lang="en-US"
                   />
                   {/* Alternative calendar icon for better UX */}
                   <FaCalendarAlt 
@@ -4243,7 +4272,7 @@ Total documents: ${documents.length}
                   />
                 </div>
                 <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
-                  Format: MM/DD/YYYY
+                  Format: MM/DD/YYYY (Month/Day/Year)
                 </small>
               </div>
               <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
