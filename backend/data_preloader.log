@@ -8974,3 +8974,51 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-21 10:17:27,966 - __main__ - INFO - Checking for cached data at startup
 2025-04-21 10:17:27,994 - werkzeug - WARNING -  * Debugger is active!
 2025-04-21 10:17:27,994 - werkzeug - INFO -  * Debugger PIN: 928-661-346
+2025-04-22 20:38:40,100 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\data_cache
+2025-04-22 20:38:40,141 - __main__ - INFO - Checking for cached data at startup
+2025-04-22 20:38:40,233 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.178:5000
+2025-04-22 20:38:40,234 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-22 20:38:40,240 - werkzeug - INFO -  * Restarting with stat
+2025-04-22 20:38:43,565 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\data_cache
+2025-04-22 20:38:43,586 - __main__ - INFO - Checking for cached data at startup
+2025-04-22 20:38:43,600 - werkzeug - WARNING -  * Debugger is active!
+2025-04-22 20:38:43,645 - werkzeug - INFO -  * Debugger PIN: 650-118-331
+2025-04-22 20:41:23,244 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:23] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-22 20:41:25,330 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:25] "GET /api/map?t=1745334683319&noCache=true&stableView=true?t%3D1745334683319&_show_states=true&_show_counties=true&_show_msas=true&_t=1745334683337 HTTP/1.1" 200 -
+2025-04-22 20:41:28,021 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:28] "GET /api/map?t=1745334686664&noCache=true&stableView=true?t%3D1745334686664&_show_states=true&_show_counties=true&_show_msas=true&_t=1745334686665 HTTP/1.1" 200 -
+2025-04-22 20:41:43,686 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:43] "GET /api/health HTTP/1.1" 200 -
+2025-04-22 20:41:44,027 - __main__ - INFO - Map request for area: Abilene
+2025-04-22 20:41:44,029 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745334703707')])
+2025-04-22 20:41:44,031 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-22 20:41:44,033 - statistical_area_zoom - INFO - Generating map for statistical area: Abilene with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-22 20:41:44,035 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Abilene_lightweight.html
+2025-04-22 20:41:44,038 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Abilene_lightweight.html (age: 0.1 hours)
+2025-04-22 20:41:44,039 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-22 20:41:44,042 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Abilene_lightweight.html
+2025-04-22 20:41:44,044 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-22 20:41:44,353 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:44] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334703707 HTTP/1.1[0m" 500 -
+2025-04-22 20:41:44,775 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:44] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334703707&_show_states=true&_show_counties=true&_show_msas=true&_t=1745334704367 HTTP/1.1[0m" 500 -
+2025-04-22 20:41:45,495 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:45] "GET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-22 20:41:45,601 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:45] "GET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-22 20:41:45,701 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:45] "GET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-04-22 20:41:50,164 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:50] "GET /api/health HTTP/1.1" 200 -
+2025-04-22 20:41:50,516 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:50] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334710174 HTTP/1.1[0m" 500 -
+2025-04-22 20:41:50,928 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:50] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334710174&_show_states=true&_show_counties=true&_show_msas=true&_t=1745334710526 HTTP/1.1[0m" 500 -
+2025-04-22 20:41:51,165 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:51] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-22 20:41:51,278 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:51] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-22 20:41:51,313 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:51] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-04-22 20:41:54,428 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:54] "GET /api/health HTTP/1.1" 200 -
+2025-04-22 20:41:54,794 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:54] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334714434 HTTP/1.1[0m" 500 -
+2025-04-22 20:41:55,170 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:55] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334714434&_show_states=true&_show_counties=true&_show_msas=true&_t=1745334714801 HTTP/1.1[0m" 500 -
+2025-04-22 20:41:55,407 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:55] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-22 20:41:55,517 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:55] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-22 20:41:55,567 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:41:55] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-04-22 20:42:33,847 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:42:33] "GET /api/health HTTP/1.1" 200 -
+2025-04-22 20:42:34,221 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:42:34] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334753852 HTTP/1.1[0m" 500 -
+2025-04-22 20:42:34,655 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:42:34] "[35m[1mGET /api/statistical-area-map/Abilene?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745334753852&_show_states=true&_show_counties=true&_show_msas=true&_t=1745334754234 HTTP/1.1[0m" 500 -
+2025-04-22 20:42:34,894 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:42:34] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-22 20:42:35,004 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:42:35] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-22 20:42:35,054 - werkzeug - INFO - 127.0.0.1 - - [22/Apr/2025 20:42:35] "[36mGET /api/statistical-area-map/Abilene?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -

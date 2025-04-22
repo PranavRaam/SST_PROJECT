@@ -1478,22 +1478,24 @@ const PGView = () => {
                 
                 <div className="form-group">
                   <label>Billing Start Date</label>
-                  <input
-                    type="date"
-                    name="start"
-                    value={selectedDateRange.start}
-                    onChange={handleDateRangeChange}
+                  <DatePicker
+                    selected={selectedDateRange.start ? new Date(selectedDateRange.start) : null}
+                    onChange={(date) => handleDateRangeChange({ target: { name: 'start', value: date ? date.toISOString().split('T')[0] : '' } })}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="MM-DD-YYYY"
                     className="date-input"
+                    isClearable
                   />
                 </div>
                 <div className="form-group">
                   <label>Billing End Date</label>
-                  <input
-                    type="date"
-                    name="end"
-                    value={selectedDateRange.end}
-                    onChange={handleDateRangeChange}
+                  <DatePicker
+                    selected={selectedDateRange.end ? new Date(selectedDateRange.end) : null}
+                    onChange={(date) => handleDateRangeChange({ target: { name: 'end', value: date ? date.toISOString().split('T')[0] : '' } })}
+                    dateFormat="MM-dd-yyyy"
+                    placeholderText="MM-DD-YYYY"
                     className="date-input"
+                    isClearable
                   />
                 </div>
                 
