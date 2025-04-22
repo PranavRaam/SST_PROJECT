@@ -21,7 +21,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Get CORS settings from environment
-cors_origins = os.environ.get('CORS_ORIGINS', 'https://sst-frontend-swart.vercel.app,http://localhost:3000,https://sst-project.onrender.com').split(',')
+cors_origins = os.environ.get('CORS_ORIGINS', 'https://sst-frontend-swart.vercel.app,http://localhost:3000,https://sst-project.onrender.com,https://sst-project-kappa.vercel.app').split(',')
 logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
 
 # Enable CORS with specific options for production
