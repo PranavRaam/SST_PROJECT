@@ -27,14 +27,14 @@ logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
 # Enable CORS with specific options for production
 CORS(app, 
     resources={r"/api/*": {
-        "origins": cors_origins,
+        "origins": "*",  # Allow all origins for simplicity
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "expose_headers": ["Content-Type", "Content-Length", "Content-Disposition", "X-Frame-Options"],
         "max_age": 86400  # Cache preflight requests for 24 hours
     }},
-    send_wildcard=False  # Changed to False to prevent CORS issues
+    send_wildcard=True  # Enable wildcard for simpler CORS
 )
 
 # Set up logging to console and file
@@ -158,23 +158,14 @@ def compress_response(response):
 @app.after_request
 def add_cors_headers(response):
     # Add CORS headers to all responses
-    origin = request.headers.get('Origin', '')
-    
-    # If the origin is in our allowed list, set it as the allowed origin
-    if origin in cors_origins:
-        response.headers['Access-Control-Allow-Origin'] = origin
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
-    # Only use wildcard if no specific origin matched and no credentials needed
-    elif not response.headers.get('Access-Control-Allow-Credentials'):
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        
+    response.headers['Access-Control-Allow-Origin'] = '*'  # Allow all origins
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Cache-Control, X-Requested-With'
     response.headers['Access-Control-Max-Age'] = '86400'  # 24 hours in seconds
     
     # For iframe embedding
     if response.mimetype == 'text/html':
-        response.headers['X-Frame-Options'] = 'ALLOW-FROM http://localhost:3000'
+        response.headers['X-Frame-Options'] = 'ALLOWALL'
         response.headers['Content-Security-Policy'] = "frame-ancestors *"
     
     return response

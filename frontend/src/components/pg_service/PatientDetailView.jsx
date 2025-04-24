@@ -853,12 +853,8 @@ const PatientDetailView = ({ patient: propPatient }) => {
     // Use custom document ID if provided, otherwise generate a unique ID
     const documentId = newDocId || `DOC-${Date.now().toString().slice(-6)}`;
     
-    // Ensure date is in consistent format (MM/DD/YYYY)
-    const formattedDate = newDocDate ? new Date(newDocDate).toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    }).replace(/\//g, '-') : new Date().toLocaleDateString('en-US').replace(/\//g, '-');
+    // Store date as is - the display formatting will be handled by formatDate function
+    const receivedDate = newDocDate;
     
     // Create a new document object
     const newDocument = {
@@ -1070,6 +1066,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
   
   // Function to update signed date
   const updateSignedDate = (docId, date) => {
+    // Store the date as is - formatting will be handled when displaying
     setSignedDocs(prevDocs => 
       prevDocs.map(doc => 
         doc.id === docId ? { ...doc, signedDate: date } : doc
@@ -1261,18 +1258,19 @@ const PatientDetailView = ({ patient: propPatient }) => {
 
   // Function to update document viewer document
   const updateViewerDocument = (field, value) => {
+    // Handle dates consistently - store as is, formatting happens at display time
     if (selectedDocument) {
-    if (selectedDocument.status) {
+      if (selectedDocument.status) {
         // For new/prepared documents
-      setNewPreparedDocs(prevDocs => 
-        prevDocs.map(doc => 
+        setNewPreparedDocs(prevDocs => 
+          prevDocs.map(doc => 
             doc.id === selectedDocument.id ? { ...doc, [field]: value } : doc
-        )
-      );
+          )
+        );
       } else if (selectedDocument.signedDate) {
         // For signed documents
-      setSignedDocs(prevDocs => 
-        prevDocs.map(doc => 
+        setSignedDocs(prevDocs => 
+          prevDocs.map(doc => 
             doc.id === selectedDocument.id ? { ...doc, [field]: value } : doc
           )
         );
@@ -1284,6 +1282,12 @@ const PatientDetailView = ({ patient: propPatient }) => {
           )
         );
       }
+      
+      // Update the selected document as well
+      setSelectedDocument(prev => ({
+        ...prev,
+        [field]: value
+      }));
     }
   };
 
@@ -2259,28 +2263,27 @@ Total documents: ${documents.length}
     const files = e.target.files;
     if (!files || files.length === 0) return;
     
-    // Store the files for processing
+    // Show the modal to collect information for each file
     setUploadedSignedFiles(Array.from(files));
-    
-    // Start with the first file
     setCurrentSignedFileIndex(0);
-    
-    // Set initial date to today in yyyy-MM-dd format
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0]; // yyyy-MM-dd format
-    setSignedDate(formattedDate);
-    
-    // Reset document type for the first file
     setSignedDocType('');
+    setSignedDocId('');
     
-    // Show date selection modal
+    // Set default date to today in MM/DD/YYYY format
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const year = today.getFullYear();
+    const formattedDate = `${year}-${month}-${day}`; // YYYY-MM-DD format for date input
+    
+    setSignedDate(formattedDate);
     setShowDateModal(true);
     
     // Clear file input
     if (e.target) {
-      e.target.value = '';
+        e.target.value = '';
     }
-  };
+};
 
   const processSignedDocument = () => {
     // Get current file being processed
@@ -2298,7 +2301,7 @@ Total documents: ${documents.length}
         type: signedDocType,
         fileName: file.name,
         size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-        signedDate: toAmericanFormat(signedDate), // Use the new utility function
+        signedDate: signedDate, // Store as is - date handling will be done during display
         signedBy: 'Current User',
         file: file
     };
@@ -2524,7 +2527,7 @@ Total documents: ${documents.length}
                   {isEditing ? (
                     <input 
                       type="date" 
-                      value={patientInfo.admissionDate} 
+                      value={toHTMLDateFormat(patientInfo.admissionDate)} 
                       onChange={(e) => handleInfoChange('admissionDate', e.target.value)}
                       className="info-input"
                     />
@@ -2541,7 +2544,7 @@ Total documents: ${documents.length}
                   {isEditing ? (
                     <input 
                       type="date" 
-                      value={patientInfo.episodeFrom} 
+                      value={toHTMLDateFormat(patientInfo.episodeFrom)} 
                       onChange={(e) => handleInfoChange('episodeFrom', e.target.value)}
                       className="info-input"
                     />
@@ -2558,7 +2561,7 @@ Total documents: ${documents.length}
                   {isEditing ? (
                     <input 
                       type="date" 
-                      value={patientInfo.episodeTo} 
+                      value={toHTMLDateFormat(patientInfo.episodeTo)} 
                       onChange={(e) => handleInfoChange('episodeTo', e.target.value)}
                       className="info-input"
                     />
@@ -4022,6 +4025,21 @@ Total documents: ${documents.length}
                       )}
                     </span>
                   )}
+                  {activeTab === 'cpo' && (
+                    <span className="document-meta-item">
+                      <FaCalendar className="meta-icon" />
+                      Creation Date: {isEditingDocumentDetails ? (
+                        <input 
+                          type="date" 
+                          value={toHTMLDateFormat(selectedDocument.creationDate) || new Date().toISOString().split('T')[0]} 
+                          onChange={(e) => updateViewerDocument('creationDate', e.target.value)}
+                          className="doc-date-input"
+                        />
+                      ) : (
+                        formatDate(selectedDocument.creationDate) || "Not specified"
+                      )}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="document-viewer-actionss">
@@ -4135,16 +4153,9 @@ Total documents: ${documents.length}
                       <input 
                           type="date" 
                           id="signedDate"
-                          value={signedDate}
+                          value={toHTMLDateFormat(signedDate)}
                           onChange={(e) => {
-                              const date = new Date(e.target.value);
-                              // Format the date in American format for display
-                              const formattedDate = date.toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: '2-digit',
-                                  day: '2-digit'
-                              }).split('/').join('-');
-                              setSignedDate(formattedDate);
+                              setSignedDate(e.target.value);
                           }}
                           onKeyDown={(e) => {
                               e.stopPropagation();
@@ -4242,7 +4253,7 @@ Total documents: ${documents.length}
                   <input 
                     type="date" 
                     id="newDocDate"
-                    value={newDocDate}
+                    value={toHTMLDateFormat(newDocDate)}
                     onChange={(e) => {
                       console.log("Date changed to:", e.target.value);
                       setNewDocDate(e.target.value);
