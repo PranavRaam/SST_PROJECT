@@ -75,7 +75,7 @@ import {
   FaComment,
   FaCaretDown
 } from 'react-icons/fa';
-import { formatDate, toAmericanFormat, toISOFormat } from '../../utils/dateUtils';
+import { formatDate, toAmericanFormat, toHTMLDateFormat } from '../../utils/dateUtils';
 
 // Standard remarks values used across the application
 const standardRemarks = [
@@ -1099,7 +1099,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
   const handleInfoChange = (field, value) => {
     if (field.includes('Date') || field.includes('date')) {
       // Convert to ISO format for storage
-      value = toISOFormat(value);
+      value = toHTMLDateFormat(value);
     }
     setPatientInfo(prev => ({
       ...prev,
@@ -2333,7 +2333,7 @@ Total documents: ${documents.length}
     
     if (date) {
       // Convert to ISO format for the input
-      const isoDate = toISOFormat(date.toLocaleDateString('en-US'));
+      const isoDate = toHTMLDateFormat(date.toLocaleDateString('en-US'));
       handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', isoDate);
     } else {
       handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', '');
