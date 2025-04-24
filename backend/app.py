@@ -154,18 +154,18 @@ def compress_response(response):
     
     return response
 
-# Custom middleware to handle CORS for HTML responses
+# Custom middleware to handle CORS for ALL responses
 @app.after_request
 def add_cors_headers(response):
     # Add CORS headers to all responses
     origin = request.headers.get('Origin', '')
     
-    # Allow specific origins only when credentials are involved
+    # If the origin is in our allowed list, set it as the allowed origin
     if origin in cors_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
+    # Only use wildcard if no specific origin matched and no credentials needed
     elif not response.headers.get('Access-Control-Allow-Credentials'):
-        # If credentials aren't being used, we can use wildcard
         response.headers['Access-Control-Allow-Origin'] = '*'
         
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
@@ -176,7 +176,6 @@ def add_cors_headers(response):
     if response.mimetype == 'text/html':
         response.headers['X-Frame-Options'] = 'ALLOW-FROM http://localhost:3000'
         response.headers['Content-Security-Policy'] = "frame-ancestors *"
-        response.headers['Access-Control-Allow-Origin'] = origin if origin in cors_origins else '*'
     
     return response
 

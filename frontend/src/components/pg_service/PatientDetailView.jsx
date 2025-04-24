@@ -1098,13 +1098,21 @@ const PatientDetailView = ({ patient: propPatient }) => {
   // Handle patient info changes
   const handleInfoChange = (field, value) => {
     if (field.includes('Date') || field.includes('date')) {
-      // Convert to ISO format for storage
-      value = toHTMLDateFormat(value);
+      // For date fields, ensure we handle different formats properly
+      if (value) {
+        // Store the value as is (HTML date inputs provide YYYY-MM-DD format)
+        setPatientInfo(prev => ({
+          ...prev,
+          [field]: value
+        }));
+      }
+    } else {
+      // For non-date fields, just update the value
+      setPatientInfo(prev => ({
+        ...prev,
+        [field]: value
+      }));
     }
-    setPatientInfo(prev => ({
-      ...prev,
-      [field]: value
-    }));
   };
 
   // Save patient info changes
@@ -2332,9 +2340,10 @@ Total documents: ${documents.length}
     }));
     
     if (date) {
-      // Convert to ISO format for the input
-      const isoDate = toHTMLDateFormat(date.toLocaleDateString('en-US'));
-      handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', isoDate);
+      // Format date as MM/DD/YYYY for display, but YYYY-MM-DD for API
+      const americanDate = date.toLocaleDateString('en-US');
+      const htmlDate = toHTMLDateFormat(americanDate);
+      handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', htmlDate);
     } else {
       handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', '');
     }

@@ -163,12 +163,33 @@ export const toHTMLDateFormat = (dateString) => {
         // If in American format (MM/DD/YYYY)
         if (dateString.includes('/')) {
             [month, day, year] = dateString.split('/');
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            // Make sure each component is valid
+            if (!month || !day || !year || isNaN(parseInt(month)) || isNaN(parseInt(day)) || isNaN(parseInt(year))) {
+                throw new Error('Invalid date components');
+            }
+            // Pad with zeros if needed
+            month = month.padStart(2, '0');
+            day = day.padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
         
-        // If already in ISO format
+        // If using dashes already (MM-DD-YYYY)
         if (dateString.includes('-')) {
-            return dateString;
+            // Check if it's already in YYYY-MM-DD format
+            if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                return dateString;
+            }
+            
+            // Otherwise, assume it's MM-DD-YYYY
+            [month, day, year] = dateString.split('-');
+            // Make sure each component is valid
+            if (!month || !day || !year || isNaN(parseInt(month)) || isNaN(parseInt(day)) || isNaN(parseInt(year))) {
+                throw new Error('Invalid date components');
+            }
+            // Pad with zeros if needed
+            month = month.padStart(2, '0');
+            day = day.padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
         
         // Try parsing as date
@@ -180,9 +201,9 @@ export const toHTMLDateFormat = (dateString) => {
             return `${year}-${month}-${day}`;
         }
         
-        return dateString;
+        return ''; // Return empty string for invalid dates
     } catch (error) {
         console.error('Error converting to HTML date format:', error);
-        return dateString;
+        return '';
     }
 }; 
