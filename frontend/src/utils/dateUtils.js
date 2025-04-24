@@ -66,30 +66,32 @@ export const parseDateInput = (dateString) => {
     if (!dateString) return '';
     
     try {
-        let date;
+        let month, day, year;
         
-        // If already in ISO format (YYYY-MM-DD)
+        // If in ISO format (YYYY-MM-DD)
         if (dateString.includes('-')) {
-            return dateString;
+            [year, month, day] = dateString.split('-');
+            // Convert to MM-DD-YYYY
+            return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
         }
         
-        // If in American format (MM/DD/YYYY)
+        // If already in American format (MM/DD/YYYY)
         if (dateString.includes('/')) {
-            const [month, day, year] = dateString.split('/');
-            date = new Date(year, parseInt(month) - 1, day);
-        } else {
-            date = new Date(dateString);
+            [month, day, year] = dateString.split('/');
+            // Just ensure proper padding
+            return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
         }
         
-        if (isNaN(date.getTime())) {
-            return dateString;
+        // Try parsing as date
+        const date = new Date(dateString);
+        if (!isNaN(date.getTime())) {
+            month = (date.getMonth() + 1).toString().padStart(2, '0');
+            day = date.getDate().toString().padStart(2, '0');
+            year = date.getFullYear();
+            return `${month}/${day}/${year}`;
         }
         
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        
-        return `${year}-${month}-${day}`;
+        return dateString;
     } catch (error) {
         console.error('Error parsing date:', error);
         return dateString;
@@ -121,32 +123,66 @@ export const toAmericanFormat = (dateString) => {
     if (!dateString) return '';
     
     try {
+        let month, day, year;
+        
         // If already in American format
         if (typeof dateString === 'string' && dateString.includes('/')) {
-            const [month, day, year] = dateString.split('/');
-            if (month && day && year) {
-                return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
-            }
+            [month, day, year] = dateString.split('/');
+            return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
         }
         
         // If in ISO format
         if (typeof dateString === 'string' && dateString.includes('-')) {
-            const [year, month, day] = dateString.split('-');
+            [year, month, day] = dateString.split('-');
             return `${month}/${day}/${year}`;
         }
         
         // Try parsing as date
         const date = new Date(dateString);
         if (!isNaN(date.getTime())) {
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            const year = date.getFullYear();
+            month = (date.getMonth() + 1).toString().padStart(2, '0');
+            day = date.getDate().toString().padStart(2, '0');
+            year = date.getFullYear();
             return `${month}/${day}/${year}`;
         }
         
         return dateString;
     } catch (error) {
         console.error('Error converting to American format:', error);
+        return dateString;
+    }
+};
+
+// Helper function to convert MM/DD/YYYY to YYYY-MM-DD (for HTML date inputs)
+export const toHTMLDateFormat = (dateString) => {
+    if (!dateString) return '';
+    
+    try {
+        let month, day, year;
+        
+        // If in American format (MM/DD/YYYY)
+        if (dateString.includes('/')) {
+            [month, day, year] = dateString.split('/');
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        }
+        
+        // If already in ISO format
+        if (dateString.includes('-')) {
+            return dateString;
+        }
+        
+        // Try parsing as date
+        const date = new Date(dateString);
+        if (!isNaN(date.getTime())) {
+            year = date.getFullYear();
+            month = (date.getMonth() + 1).toString().padStart(2, '0');
+            day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        return dateString;
+    } catch (error) {
+        console.error('Error converting to HTML date format:', error);
         return dateString;
     }
 }; 

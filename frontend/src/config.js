@@ -8,7 +8,7 @@ export const getApiUrl = (path) => {
   
   // For production - use the environment variable
   // This needs to be set in your hosting environment to point to your Render backend URL
-  return `${import.meta.env.VITE_API_URL || ' https://sst-project.onrender.com'}${path}`;
+  return `https://sst-project.onrender.com${path}`;
 };
 
 // Add map parameters to prevent caching and improve stability`
