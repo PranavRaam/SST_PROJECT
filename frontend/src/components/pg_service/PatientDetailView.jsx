@@ -75,6 +75,7 @@ import {
   FaComment,
   FaCaretDown
 } from 'react-icons/fa';
+import { formatDate, toAmericanFormat } from '../../utils/dateUtils';
 
 // Standard remarks values used across the application
 const standardRemarks = [
@@ -127,17 +128,6 @@ const getTodayMinusDays = (days) => {
   const date = new Date();
   date.setDate(date.getDate() - days);
   return date.toLocaleDateString();
-};
-
-const formatDate = (dateString) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  // Always use en-US locale for consistent MM/DD/YYYY formatting
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric'
-  });
 };
 
 const getTimelineIcon = (eventType) => {
@@ -2286,53 +2276,41 @@ Total documents: ${documents.length}
     
     // Check if document type is selected
     if (!signedDocType) {
-      showNotification('warning', 'Document Type Required', 'Please select a document type');
-      return;
+        showNotification('warning', 'Document Type Required', 'Please select a document type');
+        return;
     }
-    
-    // Ensure date is in consistent format (MM/DD/YYYY)
-    const formattedDate = signedDate ? new Date(signedDate).toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    }).replace(/\//g, '-') : new Date().toLocaleDateString('en-US').replace(/\//g, '-');
     
     // Create the signed document object with selected date and type
     const newSignedDoc = {
-      id: signedDocId || `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
-      type: signedDocType, // Use the selected document type
-      fileName: file.name,
-      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
-      signedDate: formattedDate, // This should now be in the correct format
-      signedBy: 'Current User',
-      file: file // Store the actual file for potential preview
+        id: signedDocId || `DOC-SIGNED-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 1000)}`,
+        type: signedDocType,
+        fileName: file.name,
+        size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+        signedDate: toAmericanFormat(signedDate), // Use the new utility function
+        signedBy: 'Current User',
+        file: file
     };
-    
-    // Log to ensure date is in correct format
-    console.log('Document being processed with date:', formattedDate, 'and type:', signedDocType);
-    console.log('Document ID:', signedDocId);
     
     // Add to signed documents
     setSignedDocs(prev => [...prev, newSignedDoc]);
     
     // Move to next file or close modal if done
     if (currentSignedFileIndex < uploadedSignedFiles.length - 1) {
-      setCurrentSignedFileIndex(prev => prev + 1);
-      // Reset document type for the next file
-      setSignedDocType('');
-      setSignedDocId('');
+        setCurrentSignedFileIndex(prev => prev + 1);
+        setSignedDocType('');
+        setSignedDocId('');
     } else {
-      // All files processed, close modal and show success notification
-      setShowDateModal(false);
-      showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully with custom dates and types.');
-      
-      // Clear uploaded files
-      setUploadedSignedFiles([]);
-      setCurrentSignedFileIndex(0);
-      setSignedDocType('');
-      setSignedDocId('');
+        // All files processed, close modal and show success notification
+        setShowDateModal(false);
+        showNotification('success', 'Upload Complete', 'Signed documents have been uploaded successfully with custom dates and types.');
+        
+        // Clear uploaded files
+        setUploadedSignedFiles([]);
+        setCurrentSignedFileIndex(0);
+        setSignedDocType('');
+        setSignedDocId('');
     }
-  };
+};
 
   const cancelSignedDocumentUpload = () => {
     setShowDateModal(false);
@@ -4138,41 +4116,44 @@ Total documents: ${documents.length}
                 </select>
               </div>
               
+              {/* Date input in modal */}
               <div className="form-group">
-                <label htmlFor="signedDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Signed Date:</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <input 
-                    type="date" 
-                    id="signedDate"
-                    value={signedDate}
-                    onChange={(e) => {
-                      console.log("Date changed to:", e.target.value);
-                      setSignedDate(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      // Allow editing with keyboard
-                      e.stopPropagation();
-                    }}
-                    className="form-control"
-                    max={new Date().toISOString().split('T')[0]} // Today as max date
-                    style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
-                    // Force US date format on all browsers/environments
-                    data-date-format="mm/dd/yyyy"
-                    lang="en-US"
-                  />
-                  {/* Alternative calendar icon for better UX */}
-                  <FaCalendarAlt 
-                    style={{ cursor: 'pointer', fontSize: '20px' }} 
-                    onClick={() => {
-                      // Focus the date input when calendar icon is clicked
-                      document.getElementById('signedDate')?.focus();
-                      document.getElementById('signedDate')?.showPicker?.();
-                    }}
-                  />
-                </div>
-                <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
-                  Format: MM/DD/YYYY (Month/Day/Year)
-                </small>
+                  <label htmlFor="signedDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Signed Date:</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <input 
+                          type="date" 
+                          id="signedDate"
+                          value={signedDate}
+                          onChange={(e) => {
+                              const date = new Date(e.target.value);
+                              // Format the date in American format for display
+                              const formattedDate = date.toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: '2-digit',
+                                  day: '2-digit'
+                              }).split('/').join('-');
+                              setSignedDate(formattedDate);
+                          }}
+                          onKeyDown={(e) => {
+                              e.stopPropagation();
+                          }}
+                          className="form-control"
+                          max={new Date().toISOString().split('T')[0]}
+                          style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                          data-date-format="mm/dd/yyyy"
+                          lang="en-US"
+                      />
+                      <FaCalendarAlt 
+                          style={{ cursor: 'pointer', fontSize: '20px' }} 
+                          onClick={() => {
+                              document.getElementById('signedDate')?.focus();
+                              document.getElementById('signedDate')?.showPicker?.();
+                          }}
+                      />
+                  </div>
+                  <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
+                      Format: MM/DD/YYYY (Month/Day/Year)
+                  </small>
               </div>
               <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                 <button 

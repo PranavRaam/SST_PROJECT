@@ -9050,3 +9050,153 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-22 20:58:38,009 - __main__ - INFO - Checking for cached data at startup
 2025-04-22 20:58:38,021 - werkzeug - WARNING -  * Debugger is active!
 2025-04-22 20:58:38,026 - werkzeug - INFO -  * Debugger PIN: 650-118-331
+2025-04-24 13:07:03,961 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-24 13:07:03,971 - __main__ - INFO - Checking for cached data at startup
+2025-04-24 13:07:03,992 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.128.110:5000
+2025-04-24 13:07:03,992 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-24 13:07:03,993 - werkzeug - INFO -  * Restarting with stat
+2025-04-24 13:07:04,791 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-24 13:07:04,799 - __main__ - INFO - Checking for cached data at startup
+2025-04-24 13:07:04,810 - werkzeug - WARNING -  * Debugger is active!
+2025-04-24 13:07:04,811 - werkzeug - INFO -  * Debugger PIN: 884-706-186
+2025-04-24 13:09:11,979 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:11] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-24 13:09:12,465 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:12] "GET /api/map?t=1745480351987&noCache=true&stableView=true?t%3D1745480351987&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480351988 HTTP/1.1" 200 -
+2025-04-24 13:09:12,540 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:12] "GET /api/map?t=1745480352045&noCache=true&stableView=true?t%3D1745480352045&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480352050 HTTP/1.1" 200 -
+2025-04-24 13:09:13,748 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:13] "GET /api/map?t=1745480353289&noCache=true&stableView=true?t%3D1745480353289&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480353289 HTTP/1.1" 200 -
+2025-04-24 13:09:15,502 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 13:09:15,508 - __main__ - INFO - Map request for area: Albany-Schenectady-Troy
+2025-04-24 13:09:15,509 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745480355506')])
+2025-04-24 13:09:15,509 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-24 13:09:15,509 - statistical_area_zoom - INFO - Generating map for statistical area: Albany-Schenectady-Troy with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-24 13:09:15,509 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-24 13:09:15,509 - statistical_area_zoom - INFO - Cached map is 164.3 hours old, regenerating...
+2025-04-24 13:09:15,509 - statistical_area_zoom - INFO - Loading map data...
+2025-04-24 13:09:15,509 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-24 13:09:15,509 - data_preloader - INFO - Loading all cached data...
+2025-04-24 13:09:15,528 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-24 13:09:15,530 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-24 13:09:15,530 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-24 13:09:15,530 - statistical_area_zoom - INFO - Normalized area name: albany-schenectady-troy
+2025-04-24 13:09:15,536 - statistical_area_zoom - INFO - Trying to match city name: albany
+2025-04-24 13:09:15,538 - statistical_area_zoom - INFO - Found exact city match: Albany, GA
+2025-04-24 13:09:15,538 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:09:15,538 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:09:15,539 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Albany-Schenectady-Troy
+2025-04-24 13:09:15,540 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Albany-Schenectady-Troy
+2025-04-24 13:09:15,541 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:09:15,541 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:09:15,541 - statistical_area_zoom - INFO - Center: 31.646759182348596, -84.11528437079876
+2025-04-24 13:09:15,541 - statistical_area_zoom - INFO - Bounds: -84.603086, 31.318412, -83.649384, 31.967456
+2025-04-24 13:09:15,733 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-24 13:09:15,734 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight.html
+2025-04-24 13:09:15,734 - __main__ - INFO - Request completed in 0.23 seconds
+2025-04-24 13:09:15,740 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:15] "[35m[1mGET /api/statistical-area-map/Albany-Schenectady-Troy?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480355506 HTTP/1.1[0m" 500 -
+2025-04-24 13:09:15,765 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:15] "[35m[1mGET /api/statistical-area-map/Albany-Schenectady-Troy?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480355506&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480355745 HTTP/1.1[0m" 500 -
+2025-04-24 13:09:15,783 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:15] "GET /api/statistical-area-map/Albany-Schenectady-Troy?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-24 13:09:15,784 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:15] "GET /api/statistical-area-map/Albany-Schenectady-Troy?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-24 13:09:15,797 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:15] "GET /api/statistical-area-map/Albany-Schenectady-Troy?__debugger__=yes&cmd=resource&f=console.png&s=kCFLc3oWppBUE5WnE4HZ HTTP/1.1" 200 -
+2025-04-24 13:09:21,735 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:21] "GET /api/map?t=1745480361251&noCache=true&stableView=true?t%3D1745480361251&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480361252 HTTP/1.1" 200 -
+2025-04-24 13:09:22,835 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:22] "GET /api/map?t=1745480362373&noCache=true&stableView=true?t%3D1745480362373&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480362374 HTTP/1.1" 200 -
+2025-04-24 13:09:24,712 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:24] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 13:09:24,718 - __main__ - INFO - Map request for area: Bakersfield
+2025-04-24 13:09:24,718 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745480364715')])
+2025-04-24 13:09:24,718 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-24 13:09:24,719 - statistical_area_zoom - INFO - Generating map for statistical area: Bakersfield with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-24 13:09:24,719 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-24 13:09:24,719 - statistical_area_zoom - INFO - Cached map is 111.4 hours old, regenerating...
+2025-04-24 13:09:24,719 - statistical_area_zoom - INFO - Loading map data...
+2025-04-24 13:09:24,719 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-24 13:09:24,719 - statistical_area_zoom - INFO - Normalized area name: bakersfield
+2025-04-24 13:09:24,720 - statistical_area_zoom - INFO - Trying to match city name: bakersfield
+2025-04-24 13:09:24,722 - statistical_area_zoom - INFO - Found fuzzy city match: Bakersfield-Delano, CA
+2025-04-24 13:09:24,722 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:09:24,722 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:09:24,722 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bakersfield
+2025-04-24 13:09:24,722 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bakersfield
+2025-04-24 13:09:24,723 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:09:24,723 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:09:24,723 - statistical_area_zoom - INFO - Center: 35.341596705293135, -118.73051829877349
+2025-04-24 13:09:24,723 - statistical_area_zoom - INFO - Bounds: -120.194369, 34.788655, -117.616518, 35.798359
+2025-04-24 13:09:24,883 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-24 13:09:24,884 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bakersfield_lightweight.html
+2025-04-24 13:09:24,884 - __main__ - INFO - Request completed in 0.17 seconds
+2025-04-24 13:09:24,888 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:24] "[35m[1mGET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480364715 HTTP/1.1[0m" 500 -
+2025-04-24 13:09:24,915 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:24] "[35m[1mGET /api/statistical-area-map/Bakersfield?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480364715&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480364894 HTTP/1.1[0m" 500 -
+2025-04-24 13:09:24,928 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:24] "GET /api/statistical-area-map/Bakersfield?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-24 13:09:24,928 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:24] "GET /api/statistical-area-map/Bakersfield?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-24 13:09:24,942 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:24] "GET /api/statistical-area-map/Bakersfield?__debugger__=yes&cmd=resource&f=console.png&s=kCFLc3oWppBUE5WnE4HZ HTTP/1.1" 200 -
+2025-04-24 13:09:32,913 - __main__ - INFO - Serving static fallback map for: Bakersfield
+2025-04-24 13:09:32,913 - statistical_area_zoom - INFO - Creating fallback map for Bakersfield at None
+2025-04-24 13:09:32,924 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:32] "GET /api/static-fallback-map/Bakersfield?_show_states=true&_show_counties=true&_show_msas=true&_t=1745480372906 HTTP/1.1" 200 -
+2025-04-24 13:09:40,490 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:40] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 13:09:40,515 - __main__ - INFO - Map request for area: Denver-Aurora-Lakewood
+2025-04-24 13:09:40,515 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745480380512')])
+2025-04-24 13:09:40,515 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-24 13:09:40,515 - statistical_area_zoom - INFO - Generating map for statistical area: Denver-Aurora-Lakewood with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-24 13:09:40,515 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Denver_Aurora_Lakewood_lightweight.html
+2025-04-24 13:09:40,516 - statistical_area_zoom - INFO - Loading map data...
+2025-04-24 13:09:40,516 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-24 13:09:40,516 - statistical_area_zoom - INFO - Normalized area name: denver-aurora-lakewood
+2025-04-24 13:09:40,518 - statistical_area_zoom - INFO - Trying to match city name: denver
+2025-04-24 13:09:40,520 - statistical_area_zoom - INFO - Found fuzzy city match: Denver-Aurora-Centennial, CO
+2025-04-24 13:09:40,520 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:09:40,521 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:09:40,521 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Denver-Aurora-Lakewood
+2025-04-24 13:09:40,521 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Denver-Aurora-Lakewood
+2025-04-24 13:09:40,522 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:09:40,522 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:09:40,522 - statistical_area_zoom - INFO - Center: 39.433551554752384, -104.89488238431022
+2025-04-24 13:09:40,522 - statistical_area_zoom - INFO - Bounds: -106.210173, 38.693551, -103.705701, 40.044144
+2025-04-24 13:09:40,700 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Denver_Aurora_Lakewood_lightweight.html
+2025-04-24 13:09:40,700 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Denver_Aurora_Lakewood_lightweight.html
+2025-04-24 13:09:40,700 - __main__ - INFO - Request completed in 0.18 seconds
+2025-04-24 13:09:40,705 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:40] "[35m[1mGET /api/statistical-area-map/Denver-Aurora-Lakewood?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480380512 HTTP/1.1[0m" 500 -
+2025-04-24 13:09:40,729 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:40] "[35m[1mGET /api/statistical-area-map/Denver-Aurora-Lakewood?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480380512&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480380709 HTTP/1.1[0m" 500 -
+2025-04-24 13:09:40,741 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:40] "GET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-24 13:09:40,741 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:40] "GET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-24 13:09:40,762 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:40] "GET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=console.png&s=kCFLc3oWppBUE5WnE4HZ HTTP/1.1" 200 -
+2025-04-24 13:09:48,729 - __main__ - INFO - Serving static fallback map for: Denver-Aurora-Lakewood
+2025-04-24 13:09:48,730 - statistical_area_zoom - INFO - Creating fallback map for Denver-Aurora-Lakewood at None
+2025-04-24 13:09:48,741 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:09:48] "GET /api/static-fallback-map/Denver-Aurora-Lakewood?_show_states=true&_show_counties=true&_show_msas=true&_t=1745480388723 HTTP/1.1" 200 -
+2025-04-24 13:13:51,599 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:13:51] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 13:13:51,818 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:13:51] "[35m[1mGET /api/statistical-area-map/Denver-Aurora-Lakewood?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480631797 HTTP/1.1[0m" 500 -
+2025-04-24 13:13:51,941 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:13:51] "[35m[1mGET /api/statistical-area-map/Denver-Aurora-Lakewood?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745480631797&_show_states=true&_show_counties=true&_show_msas=true&_t=1745480631862 HTTP/1.1[0m" 500 -
+2025-04-24 13:13:51,975 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:13:51] "[36mGET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-24 13:13:51,976 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:13:51] "[36mGET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-24 13:13:52,020 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:13:52] "[36mGET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=console.png&s=kCFLc3oWppBUE5WnE4HZ HTTP/1.1[0m" 304 -
+2025-04-24 13:23:05,237 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:05] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 13:23:05,266 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:05] "[35m[1mGET /api/statistical-area-map/Denver-Aurora-Lakewood?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745481185257 HTTP/1.1[0m" 500 -
+2025-04-24 13:23:05,316 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:05] "[35m[1mGET /api/statistical-area-map/Denver-Aurora-Lakewood?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745481185257&_show_states=true&_show_counties=true&_show_msas=true&_t=1745481185283 HTTP/1.1[0m" 500 -
+2025-04-24 13:23:05,336 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:05] "[36mGET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-24 13:23:05,337 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:05] "[36mGET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-24 13:23:05,376 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:05] "[36mGET /api/statistical-area-map/Denver-Aurora-Lakewood?__debugger__=yes&cmd=resource&f=console.png&s=kCFLc3oWppBUE5WnE4HZ HTTP/1.1[0m" 304 -
+2025-04-24 13:23:08,825 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:08] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 13:23:08,847 - __main__ - INFO - Map request for area: Las Vegas-Henderson-Paradise
+2025-04-24 13:23:08,847 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745481188841')])
+2025-04-24 13:23:08,847 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-24 13:23:08,847 - statistical_area_zoom - INFO - Generating map for statistical area: Las Vegas-Henderson-Paradise with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-24 13:23:08,847 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Las_Vegas_Henderson_Paradise_lightweight.html
+2025-04-24 13:23:08,847 - statistical_area_zoom - INFO - Loading map data...
+2025-04-24 13:23:08,847 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-24 13:23:08,847 - statistical_area_zoom - INFO - Normalized area name: las vegas-henderson-paradise
+2025-04-24 13:23:08,849 - statistical_area_zoom - INFO - Trying to match city name: las vegas
+2025-04-24 13:23:08,852 - statistical_area_zoom - INFO - Found fuzzy city match: Las Vegas-Henderson-North Las Vegas, NV
+2025-04-24 13:23:08,852 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:23:08,853 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 13:23:08,853 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Las Vegas-Henderson-Paradise
+2025-04-24 13:23:08,853 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Las Vegas-Henderson-Paradise
+2025-04-24 13:23:08,854 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:23:08,854 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 13:23:08,854 - statistical_area_zoom - INFO - Center: 36.21351465264982, -115.01361561413225
+2025-04-24 13:23:08,855 - statistical_area_zoom - INFO - Bounds: -115.896925, 35.001857, -114.043944, 36.853662
+2025-04-24 13:23:09,093 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Las_Vegas_Henderson_Paradise_lightweight.html
+2025-04-24 13:23:09,093 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Las_Vegas_Henderson_Paradise_lightweight.html
+2025-04-24 13:23:09,093 - __main__ - INFO - Request completed in 0.25 seconds
+2025-04-24 13:23:09,102 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:09] "[35m[1mGET /api/statistical-area-map/Las%20Vegas-Henderson-Paradise?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745481188841 HTTP/1.1[0m" 500 -
+2025-04-24 13:23:09,148 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:09] "[35m[1mGET /api/statistical-area-map/Las%20Vegas-Henderson-Paradise?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745481188841&_show_states=true&_show_counties=true&_show_msas=true&_t=1745481189113 HTTP/1.1[0m" 500 -
+2025-04-24 13:23:09,189 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:09] "GET /api/statistical-area-map/Las%20Vegas-Henderson-Paradise?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-24 13:23:09,190 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:09] "GET /api/statistical-area-map/Las%20Vegas-Henderson-Paradise?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-24 13:23:09,214 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 13:23:09] "GET /api/statistical-area-map/Las%20Vegas-Henderson-Paradise?__debugger__=yes&cmd=resource&f=console.png&s=kCFLc3oWppBUE5WnE4HZ HTTP/1.1" 200 -
