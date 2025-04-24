@@ -121,10 +121,13 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         const encodedArea = encodeURIComponent(statisticalArea);
         console.log(`Requesting map for ${encodedArea}`);
         
+        // For Anchorage specifically, use different params
+        const isAnchorage = statisticalArea.toLowerCase().includes('anchorage');
+        
         // Optimize map loading: prefer cached maps, reduce quality for faster loading
         const timestamp = new Date().getTime();
         // Use a lighter weight map with less detail for faster loading
-        const apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=${timestamp}`);
+        const apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}?force_regen=${isAnchorage ? 'true' : 'false'}&use_cached=true&detailed=false&zoom=${isAnchorage ? '7' : '10'}&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=${timestamp}`);
         
         try {
           // Attempt to fetch the map with a timeout
@@ -153,6 +156,16 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
           
         } catch (initialError) {
           console.warn(`Initial fetch attempt failed: ${initialError.message}`);
+          
+          // For Anchorage, try direct fallback right away
+          if (isAnchorage) {
+            console.log("Area is Anchorage, using static fallback immediately");
+            const fallbackUrl = getApiUrl(`/api/static-fallback-map/${encodedArea}`);
+            setMapUrl(fallbackUrl);
+            setUseFallbackMap(true);
+            setIsLoading(false);
+            return;
+          }
           
           // First try direct embedding
           console.log("Falling back to direct iframe embedding");
@@ -219,10 +232,72 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
     console.error('Map iframe failed to load', e);
     setError('The map could not be loaded. Please try again.');
     setIsLoading(false);
+    
+    // Log detailed info about the error
+    console.error('Map loading error details:', {
+      area: statisticalArea,
+      url: mapUrl,
+      errorType: e.type,
+      errorMessage: e.message
+    });
   };
 
+  // Add retry functionality for Content-Length mismatch errors
+  useEffect(() => {
+    if (iframeRef.current) {
+      const iframe = iframeRef.current;
+      
+      // Monitor for loading errors that might not trigger onError
+      const checkIframeStatus = () => {
+        try {
+          // Try to access the content document - will throw CORS error if load failed
+          if (iframe.contentDocument) {
+            // Successfully accessed document, no need for retry
+            return;
+          }
+        } catch (e) {
+          // Likely CORS error or other loading issue
+          console.log("Unable to access iframe content, might need retry", e);
+        }
+        
+        // Add timestamp to URL to prevent caching
+        if (mapUrl) {
+          const hasTimestamp = mapUrl.includes('t=');
+          const separator = mapUrl.includes('?') ? '&' : '?';
+          const newUrl = hasTimestamp 
+            ? mapUrl.replace(/t=\d+/, `t=${Date.now()}`) 
+            : `${mapUrl}${separator}t=${Date.now()}`;
+          
+          console.log("Refreshing map iframe with new URL", newUrl);
+          iframe.src = newUrl;
+        }
+      };
+      
+      // Check status after a reasonable loading time
+      const timeoutId = setTimeout(checkIframeStatus, 10000);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [mapUrl, iframeRef]);
+
   const handleRetry = () => {
+    // Force regeneration by incrementing retry count
     setRetryCount(retryCount + 1);
+    
+    // Also clear any cached URL by forcing a new timestamp
+    if (mapUrl) {
+      const timestamp = Date.now();
+      const newUrl = mapUrl.includes('t=') 
+        ? mapUrl.replace(/t=\d+/, `t=${timestamp}`) 
+        : `${mapUrl}${mapUrl.includes('?') ? '&' : '?'}t=${timestamp}`;
+      
+      // Force regeneration parameter 
+      const forceRegenUrl = newUrl.includes('force_regen=') 
+        ? newUrl.replace(/force_regen=(true|false)/, 'force_regen=true')
+        : `${newUrl}&force_regen=true`;
+        
+      setMapUrl(forceRegenUrl);
+    }
   };
 
   // Get color for metric cards

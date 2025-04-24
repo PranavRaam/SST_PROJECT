@@ -129,4 +129,111 @@
   }, 5000);
   
   console.log('[MapInject] Direct variable injection script initialized');
+})();
+
+// Map Injector Script - Will fix empty maps by injecting fallback content
+(function() {
+  console.log('[MapInject] Script loaded');
+  
+  // Wait for page to load
+  window.addEventListener('load', function() {
+    // Give the map a chance to load normally
+    setTimeout(checkAndInjectMap, 3000);
+  });
+  
+  // Function to check if map is empty and inject content if needed
+  function checkAndInjectMap() {
+    console.log('[MapInject] Checking map status');
+    
+    // Look for Leaflet containers - if none found, map is likely empty
+    const leafletContainers = document.querySelectorAll('.leaflet-container');
+    
+    if (leafletContainers.length === 0) {
+      console.log('[MapInject] No Leaflet containers found, map is likely empty');
+      injectFallbackMap();
+    } else {
+      console.log('[MapInject] Map appears to be working with ' + leafletContainers.length + ' containers');
+    }
+  }
+  
+  // Function to inject a fallback map
+  function injectFallbackMap() {
+    console.log('[MapInject] Injecting fallback map');
+    
+    try {
+      // Find the target container
+      const mapContainer = document.querySelector('.map-frame').contentDocument.body;
+      
+      if (!mapContainer) {
+        console.error('[MapInject] Cannot find map container');
+        return;
+      }
+      
+      // Clear any existing content
+      mapContainer.innerHTML = '';
+      
+      // Create a Leaflet map div
+      const mapDiv = document.createElement('div');
+      mapDiv.id = 'fallback-map';
+      mapDiv.style.width = '100%';
+      mapDiv.style.height = '100%';
+      mapContainer.appendChild(mapDiv);
+      
+      // Add Leaflet CSS
+      const leafletCSS = document.createElement('link');
+      leafletCSS.rel = 'stylesheet';
+      leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      mapContainer.appendChild(leafletCSS);
+      
+      // Add Leaflet JS
+      const leafletJS = document.createElement('script');
+      leafletJS.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      mapContainer.appendChild(leafletJS);
+      
+      // Add map initialization script
+      const mapScript = document.createElement('script');
+      mapScript.textContent = `
+        // Initialize fallback map when Leaflet is loaded
+        let mapInitInterval = setInterval(() => {
+          if (typeof L !== 'undefined') {
+            clearInterval(mapInitInterval);
+            console.log('[MapInject] Leaflet loaded, initializing fallback map');
+            
+            // Create the map
+            const map = L.map('fallback-map').setView([39.8283, -98.5795], 4);
+            
+            // Add a tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add a title
+            const titleDiv = document.createElement('div');
+            titleDiv.style.position = 'absolute';
+            titleDiv.style.top = '10px';
+            titleDiv.style.left = '50px';
+            titleDiv.style.zIndex = '1000';
+            titleDiv.style.backgroundColor = 'white';
+            titleDiv.style.padding = '10px';
+            titleDiv.style.borderRadius = '5px';
+            titleDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+            titleDiv.innerHTML = '<h3 style="margin:0; color:#4F46E5;">Map View of Anchorage</h3><p style="margin:5px 0 0; font-size:12px;">Fallback map generated automatically</p>';
+            document.getElementById('fallback-map').appendChild(titleDiv);
+            
+            // Notify parent that map is loaded
+            try {
+              window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+            } catch (e) {
+              console.error('[MapInject] Error sending message to parent:', e);
+            }
+          }
+        }, 100);
+      `;
+      mapContainer.appendChild(mapScript);
+      
+      console.log('[MapInject] Fallback map injected');
+    } catch (e) {
+      console.error('[MapInject] Error injecting fallback map:', e);
+    }
+  }
 })(); 

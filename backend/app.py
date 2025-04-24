@@ -27,14 +27,13 @@ logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
 # Enable CORS with specific options for production
 CORS(app, 
     resources={r"/api/*": {
-        "origins": "*",  # Allow all origins for simplicity
+        "origins": cors_origins,  # Use the specific origins from environment variable
         "supports_credentials": True,
         "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "expose_headers": ["Content-Type", "Content-Length", "Content-Disposition", "X-Frame-Options"],
         "max_age": 86400  # Cache preflight requests for 24 hours
-    }},
-    send_wildcard=True  # Enable wildcard for simpler CORS
+    }}
 )
 
 # Set up logging to console and file
@@ -133,20 +132,43 @@ def compress_response(response):
     # Check if client accepts gzip
     accept_encoding = request.headers.get('Accept-Encoding', '')
     
-    if 'gzip' in accept_encoding and should_compress(response):
-        response_data = response.get_data()
+    # Skip compression for several conditions that can cause problems
+    if any([
+        'gzip' not in accept_encoding,                  # Client doesn't support gzip
+        response.direct_passthrough,                    # Response is in direct passthrough mode
+        response.status_code >= 400,                    # Error responses
+        'Content-Encoding' in response.headers,         # Already encoded
+        'Content-Disposition' in response.headers,      # File downloads
+        response.mimetype.startswith(('image/', 'video/', 'audio/')), # Binary content
+    ]):
+        return response
         
-        if response_data:
-            # Compress the response
-            gzip_buffer = BytesIO()
-            gzip_file = gzip.GzipFile(mode='wb', fileobj=gzip_buffer)
-            gzip_file.write(response_data)
-            gzip_file.close()
+    try:
+        # Only compress if the response is compressible
+        if should_compress(response):
+            response_data = response.get_data()
             
-            # Replace the response with compressed data
-            response.set_data(gzip_buffer.getvalue())
-            response.headers['Content-Encoding'] = 'gzip'
-            response.headers['Content-Length'] = len(response.get_data())
+            if response_data:
+                # Compress the response
+                gzip_buffer = BytesIO()
+                gzip_file = gzip.GzipFile(mode='wb', fileobj=gzip_buffer)
+                gzip_file.write(response_data)
+                gzip_file.close()
+                
+                # Get compressed data
+                compressed_data = gzip_buffer.getvalue()
+                
+                # Only use compression if it actually reduces size
+                if len(compressed_data) < len(response_data):
+                    # Replace the response with compressed data
+                    response.set_data(compressed_data)
+                    response.headers['Content-Encoding'] = 'gzip'
+                    # Make sure to update Content-Length AFTER compression
+                    response.headers['Content-Length'] = str(len(compressed_data))
+                    response.headers['Vary'] = 'Accept-Encoding'
+    except Exception as e:
+        # Log the error but continue without compression
+        logger.warning(f"Compression failed: {str(e)}")
             
     # Add cache headers for appropriate routes
     if request.path.startswith('/api/map') or request.path.startswith('/api/regions'):
@@ -158,7 +180,16 @@ def compress_response(response):
 @app.after_request
 def add_cors_headers(response):
     # Add CORS headers to all responses
-    response.headers['Access-Control-Allow-Origin'] = '*'  # Allow all origins
+    origin = request.headers.get('Origin', '')
+    
+    # Check if the origin is in our allowed list
+    if origin in cors_origins:
+        response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+    elif '*' in cors_origins:
+        # Only use wildcard when explicitly configured and no credentials are needed
+        response.headers['Access-Control-Allow-Origin'] = '*'
+    
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Cache-Control, X-Requested-With'
     response.headers['Access-Control-Max-Age'] = '86400'  # 24 hours in seconds
@@ -268,7 +299,12 @@ def map_status():
     })
 
 @app.route('/api/map', methods=['GET'])
+@cache_response(timeout=900)  # Cache for 15 minutes to improve stability
 def get_map():
+    # Check for 'stable' parameter to determine if we should use caching
+    stable_view = request.args.get('stable', 'false').lower() == 'true'
+    show_controls = request.args.get('showControls', 'false').lower() == 'true'
+    
     # Serve the generated HTML file
     if os.path.exists(MAP_FILE):
         with open(MAP_FILE, 'r') as f:
@@ -284,24 +320,122 @@ def get_map():
             window.show_msas = true;
             window.True = true;
             window.False = false;
+            window.showControls = %s;
+            
+            // Add custom CSS for controls in both normal and fullscreen mode
+            var styleElement = document.createElement('style');
+            styleElement.textContent = `
+                .leaflet-control-layers {
+                    display: block !important;
+                    position: absolute;
+                    top: 70px;
+                    right: 10px;
+                    z-index: 1000;
+                    background: white;
+                    padding: 6px;
+                    border-radius: 4px;
+                    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+                }
+                .leaflet-control-search {
+                    display: block !important;
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    z-index: 1000;
+                }
+                .leaflet-control-search .search-input {
+                    height: 30px;
+                    padding: 0 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    width: 200px;
+                }
+                .leaflet-control-search .search-tooltip {
+                    max-height: 200px;
+                    overflow-y: auto;
+                }
+                .leaflet-touch .leaflet-control-layers {
+                    border: 2px solid rgba(0,0,0,0.2);
+                }
+            `;
+            document.head.appendChild(styleElement);
+            
+            // Add map controls if enabled
+            if (window.showControls) {
+                try {
+                    // Add a short delay to ensure the map is fully initialized
+                    setTimeout(function() {
+                        // Handle layer control visibility and ensure it's moved to the correct position
+                        var layerControl = document.querySelector('.leaflet-control-layers');
+                        if (layerControl) {
+                            layerControl.style.display = 'block';
+                            
+                            // Move the control to the right side for consistency
+                            var mapContainer = document.querySelector('.leaflet-container');
+                            if (mapContainer && !layerControl.parentNode.classList.contains('control-container')) {
+                                // Create a container for controls if needed
+                                var controlContainer = document.querySelector('.control-container') || document.createElement('div');
+                                controlContainer.className = 'control-container';
+                                controlContainer.style.position = 'absolute';
+                                controlContainer.style.top = '70px';
+                                controlContainer.style.right = '10px';
+                                controlContainer.style.zIndex = '1000';
+                                
+                                if (!document.querySelector('.control-container')) {
+                                    mapContainer.appendChild(controlContainer);
+                                }
+                                
+                                // Move layer control to our custom container
+                                controlContainer.appendChild(layerControl);
+                            }
+                        }
+                        
+                        // Handle search control visibility
+                        var searchControl = document.querySelector('.leaflet-control-search');
+                        if (searchControl) {
+                            searchControl.style.display = 'block';
+                        }
+                    }, 500);
+                } catch (e) {
+                    console.error('Error initializing controls:', e);
+                }
+            }
             
             // Safe post message function that handles cross-origin communication
             function safePostMessage(message) {
                 try {
                     window.parent.postMessage(message, '*');
-                    console.log('[Map Diagnostic] Message sent to parent:', message);
                 } catch (err) {
-                    console.log('[Map Diagnostic] Error sending message to parent:', err);
+                    console.error('[Map] Error sending message to parent:', err);
                 }
             }
             
-            // Log diagnostics
-            console.log('[Map Diagnostic] Map iframe loaded and ready for messages');
+            // Prevent flickering by handling resize events efficiently
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    try {
+                        // Find all map containers
+                        var maps = document.querySelectorAll('.leaflet-container');
+                        
+                        // Use Leaflet's methods if available
+                        if (window.L && window.L.map) {
+                            Object.keys(window.L.map._layers || {}).forEach(function(key) {
+                                var layer = window.L.map._layers[key];
+                                if (layer && layer.invalidateSize) {
+                                    layer.invalidateSize(false);
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        console.error('[Map] Error handling resize:', e);
+                    }
+                }, 250);
+            });
             
             // Handle messages from parent frame safely
             window.addEventListener('message', function(event) {
-                console.log('[Map Diagnostic] Received message from parent:', event.data);
-                
                 if (event.data && event.data.type === 'MAP_INIT') {
                     // Update map variables
                     const data = event.data.data || {};
@@ -309,49 +443,82 @@ def get_map():
                     window.show_counties = data.show_counties ?? true;
                     window.show_msas = data.show_msas ?? true;
                     
-                    // Force map refresh - safely without direct property access
+                    // Notify parent that map is ready
+                    safePostMessage({
+                        type: 'mapLoaded',
+                        status: 'success'
+                    });
+                }
+                
+                // Handle control initialization
+                if (event.data && event.data.type === 'MAP_CONTROLS_INIT') {
                     try {
-                        // Find all map containers
-                        var maps = document.querySelectorAll('.leaflet-container');
-                        console.log('[Map Diagnostic] Found', maps.length, 'map containers');
-                        
-                        // Force a resize event on the window to trigger map recalculation
-                        var evt = document.createEvent('UIEvents');
-                        evt.initUIEvent('resize', true, false, window, 0);
-                        window.dispatchEvent(evt);
-                        console.log('[Map Diagnostic] Dispatched resize event to window');
-                        
-                        // Use Leaflet's global map collection instead of accessing _leaflet_id directly
-                        // This avoids the cross-origin issue
-                        if (window.L && window.L.map && typeof window.L.map.invalidateSize === 'function') {
-                            // If we can access the map instance from a global variable
-                            window.L.map.invalidateSize(true);
-                            console.log('[Map Diagnostic] Invalidated map size using global L.map');
-                        } else {
-                            // Otherwise, we'll rely on the resize event we dispatched
-                            console.log('[Map Diagnostic] Using resize event for map refresh');
+                        // Show layer control if Leaflet is available
+                        if (window.L && window.L.control) {
+                            var layerControl = document.querySelector('.leaflet-control-layers');
+                            if (layerControl) {
+                                layerControl.style.display = 'block';
+                                
+                                // Ensure control is in the right position
+                                var mapContainer = document.querySelector('.leaflet-container');
+                                if (mapContainer && !layerControl.parentNode.classList.contains('control-container')) {
+                                    // Create a container for controls if needed
+                                    var controlContainer = document.querySelector('.control-container') || document.createElement('div');
+                                    controlContainer.className = 'control-container';
+                                    controlContainer.style.position = 'absolute';
+                                    controlContainer.style.top = '70px';
+                                    controlContainer.style.right = '10px';
+                                    controlContainer.style.zIndex = '1000';
+                                    
+                                    if (!document.querySelector('.control-container')) {
+                                        mapContainer.appendChild(controlContainer);
+                                    }
+                                    
+                                    // Move layer control to our custom container
+                                    controlContainer.appendChild(layerControl);
+                                }
+                            }
+                            
+                            var searchBox = document.querySelector('.leaflet-control-search');
+                            if (searchBox) {
+                                searchBox.style.display = 'block';
+                                // Ensure search box is in a good position
+                                searchBox.style.position = 'absolute';
+                                searchBox.style.top = '10px';
+                                searchBox.style.right = '10px';
+                                searchBox.style.zIndex = '1000';
+                            }
                         }
-                        
-                        // Notify parent that map is ready
-                        safePostMessage({
-                            type: 'mapLoaded',
-                            status: 'success'
-                        });
                     } catch (e) {
-                        console.log('[Map Diagnostic] Map refresh failed:', e);
-                        // Still try to notify parent even if refresh failed
-                        safePostMessage({
-                            type: 'mapLoaded',
-                            status: 'error',
-                            error: e.toString()
-                        });
+                        console.error('Error initializing map controls:', e);
+                    }
+                }
+                
+                // Handle toggling controls visibility
+                if (event.data && event.data.type === 'TOGGLE_CONTROLS') {
+                    try {
+                        const visible = event.data.data?.visible;
+                        const display = visible ? 'block' : 'none';
+                        
+                        // Get the control container or individual controls
+                        var controlContainer = document.querySelector('.control-container');
+                        if (controlContainer) {
+                            controlContainer.style.display = display;
+                        } else {
+                            // Fall back to individual controls
+                            var controls = document.querySelectorAll('.leaflet-control-layers, .leaflet-control-search');
+                            controls.forEach(function(control) {
+                                control.style.display = display;
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Error toggling controls:', e);
                     }
                 }
             });
             
             // Initial map loaded notification
             setTimeout(function() {
-                console.log('[Map Diagnostic] Map loaded, sending message to parent');
                 safePostMessage({
                     type: 'mapLoaded',
                     status: 'success'
@@ -359,7 +526,7 @@ def get_map():
             }, 1000);
         });
         </script>
-        """
+        """ % ('true' if show_controls else 'false')
         
         # Add the initialization script just before the closing body tag
         html_content = html_content.replace('</body>', init_script + '</body>')
@@ -368,6 +535,17 @@ def get_map():
         response = Response(html_content, mimetype='text/html')
         response.headers['Content-Security-Policy'] = "frame-ancestors *"
         response.headers['X-Frame-Options'] = "ALLOWALL"
+        
+        # Add cache control headers to prevent flickering on stable views
+        if stable_view:
+            # Use a long cache for stable views
+            response.headers['Cache-Control'] = 'public, max-age=900'  # 15 minutes
+            response.headers['ETag'] = str(os.path.getmtime(MAP_FILE))
+        else:
+            # No caching for forced refreshes
+            response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+            response.headers['Pragma'] = 'no-cache'
+        
         return response
     else:
         return "Map not found", 404
@@ -394,6 +572,87 @@ def get_static_fallback_map(area_name):
     try:
         logger.info(f"Serving static fallback map for: {area_name}")
         from statistical_area_zoom import create_fallback_map, get_coordinates_for_area
+        
+        # Special case for Anchorage - provide a customized fallback with specific coordinates
+        if 'anchorage' in area_name.lower():
+            logger.info("Using special fallback for Anchorage")
+            # Anchorage coordinates
+            coords = [61.2181, -149.9003]
+            
+            # Create simple HTML for Anchorage
+            html_content = f"""
+            <html>
+            <head>
+                <title>Map of {area_name}</title>
+                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                <style>
+                    body {{ margin: 0; padding: 0; }}
+                    #map {{ width: 100%; height: 100vh; }}
+                    .map-title {{ 
+                        position: absolute; 
+                        top: 10px; 
+                        left: 50px; 
+                        z-index: 1000; 
+                        background-color: white; 
+                        padding: 10px; 
+                        border-radius: 5px;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        font-family: Arial, sans-serif;
+                    }}
+                    .map-title h3 {{ margin: 0; color: #4F46E5; }}
+                    .map-title p {{ margin: 5px 0 0; font-size: 12px; }}
+                </style>
+            </head>
+            <body>
+                <div id="map"></div>
+                <div class="map-title">
+                    <h3>Map View of {area_name}</h3>
+                    <p>Static fallback map</p>
+                </div>
+                
+                <script>
+                    // Initialize map
+                    const map = L.map('map').setView([{coords[0]}, {coords[1]}], 9);
+                    
+                    // Add base layer
+                    L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }}).addTo(map);
+                    
+                    // Add marker for Anchorage
+                    L.marker([{coords[0]}, {coords[1]}])
+                        .addTo(map)
+                        .bindPopup("<b>{area_name}</b>")
+                        .openPopup();
+                    
+                    // Add circle to represent the area
+                    L.circle([{coords[0]}, {coords[1]}], {{
+                        color: '#4F46E5',
+                        fillColor: '#4F46E5',
+                        fillOpacity: 0.2,
+                        radius: 25000
+                    }}).addTo(map);
+                    
+                    // Notify parent when loaded
+                    window.addEventListener('load', function() {{
+                        try {{
+                            if (window.parent) {{
+                                window.parent.postMessage({{type: 'mapLoaded', status: 'success'}}, '*');
+                            }}
+                        }} catch (e) {{
+                            console.error('Error sending loaded message:', e);
+                        }}
+                    }});
+                </script>
+            </body>
+            </html>
+            """
+            
+            response = Response(html_content, mimetype='text/html')
+            response.headers['Content-Security-Policy'] = "frame-ancestors *"
+            response.headers['X-Frame-Options'] = "ALLOWALL"
+            return response
         
         # Create a static fallback map
         html_content = create_fallback_map(area_name, None)
@@ -461,7 +720,23 @@ def get_statistical_area_map(area_name):
             logger.info(f"Map generated successfully at {map_file}")
             elapsed_time = time.time() - start_time
             logger.info(f"Request completed in {elapsed_time:.2f} seconds")
-            return send_file(map_file, mimetype='text/html')
+            
+            # File exists, now read it into memory and create a Response
+            # This prevents the direct_passthrough mode issues
+            try:
+                with open(map_file, 'rb') as f:
+                    html_content = f.read()
+                
+                # Create a response with the correct Content-Length
+                response = Response(html_content, mimetype='text/html')
+                response.headers['Content-Length'] = str(len(html_content))
+                response.headers['Content-Security-Policy'] = "frame-ancestors *"
+                response.headers['X-Frame-Options'] = "ALLOWALL"
+                return response
+            except Exception as file_error:
+                logger.error(f"Error reading map file: {file_error}")
+                # Fallback to direct send_file if reading fails
+                return send_file(map_file, mimetype='text/html')
         else:
             logger.error(f"Failed to generate map for {area_name}")
             return jsonify({

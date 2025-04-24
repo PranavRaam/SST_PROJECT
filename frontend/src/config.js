@@ -11,16 +11,21 @@ export const getApiUrl = (path) => {
   return `https://sst-project.onrender.com${path}`;
 };
 
-// Add map parameters to prevent caching and improve stability`
+// Modified to provide a more stable URL that won't cause flickering
 export const getMapApiUrl = (path, options = {}) => {
   const baseUrl = getApiUrl(path);
-  const timestamp = new Date().getTime();
+  
+  // Only add stable parameters that won't cause the iframe to reload unnecessarily
   const params = new URLSearchParams({
-    t: timestamp,
-    noCache: 'true',
+    stable: 'true',
     stableView: 'true',
     ...options
   });
+  
+  // Only add a timestamp if explicitly requested via options
+  if (options.forceRefresh) {
+    params.set('t', new Date().getTime());
+  }
   
   return `${baseUrl}?${params.toString()}`;
 }; 

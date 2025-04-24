@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import MapViewer from './components/MapViewer'
-import ControlPanel from './components/ControlPanel'
 import DataTable from './components/DataTable'
 import RegionDetailView from './components/RegionDetailView'
 import StatisticalAreaDetailView from './components/StatisticalAreaDetailView'
@@ -249,7 +248,6 @@ function App() {
                           {mapStatus.isGenerated ? (
                             <div className="map-container-wrapper">
                               <MapViewer />
-                              <ControlPanel />
                             </div>
                           ) : (
                             <div className="map-not-generated-inner">
