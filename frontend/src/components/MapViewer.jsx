@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getApiUrl, getMapApiUrl } from '../config';
+import { getApiUrl, getMapApiUrl, fetchWithCORSHandling } from '../config';
 import './MapViewer.css';
 
 const MapViewer = () => {
@@ -15,27 +15,58 @@ const MapViewer = () => {
     const checkMap = async () => {
       try {
         // First check API health
-        const healthResponse = await fetch(getApiUrl('/api/health'));
-        if (!healthResponse.ok) {
-          throw new Error('API health check failed');
+        let healthData;
+        try {
+          healthData = await fetchWithCORSHandling(getApiUrl('/api/health'));
+        } catch (healthError) {
+          console.warn('Health check failed, proceeding anyway:', healthError);
+          healthData = { status: 'unknown', fallback: true };
         }
-        const healthData = await healthResponse.json();
         setMapDebugInfo(`API Status: ${JSON.stringify(healthData)}`);
         
-        // Then check map status
-        const response = await fetch(getApiUrl('/api/map-status'));
-        if (!response.ok) {
-          throw new Error('Map status check failed');
+        // Then check map status with CORS error handling
+        let data;
+        try {
+          // First try with regular fetch
+          const response = await fetch(getApiUrl('/api/map-status'), {
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Map status check failed: ${response.status}`);
+          }
+          
+          data = await response.json();
+        } catch (corsError) {
+          console.warn('CORS error in map status check, trying alternative approach:', corsError);
+          
+          // Fallback: try no-cors mode and assume map doesn't exist
+          try {
+            await fetch(getApiUrl('/api/map-status'), { mode: 'no-cors' });
+            // If we get here, the endpoint exists but we can't read the response
+            data = { exists: false, fallback: true };
+          } catch (fallbackError) {
+            console.error('Even no-cors failed:', fallbackError);
+            data = { exists: false, error: fallbackError.message };
+          }
         }
         
-        const data = await response.json();
         setMapDebugInfo(prev => `${prev}\nMap Status: ${JSON.stringify(data)}`);
         
         if (!data.exists) {
-          // Try to generate the map
+          // Try to generate the map with CORS error handling
           setMapDebugInfo(prev => `${prev}\nMap not found, attempting to generate...`);
-          const genResponse = await fetch(getApiUrl('/api/generate-map'));
-          const genData = await genResponse.json();
+          let genData;
+          try {
+            genData = await fetchWithCORSHandling(getApiUrl('/api/generate-map'));
+          } catch (genError) {
+            console.error('Map generation request failed:', genError);
+            genData = { success: false, error: genError.message };
+          }
+          
           setMapDebugInfo(prev => `${prev}\nGeneration Result: ${JSON.stringify(genData)}`);
           
           if (!genData.success) {
@@ -199,9 +230,15 @@ const MapViewer = () => {
     setMapDebugInfo('Forcing map regeneration...');
     
     try {
-      // Force regeneration with cache bypass
-      const genResponse = await fetch(getApiUrl('/api/generate-map?force=true'));
-      const genData = await genResponse.json();
+      // Force regeneration with cache bypass using CORS handling
+      let genData;
+      try {
+        genData = await fetchWithCORSHandling(getApiUrl('/api/generate-map?force=true'));
+      } catch (genError) {
+        console.error('Map regeneration request failed:', genError);
+        genData = { success: false, error: genError.message };
+      }
+      
       setMapDebugInfo(prev => `${prev}\nRegeneration Result: ${JSON.stringify(genData)}`);
       
       if (genData.success) {

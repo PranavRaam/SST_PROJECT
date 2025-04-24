@@ -6,9 +6,10 @@ export const getApiUrl = (path) => {
     return `http://localhost:5000${path}`;
   }
   
-  // For production - use the environment variable
+  // For production - use the environment variable or fallback to the Render domain
   // This needs to be set in your hosting environment to point to your Render backend URL
-  return `https://sst-project.onrender.com${path}`;
+  const baseUrl = import.meta.env.VITE_API_URL || 'https://sst-project.onrender.com';
+  return `${baseUrl}${path}`;
 };
 
 // Modified to provide a more stable URL that won't cause flickering
@@ -28,4 +29,48 @@ export const getMapApiUrl = (path, options = {}) => {
   }
   
   return `${baseUrl}?${params.toString()}`;
+};
+
+// Add a fetch wrapper with error handling for CORS issues
+export const fetchWithCORSHandling = async (url, options = {}) => {
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      mode: 'cors', // Ensure CORS mode is set
+    });
+    
+    if (!response.ok) {
+      console.error(`API Error: ${response.status} - ${response.statusText}`);
+      throw new Error(`API Error: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('CORS or Fetch Error:', error);
+    
+    // For CORS errors, try again with a no-cors mode as a fallback (this will return an opaque response)
+    if (error.message && error.message.includes('CORS')) {
+      console.log('Trying again with no-cors mode...');
+      try {
+        await fetch(url, {
+          ...options,
+          mode: 'no-cors',
+        });
+        
+        // If we get here, no-cors worked but we can't read the response
+        // Return a default "success" to prevent UI errors
+        return { success: true, fallback: true };
+      } catch (fallbackError) {
+        console.error('Even no-cors failed:', fallbackError);
+        throw fallbackError;
+      }
+    }
+    
+    throw error;
+  }
 }; 

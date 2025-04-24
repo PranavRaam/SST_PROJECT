@@ -14,7 +14,7 @@ import OfficeStaffView from './components/sa_view_components/OfficeStaffView'
 import PatientDetailView from './components/pg_service/PatientDetailView'
 import PGTest from './components/PGTest'
 import { divisionalGroupToRegions, divisionalGroupToStatisticalAreas } from './utils/regionMapping'
-import { getApiUrl } from './config'
+import { getApiUrl, fetchWithCORSHandling } from './config'
 import './App.css'
 import { PatientProvider } from './context/PatientContext'
 
@@ -95,59 +95,59 @@ function App() {
 
   const checkMapStatus = async () => {
     try {
-      const response = await fetch(getApiUrl('/api/map-status'));
-      if (!response.ok) {
-        throw new Error('Failed to check map status');
-      }
-      const data = await response.json();
+      // Use our CORS-handling fetch wrapper
+      const data = await fetchWithCORSHandling(getApiUrl('/api/map-status'));
+      
+      // If we get here, we successfully got a response
       setMapStatus({
-        isLoading: false,
+        isChecked: true,
         isGenerated: data.exists,
-        generationInProgress: data.generationInProgress,
         error: null
       });
-    } catch (err) {
+    } catch (error) {
+      console.error('Error checking map status:', error);
+      
+      // Handle errors gracefully
       setMapStatus({
-        isLoading: false,
-        isGenerated: false,
-        generationInProgress: false,
-        error: err.message
+        isChecked: true,
+        isGenerated: false, 
+        error: `Failed to check map status: ${error.message}`
       });
     }
   };
 
   const generateMap = async () => {
     try {
-      setMapStatus(prev => ({ ...prev, generationInProgress: true }));
-      const response = await fetch(getApiUrl('/api/generate-map'));
-      if (!response.ok) {
-        throw new Error('Failed to generate map');
-      }
-      const data = await response.json();
-      
-      if (data.success) {
-        // Start polling for map status
-        const pollInterval = setInterval(async () => {
-          const statusResponse = await fetch(getApiUrl('/api/map-status'));
-          const statusData = await statusResponse.json();
-          
-          if (statusData.exists) {
-            clearInterval(pollInterval);
-            setMapStatus({
-              isLoading: false,
-              isGenerated: true,
-              generationInProgress: false,
-              error: null
-            });
-          }
-        }, 5000); // Poll every 5 seconds
-      }
-    } catch (err) {
       setMapStatus(prev => ({
         ...prev,
-        generationInProgress: false,
-        error: err.message
+        isGenerating: true,
+        error: null
       }));
+      
+      // Use our CORS-handling fetch wrapper
+      const data = await fetchWithCORSHandling(getApiUrl('/api/generate-map'));
+      
+      // If we get here, we successfully got a response
+      if (data.success) {
+        setMapStatus({
+          isChecked: true,
+          isGenerated: true,
+          isGenerating: false,
+          error: null
+        });
+      } else {
+        throw new Error(data.message || 'Unknown error generating map');
+      }
+    } catch (error) {
+      console.error('Error generating map:', error);
+      
+      // Handle errors gracefully
+      setMapStatus({
+        isChecked: true,
+        isGenerated: false,
+        isGenerating: false,
+        error: `Failed to generate map: ${error.message}`
+      });
     }
   };
 
