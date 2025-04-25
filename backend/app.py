@@ -147,26 +147,28 @@ def compress_response(response):
     try:
         # Only compress if the response is compressible
         if should_compress(response):
-            response_data = response.get_data()
-            
-            if response_data:
-                # Compress the response
-                gzip_buffer = BytesIO()
-                gzip_file = gzip.GzipFile(mode='wb', fileobj=gzip_buffer)
-                gzip_file.write(response_data)
-                gzip_file.close()
+            # Important: Make sure we can safely get the data (not in direct passthrough mode)
+            if not response.direct_passthrough:
+                response_data = response.get_data()
                 
-                # Get compressed data
-                compressed_data = gzip_buffer.getvalue()
-                
-                # Only use compression if it actually reduces size
-                if len(compressed_data) < len(response_data):
-                    # Replace the response with compressed data
-                    response.set_data(compressed_data)
-                    response.headers['Content-Encoding'] = 'gzip'
-                    # Make sure to update Content-Length AFTER compression
-                    response.headers['Content-Length'] = str(len(compressed_data))
-                    response.headers['Vary'] = 'Accept-Encoding'
+                if response_data:
+                    # Compress the response
+                    gzip_buffer = BytesIO()
+                    gzip_file = gzip.GzipFile(mode='wb', fileobj=gzip_buffer)
+                    gzip_file.write(response_data)
+                    gzip_file.close()
+                    
+                    # Get compressed data
+                    compressed_data = gzip_buffer.getvalue()
+                    
+                    # Only use compression if it actually reduces size
+                    if len(compressed_data) < len(response_data):
+                        # Replace the response with compressed data
+                        response.set_data(compressed_data)
+                        response.headers['Content-Encoding'] = 'gzip'
+                        # Make sure to update Content-Length AFTER compression
+                        response.headers['Content-Length'] = str(len(compressed_data))
+                        response.headers['Vary'] = 'Accept-Encoding'
     except Exception as e:
         # Log the error but continue without compression
         logger.warning(f"Compression failed: {str(e)}")
@@ -680,15 +682,30 @@ def get_static_fallback_map(area_name):
             response = Response(html_content, mimetype='text/html')
             response.headers['Content-Security-Policy'] = "frame-ancestors *"
             response.headers['X-Frame-Options'] = "ALLOWALL"
+            response.headers['Content-Length'] = str(len(html_content))
             return response
         
-        # Create a static fallback map
-        html_content = create_fallback_map(area_name, None)
+        # Create a static fallback map - if it returns a file path, read the file
+        fallback_result = create_fallback_map(area_name, None)
         
-        if html_content:
+        if fallback_result:
+            # Check if fallback_result is a file path or already HTML content
+            if os.path.exists(fallback_result):
+                # Read the file content
+                try:
+                    with open(fallback_result, 'rb') as f:
+                        html_content = f.read()
+                except Exception as file_error:
+                    logger.error(f"Error reading fallback map file: {file_error}")
+                    raise Exception(f"Failed to read fallback map file: {str(file_error)}")
+            else:
+                # Use the returned HTML content directly
+                html_content = fallback_result
+            
             response = Response(html_content, mimetype='text/html')
             response.headers['Content-Security-Policy'] = "frame-ancestors *"
             response.headers['X-Frame-Options'] = "ALLOWALL"
+            response.headers['Content-Length'] = str(len(html_content))
             return response
         else:
             # If fallback creation failed, return a very basic HTML response
@@ -704,7 +721,11 @@ def get_static_fallback_map(area_name):
             </body>
             </html>
             """
-            return Response(basic_html, mimetype='text/html')
+            response = Response(basic_html, mimetype='text/html')
+            response.headers['Content-Security-Policy'] = "frame-ancestors *"
+            response.headers['X-Frame-Options'] = "ALLOWALL"
+            response.headers['Content-Length'] = str(len(basic_html))
+            return response
     except Exception as e:
         logger.exception(f"Error generating static fallback map: {str(e)}")
         return jsonify({
@@ -749,8 +770,8 @@ def get_statistical_area_map(area_name):
             elapsed_time = time.time() - start_time
             logger.info(f"Request completed in {elapsed_time:.2f} seconds")
             
-            # File exists, now read it into memory and create a Response
-            # This prevents the direct_passthrough mode issues
+            # Always read file contents into memory and create a Response
+            # This avoids direct_passthrough mode issues
             try:
                 with open(map_file, 'rb') as f:
                     html_content = f.read()
@@ -763,8 +784,11 @@ def get_statistical_area_map(area_name):
                 return response
             except Exception as file_error:
                 logger.error(f"Error reading map file: {file_error}")
-                # Fallback to direct send_file if reading fails
-                return send_file(map_file, mimetype='text/html')
+                # Return error json instead of using send_file
+                return jsonify({
+                    "success": False,
+                    "message": f"Error reading map file: {str(file_error)}"
+                }), 500
         else:
             logger.error(f"Failed to generate map for {area_name}")
             return jsonify({

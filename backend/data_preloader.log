@@ -10493,3 +10493,32 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-24 23:38:41,474 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:41] "GET /api/health HTTP/1.1" 200 -
 2025-04-24 23:38:41,479 - __main__ - INFO - Request from origin: http://localhost:3000
 2025-04-24 23:38:41,479 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:41] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 06:08:50,588 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 06:08:50,589 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 06:08:50] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-25 06:08:50,672 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 06:08:50,673 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 06:08:50] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 06:08:50,676 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 06:08:50,677 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 06:08:50] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 06:08:50,733 - __main__ - INFO - Request from origin: 
+2025-04-25 06:08:50,733 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 06:08:51,139 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 06:08:51] "GET /api/map?stable=true&r=map-1745541530660&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745541530661 HTTP/1.1" 200 -
+2025-04-25 06:12:42,110 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-25 06:12:44,455 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-25 06:12:44,473 - __main__ - INFO - Checking for cached data at startup
+2025-04-25 06:12:44,497 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 06:12:44,497 - werkzeug - INFO -  * Debugger PIN: 127-973-215
+2025-04-25 06:13:03,569 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-25 06:13:06,494 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-25 06:13:06,511 - __main__ - INFO - Checking for cached data at startup
+2025-04-25 06:13:06,539 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 06:13:06,540 - werkzeug - INFO -  * Debugger PIN: 127-973-215
+2025-04-25 06:13:07,552 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-25 06:13:09,179 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-25 06:13:09,192 - __main__ - INFO - Checking for cached data at startup
+2025-04-25 06:13:09,207 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 06:13:09,208 - werkzeug - INFO -  * Debugger PIN: 127-973-215
+2025-04-25 06:13:59,348 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-25 06:14:02,265 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-25 06:14:02,275 - __main__ - INFO - Checking for cached data at startup
+2025-04-25 06:14:02,293 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 06:14:02,293 - werkzeug - INFO -  * Debugger PIN: 127-973-215
