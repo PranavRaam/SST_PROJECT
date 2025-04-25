@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python39", "gcc", "binutils", "gdal"]
+nixPkgs = ["python311", "gcc", "binutils", "gdal"]
 cmds = ["apt-get update", "apt-get install -y libstdc++6"]
 
 [phases.install]

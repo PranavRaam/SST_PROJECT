@@ -10438,46 +10438,58 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-24 23:19:49,618 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:19:49] "GET /api/statistical-area-map/Albuquerque?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745516989309 HTTP/1.1" 200 -
 2025-04-24 23:19:49,640 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:19:49] "GET /api/statistical-area-map/Albuquerque?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745516989309&_show_states=true&_show_counties=true&_show_msas=true&_t=1745516989624 HTTP/1.1" 200 -
 2025-04-24 23:19:59,647 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:19:59] "GET /api/statistical-area-map/Albuquerque?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745516999642&_show_states=true&_show_counties=true&_show_msas=true&_t=1745516999642 HTTP/1.1" 200 -
-2025-04-24 23:22:34,598 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:22:34] "GET /api/map?stable=true&r=map-1745517154587&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745517154588 HTTP/1.1" 200 -
-2025-04-24 23:22:34,605 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:22:34] "GET /api/health HTTP/1.1" 200 -
-2025-04-24 23:22:34,610 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:22:34] "GET /api/health HTTP/1.1" 200 -
-2025-04-24 23:25:48,089 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
-2025-04-24 23:25:48,229 - werkzeug - INFO -  * Restarting with stat
-2025-04-24 23:25:48,902 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
-2025-04-24 23:25:48,909 - __main__ - INFO - Checking for cached data at startup
-2025-04-24 23:25:48,920 - werkzeug - WARNING -  * Debugger is active!
-2025-04-24 23:25:48,920 - werkzeug - INFO -  * Debugger PIN: 127-973-215
-2025-04-24 23:26:06,968 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
-2025-04-24 23:26:07,183 - werkzeug - INFO -  * Restarting with stat
-2025-04-24 23:26:07,957 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
-2025-04-24 23:26:07,966 - __main__ - INFO - Checking for cached data at startup
-2025-04-24 23:26:07,980 - werkzeug - WARNING -  * Debugger is active!
-2025-04-24 23:26:07,980 - werkzeug - INFO -  * Debugger PIN: 127-973-215
-2025-04-24 23:26:09,989 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
-2025-04-24 23:26:10,134 - werkzeug - INFO -  * Restarting with stat
-2025-04-24 23:26:10,812 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
-2025-04-24 23:26:10,819 - __main__ - INFO - Checking for cached data at startup
-2025-04-24 23:26:10,829 - werkzeug - WARNING -  * Debugger is active!
-2025-04-24 23:26:10,830 - werkzeug - INFO -  * Debugger PIN: 127-973-215
-2025-04-24 23:26:20,857 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
-2025-04-24 23:26:21,129 - werkzeug - INFO -  * Restarting with stat
-2025-04-24 23:26:21,996 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
-2025-04-24 23:26:22,004 - __main__ - INFO - Checking for cached data at startup
-2025-04-24 23:26:22,015 - werkzeug - WARNING -  * Debugger is active!
-2025-04-24 23:26:22,015 - werkzeug - INFO -  * Debugger PIN: 127-973-215
-2025-04-24 23:26:23,022 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
-2025-04-24 23:26:23,166 - werkzeug - INFO -  * Restarting with stat
-2025-04-24 23:26:23,865 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
-2025-04-24 23:26:23,872 - __main__ - INFO - Checking for cached data at startup
-2025-04-24 23:26:23,883 - werkzeug - WARNING -  * Debugger is active!
-2025-04-24 23:26:23,883 - werkzeug - INFO -  * Debugger PIN: 127-973-215
-2025-04-24 23:27:03,456 - __main__ - INFO - Request from origin: http://localhost:3000
-2025-04-24 23:27:03,456 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:27:03] "GET /api/health HTTP/1.1" 200 -
-2025-04-24 23:27:50,450 - __main__ - INFO - Request from origin: http://localhost:3000
-2025-04-24 23:27:50,451 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:27:50] "OPTIONS /api/health HTTP/1.1" 200 -
-2025-04-24 23:27:50,456 - __main__ - INFO - Request from origin: http://localhost:3000
-2025-04-24 23:27:50,456 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:27:50] "GET /api/health HTTP/1.1" 200 -
-2025-04-24 23:27:57,449 - __main__ - INFO - Request from origin: http://localhost:3000
-2025-04-24 23:27:57,449 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:27:57] "GET /api/health HTTP/1.1" 200 -
-2025-04-24 23:28:10,452 - __main__ - INFO - Request from origin: http://localhost:3000
-2025-04-24 23:28:10,452 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:28:10] "OPTIONS /api/map-status HTTP/1.1" 200 -
+2025-04-24 23:33:42,632 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-24 23:33:42,648 - __main__ - INFO - Checking for cached data at startup
+2025-04-24 23:33:42,671 - werkzeug - WARNING -  * Debugger is active!
+2025-04-24 23:33:42,671 - werkzeug - INFO -  * Debugger PIN: 127-973-215
+2025-04-24 23:36:41,239 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/app.py', reloading
+2025-04-24 23:36:42,809 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-24 23:36:42,823 - __main__ - INFO - Checking for cached data at startup
+2025-04-24 23:36:42,844 - werkzeug - WARNING -  * Debugger is active!
+2025-04-24 23:36:42,845 - werkzeug - INFO -  * Debugger PIN: 127-973-215
+2025-04-24 23:38:31,756 - __main__ - INFO - Request from origin: 
+2025-04-24 23:38:31,756 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-24 23:38:31,785 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-24 23:38:31,786 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:31] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 23:38:31,797 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-24 23:38:31,798 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:31] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 23:38:32,472 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:32] "GET /api/map?stable=true&r=map-1745518111680&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745518111682 HTTP/1.1" 200 -
+2025-04-24 23:38:37,241 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-24 23:38:37,241 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:37] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 23:38:37,287 - __main__ - INFO - Map request for area: Bangor, ME
+2025-04-24 23:38:37,288 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745518117282')])
+2025-04-24 23:38:37,288 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-24 23:38:37,288 - statistical_area_zoom - INFO - Generating map for statistical area: Bangor, ME with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-24 23:38:37,288 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bangor_ME_lightweight.html
+2025-04-24 23:38:37,288 - statistical_area_zoom - INFO - Cached map is 165.6 hours old, regenerating...
+2025-04-24 23:38:37,288 - statistical_area_zoom - INFO - Loading map data...
+2025-04-24 23:38:37,288 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-24 23:38:37,288 - data_preloader - INFO - Loading all cached data...
+2025-04-24 23:38:37,322 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-24 23:38:37,324 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-24 23:38:37,324 - statistical_area_zoom - INFO - Data loaded in 0.04 seconds
+2025-04-24 23:38:37,324 - statistical_area_zoom - INFO - Normalized area name: bangor, me
+2025-04-24 23:38:37,330 - statistical_area_zoom - INFO - Found exact match: Bangor, ME
+2025-04-24 23:38:37,330 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 23:38:37,331 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-24 23:38:37,331 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bangor, ME
+2025-04-24 23:38:37,331 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Bangor, ME
+2025-04-24 23:38:37,332 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 23:38:37,332 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-24 23:38:37,332 - statistical_area_zoom - INFO - Center: 45.400689161423706, -68.65113479395878
+2025-04-24 23:38:37,332 - statistical_area_zoom - INFO - Bounds: -69.355667, 44.644023, -67.93976, 46.395782
+2025-04-24 23:38:37,612 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bangor_ME_lightweight.html
+2025-04-24 23:38:37,613 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Bangor_ME_lightweight.html
+2025-04-24 23:38:37,613 - __main__ - INFO - Request completed in 0.33 seconds
+2025-04-24 23:38:37,614 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-24 23:38:37,701 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:37] "GET /api/statistical-area-map/Bangor,%20ME?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745518117282 HTTP/1.1" 200 -
+2025-04-24 23:38:37,745 - __main__ - INFO - Request from origin: 
+2025-04-24 23:38:37,746 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-24 23:38:37,746 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:37] "GET /api/statistical-area-map/Bangor,%20ME?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745518117282&_show_states=true&_show_counties=true&_show_msas=true&_t=1745518117711 HTTP/1.1" 200 -
+2025-04-24 23:38:41,441 - __main__ - INFO - Request from origin: 
+2025-04-24 23:38:41,441 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-24 23:38:41,441 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:41] "GET /api/map?stable=true&r=map-1745518121427&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745518121428 HTTP/1.1" 200 -
+2025-04-24 23:38:41,473 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-24 23:38:41,474 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:41] "GET /api/health HTTP/1.1" 200 -
+2025-04-24 23:38:41,479 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-24 23:38:41,479 - werkzeug - INFO - 127.0.0.1 - - [24/Apr/2025 23:38:41] "GET /api/health HTTP/1.1" 200 -
