@@ -1,5 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { FunnelDataContext, PG_STAGES } from './FunnelDataContext';
+import pgFunnelReference from '../../assets/data/pg_funnel_reference.json';
+import westPGData from '../../assets/data/west_pg_data.json';
+import centralPGData from '../../assets/data/central_pg_data.json';
+import eastCentralPGData from '../../assets/data/east_central_pg_data.json';
 import "../sa_view_css/PGFunnel.css"; // Importing CSS
 
 // Patient journey funnel stages - initialize using the same values from the context
@@ -33,7 +37,8 @@ const PGFunnel = () => {
   const [selectedPG, setSelectedPG] = useState(null);
   const [funnelData, setFunnelData] = useState(pgFunnelStages);
   const [hoveredSection, setHoveredSection] = useState(null);
-  const [moveStatus, setMoveStatus] = useState(null); // New state for tracking move status
+  const [moveStatus, setMoveStatus] = useState(null);
+  const [movedPGs, setMovedPGs] = useState({}); // Track moved PGs and their new stages
   
   // Logging for debugging
   useEffect(() => {
@@ -52,6 +57,35 @@ const PGFunnel = () => {
       setFunnelData(pgFunnelData);
     }
   }, [pgFunnelData, pgAssignments, pgData, currentArea, movePgToStage]);
+
+  // Get PGs for current MSA from all regions
+  const getPGsForCurrentMSA = () => {
+    if (!currentArea) return [];
+    
+    const westPGs = westPGData.West[currentArea] || [];
+    const centralPGs = centralPGData.Central[currentArea] || [];
+    const eastCentralPGs = eastCentralPGData.East_Central[currentArea] || [];
+    
+    return [...westPGs, ...centralPGs, ...eastCentralPGs];
+  };
+
+  // Get actual PGs for the expanded stage view from current MSA
+  const getPGNamesForStage = (stageName) => {
+    // Get PGs from current MSA
+    const msaPGs = getPGsForCurrentMSA();
+    
+    // Filter PGs that match both the current MSA and the selected stage
+    const pgsInStage = msaPGs.filter(pgName => {
+      // If PG was moved, use its new stage from movedPGs
+      if (movedPGs[pgName]) {
+        return movedPGs[pgName] === stageName;
+      }
+      // Otherwise use the original status from reference file
+      return pgFunnelReference[pgName] === stageName;
+    });
+
+    return pgsInStage;
+  };
 
   const handleFunnelClick = (entry) => {
     if (entry.value === 0) return;
@@ -91,8 +125,24 @@ const PGFunnel = () => {
     }
     
     try {
-      movePgToStage(selectedPG, expandedStage, targetStage);
-      console.log("PG moved successfully");
+      // Update the movedPGs state with the new stage for this PG
+      setMovedPGs(prev => ({
+        ...prev,
+        [selectedPG]: targetStage
+      }));
+
+      // Update the funnel data to reflect the move
+      const newFunnelData = funnelData.map(stage => {
+        if (stage.name === expandedStage) {
+          return { ...stage, value: Math.max(0, stage.value - 1) };
+        }
+        if (stage.name === targetStage) {
+          return { ...stage, value: stage.value + 1 };
+        }
+        return stage;
+      });
+      setFunnelData(newFunnelData);
+
       setMoveStatus({
         success: true,
         message: `Successfully moved ${selectedPG} to "${targetStage}"`
@@ -120,26 +170,6 @@ const PGFunnel = () => {
     setMoveStatus(null); // Reset move status when going back
   };
 
-  // Get PG names for the expanded stage view
-  const getPGNamesForStage = (stageName) => {
-    // Use real data if available, otherwise use mock data
-    if (pgAssignments && pgAssignments[stageName] && pgAssignments[stageName].length > 0) {
-      console.log(`Found ${pgAssignments[stageName].length} PGs in stage "${stageName}"`);
-      return pgAssignments[stageName];
-    }
-    
-    // Use a subset of mock names based on stage
-    const stageIndex = funnelData.findIndex(item => item.name === stageName);
-    if (stageIndex >= 0) {
-      const count = Math.max(1, Math.floor(funnelData[stageIndex].value / 100));
-      console.log(`Using ${count} mock PG names for stage "${stageName}"`);
-      return pgNames.slice(0, count);
-    }
-    
-    console.log(`No PGs found for stage "${stageName}", using default mock data`);
-    return pgNames.slice(0, 3);
-  };
-
   const handleMouseOver = (index) => {
     setHoveredSection(index);
   };
@@ -149,53 +179,12 @@ const PGFunnel = () => {
   };
 
   return (
-    <div className="pg-funnel-container">
-      <h3 className="funnel-title">PG Funnel</h3>
-      {expandedStage ? (
-        <div className="expanded-list">
-          <div className="expanded-header">
-            <h4>{expandedStage}</h4>
-            <button className="back-button" onClick={handleBack}>
-              ← Back to Funnel
-            </button>
-          </div>
-          {getPGNamesForStage(expandedStage).map((pg, index) => (
-            <div key={index} className="pg-entry">
-              {pg}
-              {!showMoveOptions && (
-                <button onClick={() => handleMovePG(pg)}>Move</button>
-              )}
-            </div>
-          ))}
-          {showMoveOptions && (
-            <div className="move-options">
-              <h5>Move {selectedPG} to:</h5>
-              {moveStatus && (
-                <div className={`move-status ${moveStatus.success ? 'success' : 'error'}`}>
-                  {moveStatus.message}
-                </div>
-              )}
-              {funnelData
-                .filter(stage => stage.name !== expandedStage)
-                .map((stage, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleMoveToStage(stage.name)}
-                    className="move-option-button"
-                    style={{ backgroundColor: stage.fill }}
-                    disabled={moveStatus?.success}
-                  >
-                    {stage.name}
-                  </button>
-                ))}
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="funnel-chart-wrapper">
-          <svg width="400" height="650">
-            {/* Main funnel shape (inverted triangle) */}
-            <g>
+    <div className="funnel-container">
+      {!expandedStage ? (
+        <>
+          <div className="funnel-title">PG Funnel for {currentArea || 'Selected Area'}</div>
+          <div className="funnel-chart-wrapper">
+            <svg width="400" height="650">
               {/* First section */}
               <path d="M50,50 L350,50 L340,100 L60,100 Z" 
                     fill={funnelData[0]?.fill || "#2980B9"} 
@@ -325,13 +314,59 @@ const PGFunnel = () => {
                     fill="#fff" fontSize="14" fontWeight="bold">
                 {funnelData[9]?.value || 0}
               </text>
-            </g>
-          </svg>
+            </svg>
+          </div>
           
           {/* Tooltip showing stage name on hover */}
           {hoveredSection !== null && (
             <div className="stage-tooltip">
               {funnelData[hoveredSection]?.name}
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="expanded-view">
+          <div className="expanded-header">
+            <h2>{expandedStage}</h2>
+            <button onClick={handleBack} className="back-button">Back to Funnel</button>
+          </div>
+          
+          <div className="pg-list">
+            {getPGNamesForStage(expandedStage).map((pg, index) => (
+              <div key={index} className="pg-item">
+                <span>{pg}</span>
+                <button 
+                  onClick={() => handleMovePG(pg)}
+                  className="move-button"
+                >
+                  Move
+                </button>
+              </div>
+            ))}
+          </div>
+          
+          {showMoveOptions && (
+            <div className="move-options">
+              <h3>Move {selectedPG} to:</h3>
+              <div className="stage-buttons">
+                {PG_STAGES.map((stage, index) => (
+                  stage !== expandedStage && (
+                    <button
+                      key={index}
+                      onClick={() => handleMoveToStage(stage)}
+                      className="stage-button"
+                    >
+                      {stage}
+                    </button>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {moveStatus && (
+            <div className={`move-status ${moveStatus.success ? 'success' : 'error'}`}>
+              {moveStatus.message}
             </div>
           )}
         </div>

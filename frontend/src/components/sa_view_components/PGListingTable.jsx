@@ -72,15 +72,20 @@ const PGListingTable = () => {
       
       if (allPGs.length > 0) {
         // Transform the data to match the display format
-        const transformedData = allPGs.map(pgName => ({
-          name: pgName,
-          address: "Address not available",
-          city: currentArea,
-          state: "State not available",
-          zipcode: "Zip not available",
-          phone: "Phone not available",
-          status: "On the platform"
-        }));
+        const transformedData = allPGs.map(pgName => {
+          // Check if the PG is one of the special cases
+          const isUpsoldPG = pgName === "HouseCall MD" || pgName === "Brownfield Family Physicians";
+          
+          return {
+            name: pgName,
+            address: "Address not available",
+            city: currentArea,
+            state: "State not available",
+            zipcode: "Zip not available",
+            phone: "Phone not available",
+            status: isUpsoldPG ? "Upsold to CPO/etc..." : "On the platform"
+          };
+        });
         
         setDisplayData(transformedData);
       } else {

@@ -11714,3 +11714,167 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-25 21:20:00,930 - __main__ - INFO - Request from origin: 
 2025-04-25 21:20:00,932 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
 2025-04-25 21:20:00,935 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:20:00] "GET /api/statistical-area-map/Nashville-Davidson-Murfreesboro-Franklin?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745596200913&_show_states=true&_show_counties=true&_show_msas=true&_t=1745596200914 HTTP/1.1" 200 -
+2025-04-25 21:39:30,246 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:39:30,249 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:30] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:39:30,490 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:39:30,491 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:30] "GET /api/statistical-area-map/Nashville-Davidson-Murfreesboro-Franklin?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597370262 HTTP/1.1" 200 -
+2025-04-25 21:39:30,863 - __main__ - INFO - Request from origin: 
+2025-04-25 21:39:30,864 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:39:30,864 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:30] "GET /api/statistical-area-map/Nashville-Davidson-Murfreesboro-Franklin?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597370262&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597370543 HTTP/1.1" 200 -
+2025-04-25 21:39:40,935 - __main__ - INFO - Request from origin: 
+2025-04-25 21:39:40,937 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:39:40,939 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:40] "GET /api/statistical-area-map/Nashville-Davidson-Murfreesboro-Franklin?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597380914&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597380914 HTTP/1.1" 200 -
+2025-04-25 21:39:51,008 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:39:51,010 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:51] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:39:51,463 - __main__ - INFO - Request from origin: 
+2025-04-25 21:39:51,465 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:39:51,501 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:39:51,507 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:51] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:39:54,216 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:54] "GET /api/map?stable=true&r=map-1745597390958&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597390960 HTTP/1.1" 200 -
+2025-04-25 21:39:57,454 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:39:57,455 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:57] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:39:57,809 - __main__ - INFO - Map request for area: Lubbock
+2025-04-25 21:39:57,811 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745597397496')])
+2025-04-25 21:39:57,814 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-25 21:39:57,815 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-25 21:39:57,817 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Lubbock_lightweight.html
+2025-04-25 21:39:57,819 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Lubbock_lightweight.html (age: 3.7 hours)
+2025-04-25 21:39:57,821 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-25 21:39:57,825 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Lubbock_lightweight.html
+2025-04-25 21:39:57,827 - __main__ - INFO - Request completed in 0.02 seconds
+2025-04-25 21:39:57,831 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:39:58,160 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:58] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597397496 HTTP/1.1" 200 -
+2025-04-25 21:39:58,237 - __main__ - INFO - Request from origin: 
+2025-04-25 21:39:58,239 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:39:58,241 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:39:58] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597397496&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597398172 HTTP/1.1" 200 -
+2025-04-25 21:40:08,891 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:40:08,892 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:40:08] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:40:09,252 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:40:09,257 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:40:09] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597408936 HTTP/1.1" 200 -
+2025-04-25 21:40:09,687 - __main__ - INFO - Request from origin: 
+2025-04-25 21:40:09,689 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:40:09,692 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:40:09] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597408936&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597409275 HTTP/1.1" 200 -
+2025-04-25 21:40:19,388 - __main__ - INFO - Request from origin: 
+2025-04-25 21:40:19,389 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:40:19,391 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:40:19] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597419368&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597419369 HTTP/1.1" 200 -
+2025-04-25 21:44:20,280 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:44:20,283 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:44:20] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:44:20,512 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:44:20,514 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:44:20] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597660293 HTTP/1.1" 200 -
+2025-04-25 21:44:20,918 - __main__ - INFO - Request from origin: 
+2025-04-25 21:44:20,920 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:44:20,924 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:44:20] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597660293&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597660581 HTTP/1.1" 200 -
+2025-04-25 21:44:30,923 - __main__ - INFO - Request from origin: 
+2025-04-25 21:44:30,925 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:44:30,926 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:44:30] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597670905&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597670906 HTTP/1.1" 200 -
+2025-04-25 21:45:27,235 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:45:27,237 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:27] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:45:27,490 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:45:27,492 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:27] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597727245 HTTP/1.1" 200 -
+2025-04-25 21:45:27,872 - __main__ - INFO - Request from origin: 
+2025-04-25 21:45:27,873 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:45:27,874 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:27] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597727245&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597727548 HTTP/1.1" 200 -
+2025-04-25 21:45:37,920 - __main__ - INFO - Request from origin: 
+2025-04-25 21:45:37,920 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:45:37,921 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:37] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597737911&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597737911 HTTP/1.1" 200 -
+2025-04-25 21:45:39,948 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:45:39,950 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:39] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:45:40,340 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:45:40,342 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:40] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597740025 HTTP/1.1" 200 -
+2025-04-25 21:45:40,745 - __main__ - INFO - Request from origin: 
+2025-04-25 21:45:40,746 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:45:40,748 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:40] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597740025&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597740413 HTTP/1.1" 200 -
+2025-04-25 21:45:50,936 - __main__ - INFO - Request from origin: 
+2025-04-25 21:45:50,939 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:45:50,943 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:50] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597750909&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597750910 HTTP/1.1" 200 -
+2025-04-25 21:45:59,942 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:45:59,945 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:45:59] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:00,368 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:00,371 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:00] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597760049 HTTP/1.1" 200 -
+2025-04-25 21:46:00,771 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:00,773 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:00,776 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:00] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597760049&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597760433 HTTP/1.1" 200 -
+2025-04-25 21:46:10,638 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:10,639 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:10,641 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:10] "GET /api/map?stable=true&r=map-1745597770599&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597770602 HTTP/1.1" 200 -
+2025-04-25 21:46:10,654 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:10,656 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:10] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:10,969 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:10,970 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:10] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:13,781 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:13,782 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:13] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:14,068 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:14,071 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:14,074 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:14] "GET /api/map?stable=true&r=map-1745597773704&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597773707 HTTP/1.1" 200 -
+2025-04-25 21:46:14,138 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:14,141 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:14] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:22,390 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:22,392 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:22] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:22,739 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:22,742 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:22] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597782420 HTTP/1.1" 200 -
+2025-04-25 21:46:22,846 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:22,849 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:22,853 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:22] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597782420&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597782758 HTTP/1.1" 200 -
+2025-04-25 21:46:33,185 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:33,187 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:33,189 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:33] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597792854&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597792855 HTTP/1.1" 200 -
+2025-04-25 21:46:40,993 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:40,994 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:40] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:46:41,341 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:46:41,344 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:41] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597801023 HTTP/1.1" 200 -
+2025-04-25 21:46:41,427 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:41,428 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:41,431 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:41] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597801023&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597801357 HTTP/1.1" 200 -
+2025-04-25 21:46:52,243 - __main__ - INFO - Request from origin: 
+2025-04-25 21:46:52,245 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:46:52,247 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:46:52] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597811910&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597811911 HTTP/1.1" 200 -
+2025-04-25 21:47:48,991 - __main__ - INFO - Request from origin: 
+2025-04-25 21:47:48,992 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:47:48,996 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:47:48] "GET /api/map?stable=true&r=map-1745597868951&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597868952 HTTP/1.1" 200 -
+2025-04-25 21:47:49,327 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:47:49,330 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:47:49] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:47:49,638 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:47:49,673 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:47:49] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:47:57,116 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:47:57,117 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:47:57] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:47:57,419 - __main__ - INFO - Request from origin: 
+2025-04-25 21:47:57,422 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:47:57,424 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:47:57] "GET /api/map?stable=true&r=map-1745597877078&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597877080 HTTP/1.1" 200 -
+2025-04-25 21:47:57,451 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:47:57,454 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:47:57] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:48:59,097 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:48:59,099 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:48:59] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:48:59,316 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:48:59,318 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:48:59] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597939105 HTTP/1.1" 200 -
+2025-04-25 21:48:59,693 - __main__ - INFO - Request from origin: 
+2025-04-25 21:48:59,697 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:48:59,699 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:48:59] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597939105&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597939330 HTTP/1.1" 200 -
+2025-04-25 21:49:09,924 - __main__ - INFO - Request from origin: 
+2025-04-25 21:49:09,926 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:49:09,927 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:49:09] "GET /api/statistical-area-map/Amarillo?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745597949910&_show_states=true&_show_counties=true&_show_msas=true&_t=1745597949911 HTTP/1.1" 200 -
+2025-04-25 21:54:07,240 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:54:07,243 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:07] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:54:07,479 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:54:07,482 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:07] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745598247252 HTTP/1.1" 200 -
+2025-04-25 21:54:07,918 - __main__ - INFO - Request from origin: 
+2025-04-25 21:54:07,919 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:54:07,923 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:07] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745598247252&_show_states=true&_show_counties=true&_show_msas=true&_t=1745598247499 HTTP/1.1" 200 -
+2025-04-25 21:54:21,507 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:54:21,510 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:21] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 21:54:21,856 - __main__ - INFO - Map request for area: Los Angeles-Long Beach-Anaheim
+2025-04-25 21:54:21,859 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745598261538')])
+2025-04-25 21:54:21,861 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-25 21:54:21,863 - statistical_area_zoom - INFO - Generating map for statistical area: Los Angeles-Long Beach-Anaheim with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-25 21:54:21,865 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Los_Angeles_Long_Beach_Anaheim_lightweight.html
+2025-04-25 21:54:21,868 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Los_Angeles_Long_Beach_Anaheim_lightweight.html (age: 2.1 hours)
+2025-04-25 21:54:21,869 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-25 21:54:21,871 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Los_Angeles_Long_Beach_Anaheim_lightweight.html
+2025-04-25 21:54:21,873 - __main__ - INFO - Request completed in 0.01 seconds
+2025-04-25 21:54:21,878 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 21:54:22,237 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:22] "GET /api/statistical-area-map/Los%20Angeles-Long%20Beach-Anaheim?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745598261538 HTTP/1.1" 200 -
+2025-04-25 21:54:22,324 - __main__ - INFO - Request from origin: 
+2025-04-25 21:54:22,326 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:54:22,328 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:22] "GET /api/statistical-area-map/Los%20Angeles-Long%20Beach-Anaheim?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745598261538&_show_states=true&_show_counties=true&_show_msas=true&_t=1745598262248 HTTP/1.1" 200 -
+2025-04-25 21:54:33,247 - __main__ - INFO - Request from origin: 
+2025-04-25 21:54:33,248 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 21:54:33,250 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 21:54:33] "GET /api/statistical-area-map/Los%20Angeles-Long%20Beach-Anaheim?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745598272913&_show_states=true&_show_counties=true&_show_msas=true&_t=1745598272914 HTTP/1.1" 200 -
