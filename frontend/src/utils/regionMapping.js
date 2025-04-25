@@ -276,7 +276,6 @@ export const regionToStatisticalAreas = {
     "Waterloo-Cedar Falls",
     "Wausau",
     "Wichita Falls",
-    "Wichita",
     "Youngstown-Warren-Boardman"
 ],
 
@@ -345,7 +344,6 @@ export const regionToStatisticalAreas = {
       "Huntington-Ashland",
       "Indianapolis-Carmel-Anderson",
       "Ithaca",
-      "Jackson",
       "Jackson",
       "Jacksonville",
       "Johnson City",
