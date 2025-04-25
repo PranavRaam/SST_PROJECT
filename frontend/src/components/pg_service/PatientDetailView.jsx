@@ -4147,36 +4147,16 @@ Total documents: ${documents.length}
               </div>
               
               {/* Date input in modal */}
-              <div className="form-group">
-                  <label htmlFor="signedDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Signed Date:</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <input 
-                          type="date" 
-                          id="signedDate"
-                          value={toHTMLDateFormat(signedDate)}
-                          onChange={(e) => {
-                              setSignedDate(e.target.value);
-                          }}
-                          onKeyDown={(e) => {
-                              e.stopPropagation();
-                          }}
-                          className="form-control"
-                          max={new Date().toISOString().split('T')[0]}
-                          style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
-                          data-date-format="mm/dd/yyyy"
-                          lang="en-US"
-                      />
-                      <FaCalendarAlt 
-                          style={{ cursor: 'pointer', fontSize: '20px' }} 
-                          onClick={() => {
-                              document.getElementById('signedDate')?.focus();
-                              document.getElementById('signedDate')?.showPicker?.();
-                          }}
-                      />
-                  </div>
-                  <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
-                      Format: MM/DD/YYYY (Month/Day/Year)
-                  </small>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label htmlFor="signedDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Date Signed:</label>
+                <DatePicker
+                  selected={signedDate ? new Date(signedDate) : null}
+                  onChange={(date) => setSignedDate(date ? date.toISOString().split('T')[0] : '')}
+                  dateFormat="MM-dd-yyyy"
+                  placeholderText="MM-DD-YYYY"
+                  className="form-control"
+                  style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                />
               </div>
               <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                 <button 
@@ -4247,41 +4227,16 @@ Total documents: ${documents.length}
                 </select>
               </div>
               
-              <div className="form-group">
-                <label htmlFor="newDocDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Document Received Date:</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <input 
-                    type="date" 
-                    id="newDocDate"
-                    value={toHTMLDateFormat(newDocDate)}
-                    onChange={(e) => {
-                      console.log("Date changed to:", e.target.value);
-                      setNewDocDate(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      // Allow editing with keyboard
-                      e.stopPropagation();
-                    }}
-                    className="form-control"
-                    max={new Date().toISOString().split('T')[0]} // Today as max date
-                    style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
-                    // Force US date format on all browsers/environments
-                    data-date-format="mm/dd/yyyy"
-                    lang="en-US"
-                  />
-                  {/* Alternative calendar icon for better UX */}
-                  <FaCalendarAlt 
-                    style={{ cursor: 'pointer', fontSize: '20px' }} 
-                    onClick={() => {
-                      // Focus the date input when calendar icon is clicked
-                      document.getElementById('newDocDate')?.focus();
-                      document.getElementById('newDocDate')?.showPicker?.();
-                    }}
-                  />
-                </div>
-                <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
-                  Format: MM/DD/YYYY (Month/Day/Year)
-                </small>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label htmlFor="newDocDate" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Date:</label>
+                <DatePicker
+                  selected={newDocDate ? new Date(newDocDate) : null}
+                  onChange={(date) => setNewDocDate(date ? date.toISOString().split('T')[0] : '')}
+                  dateFormat="MM-dd-yyyy"
+                  placeholderText="MM-DD-YYYY"
+                  className="form-control"
+                  style={{ width: '100%', padding: '8px', fontSize: '16px', borderRadius: '4px' }}
+                />
               </div>
               <div className="modal-footer" style={{ marginTop: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                 <button 

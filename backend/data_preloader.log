@@ -10522,3 +10522,38 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-25 06:14:02,275 - __main__ - INFO - Checking for cached data at startup
 2025-04-25 06:14:02,293 - werkzeug - WARNING -  * Debugger is active!
 2025-04-25 06:14:02,293 - werkzeug - INFO -  * Debugger PIN: 127-973-215
+2025-04-25 18:01:49,377 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\data_cache
+2025-04-25 18:01:49,402 - __main__ - INFO - Checking for cached data at startup
+2025-04-25 18:01:49,467 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.178:5000
+2025-04-25 18:01:49,468 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-25 18:01:49,471 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 18:01:51,991 - data_preloader - INFO - Using existing data cache directory: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\data_cache
+2025-04-25 18:01:52,008 - __main__ - INFO - Checking for cached data at startup
+2025-04-25 18:01:52,021 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 18:01:52,026 - werkzeug - INFO -  * Debugger PIN: 650-118-331
+2025-04-25 18:03:15,678 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 18:03:15,679 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:03:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 18:03:15,948 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 18:03:15,949 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:03:15] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 18:03:17,620 - __main__ - INFO - Request from origin: 
+2025-04-25 18:03:17,621 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 18:03:18,648 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:03:18] "GET /api/map?stable=true&r=map-1745584395326&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745584395328 HTTP/1.1" 200 -
+2025-04-25 18:03:56,014 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 18:03:56,016 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:03:56] "GET /api/health HTTP/1.1" 200 -
+2025-04-25 18:03:56,338 - __main__ - INFO - Map request for area: Albany
+2025-04-25 18:03:56,339 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745584436021')])
+2025-04-25 18:03:56,339 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-25 18:03:56,340 - statistical_area_zoom - INFO - Generating map for statistical area: Albany with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-25 18:03:56,340 - statistical_area_zoom - INFO - Cache file path: C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Albany_lightweight.html
+2025-04-25 18:03:56,341 - statistical_area_zoom - INFO - Using cached map from C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Albany_lightweight.html (age: 0.1 hours)
+2025-04-25 18:03:56,341 - statistical_area_zoom - INFO - Map retrieval completed in 0.00 seconds (from cache)
+2025-04-25 18:03:56,343 - __main__ - INFO - Map generated successfully at C:\Users\Lenovo\Music\Projects\Vivnovation\z_a\SST_PROJECT\backend\cache\statistical_area_Albany_lightweight.html
+2025-04-25 18:03:56,343 - __main__ - INFO - Request completed in 0.00 seconds
+2025-04-25 18:03:56,345 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-25 18:03:56,416 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:03:56] "GET /api/statistical-area-map/Albany?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745584436021 HTTP/1.1" 200 -
+2025-04-25 18:03:56,440 - __main__ - INFO - Request from origin: 
+2025-04-25 18:03:56,441 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-25 18:03:56,441 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:03:56] "GET /api/statistical-area-map/Albany?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745584436021&_show_states=true&_show_counties=true&_show_msas=true&_t=1745584436421 HTTP/1.1" 200 -
