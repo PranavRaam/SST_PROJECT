@@ -1915,7 +1915,7 @@ const PGView = () => {
           <tbody>
             {/* Get claims based on current filter state using getSortedClaims to apply any sorting */}
             {getSortedClaims(getFilteredClaims()).map((claim, index) => (
-              <tr key={claim.id}>
+              <tr key={`${claim.id}-${claim.docType || 'unknown'}`}>
                 <td>{claim.remarks}</td>
                 <td>{index + 1}</td>
                 <td>{claim.fullName}</td>
@@ -3996,7 +3996,7 @@ Operations Team
     // Convert to lowercase and remove excessive whitespace
     const normalizedSearchPG = pgNameParam ? pgNameParam.toLowerCase().trim().replace(/\s+/g, ' ') : '';
     
-    // Get all patients
+    // Simplified mock patients - 5 essential test cases
     const allPatients = [
       {
         id: "VT001",
@@ -4014,7 +4014,7 @@ Operations Team
         patientEpisodeTo: "08/14/2025",
         cpoMinsCaptured: 45,
         certStatus: "Document Signed",
-        certSignedDate: "03/05/2025", // Signed in March - should qualify for CERT
+        certSignedDate: "03/05/2025", // CERT example
         recertStatus: "Not Required",
         recertSignedDate: "",
         physicianName: "Dr. Sarah Johnson",
@@ -4039,11 +4039,11 @@ Operations Team
         patientSOC: "01/03/2025",
         patientEpisodeFrom: "01/03/2025",
         patientEpisodeTo: "07/02/2025",
-        cpoMinsCaptured: 35, // Eligible for CPO
+        cpoMinsCaptured: 35,
         certStatus: "Document not received",
         certSignedDate: "",
         recertStatus: "Document Signed",
-        recertSignedDate: "03/10/2025", // Signed in March - should qualify for RECERT
+        recertSignedDate: "03/10/2025", // RECERT example
         physicianName: "Dr. Robert Chen",
         patientInEHR: true,
         billingCode: "G0179",
@@ -4066,9 +4066,9 @@ Operations Team
         patientSOC: "01/20/2025",
         patientEpisodeFrom: "01/20/2025",
         patientEpisodeTo: "07/19/2025",
-        cpoMinsCaptured: 37, // Enough for CPO
+        cpoMinsCaptured: 37,
         certStatus: "Document Signed",
-        certSignedDate: "03/15/2025", // Signed in March
+        certSignedDate: "03/15/2025", // Combined CERT and CPO example
         recertStatus: "Not Required",
         recertSignedDate: "",
         physicianName: "Dr. Maria Garcia",
@@ -4093,11 +4093,11 @@ Operations Team
         patientSOC: "12/05/2024",
         patientEpisodeFrom: "12/05/2024",
         patientEpisodeTo: "06/04/2025",
-        cpoMinsCaptured: 35, // Enough for CPO
+        cpoMinsCaptured: 35,
         certStatus: "Document not received",
         certSignedDate: "",
         recertStatus: "Document Signed",
-        recertSignedDate: "03/02/2025", // Signed in March - should qualify for RECERT
+        recertSignedDate: "03/02/2025", // Combined RECERT and CPO example
         physicianName: "Dr. James Wilson",
         patientInEHR: true,
         billingCode: "G0179",
@@ -4109,60 +4109,6 @@ Operations Team
       {
         id: "VT005",
         patientId: "P1005",
-        patientFirstName: "Jennifer",
-        patientMiddleName: "R",
-        patientLastName: "Davis",
-        patientDOB: "09/30/1965",
-        hhah: "PG Delta",
-        patientInsurance: "Medicare",
-        primaryDiagnosisCodes: ["G20"], // Parkinson's disease
-        secondaryDiagnosisCodes: ["R26.2", "I10", "E03.9"], // Walking difficulty, Hypertension, Hypothyroidism
-        patientSOC: "02/28/2025",
-        patientEpisodeFrom: "02/28/2025",
-        patientEpisodeTo: "08/27/2025",
-        cpoMinsCaptured: 40, // Enough for CPO
-        certStatus: "Document Signed",
-        certSignedDate: "03/08/2025", // Signed in March
-        recertStatus: "Not Required",
-        recertSignedDate: "",
-        physicianName: "Dr. Emily Thompson",
-        patientInEHR: true,
-        billingCode: "G0180",
-        charges: 60,
-        pos: "11",
-        units: 1,
-        patientRemarks: "CERT and CPO eligible"
-      },
-      {
-        id: "VT006",
-        patientId: "P1006",
-        patientFirstName: "Michael",
-        patientMiddleName: "T",
-        patientLastName: "Wilson",
-        patientDOB: "06/25/1958",
-        hhah: "PG Delta",
-        patientInsurance: "TRICARE",
-        primaryDiagnosisCodes: ["G20"], // Parkinson's
-        secondaryDiagnosisCodes: ["R26.2", "I10"], // Difficulty walking, Hypertension
-        patientSOC: "01/15/2025",
-        patientEpisodeFrom: "01/15/2025",
-        patientEpisodeTo: "07/15/2025",
-        cpoMinsCaptured: 50, // High minutes for CPO
-        certStatus: "Document Signed",
-        certSignedDate: "03/12/2025", // Signed in March
-        recertStatus: "Not Required",
-        recertSignedDate: "",
-        physicianName: "Dr. Thomas Young",
-        patientInEHR: true,
-        billingCode: "G0180",
-        charges: 60,
-        pos: "11",
-        units: 1,
-        patientRemarks: "CERT and CPO eligible"
-      },
-      {
-        id: "VT007",
-        patientId: "P1007",
         patientFirstName: "David",
         patientMiddleName: "W",
         patientLastName: "Anderson",
@@ -4171,12 +4117,12 @@ Operations Team
         patientInsurance: "Medicare",
         primaryDiagnosisCodes: ["C34.90"], // Lung cancer
         secondaryDiagnosisCodes: ["R53.83", "E46", "R63.4"], // Fatigue, Malnutrition, Weight loss
-        patientSOC: "03/01/2025", // Start of March
+        patientSOC: "03/01/2025",
         patientEpisodeFrom: "03/01/2025",
         patientEpisodeTo: "09/01/2025",
-        cpoMinsCaptured: 42, // Good for CPO
+        cpoMinsCaptured: 25, // CPO ineligible (under 30 minutes)
         certStatus: "Document Signed",
-        certSignedDate: "03/20/2025", // Signed in March
+        certSignedDate: "03/20/2025", // CERT only example (not enough CPO minutes)
         recertStatus: "Not Required",
         recertSignedDate: "",
         physicianName: "Dr. Nancy White",
@@ -4185,164 +4131,56 @@ Operations Team
         charges: 60,
         pos: "11",
         units: 1,
-        patientRemarks: "CERT and CPO eligible - episode starts within billing month"
-      },
-      {
-        id: "VT008",
-        patientId: "P1008",
-        patientFirstName: "Elizabeth",
-        patientMiddleName: "K",
-        patientLastName: "Martin",
-        patientDOB: "04/18/1950",
-        hhah: "PG Delta",
-        patientInsurance: "Medicare",
-        primaryDiagnosisCodes: ["I63.9"], // Stroke
-        secondaryDiagnosisCodes: ["I69.391", "I10", "E11.9"], // Dysphagia following stroke, Hypertension, Type 2 diabetes
-        patientSOC: "11/15/2024",
-        patientEpisodeFrom: "11/15/2024",
-        patientEpisodeTo: "03/15/2025", // Episode ends within billing month
-        cpoMinsCaptured: 38, // Good for CPO
-        certStatus: "Document not received",
-        certSignedDate: "",
-        recertStatus: "Document Signed",
-        recertSignedDate: "03/01/2025", // Signed in March
-        physicianName: "Dr. Steven Clark",
-        patientInEHR: true,
-        billingCode: "G0179",
-        charges: 40,
-        pos: "11",
-        units: 1,
-        patientRemarks: "RECERT and CPO eligible - episode ends within billing month"
-      },
-      {
-        id: "VT009",
-        patientId: "P1009",
-        patientFirstName: "Richard",
-        patientMiddleName: "H",
-        patientLastName: "Thompson",
-        patientDOB: "10/03/1960",
-        hhah: "PG Delta",
-        patientInsurance: "Medicare",
-        primaryDiagnosisCodes: ["I50.1"], // Left ventricular failure
-        secondaryDiagnosisCodes: ["I25.10", "E11.9", "Z95.1"], // Coronary artery disease, Type 2 diabetes, Cardiac stent
-        patientSOC: "12/20/2024",
-        patientEpisodeFrom: "12/20/2024",
-        patientEpisodeTo: "06/20/2025", // Episode contains the entire billing month
-        cpoMinsCaptured: 40, // Good for CPO
-        certStatus: "Document Signed",
-        certSignedDate: "03/25/2025", // Signed in March
-        recertStatus: "Not Required",
-        recertSignedDate: "",
-        physicianName: "Dr. Kevin Rodriguez",
-        patientInEHR: true,
-        billingCode: "G0180",
-        charges: 60,
-        pos: "11",
-        units: 1,
-        patientRemarks: "CERT and CPO eligible - episode spans entire billing month"
-      },
-      {
-        id: "VT010",
-        patientId: "P1010",
-        patientFirstName: "Barbara",
-        patientMiddleName: "J",
-        patientLastName: "Lewis",
-        patientDOB: "07/22/1945",
-        hhah: "PG Delta",
-        patientInsurance: "Medicare",
-        primaryDiagnosisCodes: ["M17.0"], // Bilateral osteoarthritis of knee
-        secondaryDiagnosisCodes: ["M19.90", "E66.01", "M81.0"], // Unspecified osteoarthritis, Obesity, Osteoporosis
-        patientSOC: "01/10/2025",
-        patientEpisodeFrom: "01/10/2025",
-        patientEpisodeTo: "07/10/2025", // Episode contains the entire billing month
-        cpoMinsCaptured: 25, // NOT enough for CPO
-        certStatus: "Document Signed",
-        certSignedDate: "03/18/2025", // Signed in March
-        recertStatus: "Not Required",
-        recertSignedDate: "",
-        physicianName: "Dr. Michelle Garcia",
-        patientInEHR: true,
-        billingCode: "G0180",
-        charges: 60,
-        pos: "11",
-        units: 1,
-        patientRemarks: "CERT eligible but insufficient CPO minutes (only 25)"
+        patientRemarks: "CERT eligible only - not enough CPO minutes"
       }
     ];
     
-    // For any PG name that includes DELTA (case insensitive), return all patients
-    if (normalizedSearchPG && normalizedSearchPG.includes('delta')) {
+    // Return all patients if PG name matches
+    if (normalizedSearchPG === 'pg delta' || !normalizedSearchPG) {
       return allPatients;
     }
     
-    // Otherwise create some sample data for the specific PG
-    if (normalizedSearchPG) {
-      return createSamplePatientsForPG(pgNameParam);
-    }
-    
-    // Default - return all patients (for demo purposes)
-    return allPatients;
+    // Filter patients by PG name if specified
+    return allPatients.filter(patient => {
+      const normalizedPatientPG = patient.hhah?.toLowerCase().trim().replace(/\s+/g, ' ') || '';
+      return normalizedPatientPG.includes(normalizedSearchPG) || normalizedSearchPG.includes(normalizedPatientPG);
+    });
   };
 
-  // Helper function to create sample patients when no matches found
+  // Helper function to create sample patients - used only for PGs without mock data
   const createSamplePatientsForPG = (pgName) => {
+    // Fallback sample patients if no specific mock data is available
     return [
       {
-        id: 'sample1',
-        patientId: 'S001',
-        patientFirstName: 'John',
-        patientMiddleName: 'A',
-        patientLastName: 'Smith',
-        patientDOB: '01/15/1945',
-        hhah: pgName || 'Sample Agency',
-        patientInsurance: 'Medicare',
-        primaryDiagnosisCodes: ['I10'],
-        secondaryDiagnosisCodes: ['E11.9', 'Z79.4'],
-        patientSOC: '02/01/2024',
-        patientEpisodeFrom: '02/01/2024',
-        patientEpisodeTo: '04/01/2024',
-        cpoMinsCaptured: 35,
-        billingCode: 'G0181',
-        charges: 113,
-        pos: '11',
+        id: "SMP001",
+        patientId: "S1001",
+        patientFirstName: "Sample",
+        patientMiddleName: "",
+        patientLastName: "Patient",
+        patientDOB: "01/15/1950",
+        hhah: pgName,
+        patientInsurance: "Medicare",
+        primaryDiagnosisCodes: ["F00"],
+        secondaryDiagnosisCodes: ["I10", "E11.9"],
+        patientSOC: "01/10/2025",
+        patientEpisodeFrom: "01/10/2025",
+        patientEpisodeTo: "07/09/2025",
+        cpoMinsCaptured: 32,
+        certStatus: "Document Signed",
+        certSignedDate: "03/01/2025",
+        recertStatus: "Not Required",
+        recertSignedDate: "",
+        physicianName: "Dr. Sample Doctor",
+        patientInEHR: true,
+        billingCode: "G0180",
+        charges: 60,
+        pos: "11",
         units: 1,
-        physicianName: 'Dr. Sarah Johnson',
-        certStatus: 'Document Signed',
-        recertStatus: 'Not Started',
-        certSignedDate: '01/25/2024',
-        recertSignedDate: '',
-        patientRemarks: 'CERT signed'
-      },
-      {
-        id: 'sample2',
-        patientId: 'S002',
-        patientFirstName: 'Mary',
-        patientMiddleName: 'E',
-        patientLastName: 'Johnson',
-        patientDOB: '03/22/1938',
-        hhah: pgName || 'Sample Agency',
-        patientInsurance: 'Medicare',
-        primaryDiagnosisCodes: ['J44.9'],
-        secondaryDiagnosisCodes: ['I50.9', 'Z79.01'],
-        patientSOC: '01/15/2024',
-        patientEpisodeFrom: '01/15/2024',
-        patientEpisodeTo: '03/15/2024',
-        cpoMinsCaptured: 40,
-        billingCode: 'G0181',
-        charges: 113,
-        pos: '11',
-        units: 1,
-        physicianName: 'Dr. Robert Chen',
-        certStatus: 'Not Started',
-        recertStatus: 'Not Started',
-        certSignedDate: '',
-        recertSignedDate: '',
-        patientRemarks: 'CPO completed'
+        patientRemarks: "Sample data"
       }
     ];
   };
 
-  // Export claims as PDF
   const exportClaimsAsPDF = () => {
     // Create new PDF document
     const doc = new jsPDF();

@@ -1,0 +1,44 @@
+{
+  "Central": {
+    "San Antonio-New Braunfels": [
+      "BSZ Medical PA",
+      "Responsive Infectious Diseases Solutions",
+      "Northeast ProHealth",
+      "Centric Physicians Group",
+      "Doctor at your service",
+      "WoundCentrics LLC",
+      "Visiting Practitioners And Palliative Care LLC",
+      "UT Health-Geriatrics & Supportive Care Clinic",
+      "Goldstein Alasdair MD"
+    ],
+    "Dallas-Fort Worth-Arlington": [
+      "Doctors at Home - Mary Snellings MD",
+      "Morning Star Healthcare Services PA",
+      "Spectrum (Community First Primary Care)",
+      "Royal V.P. LLC",
+      "CityWide Housecalls LLC",
+      "Prime MD Geriatrics",
+      "Americare Medical Group",
+      "Texas Infectious Disease Institute",
+      "Atrium HouseCall",
+      "Preferred Primary Care"
+    ],
+    "Sherman-Denison": [
+      "Diverse Care"
+    ],
+    "Wichita Falls": [
+      "Boyers Family Practice",
+      "Clinic of North Texas"
+    ],
+    "Houston-The Woodlands-Sugar Land": [
+      "Apple MD",
+      "Anand Balasubramanian MD PA"
+    ],
+    "Cleveland": [
+      "Comprehensive primary care and behavioural health LLC"
+    ],
+    "Cleveland-Elyria": [
+      "Comprehensive primary care and behavioural health LLC"
+    ]
+  }
+} 

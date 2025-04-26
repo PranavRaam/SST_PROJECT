@@ -9,8 +9,139 @@ import BarChart from './BarChart';
 import './RegionDetailView.css';
 import { FunnelDataProvider } from './sa_view_components/FunnelDataContext';
 
+// List of non-virgin MSAs for each region
+const nonVirginMSAs = {
+  'West': new Set([
+    'Amarillo',
+    'Boulder',
+    'Broomfield',
+    'Casper',
+    'Chicago–Naperville–Elgin',
+    'Cleveland–Elyria',
+    'Clovis Micropolitan Statistical Area',
+    'Colorado Springs',
+    'Corpus Christi',
+    'Dallas–Fort Worth–Arlington',
+    'Denver-Aurora-Lakewood',
+    'El Paso',
+    'Fort Collins',
+    'Fort Morgan Micropolitan Statistical Area',
+    'Greeley',
+    'Laredo',
+    'Las Vegas-Henderson-Paradise',
+    'Levelland Micropolitan Statistical Area',
+    'Los Angeles-Long Beach-Anaheim',
+    'Lubbock',
+    'McAllen-Edinburg-Mission',
+    'New York–Newark–Jersey City',
+    'Odessa',
+    'Ogden-Clearfield',
+    'Pampa Micropolitan Statistical Area',
+    'Phoenix-Mesa-Scottsdale',
+    'Pueblo',
+    'Salt Lake City',
+    'Santa Barbara',
+    'Santa Maria-Santa Barbara',
+    'St. George',
+    'Sterling Micropolitan Statistical Area'
+  ]),
+  'East Central': new Set([
+    'Bryan-College Station',
+    'Chicago-Naperville-Elgin',
+    'Clarksville',
+    'Cleveland-Elyria',
+    'Cleveland',
+    'Dallas-Fort Worth-Arlington',
+    'Detroit-Warren-Dearborn',
+    'Detroit-Warren-Flint',
+    'Houston-The Woodlands-Sugar Land',
+    'Indianapolis-Carmel-Anderson',
+    'Jackson',
+    'Lafayette',
+    'Los Angeles-Long Beach-Anaheim',
+    'McAllen-Edinburg-Mission',
+    'Minneapolis-St. Paul-Bloomington',
+    'Monroe',
+    'Nashville-Davidson-Murfreesboro-Franklin',
+    'New York-Newark-Jersey City',
+    'Oklahoma City',
+    'Philadelphia-Camden-Wilmington',
+    'Pittsburgh',
+    'Port St. Lucie',
+    'Salt Lake City',
+    'San Antonio-New Braunfels',
+    'Sebastian-Vero Beach',
+    'St. Louis',
+    'Wichita Falls'
+  ]),
+  'Central': new Set([
+    'Alexandria',
+    'Alice Micropolitan Statistical Area',
+    'Ardmore Micropolitan Statistical Area',
+    'Ashtabula',
+    'Austin-Round Rock',
+    'Benavides Micropolitan Statistical Area',
+    'Brownsville–Harlingen',
+    'Brownwood Micropolitan Statistical Area',
+    'Bryan-College Station',
+    'Carlsbad Micropolitan Statistical Area',
+    'Casper',
+    'Chicago-Naperville-Elgin',
+    'Cleveland',
+    'Cleveland-Elyria',
+    'Corpus Christi',
+    'Dallas-Fort Worth-Arlington',
+    'Del Rio Micropolitan Statistical Area',
+    'Denver-Aurora-Lakewood',
+    'Durant Micropolitan Statistical Area',
+    'Eagle Pass Micropolitan Statistical Area',
+    'El Paso',
+    'Fort Worth-Arlington',
+    'Houston-The Woodlands-Sugar Land',
+    'Huntsville Micropolitan Statistical Area',
+    'Jackson',
+    'Kerrville Micropolitan Statistical Area',
+    'Killeen-Temple',
+    'Lafayette-Opelousas-Morgan City Combined Statistical Area',
+    'Lafayette',
+    'Lake Charles',
+    'Laredo',
+    'Laredo Micropolitan Statistical Area',
+    'Lawton',
+    'Livingston Micropolitan Statistical Area',
+    'Los Angeles-Long Beach-Anaheim',
+    'McAllen-Edinburg-Mission',
+    'Minneapolis-St. Paul-Bloomington',
+    'Monroe',
+    'Nacogdoches Micropolitan Statistical Area',
+    'Natchez Micropolitan Statistical Area',
+    'Odessa',
+    'Ogden-Clearfield',
+    'Oklahoma City',
+    'Palestine Micropolitan Statistical Area',
+    'Paris Micropolitan Statistical Area',
+    'Philadelphia-Camden-Wilmington',
+    'Pittsburgh',
+    'Salt Lake City',
+    'San Antonio-New Braunfels',
+    'San Marcos',
+    'Sarasota-Bradenton-Venice',
+    'Sebastian-Vero Beach',
+    'Sherman-Denison',
+    'St. George',
+    'St. Louis',
+    'Sweetwater Micropolitan Statistical Area',
+    'Tyler',
+    'Victoria',
+    'Waco',
+    'Wichita Falls',
+    'Youngstown-Warren-Boardman'
+  ]),
+  'East': new Set([]) // Empty set for East region as all areas are virgin
+};
+
 const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, onSelectStatisticalArea }) => {
-  const [activeTab, setActiveTab] = useState('table');
+  const [activeTab, setActiveTab] = useState('non-virgin');
   const [selectedMetric, setSelectedMetric] = useState('patients');
   const [searchTerm, setSearchTerm] = useState('');
   const printRef = useRef(null);
@@ -18,10 +149,30 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
   // Use the statisticalAreas prop directly
   const allStatisticalAreas = statisticalAreas;
   
-  // Filter statistical areas based on search term
-  const filteredAreas = allStatisticalAreas.filter(area => 
-    area.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter statistical areas based on search term and tab
+  const filteredAreas = allStatisticalAreas.filter(area => {
+    const matchesSearch = area.toLowerCase().includes(searchTerm.toLowerCase());
+    if (!matchesSearch) return false;
+    
+    const regionNonVirginMSAs = nonVirginMSAs[divisionalGroup] || new Set();
+    
+    // Debug logs
+    console.log('Current region:', divisionalGroup);
+    console.log('Current area:', area);
+    console.log('Non-virgin MSAs for region:', Array.from(regionNonVirginMSAs));
+    console.log('Is area in non-virgin set:', regionNonVirginMSAs.has(area));
+    
+    switch (activeTab) {
+      case 'non-virgin':
+        return regionNonVirginMSAs.has(area);
+      case 'virgin':
+        return !regionNonVirginMSAs.has(area);
+      case 'all':
+        return true;
+      default:
+        return true;
+    }
+  });
   
   // Format number with commas
   const formatNumber = (num) => {
@@ -228,10 +379,22 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
         {/* Tab navigation */}
         <div className="detail-tabs">
           <button 
-            className={`tab-button ${activeTab === 'table' ? 'active' : ''}`}
-            onClick={() => setActiveTab('table')}
+            className={`tab-button ${activeTab === 'non-virgin' ? 'active' : ''}`}
+            onClick={() => setActiveTab('non-virgin')}
           >
-            Statistical Areas
+            Non-virgin Area
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'virgin' ? 'active' : ''}`}
+            onClick={() => setActiveTab('virgin')}
+          >
+            Virgin Area
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveTab('all')}
+          >
+            All Statistical Area
           </button>
           <button 
             className={`tab-button ${activeTab === 'comparison' ? 'active' : ''}`}
@@ -242,7 +405,7 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
         </div>
         
         {/* Statistical Areas Table view */}
-        {activeTab === 'table' && (
+        {activeTab !== 'comparison' && (
           <div className="region-stats-container animate-fade-in">
             <div className="search-container">
               <input
@@ -253,35 +416,41 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
                 className="search-inputt"
               />
             </div>
-            <table className="region-stats-table">
-              <thead>
-                <tr>
-                  <th>Statistical Area</th>
-                  <th>No. of Patients</th>
-                  <th>No. of Physician Groups</th>
-                  <th>No. of Agencies</th>
-                  <th>No. of Active Reactive Outcomes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredAreas.map((area, index) => (
-                  <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
-                    <td className="area-name">{area}</td>
-                    <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
-                    <td>{formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
-                    <td>{formatNumber(statisticalAreaStatistics[area]?.agencies || 0)}</td>
-                    <td>{formatNumber(statisticalAreaStatistics[area]?.activeOutcomes || 0)}</td>
+            {filteredAreas.length === 0 && activeTab === 'non-virgin' ? (
+              <div className="no-data-message">
+                <p>No non-virgin areas in {divisionalGroup} region</p>
+              </div>
+            ) : (
+              <table className="region-stats-table">
+                <thead>
+                  <tr>
+                    <th>Statistical Area</th>
+                    <th>No. of Patients</th>
+                    <th>No. of Physician Groups</th>
+                    <th>No. of Agencies</th>
+                    <th>No. of Active Reactive Outcomes</th>
                   </tr>
-                ))}
-                <tr className="total-row">
-                  <td><strong>Totals</strong></td>
-                  <td><strong>{formatNumber(areaTotals.patients)}</strong></td>
-                  <td><strong>{formatNumber(areaTotals.physicianGroups)}</strong></td>
-                  <td><strong>{formatNumber(areaTotals.agencies)}</strong></td>
-                  <td><strong>{formatNumber(areaTotals.activeOutcomes)}</strong></td>
-                </tr>
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredAreas.map((area, index) => (
+                    <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
+                      <td className="area-name">{area}</td>
+                      <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
+                      <td>{formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
+                      <td>{formatNumber(statisticalAreaStatistics[area]?.agencies || 0)}</td>
+                      <td>{formatNumber(statisticalAreaStatistics[area]?.activeOutcomes || 0)}</td>
+                    </tr>
+                  ))}
+                  <tr className="total-row">
+                    <td><strong>Totals</strong></td>
+                    <td><strong>{formatNumber(areaTotals.patients)}</strong></td>
+                    <td><strong>{formatNumber(areaTotals.physicianGroups)}</strong></td>
+                    <td><strong>{formatNumber(areaTotals.agencies)}</strong></td>
+                    <td><strong>{formatNumber(areaTotals.activeOutcomes)}</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
           </div>
         )}
         

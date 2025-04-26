@@ -6,6 +6,10 @@ import {
   transformAgencyDataForFunnel,
   updateAgencyData 
 } from '../../utils/csvDataService';
+import pgFunnelReference from '../../assets/data/pg_funnel_reference.json';
+import westPGData from '../../assets/data/west_pg_data.json';
+import centralPGData from '../../assets/data/central_pg_data.json';
+import eastCentralPGData from '../../assets/data/east_central_pg_data.json';
 
 // Create the context
 const FunnelDataContext = createContext();
@@ -21,7 +25,7 @@ export const PG_STAGES = [
   "Deal is so hot your hands will burn if you touch it",
   "On the platform",
   "In the upselling zone",
-  "Upsold to CPOs/CCMs/RPMs/other services"
+  "Upsold to CPO/etc..."
 ];
 
 export const HHAH_STAGES = [
@@ -95,17 +99,27 @@ const FunnelDataProvider = ({ children, initialArea }) => {
     // Create initial funnel data based on actual data
     const createFunnelData = (type, agencies) => {
       if (type === 'pg') {
+        // Get PGs for current MSA from all regions
+        const westPGs = westPGData.West[currentArea] || [];
+        const centralPGs = centralPGData.Central[currentArea] || [];
+        const eastCentralPGs = eastCentralPGData.East_Central[currentArea] || [];
+        
+        // Combine PGs from all regions for current MSA
+        const allPGs = [...westPGs, ...centralPGs, ...eastCentralPGs];
+        
         // Initialize counts for each PG stage
         const stageCounts = {};
         PG_STAGES.forEach(stage => {
           stageCounts[stage] = 0;
         });
         
-        // Count PGs in each stage
-        agencies.forEach(agency => {
-          const stage = agency['Agency Type'] || PG_STAGES[0]; // Default to first stage if no type
-          if (stageCounts[stage] !== undefined) {
-            stageCounts[stage]++;
+        // Count PGs in each stage using the reference file
+        allPGs.forEach(pgName => {
+          const status = pgFunnelReference[pgName];
+          if (status === "On the platform") {
+            stageCounts["On the platform"]++;
+          } else if (status === "Upsold to CPO/etc...") {
+            stageCounts["Upsold to CPO/etc..."]++;
           }
         });
         
@@ -120,7 +134,7 @@ const FunnelDataProvider = ({ children, initialArea }) => {
         return PG_STAGES.map((stage, index) => ({
           name: stage, 
           value: stageCounts[stage] || 0,
-          fill: colors[index] || "#9C27B0"
+          fill: colors[index]
         }));
       } else {
         // Initialize counts for each stage for HHAH funnel
