@@ -12,6 +12,23 @@ import tempfile
 from folium import IFrame, Figure
 from branca.element import MacroElement
 from jinja2 import Template
+import logging
+
+# Import the customer_data_processor module for virgin/non-virgin MSA analysis
+try:
+    import customer_data_processor
+except ImportError:
+    # Create a custom handler if the module is missing
+    class DummyCustomerDataProcessor:
+        @staticmethod
+        def identify_virgin_statistical_areas(*args, **kwargs):
+            print("Warning: customer_data_processor module not available, using empty data")
+            return [], []
+    customer_data_processor = DummyCustomerDataProcessor()
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class LegendControl(MacroElement):
     def __init__(self, title, color_dict, position='bottomright'):
@@ -113,6 +130,10 @@ def get_msa_data():
     
     # Add placeholder for state count that will be populated later
     msa_data['STATE_COUNT'] = 0
+    
+    # Add placeholders for virgin/non-virgin status
+    msa_data['IS_VIRGIN'] = False
+    msa_data['HAS_CUSTOMERS'] = False
     
     return msa_data
 
@@ -470,6 +491,34 @@ def assign_counties_to_regions_and_msas(county_data, regions, ca_regions, specia
     county_data['CBSAFP'], county_data['CBSA_NAME'] = zip(*county_data.apply(get_msa_info, axis=1))
     county_data['InMSA'] = county_data['CBSAFP'] != ''
     
+    # Get virgin and non-virgin MSAs
+    try:
+        virgin_msas, non_virgin_msas = customer_data_processor.identify_virgin_statistical_areas(msa_data)
+        
+        # Mark MSAs based on virgin/non-virgin status
+        for idx, msa in msa_data.iterrows():
+            if msa['CBSAFP'] in virgin_msas:
+                msa_data.at[idx, 'IS_VIRGIN'] = True
+            if msa['CBSAFP'] in non_virgin_msas:
+                msa_data.at[idx, 'HAS_CUSTOMERS'] = True
+        
+        logger.info(f"Identified {len(virgin_msas)} virgin MSAs and {len(non_virgin_msas)} non-virgin MSAs")
+    except Exception as e:
+        logger.error(f"Error identifying virgin/non-virgin MSAs: {e}")
+        virgin_msas, non_virgin_msas = [], []
+    
+    # Prepare MSA data with state counts (restore this code)
+    # First, make sure necessary columns exist in county_data
+    if all(col in county_data.columns for col in ['InMSA', 'CBSAFP', 'STUSPS']):
+        # Group counties by MSA to count states
+        msa_counties = county_data[county_data['InMSA']]
+        if not msa_counties.empty:
+            msa_state_counts = msa_counties.groupby('CBSAFP')['STUSPS'].nunique().to_dict()
+            
+            # Add state count to MSA data
+            if 'CBSAFP' in msa_data.columns:
+                msa_data['STATE_COUNT'] = msa_data['CBSAFP'].map(lambda x: msa_state_counts.get(x, 0))
+    
     return county_data
 
 def create_enhanced_interactive_map(county_data, msa_data, regions):
@@ -525,17 +574,21 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
     # Get color scheme for regions
     region_colors = {region: data["color"] for region, data in regions.items()}
     
-    # Prepare MSA data with state counts
-    # First, make sure necessary columns exist in county_data
-    if all(col in county_data.columns for col in ['InMSA', 'CBSAFP', 'STUSPS']):
-        # Group counties by MSA to count states
-        msa_counties = county_data[county_data['InMSA']]
-        if not msa_counties.empty:
-            msa_state_counts = msa_counties.groupby('CBSAFP')['STUSPS'].nunique().to_dict()
-            
-            # Add state count to MSA data
-            if 'CBSAFP' in msa_data.columns:
-                msa_data['STATE_COUNT'] = msa_data['CBSAFP'].map(lambda x: msa_state_counts.get(x, 0))
+    # Get virgin and non-virgin MSAs
+    try:
+        virgin_msas, non_virgin_msas = customer_data_processor.identify_virgin_statistical_areas(msa_data)
+        
+        # Mark MSAs based on virgin/non-virgin status
+        for idx, msa in msa_data.iterrows():
+            if msa['CBSAFP'] in virgin_msas:
+                msa_data.at[idx, 'IS_VIRGIN'] = True
+            if msa['CBSAFP'] in non_virgin_msas:
+                msa_data.at[idx, 'HAS_CUSTOMERS'] = True
+        
+        logger.info(f"Identified {len(virgin_msas)} virgin MSAs and {len(non_virgin_msas)} non-virgin MSAs")
+    except Exception as e:
+        logger.error(f"Error identifying virgin/non-virgin MSAs: {e}")
+        virgin_msas, non_virgin_msas = [], []
     
     # Style function for counties
     def style_county(feature):
@@ -636,8 +689,8 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
                 'dashArray': '5, 5'
             },
             tooltip=folium.GeoJsonTooltip(
-                fields=['NAME', 'STATE_COUNT'],
-                aliases=['Metropolitan Area:', 'Number of States:'],
+                fields=['NAME', 'STATE_COUNT', 'IS_VIRGIN', 'HAS_CUSTOMERS'],
+                aliases=['Metropolitan Area:', 'Number of States:', 'Virgin MSA:', 'Has Customers:'],
                 localize=True,
                 sticky=True,
                 labels=True,
@@ -661,8 +714,98 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
             }
         ).add_to(m)
     except Exception as e:
-        print(f"Warning: Could not add MSA layer: {e}")
+        logger.error(f"Warning: Could not add MSA layer: {e}")
         msa_layer = None
+    
+    # Add Virgin Statistical Areas layer (MSAs with no customers)
+    try:
+        virgin_msa_data = msa_data[msa_data['IS_VIRGIN'] == True].copy()
+        if len(virgin_msa_data) > 0:
+            virgin_msa_json = virgin_msa_data.to_json()
+            virgin_msa_layer = folium.GeoJson(
+                data=virgin_msa_json,
+                name='Virgin Statistical Areas',
+                show=False,  # Hidden by default
+                style_function=lambda x: {
+                    'fillColor': '#FF5733',  # Orange-red
+                    'color': '#FF5733',
+                    'weight': 2.5,
+                    'opacity': 0.8,
+                    'fillOpacity': 0.2,
+                    'dashArray': '5, 5'
+                },
+                tooltip=folium.GeoJsonTooltip(
+                    fields=['NAME'],
+                    aliases=['Virgin Metropolitan Area:'],
+                    localize=True,
+                    sticky=True,
+                    labels=True,
+                    style="""
+                        background-color: rgba(255, 200, 200, 0.9);
+                        border: 2px solid #FF5733;
+                        border-radius: 5px;
+                        box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
+                        font-size: 14px;
+                        padding: 8px;
+                        min-width: 200px;
+                    """
+                ),
+                highlight_function=lambda x: {
+                    'fillColor': '#FFA07A',
+                    'color': '#FF5733',
+                    'weight': 3,
+                    'opacity': 1,
+                    'fillOpacity': 0.3,
+                }
+            ).add_to(m)
+            logger.info(f"Added Virgin Statistical Areas layer with {len(virgin_msa_data)} areas")
+    except Exception as e:
+        logger.error(f"Warning: Could not add Virgin Statistical Areas layer: {e}")
+    
+    # Add Non-Virgin Statistical Areas layer (MSAs with customers)
+    try:
+        non_virgin_msa_data = msa_data[msa_data['HAS_CUSTOMERS'] == True].copy()
+        if len(non_virgin_msa_data) > 0:
+            non_virgin_msa_json = non_virgin_msa_data.to_json()
+            non_virgin_msa_layer = folium.GeoJson(
+                data=non_virgin_msa_json,
+                name='Non-Virgin Statistical Areas',
+                show=False,  # Hidden by default
+                style_function=lambda x: {
+                    'fillColor': '#33A1FF',  # Bright blue
+                    'color': '#33A1FF',
+                    'weight': 2.5,
+                    'opacity': 0.8,
+                    'fillOpacity': 0.2,
+                    'dashArray': '5, 5'
+                },
+                tooltip=folium.GeoJsonTooltip(
+                    fields=['NAME'],
+                    aliases=['Non-Virgin Metropolitan Area:'],
+                    localize=True,
+                    sticky=True,
+                    labels=True,
+                    style="""
+                        background-color: rgba(200, 225, 255, 0.9);
+                        border: 2px solid #33A1FF;
+                        border-radius: 5px;
+                        box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
+                        font-size: 14px;
+                        padding: 8px;
+                        min-width: 200px;
+                    """
+                ),
+                highlight_function=lambda x: {
+                    'fillColor': '#87CEFA',
+                    'color': '#33A1FF',
+                    'weight': 3,
+                    'opacity': 1,
+                    'fillOpacity': 0.3,
+                }
+            ).add_to(m)
+            logger.info(f"Added Non-Virgin Statistical Areas layer with {len(non_virgin_msa_data)} areas")
+    except Exception as e:
+        logger.error(f"Warning: Could not add Non-Virgin Statistical Areas layer: {e}")
     
     # Add MSA counties layer
     try:
@@ -724,11 +867,23 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
             </svg>
             <span style="margin-left: 5px; font-size: 13px;">MSA Boundary</span>
         </div>
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; margin-bottom: 5px;">
             <svg height="18" width="22">
                 <rect x="0" y="0" width="22" height="18" style="fill:rgba(51,136,255,0.05);stroke:#3388FF;stroke-width:1" />
             </svg>
             <span style="margin-left: 5px; font-size: 13px;">MSA Area</span>
+        </div>
+        <div style="display: flex; align-items: center; margin-bottom: 5px;">
+            <svg height="18" width="22">
+                <rect x="0" y="0" width="22" height="18" style="fill:rgba(255,87,51,0.2);stroke:#FF5733;stroke-width:1" />
+            </svg>
+            <span style="margin-left: 5px; font-size: 13px;">Virgin MSA (No Customers)</span>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <svg height="18" width="22">
+                <rect x="0" y="0" width="22" height="18" style="fill:rgba(51,161,255,0.2);stroke:#33A1FF;stroke-width:1" />
+            </svg>
+            <span style="margin-left: 5px; font-size: 13px;">Non-Virgin MSA (Has Customers)</span>
         </div>
     </div>
     """))

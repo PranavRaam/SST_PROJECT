@@ -12049,3 +12049,165 @@ ValueError: The truth value of a GeoDataFrame is ambiguous. Use a.empty, a.bool(
 2025-04-25 22:32:58,244 - __main__ - INFO - Request from origin: 
 2025-04-25 22:32:58,246 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
 2025-04-25 22:32:58,248 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 22:32:58] "GET /api/statistical-area-map/San%20Antonio-New%20Braunfels?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745600577929&_show_states=true&_show_counties=true&_show_msas=true&_t=1745600577929 HTTP/1.1" 200 -
+2025-04-26 11:22:46,874 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-26 11:22:46,881 - __main__ - INFO - Checking for cached data at startup
+2025-04-26 11:22:46,896 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+2025-04-26 11:22:46,896 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-26 11:22:46,896 - werkzeug - INFO -  * Restarting with stat
+2025-04-26 11:22:47,528 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-26 11:22:47,534 - __main__ - INFO - Checking for cached data at startup
+2025-04-26 11:22:47,543 - werkzeug - WARNING -  * Debugger is active!
+2025-04-26 11:22:47,544 - werkzeug - INFO -  * Debugger PIN: 534-203-379
+2025-04-26 11:23:03,250 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:03,251 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "OPTIONS /api/map-status HTTP/1.1" 200 -
+2025-04-26 11:23:03,252 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:03,252 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "OPTIONS /api/map-status HTTP/1.1" 200 -
+2025-04-26 11:23:03,327 - __main__ - INFO - Request from origin: 
+2025-04-26 11:23:03,327 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 11:23:03,342 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:03,343 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:03,343 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-04-26 11:23:03,343 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "OPTIONS /api/health HTTP/1.1" 200 -
+2025-04-26 11:23:03,349 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:03,349 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 11:23:03,352 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:03,352 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 11:23:03,623 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:03] "GET /api/map?stable=true&r=map-1745646783305&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745646783306 HTTP/1.1" 200 -
+2025-04-26 11:23:09,561 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:09,561 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:09] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 11:23:09,573 - __main__ - INFO - Map request for area: Chicago–Naperville–Elgin
+2025-04-26 11:23:09,573 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745646789571')])
+2025-04-26 11:23:09,573 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-26 11:23:09,573 - statistical_area_zoom - INFO - Generating map for statistical area: Chicago–Naperville–Elgin with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-26 11:23:09,573 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Chicago–Naperville–Elgin_lightweight.html
+2025-04-26 11:23:09,574 - statistical_area_zoom - INFO - Cached map is 218.1 hours old, regenerating...
+2025-04-26 11:23:09,574 - statistical_area_zoom - INFO - Loading map data...
+2025-04-26 11:23:09,574 - statistical_area_zoom - INFO - Loading data from cache...
+2025-04-26 11:23:09,574 - data_preloader - INFO - Loading all cached data...
+2025-04-26 11:23:09,589 - statistical_area_zoom - INFO - Loaded MSA data with 393 entries
+2025-04-26 11:23:09,591 - statistical_area_zoom - INFO - Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+2025-04-26 11:23:09,591 - statistical_area_zoom - INFO - Data loaded in 0.02 seconds
+2025-04-26 11:23:09,591 - statistical_area_zoom - INFO - Normalized area name: chicago–naperville–elgin
+2025-04-26 11:23:09,597 - statistical_area_zoom - INFO - Trying to match city name: chicago–naperville–elgin
+2025-04-26 11:23:09,599 - statistical_area_zoom - ERROR - Could not find any matching MSA for: Chicago–Naperville–Elgin
+2025-04-26 11:23:09,599 - statistical_area_zoom - INFO - Creating fallback map for Chicago–Naperville–Elgin at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Chicago–Naperville–Elgin_lightweight.html
+2025-04-26 11:23:09,607 - statistical_area_zoom - INFO - Fallback map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Chicago–Naperville–Elgin_lightweight.html
+2025-04-26 11:23:09,607 - statistical_area_zoom - INFO - Created fallback map at: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Chicago–Naperville–Elgin_lightweight.html
+2025-04-26 11:23:09,608 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Chicago–Naperville–Elgin_lightweight.html
+2025-04-26 11:23:09,608 - __main__ - INFO - Request completed in 0.03 seconds
+2025-04-26 11:23:09,608 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:23:09,608 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:09] "GET /api/statistical-area-map/Chicago–Naperville–Elgin?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745646789571 HTTP/1.1" 200 -
+2025-04-26 11:23:09,626 - __main__ - INFO - Request from origin: 
+2025-04-26 11:23:09,626 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 11:23:09,626 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:23:09] "GET /api/statistical-area-map/Chicago–Naperville–Elgin?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745646789571&_show_states=true&_show_counties=true&_show_msas=true&_t=1745646789614 HTTP/1.1" 200 -
+2025-04-26 11:44:22,824 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:44:22,824 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:22] "GET /api/map-status HTTP/1.1" 200 -
+2025-04-26 11:44:22,901 - __main__ - INFO - Request from origin: 
+2025-04-26 11:44:22,901 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 11:44:22,915 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:44:22,916 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:22] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 11:44:22,922 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:44:22,922 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:22] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 11:44:23,200 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:23] "GET /api/map?stable=true&r=map-1745648062876&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745648062876 HTTP/1.1" 200 -
+2025-04-26 11:44:37,233 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:44:37,233 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:37] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 11:44:37,240 - __main__ - INFO - Map request for area: Lubbock
+2025-04-26 11:44:37,240 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745648077238')])
+2025-04-26 11:44:37,240 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-26 11:44:37,240 - statistical_area_zoom - INFO - Generating map for statistical area: Lubbock with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-26 11:44:37,240 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-26 11:44:37,240 - statistical_area_zoom - INFO - Cached map is 210.9 hours old, regenerating...
+2025-04-26 11:44:37,241 - statistical_area_zoom - INFO - Loading map data...
+2025-04-26 11:44:37,241 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-26 11:44:37,241 - statistical_area_zoom - INFO - Normalized area name: lubbock
+2025-04-26 11:44:37,242 - statistical_area_zoom - INFO - Trying to match city name: lubbock
+2025-04-26 11:44:37,244 - statistical_area_zoom - INFO - Found exact city match: Lubbock, TX
+2025-04-26 11:44:37,244 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-26 11:44:37,244 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-26 11:44:37,245 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Lubbock
+2025-04-26 11:44:37,245 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Lubbock
+2025-04-26 11:44:37,247 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-26 11:44:37,247 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-26 11:44:37,247 - statistical_area_zoom - INFO - Center: 33.465531819400034, -101.8823098890895
+2025-04-26 11:44:37,247 - statistical_area_zoom - INFO - Bounds: -103.056485, 32.959702, -101.03866, 33.833625
+2025-04-26 11:44:37,400 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-26 11:44:37,400 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lubbock_lightweight.html
+2025-04-26 11:44:37,400 - __main__ - INFO - Request completed in 0.16 seconds
+2025-04-26 11:44:37,400 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 11:44:37,431 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:37] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745648077238 HTTP/1.1" 200 -
+2025-04-26 11:44:37,450 - __main__ - INFO - Request from origin: 
+2025-04-26 11:44:37,450 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 11:44:37,451 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 11:44:37] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745648077238&_show_states=true&_show_counties=true&_show_msas=true&_t=1745648077436 HTTP/1.1" 200 -
+2025-04-26 12:31:21,421 - __main__ - INFO - Request from origin: 
+2025-04-26 12:31:21,421 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 12:31:21,435 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:31:21,435 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:21] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 12:31:21,438 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:31:21,438 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:21] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 12:31:21,721 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:21] "GET /api/map?stable=true&r=map-1745650881402&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&_show_states=true&_show_counties=true&_show_msas=true&_t=1745650881403 HTTP/1.1" 200 -
+2025-04-26 12:31:27,659 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:31:27,659 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:27] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 12:31:27,671 - __main__ - INFO - Map request for area: Corpus Christi
+2025-04-26 12:31:27,672 - __main__ - INFO - Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'true'), ('display_hhahs', 'true'), ('lightweight', 'true'), ('t', '1745650887669')])
+2025-04-26 12:31:27,672 - __main__ - INFO - Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True
+2025-04-26 12:31:27,672 - statistical_area_zoom - INFO - Generating map for statistical area: Corpus Christi with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True
+2025-04-26 12:31:27,672 - statistical_area_zoom - INFO - Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Corpus_Christi_lightweight.html
+2025-04-26 12:31:27,672 - statistical_area_zoom - INFO - Loading map data...
+2025-04-26 12:31:27,672 - statistical_area_zoom - INFO - Data loaded in 0.00 seconds
+2025-04-26 12:31:27,672 - statistical_area_zoom - INFO - Normalized area name: corpus christi
+2025-04-26 12:31:27,673 - statistical_area_zoom - INFO - Trying to match city name: corpus christi
+2025-04-26 12:31:27,674 - statistical_area_zoom - INFO - Found exact city match: Corpus Christi, TX
+2025-04-26 12:31:27,674 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-26 12:31:27,674 - statistical_area_zoom - INFO - Validating geometry...
+2025-04-26 12:31:27,674 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Corpus Christi
+2025-04-26 12:31:27,674 - statistical_area_zoom - INFO - Generating mock PGs and HHAHs for Corpus Christi
+2025-04-26 12:31:27,675 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-26 12:31:27,675 - statistical_area_zoom - INFO - Generated 5 mock PGs and 7 mock HHAHs
+2025-04-26 12:31:27,675 - statistical_area_zoom - INFO - Center: 27.89243156564578, -97.40120760798982
+2025-04-26 12:31:27,675 - statistical_area_zoom - INFO - Bounds: -97.942146, 27.558358, -96.790512, 28.319238
+2025-04-26 12:31:27,787 - statistical_area_zoom - INFO - Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Corpus_Christi_lightweight.html
+2025-04-26 12:31:27,787 - __main__ - INFO - Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Corpus_Christi_lightweight.html
+2025-04-26 12:31:27,787 - __main__ - INFO - Request completed in 0.12 seconds
+2025-04-26 12:31:27,788 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:31:27,817 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:27] "GET /api/statistical-area-map/Corpus%20Christi?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650887669 HTTP/1.1" 200 -
+2025-04-26 12:31:27,838 - __main__ - INFO - Request from origin: 
+2025-04-26 12:31:27,838 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 12:31:27,838 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:27] "GET /api/statistical-area-map/Corpus%20Christi?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650887669&_show_states=true&_show_counties=true&_show_msas=true&_t=1745650887823 HTTP/1.1" 200 -
+2025-04-26 12:31:37,322 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:31:37,322 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:37] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 12:31:37,328 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:31:37,328 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:37] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650897326 HTTP/1.1" 200 -
+2025-04-26 12:31:37,348 - __main__ - INFO - Request from origin: 
+2025-04-26 12:31:37,349 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 12:31:37,349 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:31:37] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650897326&_show_states=true&_show_counties=true&_show_msas=true&_t=1745650897338 HTTP/1.1" 200 -
+2025-04-26 12:32:24,421 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:32:24,422 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:32:24] "GET /api/health HTTP/1.1" 200 -
+2025-04-26 12:32:24,431 - __main__ - INFO - Request from origin: http://localhost:3000
+2025-04-26 12:32:24,432 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:32:24] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650944428 HTTP/1.1" 200 -
+2025-04-26 12:32:24,454 - __main__ - INFO - Request from origin: 
+2025-04-26 12:32:24,454 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 12:32:24,454 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:32:24] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650944428&_show_states=true&_show_counties=true&_show_msas=true&_t=1745650944442 HTTP/1.1" 200 -
+2025-04-26 12:32:34,460 - __main__ - INFO - Request from origin: 
+2025-04-26 12:32:34,461 - __main__ - INFO - Fallback: Allowed origin for API endpoint: *
+2025-04-26 12:32:34,461 - werkzeug - INFO - 127.0.0.1 - - [26/Apr/2025 12:32:34] "GET /api/statistical-area-map/Lubbock?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=1745650954456&_show_states=true&_show_counties=true&_show_msas=true&_t=1745650954456 HTTP/1.1" 200 -
+2025-04-26 12:55:10,902 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/main.py', reloading
+2025-04-26 12:55:11,053 - werkzeug - INFO -  * Restarting with stat
+2025-04-26 12:55:11,618 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-26 12:55:11,624 - __main__ - INFO - Checking for cached data at startup
+2025-04-26 12:55:11,632 - werkzeug - WARNING -  * Debugger is active!
+2025-04-26 12:55:11,632 - werkzeug - INFO -  * Debugger PIN: 534-203-379
+2025-04-26 12:55:19,657 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/main.py', reloading
+2025-04-26 12:55:19,846 - werkzeug - INFO -  * Restarting with stat
+2025-04-26 12:55:20,537 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-26 12:55:20,545 - __main__ - INFO - Checking for cached data at startup
+2025-04-26 12:55:20,558 - werkzeug - WARNING -  * Debugger is active!
+2025-04-26 12:55:20,558 - werkzeug - INFO -  * Debugger PIN: 534-203-379
+2025-04-26 12:55:22,568 - werkzeug - INFO -  * Detected change in '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/main.py', reloading
+2025-04-26 12:55:22,707 - werkzeug - INFO -  * Restarting with stat
+2025-04-26 12:55:23,253 - data_preloader - INFO - Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+2025-04-26 12:55:23,259 - __main__ - INFO - Checking for cached data at startup
+2025-04-26 12:55:23,268 - werkzeug - WARNING -  * Debugger is active!
+2025-04-26 12:55:23,268 - werkzeug - INFO -  * Debugger PIN: 534-203-379

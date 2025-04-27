@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   regionStatistics, 
   regionToStatisticalAreas, 
@@ -144,33 +144,117 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
   const [activeTab, setActiveTab] = useState('non-virgin');
   const [selectedMetric, setSelectedMetric] = useState('patients');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedSortOrder, setSortOrder] = useState('desc');
+  const [sortField, setSortField] = useState('patients');
+  const [selectedFilters, setSelectedFilters] = useState({
+    size: [], // small, medium, large
+    agencies: [], // low, medium, high
+    outcomes: [], // low, medium, high
+  });
+  const filterRef = useRef(null);
   const printRef = useRef(null);
   
   // Use the statisticalAreas prop directly
   const allStatisticalAreas = statisticalAreas;
+
+  // Close filter panel when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setShowFilters(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   
-  // Filter statistical areas based on search term and tab
+  // Filter statistical areas based on search term, tab, and advanced filters
   const filteredAreas = allStatisticalAreas.filter(area => {
     const matchesSearch = area.toLowerCase().includes(searchTerm.toLowerCase());
     if (!matchesSearch) return false;
     
     const regionNonVirginMSAs = nonVirginMSAs[divisionalGroup] || new Set();
     
-    // Debug logs
-    console.log('Current region:', divisionalGroup);
-    console.log('Current area:', area);
-    console.log('Non-virgin MSAs for region:', Array.from(regionNonVirginMSAs));
-    console.log('Is area in non-virgin set:', regionNonVirginMSAs.has(area));
-    
+    // First filter by tab (virgin/non-virgin/all)
+    let matchesTab = true;
     switch (activeTab) {
       case 'non-virgin':
-        return regionNonVirginMSAs.has(area);
+        matchesTab = regionNonVirginMSAs.has(area);
+        break;
       case 'virgin':
-        return !regionNonVirginMSAs.has(area);
+        matchesTab = !regionNonVirginMSAs.has(area);
+        break;
       case 'all':
-        return true;
+        matchesTab = true;
+        break;
       default:
-        return true;
+        matchesTab = true;
+    }
+
+    if (!matchesTab) return false;
+
+    // Then apply advanced filters
+    if (selectedFilters.size.length > 0) {
+      const patients = statisticalAreaStatistics[area]?.patients || 0;
+      const isSmall = patients < 5000;
+      const isMedium = patients >= 5000 && patients < 20000;
+      const isLarge = patients >= 20000;
+
+      if (
+        (selectedFilters.size.includes('small') && !isSmall) &&
+        (selectedFilters.size.includes('medium') && !isMedium) &&
+        (selectedFilters.size.includes('large') && !isLarge)
+      ) {
+        return false;
+      }
+    }
+
+    if (selectedFilters.agencies.length > 0) {
+      const agencies = statisticalAreaStatistics[area]?.agencies || 0;
+      const isLow = agencies < 50;
+      const isMedium = agencies >= 50 && agencies < 150;
+      const isHigh = agencies >= 150;
+
+      if (
+        (selectedFilters.agencies.includes('low') && !isLow) &&
+        (selectedFilters.agencies.includes('medium') && !isMedium) &&
+        (selectedFilters.agencies.includes('high') && !isHigh)
+      ) {
+        return false;
+      }
+    }
+
+    if (selectedFilters.outcomes.length > 0) {
+      const outcomes = statisticalAreaStatistics[area]?.activeOutcomes || 0;
+      const isLow = outcomes < 1000;
+      const isMedium = outcomes >= 1000 && outcomes < 5000;
+      const isHigh = outcomes >= 5000;
+
+      if (
+        (selectedFilters.outcomes.includes('low') && !isLow) &&
+        (selectedFilters.outcomes.includes('medium') && !isMedium) &&
+        (selectedFilters.outcomes.includes('high') && !isHigh)
+      ) {
+        return false;
+      }
+    }
+    
+    return true;
+  });
+
+  // Sort the filtered areas
+  const sortedAreas = [...filteredAreas].sort((a, b) => {
+    const valueA = statisticalAreaStatistics[a]?.[sortField] || 0;
+    const valueB = statisticalAreaStatistics[b]?.[sortField] || 0;
+    
+    if (selectedSortOrder === 'asc') {
+      return valueA - valueB;
+    } else {
+      return valueB - valueA;
     }
   });
   
@@ -332,6 +416,55 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
     onSelectStatisticalArea(areaName);
   };
 
+  // Toggle a filter selection
+  const toggleFilter = (category, value) => {
+    setSelectedFilters(prev => {
+      const newFilters = {...prev};
+      
+      if (newFilters[category].includes(value)) {
+        // Remove filter if already selected
+        newFilters[category] = newFilters[category].filter(v => v !== value);
+      } else {
+        // Add filter if not already selected
+        newFilters[category] = [...newFilters[category], value];
+      }
+      
+      return newFilters;
+    });
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSelectedFilters({
+      size: [],
+      agencies: [],
+      outcomes: []
+    });
+    setSearchTerm('');
+    setSortOrder('desc');
+    setSortField('patients');
+  };
+
+  // Get count of active filters
+  const getActiveFilterCount = () => {
+    return selectedFilters.size.length + 
+           selectedFilters.agencies.length + 
+           selectedFilters.outcomes.length +
+           (searchTerm ? 1 : 0);
+  };
+
+  // Handle sort selection
+  const handleSortChange = (field) => {
+    if (sortField === field) {
+      // If already sorting by this field, toggle the order
+      setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      // If changing field, default to descending order
+      setSortField(field);
+      setSortOrder('desc');
+    }
+  };
+
   return (
     <div className="region-detail-view">
       <div className="detail-header">
@@ -407,49 +540,281 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
         {/* Statistical Areas Table view */}
         {activeTab !== 'comparison' && (
           <div className="region-stats-container animate-fade-in">
-            <div className="search-container">
-              <input
-                type="text"
-                placeholder="Search statistical areas..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-inputt"
-              />
+            <div className="filter-toolbar">
+              <div className="search-wrapper">
+                <input
+                  type="text"
+                  placeholder="Search statistical areas..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+                {searchTerm && (
+                  <button 
+                    className="clear-search" 
+                    onClick={() => setSearchTerm('')}
+                  >
+                    ×
+                  </button>
+                )}
+                <span className="search-icon">🔍</span>
+              </div>
+              
+              <div className="filter-actions">
+                <div className="filter-dropdown-container" ref={filterRef}>
+                  <button 
+                    className={`filter-button ${showFilters ? 'active' : ''} ${getActiveFilterCount() > 0 ? 'has-filters' : ''}`}
+                    onClick={() => setShowFilters(!showFilters)}
+                  >
+                    <span className="filter-icon">🔍</span>
+                    Filter
+                    {getActiveFilterCount() > 0 && (
+                      <span className="filter-badge">{getActiveFilterCount()}</span>
+                    )}
+                  </button>
+                  
+                  {showFilters && (
+                    <div className="filter-dropdown">
+                      <div className="filter-header">
+                        <h4>Filter Options</h4>
+                        <button className="clear-filters" onClick={clearAllFilters}>
+                          Clear All
+                        </button>
+                      </div>
+                      
+                      <div className="filter-group">
+                        <h5>Area Size (Patients)</h5>
+                        <div className="filter-options">
+                          <label className={`filter-checkbox ${selectedFilters.size.includes('small') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.size.includes('small')}
+                              onChange={() => toggleFilter('size', 'small')}
+                            />
+                            <span className="checkmark"></span>
+                            Small (&lt;5,000)
+                          </label>
+                          <label className={`filter-checkbox ${selectedFilters.size.includes('medium') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.size.includes('medium')}
+                              onChange={() => toggleFilter('size', 'medium')}
+                            />
+                            <span className="checkmark"></span>
+                            Medium (5,000-20,000)
+                          </label>
+                          <label className={`filter-checkbox ${selectedFilters.size.includes('large') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.size.includes('large')}
+                              onChange={() => toggleFilter('size', 'large')}
+                            />
+                            <span className="checkmark"></span>
+                            Large (&gt;20,000)
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <div className="filter-group">
+                        <h5>Agencies</h5>
+                        <div className="filter-options">
+                          <label className={`filter-checkbox ${selectedFilters.agencies.includes('low') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.agencies.includes('low')}
+                              onChange={() => toggleFilter('agencies', 'low')}
+                            />
+                            <span className="checkmark"></span>
+                            Low (&lt;50)
+                          </label>
+                          <label className={`filter-checkbox ${selectedFilters.agencies.includes('medium') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.agencies.includes('medium')}
+                              onChange={() => toggleFilter('agencies', 'medium')}
+                            />
+                            <span className="checkmark"></span>
+                            Medium (50-150)
+                          </label>
+                          <label className={`filter-checkbox ${selectedFilters.agencies.includes('high') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.agencies.includes('high')}
+                              onChange={() => toggleFilter('agencies', 'high')}
+                            />
+                            <span className="checkmark"></span>
+                            High (&gt;150)
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <div className="filter-group">
+                        <h5>Active Outcomes</h5>
+                        <div className="filter-options">
+                          <label className={`filter-checkbox ${selectedFilters.outcomes.includes('low') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.outcomes.includes('low')}
+                              onChange={() => toggleFilter('outcomes', 'low')}
+                            />
+                            <span className="checkmark"></span>
+                            Low (&lt;1,000)
+                          </label>
+                          <label className={`filter-checkbox ${selectedFilters.outcomes.includes('medium') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.outcomes.includes('medium')}
+                              onChange={() => toggleFilter('outcomes', 'medium')}
+                            />
+                            <span className="checkmark"></span>
+                            Medium (1,000-5,000)
+                          </label>
+                          <label className={`filter-checkbox ${selectedFilters.outcomes.includes('high') ? 'selected' : ''}`}>
+                            <input 
+                              type="checkbox" 
+                              checked={selectedFilters.outcomes.includes('high')}
+                              onChange={() => toggleFilter('outcomes', 'high')}
+                            />
+                            <span className="checkmark"></span>
+                            High (&gt;5,000)
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <div className="filter-group">
+                        <h5>Sort By</h5>
+                        <div className="sort-options">
+                          <select 
+                            value={`${sortField}-${selectedSortOrder}`}
+                            onChange={(e) => {
+                              const [field, order] = e.target.value.split('-');
+                              setSortField(field);
+                              setSortOrder(order);
+                            }}
+                            className="sort-select"
+                          >
+                            <option value="patients-desc">Patients (High to Low)</option>
+                            <option value="patients-asc">Patients (Low to High)</option>
+                            <option value="physicianGroups-desc">Physician Groups (High to Low)</option>
+                            <option value="physicianGroups-asc">Physician Groups (Low to High)</option>
+                            <option value="agencies-desc">Agencies (High to Low)</option>
+                            <option value="agencies-asc">Agencies (Low to High)</option>
+                            <option value="activeOutcomes-desc">Active Outcomes (High to Low)</option>
+                            <option value="activeOutcomes-asc">Active Outcomes (Low to High)</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="results-count">
+                  Showing <strong>{sortedAreas.length}</strong> of <strong>{allStatisticalAreas.length}</strong> areas
+                </div>
+              </div>
             </div>
-            {filteredAreas.length === 0 && activeTab === 'non-virgin' ? (
+            
+            {/* Filter chips - show active filters */}
+            {getActiveFilterCount() > 0 && (
+              <div className="filter-chips">
+                {searchTerm && (
+                  <div className="filter-chip">
+                    <span>Search: {searchTerm}</span>
+                    <button className="chip-remove" onClick={() => setSearchTerm('')}>×</button>
+                  </div>
+                )}
+                
+                {selectedFilters.size.map(size => (
+                  <div className="filter-chip" key={`size-${size}`}>
+                    <span>Size: {size.charAt(0).toUpperCase() + size.slice(1)}</span>
+                    <button className="chip-remove" onClick={() => toggleFilter('size', size)}>×</button>
+                  </div>
+                ))}
+                
+                {selectedFilters.agencies.map(level => (
+                  <div className="filter-chip" key={`agencies-${level}`}>
+                    <span>Agencies: {level.charAt(0).toUpperCase() + level.slice(1)}</span>
+                    <button className="chip-remove" onClick={() => toggleFilter('agencies', level)}>×</button>
+                  </div>
+                ))}
+                
+                {selectedFilters.outcomes.map(level => (
+                  <div className="filter-chip" key={`outcomes-${level}`}>
+                    <span>Outcomes: {level.charAt(0).toUpperCase() + level.slice(1)}</span>
+                    <button className="chip-remove" onClick={() => toggleFilter('outcomes', level)}>×</button>
+                  </div>
+                ))}
+                
+                <button className="clear-all-chip" onClick={clearAllFilters}>
+                  Clear All
+                </button>
+              </div>
+            )}
+            
+            {sortedAreas.length === 0 ? (
               <div className="no-data-message">
-                <p>No non-virgin areas in {divisionalGroup} region</p>
+                <p>No areas match your current filters</p>
+                <button className="reset-filters-button" onClick={clearAllFilters}>
+                  Reset Filters
+                </button>
               </div>
             ) : (
-              <table className="region-stats-table">
-                <thead>
-                  <tr>
-                    <th>Statistical Area</th>
-                    <th>No. of Patients</th>
-                    <th>No. of Physician Groups</th>
-                    <th>No. of Agencies</th>
-                    <th>No. of Active Reactive Outcomes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAreas.map((area, index) => (
-                    <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
-                      <td className="area-name">{area}</td>
-                      <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
-                      <td>{formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
-                      <td>{formatNumber(statisticalAreaStatistics[area]?.agencies || 0)}</td>
-                      <td>{formatNumber(statisticalAreaStatistics[area]?.activeOutcomes || 0)}</td>
+              <div className="table-responsive">
+                <table className="region-stats-table">
+                  <thead>
+                    <tr>
+                      <th onClick={() => handleSortChange('name')} className="sortable-header">
+                        Statistical Area
+                        {sortField === 'name' && (
+                          <span className="sort-arrow">{selectedSortOrder === 'asc' ? '↑' : '↓'}</span>
+                        )}
+                      </th>
+                      <th onClick={() => handleSortChange('patients')} className="sortable-header">
+                        No. of Patients
+                        {sortField === 'patients' && (
+                          <span className="sort-arrow">{selectedSortOrder === 'asc' ? '↑' : '↓'}</span>
+                        )}
+                      </th>
+                      <th onClick={() => handleSortChange('physicianGroups')} className="sortable-header">
+                        No. of Physician Groups
+                        {sortField === 'physicianGroups' && (
+                          <span className="sort-arrow">{selectedSortOrder === 'asc' ? '↑' : '↓'}</span>
+                        )}
+                      </th>
+                      <th onClick={() => handleSortChange('agencies')} className="sortable-header">
+                        No. of Agencies
+                        {sortField === 'agencies' && (
+                          <span className="sort-arrow">{selectedSortOrder === 'asc' ? '↑' : '↓'}</span>
+                        )}
+                      </th>
+                      <th onClick={() => handleSortChange('activeOutcomes')} className="sortable-header">
+                        No. of Active Reactive Outcomes
+                        {sortField === 'activeOutcomes' && (
+                          <span className="sort-arrow">{selectedSortOrder === 'asc' ? '↑' : '↓'}</span>
+                        )}
+                      </th>
                     </tr>
-                  ))}
-                  <tr className="total-row">
-                    <td><strong>Totals</strong></td>
-                    <td><strong>{formatNumber(areaTotals.patients)}</strong></td>
-                    <td><strong>{formatNumber(areaTotals.physicianGroups)}</strong></td>
-                    <td><strong>{formatNumber(areaTotals.agencies)}</strong></td>
-                    <td><strong>{formatNumber(areaTotals.activeOutcomes)}</strong></td>
-                  </tr>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {sortedAreas.map((area, index) => (
+                      <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
+                        <td className="area-name">{area}</td>
+                        <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
+                        <td>{formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
+                        <td>{formatNumber(statisticalAreaStatistics[area]?.agencies || 0)}</td>
+                        <td>{formatNumber(statisticalAreaStatistics[area]?.activeOutcomes || 0)}</td>
+                      </tr>
+                    ))}
+                    <tr className="total-row">
+                      <td><strong>Totals</strong></td>
+                      <td><strong>{formatNumber(areaTotals.patients)}</strong></td>
+                      <td><strong>{formatNumber(areaTotals.physicianGroups)}</strong></td>
+                      <td><strong>{formatNumber(areaTotals.agencies)}</strong></td>
+                      <td><strong>{formatNumber(areaTotals.activeOutcomes)}</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         )}

@@ -6,18 +6,214 @@
  * while maintaining the same return structure to minimize refactoring.
  */
 
-// Use January 2025 as our fixed test month for all test cases
+// Use March 2025 as our fixed test month for all test cases
 // This ensures the data works regardless of when you're running the app
 const fixedYear = 2025;
-const fixedMonth = 1; // January (1-indexed)
+const fixedMonth = 3; // March (1-indexed)
 
-// Create fixed dates for January 2025 for testing
-const fixedMonthStart = `01/01/2025`;
-const fixedMonthMiddle = `01/15/2025`;
-const fixedMonthEnd = `01/31/2025`;
+// Create fixed dates for March 2025 for testing
+const fixedMonthStart = `03/01/2025`;
+const fixedMonthMiddle = `03/15/2025`;
+const fixedMonthEnd = `03/31/2025`;
 
 // Mock patient data by PG
 const mockPatientsByPG = {
+  "HouseCall MD": [
+    {
+      id: "LA001",
+      patientId: "W1001",
+      patientFirstName: "John",
+      patientMiddleName: "A",
+      patientLastName: "Smith",
+      patientDOB: "05/12/1962",
+      hhah: "HouseCall MD",
+      patientInsurance: "Medicare",
+      primaryDiagnosisCodes: ["I10"], // Hypertension
+      secondaryDiagnosisCodes: ["I50.9", "E11.9"], // Heart failure, Type 2 diabetes
+      patientSOC: "02/15/2025",
+      patientEpisodeFrom: "02/15/2025",
+      patientEpisodeTo: "08/14/2025",
+      cpoMinsCaptured: 45,
+      certStatus: "Document Signed",
+      certSignedDate: fixedMonthMiddle, // CERT example
+      recertStatus: "Not Required",
+      recertSignedDate: "",
+      physicianName: "Dr. Sarah Johnson",
+      patientInEHR: true,
+      patientRemarks: "CERT eligible"
+    },
+    {
+      id: "LA002",
+      patientId: "W1002",
+      patientFirstName: "Mary",
+      patientMiddleName: "E",
+      patientLastName: "Johnson",
+      patientDOB: "08/23/1955",
+      hhah: "HouseCall MD",
+      patientInsurance: "Medicare",
+      primaryDiagnosisCodes: ["E11.9"], // Type 2 diabetes
+      secondaryDiagnosisCodes: ["I10", "Z79.4"], // Hypertension, Long-term drug therapy
+      patientSOC: "01/03/2025",
+      patientEpisodeFrom: "01/03/2025",
+      patientEpisodeTo: "07/02/2025",
+      cpoMinsCaptured: 35,
+      certStatus: "Document not received",
+      certSignedDate: "",
+      recertStatus: "Document Signed",
+      recertSignedDate: fixedMonthEnd, // RECERT example
+      physicianName: "Dr. Robert Chen",
+      patientInEHR: true,
+      patientRemarks: "RECERT eligible and CPO eligible"
+    }
+  ],
+  
+  "ROCKY MOUNTAIN MEDICAL AND HEALTHCARE": [
+    {
+      id: "CS001",
+      patientId: "W2001",
+      patientFirstName: "Richard",
+      patientMiddleName: "H",
+      patientLastName: "Thompson",
+      patientDOB: "10/03/1960",
+      hhah: "ROCKY MOUNTAIN MEDICAL AND HEALTHCARE",
+      patientInsurance: "Medicare",
+      primaryDiagnosisCodes: ["I50.1"], // Left ventricular failure
+      secondaryDiagnosisCodes: ["I25.10", "E11.9", "Z95.1"], // Coronary artery disease, Type 2 diabetes, Cardiac stent
+      patientSOC: "12/20/2024",
+      patientEpisodeFrom: "12/20/2024",
+      patientEpisodeTo: "06/20/2025",
+      cpoMinsCaptured: 40,
+      certStatus: "Document Signed",
+      certSignedDate: fixedMonthStart, // CERT example
+      recertStatus: "Not Required",
+      recertSignedDate: "",
+      physicianName: "Dr. Kevin Rodriguez",
+      patientInEHR: true,
+      patientRemarks: "CERT and CPO eligible"
+    },
+    {
+      id: "CS002",
+      patientId: "W2002",
+      patientFirstName: "Lisa",
+      patientMiddleName: "M",
+      patientLastName: "Garcia",
+      patientDOB: "05/17/1968",
+      hhah: "ROCKY MOUNTAIN MEDICAL AND HEALTHCARE",
+      patientInsurance: "Medicare",
+      primaryDiagnosisCodes: ["G20"], // Parkinson's disease
+      secondaryDiagnosisCodes: ["G21.11", "F32.9"], // Drug-induced parkinsonism, Depression
+      patientSOC: "03/20/2024",
+      patientEpisodeFrom: "03/20/2024",
+      patientEpisodeTo: "09/19/2025",
+      cpoMinsCaptured: 32,
+      certStatus: "Document not received",
+      certSignedDate: "",
+      recertStatus: "Document Signed",
+      recertSignedDate: fixedMonthMiddle, // RECERT example
+      physicianName: "Dr. Maria Lopez",
+      patientInEHR: true,
+      patientRemarks: "RECERT and CPO eligible"
+    }
+  ],
+  
+  "BSZ Medical PA": [
+    {
+      id: "SA001",
+      patientId: "C1001",
+      patientFirstName: "Robert",
+      patientMiddleName: "J",
+      patientLastName: "Williams",
+      patientDOB: "11/04/1970",
+      hhah: "BSZ Medical PA",
+      patientInsurance: "Medicaid",
+      primaryDiagnosisCodes: ["J44.9"], // COPD
+      secondaryDiagnosisCodes: ["I50.9", "F32.9"], // Heart failure, Depression
+      patientSOC: "01/20/2025",
+      patientEpisodeFrom: "01/20/2025",
+      patientEpisodeTo: "07/19/2025",
+      cpoMinsCaptured: 37,
+      certStatus: "Document Signed",
+      certSignedDate: fixedMonthEnd, // CERT example
+      recertStatus: "Not Required",
+      recertSignedDate: "",
+      physicianName: "Dr. Maria Garcia",
+      patientInEHR: true,
+      patientRemarks: "CERT and CPO eligible"
+    },
+    {
+      id: "SA002",
+      patientId: "C1002",
+      patientFirstName: "Patricia",
+      patientMiddleName: "L",
+      patientLastName: "Brown",
+      patientDOB: "03/17/1948",
+      hhah: "BSZ Medical PA",
+      patientInsurance: "Medicare",
+      primaryDiagnosisCodes: ["I50.9"], // Heart failure
+      secondaryDiagnosisCodes: ["J44.9", "I10"], // COPD, Hypertension
+      patientSOC: "12/05/2024",
+      patientEpisodeFrom: "12/05/2024",
+      patientEpisodeTo: "06/04/2025",
+      cpoMinsCaptured: 35,
+      certStatus: "Document not received",
+      certSignedDate: "",
+      recertStatus: "Document Signed",
+      recertSignedDate: fixedMonthStart, // RECERT example
+      physicianName: "Dr. James Wilson",
+      patientInEHR: true,
+      patientRemarks: "RECERT eligible and CPO eligible"
+    }
+  ],
+  
+  "Responsive Infectious Diseases Solutions": [
+    {
+      id: "SA003",
+      patientId: "C2001",
+      patientFirstName: "Michael",
+      patientMiddleName: "T",
+      patientLastName: "Wilson",
+      patientDOB: "06/25/1958",
+      hhah: "Responsive Infectious Diseases Solutions",
+      patientInsurance: "TRICARE",
+      primaryDiagnosisCodes: ["G20"], // Parkinson's
+      secondaryDiagnosisCodes: ["R26.2", "I10"], // Difficulty walking, Hypertension
+      patientSOC: "01/15/2025",
+      patientEpisodeFrom: "01/15/2025",
+      patientEpisodeTo: "07/15/2025",
+      cpoMinsCaptured: 50, // High minutes for CPO
+      certStatus: "Document Signed",
+      certSignedDate: fixedMonthMiddle, // CERT example
+      recertStatus: "Not Required",
+      recertSignedDate: "",
+      physicianName: "Dr. Thomas Young",
+      patientInEHR: true,
+      patientRemarks: "CERT and CPO eligible"
+    },
+    {
+      id: "SA004",
+      patientId: "C2002",
+      patientFirstName: "Sarah",
+      patientMiddleName: "J",
+      patientLastName: "Martinez",
+      patientDOB: "09/12/1965",
+      hhah: "Responsive Infectious Diseases Solutions",
+      patientInsurance: "Medicare",
+      primaryDiagnosisCodes: ["A41.9"], // Sepsis
+      secondaryDiagnosisCodes: ["J15.9", "N39.0"], // Pneumonia, UTI
+      patientSOC: "01/05/2025",
+      patientEpisodeFrom: "01/05/2025",
+      patientEpisodeTo: "07/05/2025",
+      cpoMinsCaptured: 28, // Not enough for CPO
+      certStatus: "Document Signed",
+      certSignedDate: fixedMonthStart, // CERT only
+      recertStatus: "Not Required",
+      recertSignedDate: "",
+      physicianName: "Dr. Rebecca Johnson",
+      patientInEHR: true,
+      patientRemarks: "CERT eligible only - insufficient CPO minutes"
+    }
+  ],
+  
   "enhabit - lubbock": [
     {
       id: "VT001",
@@ -163,9 +359,9 @@ const mockPatientsByPG = {
     {
       id: "BF001",
       patientId: "P2001",
-      patientFirstName: "Michael",
-      patientMiddleName: "T",
-      patientLastName: "Cooper",
+      patientFirstName: "James",
+      patientMiddleName: "R",
+      patientLastName: "Wilson",
       patientDOB: "09/22/1957",
       hhah: "Brownfield Home Care",
       patientInsurance: "Medicare",
@@ -186,9 +382,9 @@ const mockPatientsByPG = {
     {
       id: "BF002",
       patientId: "P2002",
-      patientFirstName: "Susan",
-      patientMiddleName: "L",
-      patientLastName: "Walker",
+      patientFirstName: "Elizabeth",
+      patientMiddleName: "M",
+      patientLastName: "Taylor",
       patientDOB: "04/15/1962",
       hhah: "Brownfield Home Care",
       patientInsurance: "Medicare",
@@ -209,9 +405,9 @@ const mockPatientsByPG = {
     {
       id: "BF003",
       patientId: "P2003",
-      patientFirstName: "George",
-      patientMiddleName: "W",
-      patientLastName: "Miller",
+      patientFirstName: "Christopher",
+      patientMiddleName: "L",
+      patientLastName: "Anderson",
       patientDOB: "02/28/1950",
       hhah: "Brownfield Regional Care",
       patientInsurance: "Medicare",
@@ -455,25 +651,25 @@ export const getMockPatientsByPG = (pgNameParam) => {
       {
         id: "BF001",
         patientId: "P2001",
-        patientFirstName: "Michael",
+        patientFirstName: "Bruce",
         patientMiddleName: "T",
-        patientLastName: "Cooper",
+        patientLastName: "Wayne",
         patientDOB: "09/22/1957",
         hhah: "Brownfield Home Care",
         patientInsurance: "Medicare",
         primaryDiagnosisCodes: ["I25.10", "I10", "E11.9"], // Ensure 3+ codes
         secondaryDiagnosisCodes: ["J44.9", "F32.9"],
-        patientSOC: "12/10/2024",
-        patientEpisodeFrom: "12/10/2024",
-        patientEpisodeTo: "06/09/2025",
+        patientSOC: "02/01/2025",
+        patientEpisodeFrom: "02/01/2025",
+        patientEpisodeTo: "03/29/2025",
         cpoMinsCaptured: 50,
         certStatus: "Document Signed",
         certSignedDate: fixedMonthStart,
         recertStatus: "Not Required",
         recertSignedDate: "",
         physicianName: "Dr. Kevin Jones",
-        patientInEHR: true,
-        patientRemarks: "CERT eligible with good CPO minutes"
+        patientInEHR: false,
+        patientRemarks: ""
       },
       {
         id: "BF002",
@@ -488,7 +684,7 @@ export const getMockPatientsByPG = (pgNameParam) => {
         secondaryDiagnosisCodes: ["F32.9", "G47.33", "E11.9"],
         patientSOC: "11/05/2024",
         patientEpisodeFrom: "11/05/2024",
-        patientEpisodeTo: "05/04/2025",
+        patientEpisodeTo: "12/31/2024",
         cpoMinsCaptured: 35,
         certStatus: "Document Signed",
         certSignedDate: "11/05/2024",
@@ -496,7 +692,7 @@ export const getMockPatientsByPG = (pgNameParam) => {
         recertSignedDate: fixedMonthMiddle,
         physicianName: "Dr. Linda Martinez",
         patientInEHR: true,
-        patientRemarks: "RECERT eligible with CPO"
+        patientRemarks: ""
       },
       {
         id: "BF003",
@@ -510,13 +706,13 @@ export const getMockPatientsByPG = (pgNameParam) => {
         primaryDiagnosisCodes: ["I50.9", "E11.9"],
         secondaryDiagnosisCodes: ["N18.3", "I48.91", "J44.9"],
         patientSOC: "01/08/2024",
-        patientEpisodeFrom: "01/08/2024",
-        patientEpisodeTo: "07/07/2025",
-        cpoMinsCaptured: 42,
+        patientEpisodeFrom: "03/01/2025",
+        patientEpisodeTo: "04/30/2025",
+        cpoMinsCaptured: 28,
         certStatus: "Document Signed", // Changed to signed for testing
-        certSignedDate: fixedMonthEnd, // Changed to a valid date
+        certSignedDate: "02/01/2025", // Changed to a valid date
         recertStatus: "Not Required",
-        recertSignedDate: "",
+        recertSignedDate: "03/15/2025",
         physicianName: "Dr. Thomas Williams",
         patientInEHR: true,
         patientRemarks: "CERT and CPO eligible"
@@ -533,17 +729,86 @@ export const getMockPatientsByPG = (pgNameParam) => {
         primaryDiagnosisCodes: ["I10", "E11.9", "J45.909"], 
         secondaryDiagnosisCodes: ["F32.9", "M54.5"],
         patientSOC: "12/15/2024",
-        patientEpisodeFrom: "12/15/2024",
-        patientEpisodeTo: "06/14/2025",
+        patientEpisodeFrom: "03/15/2025",
+        patientEpisodeTo: "05/16/2025",
         cpoMinsCaptured: 40,
         certStatus: "Document Signed",
-        certSignedDate: fixedMonthMiddle,
-        recertStatus: "Not Required",
-        recertSignedDate: "",
+        certSignedDate: "02/01/2025",
+        recertStatus: "Document Signed",
+        recertSignedDate: "03/15/2025",
         physicianName: "Dr. Phillip Morris",
         patientInEHR: true,
         patientRemarks: "CERT and CPO eligible"
-      }
+      },
+      {
+        id: "BHC004",
+        patientId: "P2004",
+        patientFirstName: "Clark",
+        patientMiddleName: "J",
+        patientLastName: "Kent",
+        patientDOB: "07/18/1959",
+        hhah: "Brownfield HHA",
+        patientInsurance: "Medicare",
+        primaryDiagnosisCodes: ["I10"], 
+        secondaryDiagnosisCodes: ["F32.9"],
+        patientSOC: "12/15/2024",
+        patientEpisodeFrom: "03/15/2025",
+        patientEpisodeTo: "05/16/2025",
+        cpoMinsCaptured: 40,
+        certStatus: "Document Signed",
+        certSignedDate: "02/01/2025",
+        recertStatus: "Document Signed",
+        recertSignedDate: "03/15/2025",
+        physicianName: "Dr. Phillip Morris",
+        patientInEHR: true,
+        patientRemarks: ""
+      },
+      {
+        id: "BHC004",
+        patientId: "P3004",
+        patientFirstName: "John",
+        patientMiddleName: "K",
+        patientLastName: "Doe",
+        patientDOB: "07/18/1959",
+        hhah: "Brownfield HHA",
+        patientInsurance: "Medicare",
+        primaryDiagnosisCodes: ["I10"], 
+        secondaryDiagnosisCodes: ["F32.9"],
+        patientSOC: "12/15/2024",
+        patientEpisodeFrom: "03/15/2025",
+        patientEpisodeTo: "05/16/2025",
+        cpoMinsCaptured: 40,
+        certStatus: "Document Signed",
+        certSignedDate: "02/01/2025",
+        recertStatus: "Document Signed",
+        recertSignedDate: "02/02/2025",
+        physicianName: "Dr. Phillip Morris",
+        patientInEHR: true,
+        patientRemarks: ""
+      },
+      {
+        id: "BHC004",
+        patientId: "P5204",
+        patientFirstName: "Steve",
+        patientMiddleName: "K",
+        patientLastName: "Jobs",
+        patientDOB: "07/18/1959",
+        hhah: "Brownfield HHA",
+        patientInsurance: "Medicare",
+        primaryDiagnosisCodes: ["I10"], 
+        secondaryDiagnosisCodes: ["F32.9"],
+        patientSOC: "03/14/2025",
+        patientEpisodeFrom: "03/15/2025",
+        patientEpisodeTo: "05/16/2025",
+        cpoMinsCaptured: 28,
+        certStatus: "Document Signed",
+        certSignedDate: "03/01/2025",
+        recertStatus: "Document Signed",
+        recertSignedDate: "03/15/2025",
+        physicianName: "Dr. Phillip Morris",
+        patientInEHR: true,
+        patientRemarks: ""
+      },
     ];
     
     // Add the PG name to each patient

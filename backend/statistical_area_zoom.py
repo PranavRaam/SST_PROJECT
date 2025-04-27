@@ -18,6 +18,14 @@ import time
 from data_preloader import get_cached_msa_data, get_cached_county_data, get_cached_states_data, get_cached_county_msa_relationships, get_all_cached_data
 import sys
 
+# Try to import customer_data_processor for virgin/non-virgin MSA information
+try:
+    import customer_data_processor
+    has_customer_data = True
+except ImportError:
+    has_customer_data = False
+    print("Warning: customer_data_processor module not available, virgin/non-virgin MSA detection disabled")
+
 # Configure logging to output to console and file
 logging.basicConfig(
     level=logging.INFO,
@@ -439,6 +447,25 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
         logger.error("Failed to load MSA data or MSA data is empty")
         return create_fallback_map(area_name, cache_file)
     
+    # If customer_data_processor is available, get virgin/non-virgin information
+    if has_customer_data:
+        try:
+            virgin_msas, non_virgin_msas = customer_data_processor.identify_virgin_statistical_areas(msa_data)
+            
+            # Add virgin/non-virgin status to MSA data
+            msa_data['IS_VIRGIN'] = False
+            msa_data['HAS_CUSTOMERS'] = False
+            
+            for idx, msa in msa_data.iterrows():
+                if msa['CBSAFP'] in virgin_msas:
+                    msa_data.at[idx, 'IS_VIRGIN'] = True
+                if msa['CBSAFP'] in non_virgin_msas:
+                    msa_data.at[idx, 'HAS_CUSTOMERS'] = True
+                    
+            logger.info(f"Added virgin/non-virgin status to MSA data")
+        except Exception as e:
+            logger.error(f"Error applying virgin/non-virgin status: {e}")
+    
     try:
         # Normalize the area name for comparison
         normalized_area_name = area_name.lower().strip()
@@ -518,6 +545,16 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
             logger.info(f"Generating mock PGs and HHAHs for {area_name}")
             pgs_data, hhahs_data = generate_mock_pgs_hhahs(area_name, target_area.geometry)
             logger.info(f"Generated {len(pgs_data)} mock PGs and {len(hhahs_data)} mock HHAHs")
+            
+            # Check if this is a virgin or non-virgin MSA
+            is_virgin = target_area.get('IS_VIRGIN', False)
+            has_customers = target_area.get('HAS_CUSTOMERS', False)
+            
+            # If it's a virgin MSA, don't show any PGs/HHAHs
+            if is_virgin:
+                logger.info(f"This is a VIRGIN statistical area - no customers (PGs/HHAHs)")
+                pgs_data = []
+                hhahs_data = []
             
             logger.info(f"Center: {center_lat}, {center_lng}")
             logger.info(f"Bounds: {min_x}, {min_y}, {max_x}, {max_y}")
@@ -626,13 +663,22 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
         m.fit_bounds([[min_y, min_x], [max_y, max_x]])
         
         # Add title - simpler version for lightweight
+        virgin_status = ""
+        if is_virgin:
+            virgin_status = '<span style="color: #FF5733; font-weight: bold;">(Virgin Area - No Customers)</span>'
+        elif has_customers:
+            virgin_status = '<span style="color: #33A1FF; font-weight: bold;">(Non-Virgin Area - Has Customers)</span>'
+            
         title_html = f'''
             <div style="position: fixed; 
-                        top: 10px; left: 50px; width: 300px; height: auto;
+                        top: 10px; left: 50px; width: 350px; height: auto;
                         background-color: white; border-radius: 8px;
                         border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
                         font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
                 <h4 style="margin-top: 0; color: #1F2937;">Map View of {target_area['NAME']}</h4>
+                <p style="font-size: 12px; margin-bottom: 5px;">
+                    {virgin_status}
+                </p>
                 <p style="font-size: 12px; margin-bottom: 0;">
                     Showing {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs in this area.
                 </p>
