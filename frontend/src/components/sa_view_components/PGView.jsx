@@ -14,6 +14,10 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { usePatientContext } from '../../context/PatientContext';
 import { getMockPatientsByPG, mockDataDates } from '../../utils/mockDataService';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker as MUIDatePicker } from '@mui/x-date-pickers/DatePicker';
+import TextField from '@mui/material/TextField';
 
 const PGView = () => {
   const navigate = useNavigate();
@@ -1664,9 +1668,9 @@ const PGView = () => {
         // Prepare CSV content
         let csvContent = "data:text/csv;charset=utf-8,";
         
-        // Add headers
+        // Add headers (remove Doc Type)
         const headers = [
-          "Doc Type", "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
+          "Remarks", "S. No.", "FULL Name", "First Name", "Middle Name", "Last Name", "DOB",
           "HHA NAME", "INSURANCE TYPE", "PRIMARY DIAGNOSIS CODE", "SECONDARY DIAGNOSIS CODE 1", "SECONDARY DIAGNOSIS CODE 2",
           "SECONDARY DIAGNOSIS CODE 3", "SECONDARY DIAGNOSIS CODE 4", "SECONDARY DIAGNOSIS CODE 5",
           "SOC", "Episode From", "Episode To",
@@ -1676,10 +1680,9 @@ const PGView = () => {
         
         csvContent += headers.join(",") + "\r\n";
         
-        // Add data rows
+        // Add data rows (remove Doc Type)
         claimsToExport.forEach(claim => {
           const row = [
-            `"${claim.docType || ''}"`,
             `"${claim.remarks || ''}"`,
             `"${claim.sNo || ''}"`,
             `"${claim.fullName || ''}"`,
@@ -1707,12 +1710,6 @@ const PGView = () => {
             `"${claim.line1Units || ''}"`,
             `"${claim.providersName || ''}"`,
           ];
-          
-          // If we don't have validated claims, remove the docType column
-          if (certValidatedClaims.length === 0 && cpoValidatedClaims.length === 0) {
-            row.shift();
-          }
-          
           csvContent += row.join(",") + "\r\n";
         });
         
@@ -1734,18 +1731,17 @@ const PGView = () => {
         doc.text(fileName, 14, 15);
         doc.setFontSize(10);
         
-        // Prepare headers
+        // Prepare headers (remove Doc Type)
         const headers = [
-          ["Doc Type", "S.No", "Patient Name", "DOB", "HHA", "Insurance", "Primary DX", 
+          ["S.No", "Patient Name", "DOB", "HHA", "Insurance", "Primary DX", 
            "Secondary DX 1", "Secondary DX 2", "Secondary DX 3", "Secondary DX 4", "Secondary DX 5",
            "SOC", "Episode From", "Episode To",
            "CPO Min", "Billing Code", "DOS From", "DOS To", "$Charges", "POS", "Units"]
         ];
         
-        // Prepare data for table
+        // Prepare data for table (remove Doc Type)
         const data = claimsToExport.map(claim => {
           return [
-            claim.docType || '',
             claim.sNo || '',
             claim.fullName || '',
             formatDownloadDate(claim.dob),
@@ -1783,28 +1779,27 @@ const PGView = () => {
             cellWidth: 'wrap'
           },
           columnStyles: {
-            0: { cellWidth: 12 }, // Doc Type
-            1: { cellWidth: 8 }, // S.No
-            2: { cellWidth: 22 }, // Patient Name
-            3: { cellWidth: 12 }, // DOB
-            4: { cellWidth: 15 }, // HHA
-            5: { cellWidth: 12 }, // Insurance
-            6: { cellWidth: 12 }, // Primary DX
-            7: { cellWidth: 12 }, // Secondary DX 1
-            8: { cellWidth: 12 }, // Secondary DX 2
-            9: { cellWidth: 12 }, // Secondary DX 3
-            10: { cellWidth: 12 }, // Secondary DX 4
-            11: { cellWidth: 12 }, // Secondary DX 5
-            12: { cellWidth: 12 }, // SOC
-            13: { cellWidth: 12 }, // Episode From
-            14: { cellWidth: 12 }, // Episode To
-            15: { cellWidth: 8 }, // CPO Min
-            16: { cellWidth: 12 }, // Billing Code
-            17: { cellWidth: 12 }, // DOS From
-            18: { cellWidth: 12 }, // DOS To
-            19: { cellWidth: 10 }, // $Charges
-            20: { cellWidth: 8 }, // POS
-            21: { cellWidth: 8 }  // Units
+            0: { cellWidth: 12 }, // S.No
+            1: { cellWidth: 22 }, // Patient Name
+            2: { cellWidth: 12 }, // DOB
+            3: { cellWidth: 15 }, // HHA
+            4: { cellWidth: 12 }, // Insurance
+            5: { cellWidth: 12 }, // Primary DX
+            6: { cellWidth: 12 }, // Secondary DX 1
+            7: { cellWidth: 12 }, // Secondary DX 2
+            8: { cellWidth: 12 }, // Secondary DX 3
+            9: { cellWidth: 12 }, // Secondary DX 4
+            10: { cellWidth: 12 }, // Secondary DX 5
+            11: { cellWidth: 12 }, // SOC
+            12: { cellWidth: 12 }, // Episode From
+            13: { cellWidth: 12 }, // Episode To
+            14: { cellWidth: 8 }, // CPO Min
+            15: { cellWidth: 12 }, // Billing Code
+            16: { cellWidth: 12 }, // DOS From
+            17: { cellWidth: 12 }, // DOS To
+            18: { cellWidth: 10 }, // $Charges
+            19: { cellWidth: 8 }, // POS
+            20: { cellWidth: 8 }  // Units
           },
           headStyles: {
             fillColor: [71, 85, 119],
@@ -2058,25 +2053,29 @@ const PGView = () => {
                 
                 <div className="form-group">
                   <label>Billing Start Date</label>
-                  <DatePicker
-                    selected={selectedDateRange.start ? new Date(selectedDateRange.start) : null}
-                    onChange={(date) => handleDateRangeChange({ target: { name: 'start', value: date ? date.toISOString().split('T')[0] : '' } })}
-                    dateFormat="MM-dd-yyyy"
-                    placeholderText="MM-DD-YYYY"
-                    className="date-input"
-                    isClearable
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MUIDatePicker
+                      label="Billing Start Date"
+                      value={selectedDateRange.start ? new Date(selectedDateRange.start) : null}
+                      onChange={(date) => handleDateRangeChange({ target: { name: 'start', value: date ? date.toISOString().split('T')[0] : '' } })}
+                      renderInput={(params) => <TextField {...params} size="small" fullWidth />}
+                      inputFormat="MM-dd-yyyy"
+                      clearable
+                    />
+                  </LocalizationProvider>
                 </div>
                 <div className="form-group">
                   <label>Billing End Date</label>
-                  <DatePicker
-                    selected={selectedDateRange.end ? new Date(selectedDateRange.end) : null}
-                    onChange={(date) => handleDateRangeChange({ target: { name: 'end', value: date ? date.toISOString().split('T')[0] : '' } })}
-                    dateFormat="MM-dd-yyyy"
-                    placeholderText="MM-DD-YYYY"
-                    className="date-input"
-                    isClearable
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MUIDatePicker
+                      label="Billing End Date"
+                      value={selectedDateRange.end ? new Date(selectedDateRange.end) : null}
+                      onChange={(date) => handleDateRangeChange({ target: { name: 'end', value: date ? date.toISOString().split('T')[0] : '' } })}
+                      renderInput={(params) => <TextField {...params} size="small" fullWidth />}
+                      inputFormat="MM-dd-yyyy"
+                      clearable
+                    />
+                  </LocalizationProvider>
                 </div>
                 
                 <div className="form-group" style={{ marginTop: '15px' }}>
