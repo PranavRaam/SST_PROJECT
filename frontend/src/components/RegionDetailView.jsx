@@ -6,6 +6,7 @@ import {
   divisionalGroupToStatisticalAreas
 } from '../utils/regionMapping';
 import BarChart from './BarChart';
+import SubdivisionFilter from './SubdivisionFilter';
 import './RegionDetailView.css';
 import { FunnelDataProvider } from './sa_view_components/FunnelDataContext';
 
@@ -152,6 +153,7 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
     agencies: [], // low, medium, high
     outcomes: [], // low, medium, high
   });
+  const [subdivisionFilteredMSAs, setSubdivisionFilteredMSAs] = useState(null);
   const filterRef = useRef(null);
   const printRef = useRef(null);
   
@@ -171,6 +173,10 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
+  const handleSubdivisionFilterChange = (filteredMSAs) => {
+    setSubdivisionFilteredMSAs(filteredMSAs);
+  };
   
   // Filter statistical areas based on search term, tab, and advanced filters
   const filteredAreas = allStatisticalAreas.filter(area => {
@@ -196,6 +202,11 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
     }
 
     if (!matchesTab) return false;
+    
+    // Apply subdivision filter if active
+    if (subdivisionFilteredMSAs !== null && !subdivisionFilteredMSAs.includes(area)) {
+      return false;
+    }
 
     // Then apply advanced filters
     if (selectedFilters.size.length > 0) {
@@ -466,7 +477,26 @@ const RegionDetailView = ({ divisionalGroup, regions, statisticalAreas, onBack, 
   };
 
   return (
-    <div className="region-detail-view">
+    <div className="region-detail-view" ref={printRef}>
+      <div className="region-header">
+        <div className="region-header-top">
+          <button className="back-button" onClick={onBack}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back
+          </button>
+          <h2>{divisionalGroup} Division</h2>
+        </div>
+      </div>
+      
+      {/* Add Subdivision Filter component */}
+      <SubdivisionFilter 
+        divisionalGroup={divisionalGroup}
+        onSubdivisionFilterChange={handleSubdivisionFilterChange}
+      />
+      
       <div className="detail-header">
         <button className="back-button" onClick={onBack}>
           ← Back to Overview

@@ -611,6 +611,7 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
         return style
     
     # Add states layer (bottom layer)
+    """
     states_layer = folium.GeoJson(
         get_states_data(),
         name='State Boundaries',
@@ -628,16 +629,10 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
             localize=True,
             sticky=False,
             labels=True,
-            style="""
-                background-color: rgba(255, 255, 255, 0.8);
-                border: 2px solid black;
-                border-radius: 3px;
-                box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
-                font-size: 14px;
-                padding: 5px;
-            """
+            style="background-color: rgba(255, 255, 255, 0.8); border: 2px solid black; border-radius: 3px; box-shadow: 3px 3px 3px rgba(0,0,0,0.3); font-size: 14px; padding: 5px;"
         )
     ).add_to(m)
+    """
     
     # Add all counties layer
     try:

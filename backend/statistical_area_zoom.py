@@ -578,6 +578,7 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
             return create_fallback_map(area_name, cache_file)
         
         # Add state boundaries with error handling
+        """
         try:
             style_function = lambda x: {
                 'fillColor': '#f5f5f5',
@@ -615,6 +616,7 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
         except Exception as e:
             logger.error(f"Error adding state boundaries: {str(e)}")
             # Continue without states
+        """
         
         # Add MSA boundary (simpler style for lightweight version)
         style_params = {
