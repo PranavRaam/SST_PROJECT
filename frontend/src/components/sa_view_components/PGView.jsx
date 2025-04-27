@@ -736,27 +736,64 @@ const PGView = () => {
     // If we have validated claims, use them based on the filter
     if (hasValidatedClaims) {
       // Handle specific claim type filters
-    if (showCertClaimsOnly) {
+      if (showCertClaimsOnly) {
         // Only show CERT claims (code 180)
         return certValidatedClaims.filter(claim => claim.docType === 'CERT');
       }
       
-    if (showRecertClaimsOnly) {
+      if (showRecertClaimsOnly) {
         // Only show RECERT claims (code 179)
         return certValidatedClaims.filter(claim => claim.docType === 'RECERT');
       }
       
-    if (showCpoClaimsOnly) {
+      if (showCpoClaimsOnly) {
         // Only show CPO claims (code 181)
-      return cpoValidatedClaims;
-    }
-    
+        return cpoValidatedClaims;
+      }
+      
       // If no specific filter is set, show all validated claims
       return [...certValidatedClaims, ...cpoValidatedClaims];
     }
     
-    // If no validated claims, return filtered claims from filters
-      return filteredClaims;
+    // If no validated claims, apply eligibility filters to the filtered claims
+    if (showCertClaimsOnly) {
+      // Only return patients eligible for CERT
+      return filteredClaims.filter(claim => {
+        const patient = {
+          patientFirstName: claim.firstName,
+          patientLastName: claim.lastName,
+          patientMiddleName: claim.middleName
+        };
+        return isCertEligible(patient);
+      });
+    }
+    
+    if (showRecertClaimsOnly) {
+      // Only return patients eligible for RECERT
+      return filteredClaims.filter(claim => {
+        const patient = {
+          patientFirstName: claim.firstName,
+          patientLastName: claim.lastName,
+          patientMiddleName: claim.middleName
+        };
+        return isRecertEligible(patient);
+      });
+    }
+    
+    if (showCpoClaimsOnly) {
+      // Only return patients eligible for CPO
+      return filteredClaims.filter(claim => {
+        const patient = {
+          patientFirstName: claim.firstName,
+          patientLastName: claim.lastName,
+          patientMiddleName: claim.middleName
+        };
+        return isCpoEligible(patient);
+      });
+    }
+    
+    // Only return claims with a valid docType (CERT, RECERT, CPO) in All Claims view
+    return filteredClaims.filter(claim => ['CERT', 'RECERT', 'CPO'].includes(claim.docType));
   };
 
   // Add or update handlers for the filter toggles
@@ -1444,15 +1481,45 @@ const PGView = () => {
     const pgPatients = getMockPatientsByPG(pgName);
     console.log("Retrieved", pgPatients.length, "patients for PG:", pgName);
     
-    // Get all patients, then filter later if needed
-    const allClaims = pgPatients.map(patient => {
+    // Filter patients to only include those who are in EHR and have minimum ICD codes
+    const eligiblePatients = pgPatients.filter(patient => {
+      const patientName = patient.patientFirstName || patient.firstName;
+      const patientLastName = patient.patientLastName || patient.lastName;
+      
+      // Check if patient is in EHR
+      const inEhr = isPatientInEhr(patient);
+      if (!inEhr) {
+        console.log(`Patient ${patientName} ${patientLastName} not found in EHR - skipping`);
+        return false;
+      }
+      
+      // Check for minimum ICD codes
+      if (!hasMinimumIcdCodes(patient)) {
+        console.log(`Patient ${patientName} ${patientLastName} has insufficient ICD codes - skipping`);
+        return false;
+      }
+      
+      // Check if patient is active in the billing month
+      const isActive = isActiveInMonth(patient, startDate.getMonth() + 1, startDate.getFullYear());
+      if (!isActive) {
+        console.log(`Patient ${patientName} ${patientLastName} not active in ${startDate.getMonth() + 1}/${startDate.getFullYear()} - skipping`);
+        return false;
+      }
+      
+      return true;
+    });
+    
+    console.log(`${eligiblePatients.length} of ${pgPatients.length} patients meet eligibility criteria`);
+    
+    // Get all eligible patients, then filter later if needed
+    const allClaims = eligiblePatients.map(patient => {
       // Determine doc type based on status
       let docType = '';
       if (patient.certStatus === 'Document Signed') {
         docType = 'CERT';
       } else if (patient.recertStatus === 'Document Signed') {
         docType = 'RECERT'; 
-      } else if (patient.cpoMinsCaptured >= 30) {
+      } else if (patient.cpoMinsCaptured >= 30 && isCpoEligible(patient)) {
         docType = 'CPO';
       }
       
@@ -1508,12 +1575,13 @@ const PGView = () => {
     // Show a status message
     setValidationStatus(`Validating claims for billing window ${startMonth}/${startYear}...`);
     
-    // Automatically trigger the validate claims workflow after a short delay
-    // This allows the state updates to complete before validation
+    // Now run the validation process directly
+    setShowValidationModal(true);
+    
+    // Short delay to allow state updates before running validation
     setTimeout(() => {
-      console.log("Starting validation with month:", startMonth, "year:", startYear);
-    validateAllClaims();
-    }, 500); // Increased timeout to ensure state updates have time to process
+      validateAllClaims();
+    }, 100);
   };
 
   const formatDownloadDate = (dateStr) => {
@@ -1868,28 +1936,7 @@ const PGView = () => {
           
           {/* Validation and filter buttons */}
           <div className="filter-group" style={{ display: 'flex', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
-            <button 
-              className="filter-button"
-              onClick={validateAllClaims}
-              style={{ 
-                padding: '8px 16px', 
-                backgroundColor: '#4F46E5',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px'
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              Validate All Claims
-            </button>
-            
-            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ fontWeight: 'bold', marginRight: '10px' }}>Filter:</span>
             
               <button 
@@ -2058,20 +2105,27 @@ const PGView = () => {
                   >
                     Cancel
                     </button>
-                  <button 
+                   <button 
                     className="submit-button"
                     onClick={filterClaimsByDateRange}
                     disabled={!selectedDateRange.start || !selectedDateRange.end}
                     style={{ 
                       padding: '8px 16px', 
-                      backgroundColor: (!selectedDateRange.start || !selectedDateRange.end) ? '#cbd5e0' : '#4361ee', 
+                      backgroundColor: (!selectedDateRange.start || !selectedDateRange.end) ? '#cbd5e0' : '#4F46E5', 
                       color: 'white',
                       border: 'none',
                       borderRadius: '4px',
-                      cursor: (!selectedDateRange.start || !selectedDateRange.end) ? 'not-allowed' : 'pointer'
+                      cursor: (!selectedDateRange.start || !selectedDateRange.end) ? 'not-allowed' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px'
                     }}
                   >
-                    Apply & Validate Claims
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Validate All Claims
                   </button>
                 </div>
               </div>
@@ -2115,48 +2169,60 @@ const PGView = () => {
           </thead>
           <tbody>
             {/* Get claims based on current filter state using getSortedClaims to apply any sorting */}
-            {getSortedClaims(getFilteredClaims()).map((claim, index) => (
-              <tr key={`${claim.id}-${claim.docType || 'unknown'}`}>
-                <td>{claim.remarks}</td>
-                <td>{index + 1}</td>
-                <td>{claim.fullName}</td>
-                <td>{claim.firstName}</td>
-                <td>{claim.middleName}</td>
-                <td>{claim.lastName}</td>
-                <td>{claim.dob}</td>
-                <td>{claim.hhaName}</td>
-                <td>{claim.insuranceType}</td>
-                <td>{claim.primaryDiagnosisCode}</td>
-                {claim.secondaryDiagnosisCodes ? (
-                  <>
-                    <td>{claim.secondaryDiagnosisCodes[0] || ''}</td>
-                    <td>{claim.secondaryDiagnosisCodes[1] || ''}</td>
-                    <td>{claim.secondaryDiagnosisCodes[2] || ''}</td>
-                    <td>{claim.secondaryDiagnosisCodes[3] || ''}</td>
-                    <td>{claim.secondaryDiagnosisCodes[4] || ''}</td>
-                  </>
-                ) : (
-                  <>
-                    <td>{claim.secondaryDiagnosisCode1 || ''}</td>
-                    <td>{claim.secondaryDiagnosisCode2 || ''}</td>
-                <td>{claim.secondaryDiagnosisCode3 || ''}</td>
-                <td>{claim.secondaryDiagnosisCode4 || ''}</td>
-                <td>{claim.secondaryDiagnosisCode5 || ''}</td>
-                  </>
-                )}
-                <td>{claim.soc}</td>
-                <td>{claim.episodeFrom}</td>
-                <td>{claim.episodeTo}</td>
-                <td>{claim.minutesCaptured}</td>
-                <td>{claim.billingCode}</td>
-                <td>{claim.line1DosFrom}</td>
-                <td>{claim.line1DosTo}</td>
-                <td>${claim.line1Charges}</td>
-                <td>{claim.line1Pos || claim.line1POS}</td>
-                <td>{claim.line1Units}</td>
-                <td>{claim.providersName}</td>
-              </tr>
-            ))}
+            {(() => {
+              // Deduplicate claims by patient id and docType
+              const seen = new Set();
+              const uniqueClaims = [];
+              for (const claim of getSortedClaims(getFilteredClaims())) {
+                const key = `${claim.id}-${claim.docType}`;
+                if (!seen.has(key)) {
+                  uniqueClaims.push(claim);
+                  seen.add(key);
+                }
+              }
+              return uniqueClaims.map((claim, index) => (
+                <tr key={`${claim.id}-${claim.docType || 'unknown'}`}>
+                  <td>{claim.remarks}</td>
+                  <td>{index + 1}</td>
+                  <td>{claim.fullName}</td>
+                  <td>{claim.firstName}</td>
+                  <td>{claim.middleName}</td>
+                  <td>{claim.lastName}</td>
+                  <td>{claim.dob}</td>
+                  <td>{claim.hhaName}</td>
+                  <td>{claim.insuranceType}</td>
+                  <td>{claim.primaryDiagnosisCode}</td>
+                  {claim.secondaryDiagnosisCodes ? (
+                    <>
+                      <td>{claim.secondaryDiagnosisCodes[0] || ''}</td>
+                      <td>{claim.secondaryDiagnosisCodes[1] || ''}</td>
+                      <td>{claim.secondaryDiagnosisCodes[2] || ''}</td>
+                      <td>{claim.secondaryDiagnosisCodes[3] || ''}</td>
+                      <td>{claim.secondaryDiagnosisCodes[4] || ''}</td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{claim.secondaryDiagnosisCode1 || ''}</td>
+                      <td>{claim.secondaryDiagnosisCode2 || ''}</td>
+                      <td>{claim.secondaryDiagnosisCode3 || ''}</td>
+                      <td>{claim.secondaryDiagnosisCode4 || ''}</td>
+                      <td>{claim.secondaryDiagnosisCode5 || ''}</td>
+                    </>
+                  )}
+                  <td>{claim.soc}</td>
+                  <td>{claim.episodeFrom}</td>
+                  <td>{claim.episodeTo}</td>
+                  <td>{claim.minutesCaptured}</td>
+                  <td>{claim.billingCode}</td>
+                  <td>{claim.line1DosFrom}</td>
+                  <td>{claim.line1DosTo}</td>
+                  <td>${claim.line1Charges}</td>
+                  <td>{claim.line1Pos || claim.line1POS}</td>
+                  <td>{claim.line1Units}</td>
+                  <td>{claim.providersName}</td>
+                </tr>
+              ));
+            })()}
             
             {/* Show empty state message if no claims are found */}
             {getFilteredClaims().length === 0 && (
@@ -4052,32 +4118,50 @@ Operations Team
 
   // Function to apply sorting to claims data
   const getSortedClaims = (claims) => {
-    if (!sortConfig.key) return claims;
-    
-    return [...claims].sort((a, b) => {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
+    // First sort by remarks (to prioritize claims with eligibility info)
+    let sortedClaims = [...claims].sort((a, b) => {
+      // If one has a remark and the other doesn't, prioritize the one with a remark
+      if (a.remarks && !b.remarks) return -1;
+      if (!a.remarks && b.remarks) return 1;
       
-      if (aValue === undefined || aValue === null) return 1;
-      if (bValue === undefined || bValue === null) return -1;
-      
-      // Check if values are dates
-      if (aValue.includes && aValue.includes('-') && !isNaN(new Date(aValue))) {
-        const dateA = new Date(aValue);
-        const dateB = new Date(bValue);
-        return sortConfig.direction === 'asc' ? dateA - dateB : dateB - dateA;
+      // If both have remarks, sort alphabetically
+      if (a.remarks && b.remarks) {
+        return a.remarks.localeCompare(b.remarks);
       }
       
-      // Check if values are numbers
-      if (!isNaN(aValue) && !isNaN(bValue)) {
-        return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
-      }
-      
-      // Default string comparison
-      return sortConfig.direction === 'asc' 
-        ? aValue.toString().localeCompare(bValue.toString())
-        : bValue.toString().localeCompare(aValue.toString());
+      // If neither has remarks, maintain original order
+      return 0;
     });
+    
+    // Then apply any requested column sort
+    if (sortConfig.key) {
+      sortedClaims = sortedClaims.sort((a, b) => {
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+        
+        if (aValue === undefined || aValue === null) return 1;
+        if (bValue === undefined || bValue === null) return -1;
+        
+        // Check if values are dates
+        if (aValue.includes && aValue.includes('-') && !isNaN(new Date(aValue))) {
+          const dateA = new Date(aValue);
+          const dateB = new Date(bValue);
+          return sortConfig.direction === 'asc' ? dateA - dateB : dateB - dateA;
+        }
+        
+        // Check if values are numbers
+        if (!isNaN(aValue) && !isNaN(bValue)) {
+          return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+        
+        // Default string comparison
+        return sortConfig.direction === 'asc' 
+          ? aValue.toString().localeCompare(bValue.toString())
+          : bValue.toString().localeCompare(aValue.toString());
+      });
+    }
+    
+    return sortedClaims;
   };
 
   // Function to convert ISO date to American format
