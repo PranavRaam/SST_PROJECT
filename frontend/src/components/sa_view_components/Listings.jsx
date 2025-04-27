@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback, memo } from 'react';
 import PGListingTable from './PGListingTable';
 import HHAHListingTable from './HHAHListingTable';
 import AddPGForm from './AddPGForm';
@@ -6,10 +6,31 @@ import AddHHAHForm from './AddHHAHForm';
 import { FunnelDataContext } from './FunnelDataContext';
 import '../sa_view_css/Listings.css';
 
+// Memoize the form components to prevent unnecessary re-renders
+const MemoizedAddPGForm = memo(AddPGForm);
+const MemoizedAddHHAHForm = memo(AddHHAHForm);
+
 const Listings = () => {
   const [showAddPGForm, setShowAddPGForm] = useState(false);
   const [showAddHHAHForm, setShowAddHHAHForm] = useState(false);
   const { currentArea, isLoading } = useContext(FunnelDataContext);
+
+  // Use callbacks for handlers to prevent recreation on each render
+  const handleOpenPGForm = useCallback(() => {
+    setShowAddPGForm(true);
+  }, []);
+
+  const handleClosePGForm = useCallback(() => {
+    setShowAddPGForm(false);
+  }, []);
+
+  const handleOpenHHAHForm = useCallback(() => {
+    setShowAddHHAHForm(true);
+  }, []);
+
+  const handleCloseHHAHForm = useCallback(() => {
+    setShowAddHHAHForm(false);
+  }, []);
 
   if (isLoading) {
     return (
@@ -39,14 +60,14 @@ const Listings = () => {
           <h2 className="table-title">PG Listing for {currentArea}</h2>
           <button 
             className="add-button"
-            onClick={() => setShowAddPGForm(true)}
+            onClick={handleOpenPGForm}
           >
             + Add New PG
           </button>
         </div>
         <PGListingTable />
         {showAddPGForm && (
-          <AddPGForm onClose={() => setShowAddPGForm(false)} />
+          <MemoizedAddPGForm onClose={handleClosePGForm} />
         )}
       </div>
       
@@ -55,18 +76,19 @@ const Listings = () => {
           <h2 className="table-title">HHAH Listing for {currentArea}</h2>
           <button 
             className="add-button"
-            onClick={() => setShowAddHHAHForm(true)}
+            onClick={handleOpenHHAHForm}
           >
             + Add New HHAH
           </button>
         </div>
         <HHAHListingTable />
         {showAddHHAHForm && (
-          <AddHHAHForm onClose={() => setShowAddHHAHForm(false)} />
+          <MemoizedAddHHAHForm onClose={handleCloseHHAHForm} />
         )}
       </div>
     </div>
   );
 };
 
-export default Listings;
+// Memoize the entire Listings component to prevent unnecessary re-renders
+export default memo(Listings);

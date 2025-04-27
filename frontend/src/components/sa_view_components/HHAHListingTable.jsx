@@ -1,25 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FunnelDataContext, HHAH_STAGES } from './FunnelDataContext';
 import '../sa_view_css/HHAHListingTable.css';
 import combinedData from '../../assets/data/combined_data.json';
 
-const HHAHListingTable = () => {
+const HHAHListingTable = memo(() => {
   const { currentArea, hhahData, hhahAssignments } = useContext(FunnelDataContext);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleRowClick = (hhah) => {
+  const handleRowClick = useCallback((hhah) => {
     navigate(`/hhah-view/${encodeURIComponent(hhah['Agency Name'])}`, {
       state: {
         hhahData: hhah
       }
     });
-  };
+  }, [navigate]);
 
   // Get an agency's current funnel stage from the assignments
-  const getAgencyStage = (agencyName) => {
+  const getAgencyStage = useCallback((agencyName) => {
     if (!hhahAssignments) return "Not Using"; // Default value
     
     for (const [stage, agencies] of Object.entries(hhahAssignments)) {
@@ -29,12 +29,36 @@ const HHAHListingTable = () => {
     }
     
     return "Not Using"; // Default if not found in any stage
-  };
+  }, [hhahAssignments]);
+
+  // Memoize the getStatusClass function to prevent unnecessary calculations
+  const getStatusClass = useCallback((status) => {
+    const statusMap = {
+      "Freemium": "status-freemium",
+      "Not Using": "status-not-using",
+      "Order360 Lite": "status-lite",
+      "Order360 Full": "status-full",
+      "Upsold (Fully subscribed)": "status-upsold"
+    };
+    
+    return statusMap[status] || "status-default";
+  }, []);
+
+  // Memoize the getShortStatusName function
+  const getShortStatusName = useCallback((status) => {
+    const nameMap = {
+      "Upsold (Fully subscribed)": "Fully Subscribed"
+    };
+    
+    return nameMap[status] || status;
+  }, []);
 
   useEffect(() => {
-    console.log('Current Area:', currentArea);
-    console.log('HHAH Data from Context:', hhahData?.length);
-    console.log('HHAH Assignments:', hhahAssignments);
+    console.log('HHAHListingTable: Data changed, re-filtering', {
+      currentArea,
+      hhahDataLength: hhahData?.length,
+      hhahAssignments
+    });
     
     // Check if we have data from the context first (preferred source)
     if (currentArea && hhahData && hhahData.length > 0) {
@@ -82,7 +106,7 @@ const HHAHListingTable = () => {
     } else {
       setFilteredData([]);
     }
-  }, [currentArea, hhahData, hhahAssignments]);
+  }, [currentArea, hhahData, hhahAssignments, getAgencyStage]);
 
   if (isLoading) {
     return <div className="loading-message">Loading HHAH data...</div>;
@@ -109,28 +133,6 @@ const HHAHListingTable = () => {
       </div>
     );
   }
-
-  // Helper function to get appropriate CSS class based on agency stage
-  const getStatusClass = (status) => {
-    const statusMap = {
-      "Freemium": "status-freemium",
-      "Not Using": "status-not-using",
-      "Order360 Lite": "status-lite",
-      "Order360 Full": "status-full",
-      "Upsold (Fully subscribed)": "status-upsold"
-    };
-    
-    return statusMap[status] || "status-default";
-  };
-
-  // Helper function to get a shorter display name if needed
-  const getShortStatusName = (status) => {
-    const nameMap = {
-      "Upsold (Fully subscribed)": "Fully Subscribed"
-    };
-    
-    return nameMap[status] || status;
-  };
 
   return (
     <div className="table-container">
@@ -167,6 +169,6 @@ const HHAHListingTable = () => {
       </table>
     </div>
   );
-};
+});
 
 export default HHAHListingTable;

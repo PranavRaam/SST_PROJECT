@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e6876e3088c58367149416cda866e9be {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div style="position: fixed; 
+                        top: 10px; left: 50px; width: 350px; height: auto;
+                        background-color: white; border-radius: 8px;
+                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0; color: #1F2937;">Map View of Corpus Christi, TX</h4>
+                <p style="font-size: 12px; margin-bottom: 5px;">
+                    <span style="color: #FF5733; font-weight: bold;">(Virgin Area - No Customers)</span>
+                </p>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    Showing 0 PGs and 0 HHAHs in this area.
+                </p>
+            </div>
+        
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_e6876e3088c58367149416cda866e9be" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e6876e3088c58367149416cda866e9be = L.map(
+                "map_e6876e3088c58367149416cda866e9be",
+                {
+                    center: [27.89243156564578, -97.40120760798982],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_e6876e3088c58367149416cda866e9be);
+
+            
+
+        
+    
+            var tile_layer_f1ee518b36b313e0a78fd230d3d668a1 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f1ee518b36b313e0a78fd230d3d668a1.addTo(map_e6876e3088c58367149416cda866e9be);
+        
+    
+        function geo_json_924fafe08629cc378141e6b2fcaabe4a_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_924fafe08629cc378141e6b2fcaabe4a_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_924fafe08629cc378141e6b2fcaabe4a = L.geoJson(null, {
+                onEachFeature: geo_json_924fafe08629cc378141e6b2fcaabe4a_onEachFeature,
+            
+                style: geo_json_924fafe08629cc378141e6b2fcaabe4a_styler,
+            ...{
+}
+        });
+
+        function geo_json_924fafe08629cc378141e6b2fcaabe4a_add (data) {
+            geo_json_924fafe08629cc378141e6b2fcaabe4a
+                .addData(data);
+        }
+            geo_json_924fafe08629cc378141e6b2fcaabe4a_add({"features": [{"geometry": {"coordinates": [[[-96.984281, 27.803783], [-97.046727, 27.755049], [-97.165097, 27.5683], [-97.242122, 27.582924], [-97.325216, 27.560896], [-97.840678, 27.558358], [-97.88859, 27.620249], [-97.942146, 27.635932], [-97.934274, 27.885202], [-97.788988, 28.013895], [-97.805827, 28.041382], [-97.860558, 28.038113], [-97.895336, 28.061176], [-97.904081, 28.114228], [-97.817716, 28.176848], [-97.567622, 28.129683], [-97.541071, 28.164669], [-97.521211, 28.151341], [-97.4759, 28.179406], [-97.471882, 28.155003], [-97.442125, 28.153857], [-97.447468, 28.133348], [-97.42249, 28.142755], [-97.435277, 28.129908], [-97.426733, 28.117259], [-97.403683, 28.109064], [-97.403842, 28.130129], [-97.384833, 28.123951], [-97.378614, 28.139002], [-97.327183, 28.11874], [-97.317803, 28.137495], [-97.316886, 28.110067], [-97.290286, 28.114796], [-97.283702, 28.090935], [-97.237828, 28.061515], [-97.144916, 28.102622], [-97.023586, 28.187657], [-97.017539, 28.202876], [-97.102162, 28.22649], [-97.123333, 28.272739], [-96.790512, 28.319238], [-96.830433, 28.109619], [-96.853988, 28.063105], [-96.815905, 28.022835], [-96.959495, 27.875302], [-96.984281, 27.803783]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_924fafe08629cc378141e6b2fcaabe4a.addTo(map_e6876e3088c58367149416cda866e9be);
+        
+    
+            var layer_control_e21827919b67298c22d8dd246e7067c7_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_f1ee518b36b313e0a78fd230d3d668a1,
+                },
+                overlays :  {
+                    "Corpus Christi, TX Boundary" : geo_json_924fafe08629cc378141e6b2fcaabe4a,
+                },
+            };
+            let layer_control_e21827919b67298c22d8dd246e7067c7 = L.control.layers(
+                layer_control_e21827919b67298c22d8dd246e7067c7_layers.base_layers,
+                layer_control_e21827919b67298c22d8dd246e7067c7_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_e6876e3088c58367149416cda866e9be);
+
+        
+    
+            map_e6876e3088c58367149416cda866e9be.fitBounds(
+                [[27.558358, -97.942146], [28.319238, -96.790512]],
+                {}
+            );
+        
+</script>
+</html>
