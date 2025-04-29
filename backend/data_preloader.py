@@ -192,7 +192,20 @@ def get_cached_county_msa_relationships():
     if os.path.exists(COUNTY_MSA_CACHE):
         try:
             with open(COUNTY_MSA_CACHE, 'rb') as f:
-                return pickle.load(f)
+                cached_data = pickle.load(f)
+                
+                # Ensure we return a consistent tuple format
+                if isinstance(cached_data, tuple) and len(cached_data) >= 2:
+                    # The cache contains the expected (county_msa, df) tuple
+                    return cached_data
+                elif isinstance(cached_data, dict):
+                    # The cache only contains the county_msa dictionary
+                    logger.warning("Cache contains only county_msa dictionary, reconstructing tuple")
+                    return cached_data, None
+                else:
+                    # Unknown format, log warning and fall back to downloading
+                    logger.warning(f"Unexpected format in County-MSA cache: {type(cached_data)}")
+                    raise ValueError("Cache format not recognized")
         except Exception as e:
             logger.error(f"Error loading cached County-MSA relationships: {str(e)}")
     
@@ -219,7 +232,17 @@ def get_all_cached_data():
     msa_data = get_cached_msa_data()
     county_data = get_cached_county_data()
     states_data = get_cached_states_data()
-    county_msa, _ = get_cached_county_msa_relationships()
+    
+    # Fix unpacking issue by handling the return value more carefully
+    result = get_cached_county_msa_relationships()
+    
+    # Check if result is a tuple with at least one item
+    if isinstance(result, tuple) and len(result) > 0:
+        county_msa = result[0]  # Get the first item (county_msa dictionary)
+    else:
+        # Fallback in case the cached data is not in the expected format
+        logger.warning("Unexpected format from get_cached_county_msa_relationships, fetching directly")
+        county_msa, _ = main.get_county_msa_relationships()
     
     return msa_data, county_data, states_data, county_msa
 
