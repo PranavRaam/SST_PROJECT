@@ -751,10 +751,24 @@ def get_statistical_area_map(area_name):
         exact_boundary = request.args.get('exact_boundary', 'true').lower() == 'true'
         lightweight = request.args.get('lightweight', 'true').lower() == 'true'
         
+        # If we have real map data for this area, force regeneration
+        has_few_markers = False
+        if area_name in real_map_data:
+            logger.info(f"Real map data found for {area_name}, forcing regeneration")
+            force_regen = True
+            use_cached = False  # Don't use cached maps when we have real data
+            
+            # Check if this area has very few markers (3 or fewer total)
+            area_data = real_map_data[area_name]
+            total_markers = len(area_data.get('pgs', [])) + len(area_data.get('hhahs', []))
+            has_few_markers = total_markers <= 3
+            if has_few_markers:
+                logger.info(f"Area has only {total_markers} markers, using ultra-lightweight rendering")
+        
         logger.info(f"Processing parameters: force_regen={force_regen}, use_cached={use_cached}, "
                    f"detailed={detailed}, zoom={zoom}, exact_boundary={exact_boundary}, lightweight={lightweight}")
         
-        # Generate the map
+        # Generate the map - pass has_few_markers for ultra-lightweight rendering optimization
         map_file = generate_statistical_area_map(
             area_name, 
             zoom=zoom,
@@ -762,7 +776,8 @@ def get_statistical_area_map(area_name):
             detailed=detailed,
             use_cached=use_cached,
             force_regen=force_regen,
-            lightweight=lightweight
+            lightweight=lightweight,
+            ultra_lightweight=has_few_markers  # New parameter for special optimization
         )
         
         if map_file and os.path.exists(map_file):
@@ -900,6 +915,44 @@ def preload_data():
         return jsonify({
             "success": False,
             "message": f"Error starting preload: {str(e)}"
+        }), 500
+
+# Storage for real PG and HHAH data by statistical area
+real_map_data = {}
+
+@app.route('/api/update-map-data', methods=['POST'])
+def update_map_data():
+    """Store real PG and HHAH data for a statistical area to be used in map generation"""
+    try:
+        data = request.json
+        if not data or 'area' not in data:
+            return jsonify({
+                "success": False,
+                "message": "Missing area parameter"
+            }), 400
+            
+        area_name = data['area']
+        pgs = data.get('pgs', [])
+        hhahs = data.get('hhahs', [])
+        
+        logger.info(f"Received map data update for {area_name}: {len(pgs)} PGs and {len(hhahs)} HHAHs")
+        
+        # Store the data for this area
+        real_map_data[area_name] = {
+            'pgs': pgs,
+            'hhahs': hhahs,
+            'timestamp': time.time()
+        }
+        
+        return jsonify({
+            "success": True,
+            "message": f"Data updated for {area_name}: {len(pgs)} PGs and {len(hhahs)} HHAHs"
+        })
+    except Exception as e:
+        logger.exception(f"Error updating map data: {str(e)}")
+        return jsonify({
+            "success": False,
+            "message": f"Error: {str(e)}"
         }), 500
 
 if __name__ == '__main__':

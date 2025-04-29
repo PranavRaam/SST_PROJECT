@@ -1,0 +1,26 @@
+.subdivision-color {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.subdivision-parent {
+  color: #6B7280;
+  font-size: 14px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* Add styling for the subdivision detail view header */
+.subdivision-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.subdivision-header h2 {
+  margin-right: 10px;
+} 

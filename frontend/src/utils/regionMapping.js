@@ -977,6 +977,30 @@ Object.entries(divisionalGroupToRegions).forEach(
   }
 );
 
+// Calculate statistics for each subdivision based on its MSAs
+export const getSubdivisionStatistics = (subdivision) => {
+  const msas = subdivisionToMSAs[subdivision] || [];
+  
+  // Initialize totals
+  const stats = {
+    patients: 0,
+    physicianGroups: 0,
+    agencies: 0,
+    activeOutcomes: 0
+  };
+  
+  // Sum up statistics for all MSAs in this subdivision
+  msas.forEach(msa => {
+    const msaStats = statisticalAreaStatistics[msa] || {};
+    stats.patients += msaStats.patients || 0;
+    stats.physicianGroups += msaStats.physicianGroups || 0;
+    stats.agencies += msaStats.agencies || 0;
+    stats.activeOutcomes += msaStats.activeOutcomes || 0;
+  });
+  
+  return stats;
+};
+
 export default {
   regionToDivisionalGroup,
   divisionalGroupToRegions,
@@ -984,4 +1008,5 @@ export default {
   divisionalGroupToStatisticalAreas,
   regionStatistics,
   statisticalAreaStatistics,
+  getSubdivisionStatistics,
 };

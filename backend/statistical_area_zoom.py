@@ -251,6 +251,132 @@ def generate_mock_pgs_hhahs(area_name, target_area_geometry, num_pgs=5, num_hhah
     logger = logging.getLogger(__name__)
     logger.info(f"Generating mock PGs and HHAHs for {area_name}")
     
+    # Check if we have real data for this area in the app's storage
+    try:
+        from app import real_map_data
+        if area_name in real_map_data:
+            logger.info(f"Using real data for {area_name} instead of generating mock data")
+            area_data = real_map_data[area_name]
+            
+            # Get area geometry bounds once
+            minx, miny, maxx, maxy = target_area_geometry.bounds
+            
+            # Calculate bounds padding (10% of dimensions)
+            pad_x = (maxx - minx) * 0.1
+            pad_y = (maxy - miny) * 0.1
+            
+            # Adjust bounds with padding
+            minx += pad_x
+            miny += pad_y
+            maxx -= pad_x
+            maxy -= pad_y
+            
+            # Pre-generate a set of valid points within the geometry
+            # If we have very few markers, position them in a clear pattern around the center
+            center_lng, center_lat = target_area_geometry.centroid.x, target_area_geometry.centroid.y
+            valid_points = []
+            
+            total_markers = len(area_data.get('pgs', [])) + len(area_data.get('hhahs', []))
+            
+            if total_markers <= 5:
+                # For very few markers, use a simple pattern around the center
+                # Calculations for positions at regular intervals around a small circle
+                radius = 0.02  # About 2km in lng/lat units
+                markers_count = max(total_markers, 1)  # Ensure at least 1 marker
+                for i in range(markers_count):
+                    angle = (i / markers_count) * 2 * 3.14159  # Evenly spaced angles in radians
+                    # Calculate position on the circle
+                    lng = center_lng + radius * np.cos(angle)
+                    lat = center_lat + radius * np.sin(angle)
+                    
+                    # Verify point is within geometry (adjust if needed)
+                    point = Point(lng, lat)
+                    if target_area_geometry.contains(point):
+                        valid_points.append((lat, lng))
+                    else:
+                        # If point is outside, place at center with small offset
+                        valid_points.append((center_lat + 0.005 * np.sin(angle), 
+                                            center_lng + 0.005 * np.cos(angle)))
+                
+                logger.info(f"Created {len(valid_points)} evenly spaced points for marker placement")
+            else:
+                # For more markers, use random distribution
+                attempts = 0
+                # Generate up to 50 valid points or until we've tried 200 times
+                while len(valid_points) < 50 and attempts < 200:
+                    lng = random.uniform(minx, maxx)
+                    lat = random.uniform(miny, maxy)
+                    point = Point(lng, lat)
+                    if target_area_geometry.contains(point):
+                        valid_points.append((lat, lng))
+                    attempts += 1
+                
+                logger.info(f"Generated {len(valid_points)} random valid points for marker placement")
+            
+            logger.info(f"Generated {len(valid_points)} valid points for marker placement")
+            
+            # Convert real PG data to the expected format - limit to 20 max for performance
+            real_pgs = []
+            pg_limit = min(len(area_data.get('pgs', [])), 20)
+            
+            for i, pg in enumerate(area_data.get('pgs', [])[:pg_limit]):
+                # Use a pre-generated point if available, otherwise fallback
+                if valid_points and i < len(valid_points):
+                    lat, lng = valid_points[i]
+                else:
+                    # Fallback to a simpler approach - just use center with small random offset
+                    center_lng, center_lat = target_area_geometry.centroid.x, target_area_geometry.centroid.y
+                    lng = center_lng + random.uniform(-0.01, 0.01)
+                    lat = center_lat + random.uniform(-0.01, 0.01)
+                
+                # Create PG data with actual name
+                real_pg = {
+                    "id": i + 1,
+                    "name": pg.get('name', f"PG-{i+1}"),
+                    "location": [lat, lng],  # Folium uses [lat, lng] format
+                    "group": pg.get('group', "Group A"),
+                    "physicians": pg.get('physicians', random.randint(3, 15)),
+                    "patients": pg.get('patients', random.randint(50, 300)),
+                    "status": pg.get('status', "Active"),
+                    "address": pg.get('address', f"{random.randint(100, 999)} Healthcare Ave, {area_name.split(',')[0]}"),
+                    "contact": pg.get('contact', f"(555) {random.randint(100, 999)}-{random.randint(1000, 9999)}")
+                }
+                real_pgs.append(real_pg)
+            
+            # Convert real HHAH data to the expected format - limit to 30 max for performance
+            real_hhahs = []
+            hhah_limit = min(len(area_data.get('hhahs', [])), 30)
+            
+            for i, hhah in enumerate(area_data.get('hhahs', [])[:hhah_limit]):
+                # Use remaining pre-generated points for HHAHs if available
+                point_index = i + pg_limit
+                if valid_points and point_index < len(valid_points):
+                    lat, lng = valid_points[point_index]
+                else:
+                    # Fallback to a simpler approach - just use center with small random offset
+                    center_lng, center_lat = target_area_geometry.centroid.x, target_area_geometry.centroid.y
+                    lng = center_lng + random.uniform(-0.01, 0.01)
+                    lat = center_lat + random.uniform(-0.01, 0.01)
+                
+                # Create HHAH data with actual name
+                real_hhah = {
+                    "id": i + 1,
+                    "name": hhah.get('Agency Name', f"HHAH-{i+1}"),
+                    "location": [lat, lng],  # Folium uses [lat, lng] format
+                    "services": hhah.get('services', random.randint(2, 8)),
+                    "patients": hhah.get('patients', random.randint(20, 150)),
+                    "status": hhah.get('Agency Type', "Active"),
+                    "address": hhah.get('Address', f"{random.randint(100, 999)} Medical Blvd, {area_name.split(',')[0]}"),
+                    "contact": hhah.get('Telephone', f"(555) {random.randint(100, 999)}-{random.randint(1000, 9999)}")
+                }
+                real_hhahs.append(real_hhah)
+            
+            logger.info(f"Using real data: {len(real_pgs)} PGs and {len(real_hhahs)} HHAHs")
+            return real_pgs, real_hhahs
+    except Exception as e:
+        logger.error(f"Error using real data, falling back to mock data: {str(e)}")
+        # Continue with mock data generation if there's an error
+    
     # Get the bounds of the area geometry
     minx, miny, maxx, maxy = target_area_geometry.bounds
     
@@ -320,67 +446,158 @@ def generate_mock_pgs_hhahs(area_name, target_area_geometry, num_pgs=5, num_hhah
     logger.info(f"Generated {len(pgs_data)} mock PGs and {len(hhahs_data)} mock HHAHs")
     return pgs_data, hhahs_data
 
-def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data):
+def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight=False, ultra_lightweight=False):
     """Add PGs and HHAHs markers to the map"""
     logger = logging.getLogger(__name__)
     
-    # Create a feature group for PGs
-    pg_group = folium.FeatureGroup(name="Physician Groups (PGs)")
+    # For ultra_lightweight mode, use extremely simplified markers
+    if ultra_lightweight:
+        logger.info("Using ultra-lightweight marker rendering for optimized performance")
+        
+        # Create a feature group for all markers
+        all_markers = folium.FeatureGroup(name="All Markers")
+        
+        # Add all PGs as blue circles
+        for pg in pgs_data:
+            folium.Circle(
+                location=pg['location'],
+                radius=300,  # 300 meters
+                color='blue',
+                fill=True,
+                fill_color='blue',
+                fill_opacity=0.7,
+                popup=pg['name'],
+                tooltip=pg['name']
+            ).add_to(all_markers)
+        
+        # Add all HHAHs as green circles
+        for hhah in hhahs_data:
+            folium.Circle(
+                location=hhah['location'],
+                radius=300,  # 300 meters
+                color='green',
+                fill=True,
+                fill_color='green',
+                fill_opacity=0.7,
+                popup=hhah['name'],
+                tooltip=hhah['name']
+            ).add_to(all_markers)
+        
+        # Add the feature group to the map
+        all_markers.add_to(m)
+        
+        # Add minimal legend
+        legend_colors = {
+            "Physician Groups (PGs)": "blue",
+            "Home Health At Home (HHAHs)": "green",
+            "Statistical Area": "#4F46E5"
+        }
+        
+        legend = LegendControl(
+            title="Map Legend",
+            color_dict=legend_colors,
+            position="bottomright"
+        )
+        m.add_child(legend)
+        
+        logger.info(f"Added {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs to map (ultra lightweight mode)")
+        return
+
+    # Determine if we should use clustering based on number of markers
+    use_clustering = len(pgs_data) + len(hhahs_data) > 15 and not ultra_lightweight
     
-    # Add PG markers
+    if use_clustering:
+        # Use MarkerCluster for better performance with many markers
+        from folium.plugins import MarkerCluster
+        pg_cluster = MarkerCluster(name="Physician Groups (PGs)")
+        hhah_cluster = MarkerCluster(name="Home Health At Home (HHAHs)")
+    else:
+        # Use regular feature groups for fewer markers
+        pg_group = folium.FeatureGroup(name="Physician Groups (PGs)")
+        hhah_group = folium.FeatureGroup(name="Home Health At Home (HHAHs)")
+    
+    # Add PG markers with simplified popups for lightweight mode
     for pg in pgs_data:
-        # Create popup with PG details
-        popup_html = f"""
-        <div style="min-width: 180px;">
-            <h4 style="margin-top: 0; margin-bottom: 8px; color: #1F2937;">{pg['name']}</h4>
-            <p style="margin: 4px 0;"><strong>Group:</strong> {pg['group']}</p>
-            <p style="margin: 4px 0;"><strong>Physicians:</strong> {pg['physicians']}</p>
-            <p style="margin: 4px 0;"><strong>Patients:</strong> {pg['patients']}</p>
-            <p style="margin: 4px 0;"><strong>Status:</strong> {pg['status']}</p>
-            <p style="margin: 4px 0;"><strong>Address:</strong> {pg['address']}</p>
-            <p style="margin: 4px 0;"><strong>Contact:</strong> {pg['contact']}</p>
-        </div>
-        """
+        # Create popup with PG details - simpler for lightweight mode
+        if lightweight:
+            popup_html = f"""
+            <div style="min-width: 120px; max-width: 200px;">
+                <h4 style="margin: 4px 0; color: #1F2937;">{pg['name']}</h4>
+                <p style="margin: 2px 0;"><strong>Status:</strong> {pg['status']}</p>
+            </div>
+            """
+        else:
+            popup_html = f"""
+            <div style="min-width: 180px;">
+                <h4 style="margin-top: 0; margin-bottom: 8px; color: #1F2937;">{pg['name']}</h4>
+                <p style="margin: 4px 0;"><strong>Group:</strong> {pg['group']}</p>
+                <p style="margin: 4px 0;"><strong>Physicians:</strong> {pg['physicians']}</p>
+                <p style="margin: 4px 0;"><strong>Patients:</strong> {pg['patients']}</p>
+                <p style="margin: 4px 0;"><strong>Status:</strong> {pg['status']}</p>
+                <p style="margin: 4px 0;"><strong>Address:</strong> {pg['address']}</p>
+                <p style="margin: 4px 0;"><strong>Contact:</strong> {pg['contact']}</p>
+            </div>
+            """
         
         # Always use blue for PGs for better distinction
-        folium.Marker(
+        marker = folium.Marker(
             location=pg['location'],
             popup=folium.Popup(popup_html, max_width=300),
             tooltip=f"PG: {pg['name']}",
-            icon=folium.Icon(color='blue', icon="user-md", prefix="fa")
-        ).add_to(pg_group)
+            icon=folium.Icon(color='blue', icon="user-md" if not lightweight else "h-square", prefix="fa")
+        )
+        
+        # Add to appropriate group
+        if use_clustering:
+            marker.add_to(pg_cluster)
+        else:
+            marker.add_to(pg_group)
     
-    # Add the PG group to the map
-    pg_group.add_to(m)
-    
-    # Create a feature group for HHAHs
-    hhah_group = folium.FeatureGroup(name="Home Health At Home (HHAHs)")
-    
-    # Add HHAH markers
+    # Add HHAH markers with simplified popups for lightweight mode
     for hhah in hhahs_data:
-        # Create popup with HHAH details
-        popup_html = f"""
-        <div style="min-width: 180px;">
-            <h4 style="margin-top: 0; margin-bottom: 8px; color: #1F2937;">{hhah['name']}</h4>
-            <p style="margin: 4px 0;"><strong>Services:</strong> {hhah['services']}</p>
-            <p style="margin: 4px 0;"><strong>Patients:</strong> {hhah['patients']}</p>
-            <p style="margin: 4px 0;"><strong>Status:</strong> {hhah['status']}</p>
-            <p style="margin: 4px 0;"><strong>Address:</strong> {hhah['address']}</p>
-            <p style="margin: 4px 0;"><strong>Contact:</strong> {hhah['contact']}</p>
-        </div>
-        """
+        # Create popup with HHAH details - simpler for lightweight mode
+        if lightweight:
+            popup_html = f"""
+            <div style="min-width: 120px; max-width: 200px;">
+                <h4 style="margin: 4px 0; color: #1F2937;">{hhah['name']}</h4>
+                <p style="margin: 2px 0;"><strong>Status:</strong> {hhah['status']}</p>
+            </div>
+            """
+        else:
+            popup_html = f"""
+            <div style="min-width: 180px;">
+                <h4 style="margin-top: 0; margin-bottom: 8px; color: #1F2937;">{hhah['name']}</h4>
+                <p style="margin: 4px 0;"><strong>Services:</strong> {hhah['services']}</p>
+                <p style="margin: 4px 0;"><strong>Patients:</strong> {hhah['patients']}</p>
+                <p style="margin: 4px 0;"><strong>Status:</strong> {hhah['status']}</p>
+                <p style="margin: 4px 0;"><strong>Address:</strong> {hhah['address']}</p>
+                <p style="margin: 4px 0;"><strong>Contact:</strong> {hhah['contact']}</p>
+            </div>
+            """
         
         # Always use green for HHAHs for better distinction
-        folium.Marker(
+        marker = folium.Marker(
             location=hhah['location'],
             popup=folium.Popup(popup_html, max_width=300),
             tooltip=f"HHAH: {hhah['name']}",
-            icon=folium.Icon(color='green', icon="home", prefix="fa")
-        ).add_to(hhah_group)
+            icon=folium.Icon(color='green', icon="home" if not lightweight else "plus-square", prefix="fa")
+        )
+        
+        # Add to appropriate group
+        if use_clustering:
+            marker.add_to(hhah_cluster)
+        else:
+            marker.add_to(hhah_group)
     
-    # Add the HHAH group to the map
-    hhah_group.add_to(m)
-    logger.info("Added PGs and HHAHs to map")
+    # Add the groups to the map
+    if use_clustering:
+        pg_cluster.add_to(m)
+        hhah_cluster.add_to(m)
+    else:
+        pg_group.add_to(m)
+        hhah_group.add_to(m)
+        
+    logger.info(f"Added {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs to map{' using clustering' if use_clustering else ''}")
     
     # Add legend for PGs and HHAHs
     legend_colors = {
@@ -396,7 +613,7 @@ def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data):
     )
     m.add_child(legend)
 
-def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detailed=True, use_cached=True, force_regen=False, lightweight=False):
+def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detailed=True, use_cached=True, force_regen=False, lightweight=False, ultra_lightweight=False):
     """
     Generate a map zoomed in on a specific statistical area (MSA)
     
@@ -408,11 +625,12 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
     - use_cached: Whether to use cached maps if available (default: True) 
     - force_regen: Whether to force regeneration of the map (default: False)
     - lightweight: Whether to generate a lightweight version for faster loading (default: False)
+    - ultra_lightweight: Whether to use extremely simplified rendering for areas with few markers (default: False)
     """
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     
-    logger.info(f"Generating map for statistical area: {area_name} with params: zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, use_cached={use_cached}, force_regen={force_regen}, lightweight={lightweight}")
+    logger.info(f"Generating map for statistical area: {area_name} with params: zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, use_cached={use_cached}, force_regen={force_regen}, lightweight={lightweight}, ultra_lightweight={ultra_lightweight}")
     start_time = time.time()
     
     # Generate cache filename
@@ -421,6 +639,8 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
     # Add suffix for lightweight version
     if lightweight:
         cache_file = cache_file.replace('.html', '_lightweight.html')
+    if ultra_lightweight:
+        cache_file = cache_file.replace('.html', '_ultra_lightweight.html')
     
     logger.info(f"Cache file path: {cache_file}")
     
@@ -653,7 +873,7 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
                 ).add_to(m)
         else:
             # Detailed markers for full version
-            add_pgs_hhahs_to_map(m, pgs_data, hhahs_data)
+            add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight, ultra_lightweight)
         
         # Add essential controls - minimal for lightweight
         if not lightweight:
@@ -664,29 +884,31 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
         # Set bounds
         m.fit_bounds([[min_y, min_x], [max_y, max_x]])
         
-        # Add title - simpler version for lightweight
-        virgin_status = ""
-        if is_virgin:
-            virgin_status = '<span style="color: #FF5733; font-weight: bold;">(Virgin Area - No Customers)</span>'
-        elif has_customers:
-            virgin_status = '<span style="color: #33A1FF; font-weight: bold;">(Non-Virgin Area - Has Customers)</span>'
-            
-        title_html = f'''
+        # Add MSA title overlay box
+        try:
+            # Use CSS with flex layout for better appearance
+            is_virgin_text = "VIRGIN Area - No Existing Customers" if is_virgin else "Non-Virgin Area - Has Customers"
+            pg_hhah_count_text = f"Showing {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs in this area."
+            info_box_html = f"""
             <div style="position: fixed; 
                         top: 10px; left: 50px; width: 350px; height: auto;
                         background-color: white; border-radius: 8px;
                         border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
                         font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-                <h4 style="margin-top: 0; color: #1F2937;">Map View of {target_area['NAME']}</h4>
+                <h4 style="margin-top: 0; color: #1F2937;">Map View of {area_name}</h4>
                 <p style="font-size: 12px; margin-bottom: 5px;">
-                    {virgin_status}
+                    <span style="color: {'#FF5733' if is_virgin else '#33A1FF'}; font-weight: bold;">({is_virgin_text})</span>
                 </p>
                 <p style="font-size: 12px; margin-bottom: 0;">
-                    Showing {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs in this area.
+                    {pg_hhah_count_text}
                 </p>
             </div>
-        '''
-        m.get_root().html.add_child(folium.Element(title_html))
+            """
+            
+            folium.Element(info_box_html).add_to(m)
+            logger.info(f"Added title overlay with {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs")
+        except Exception as e:
+            logger.error(f"Error adding title: {str(e)}")
         
         # Add safe script for cross-origin communication - simplified for lightweight
         safe_script = """

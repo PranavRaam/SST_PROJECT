@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-do
 import MapViewer from './components/MapViewer'
 import DataTable from './components/DataTable'
 import RegionDetailView from './components/RegionDetailView'
+import DivisionalGroupView from './components/DivisionalGroupView'
+import SubdivisionDetailView from './components/SubdivisionDetailView'
 import StatisticalAreaDetailView from './components/StatisticalAreaDetailView'
 import PgServiceView from './components/PgServiceView'
 import HHAHServiceView from './components/HHAHServiceView'
@@ -43,6 +45,7 @@ function App() {
   });
   
   const [selectedDivisionalGroup, setSelectedDivisionalGroup] = useState(null);
+  const [selectedSubdivision, setSelectedSubdivision] = useState(null);
   const [selectedStatisticalArea, setSelectedStatisticalArea] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -151,11 +154,13 @@ function App() {
     }
   };
 
+  // Navigation handlers
   const handleRowClick = (group) => {
     setIsTransitioning(true);
     // Add slight delay to show loading animation
     setTimeout(() => {
       setSelectedDivisionalGroup(group);
+      setSelectedSubdivision(null);
       setSelectedStatisticalArea(null);
       setIsTransitioning(false);
     }, 300);
@@ -166,6 +171,7 @@ function App() {
     // Add slight delay to show loading animation
     setTimeout(() => {
       setSelectedDivisionalGroup(null);
+      setSelectedSubdivision(null);
       setSelectedStatisticalArea(null);
       setIsTransitioning(false);
     }, 300);
@@ -185,6 +191,26 @@ function App() {
     setIsTransitioning(true);
     // Add slight delay to show loading animation
     setTimeout(() => {
+      setSelectedStatisticalArea(null);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const handleSelectSubdivision = (subdivision) => {
+    setIsTransitioning(true);
+    // Add slight delay to show loading animation
+    setTimeout(() => {
+      setSelectedSubdivision(subdivision);
+      setSelectedStatisticalArea(null);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const handleBackToSubdivisionList = () => {
+    setIsTransitioning(true);
+    // Add slight delay to show loading animation
+    setTimeout(() => {
+      setSelectedSubdivision(null);
       setSelectedStatisticalArea(null);
       setIsTransitioning(false);
     }, 300);
@@ -220,22 +246,29 @@ function App() {
                       <div className="spinner"></div>
                       <p>Loading view...</p>
                     </div>
-                  ) : selectedDivisionalGroup && selectedStatisticalArea ? (
+                  ) : selectedDivisionalGroup && selectedSubdivision && selectedStatisticalArea ? (
                     <div className="dashboard-detail-view">
                       <StatisticalAreaDetailView 
                         statisticalArea={selectedStatisticalArea}
                         divisionalGroup={selectedDivisionalGroup}
-                        onBack={handleBackToRegionView}
+                        onBack={() => handleBackToRegionView()}
+                      />
+                    </div>
+                  ) : selectedDivisionalGroup && selectedSubdivision ? (
+                    <div className="dashboard-detail-view">
+                      <SubdivisionDetailView 
+                        divisionalGroup={selectedDivisionalGroup}
+                        subdivision={selectedSubdivision}
+                        onBack={handleBackToSubdivisionList}
+                        onSelectStatisticalArea={handleSelectStatisticalArea}
                       />
                     </div>
                   ) : selectedDivisionalGroup ? (
                     <div className="dashboard-detail-view">
-                      <RegionDetailView 
+                      <DivisionalGroupView 
                         divisionalGroup={selectedDivisionalGroup}
-                        regions={divisionalGroupToRegions[selectedDivisionalGroup] || []}
-                        statisticalAreas={divisionalGroupToStatisticalAreas[selectedDivisionalGroup] || []}
                         onBack={handleBackToOverview}
-                        onSelectStatisticalArea={handleSelectStatisticalArea}
+                        onSelectSubdivision={handleSelectSubdivision}
                       />
                     </div>
                   ) : (
