@@ -198,9 +198,7 @@ const InteractionLog = () => {
 
   // Sample reactive outcome numbers for dropdown
   const reactiveOutcomeOptions = [
-    'RO-001', 'RO-002', 'RO-003', 'RO-004', 'RO-005', 
-    'RO-006', 'RO-007', 'RO-008', 'RO-009', 'RO-010',
-    'RO-011', 'RO-012', 'RO-013', 'RO-014', 'RO-015'
+    'RO-001', 'RO-002', 'RO-003', 'RO-004', 'RO-005'
   ];
 
   const handleSearch = (e) => {
@@ -216,10 +214,13 @@ const InteractionLog = () => {
   };
 
   const handleAddInteraction = () => {
-    setInteractions(prev => [...prev, {
-      ...newInteraction,
-      id: prev.length + 1
-    }]);
+    setShowModal(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newId = Math.max(...interactions.map(i => i.id)) + 1;
+    setInteractions(prev => [...prev, { ...newInteraction, id: newId }]);
     setShowModal(false);
     setNewInteraction({
       reactiveOutcomeNo: '',
@@ -233,32 +234,17 @@ const InteractionLog = () => {
     });
   };
 
-  const filteredInteractions = interactions.filter(interaction =>
-    Object.values(interaction).some(value =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const newInteraction = {
-      user: formData.get('user'),
-      contact: formData.get('contact'),
-      designation: formData.get('designation'),
-      medium: formData.get('medium'),
-      summary: formData.get('summary'),
-      action: formData.get('action'),
-      reactiveOutcomeNo: formData.get('reactiveOutcomeNo'),
-      dateTime: new Date(formData.get('dateAndTime')).toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric'
-      })
-    };
-    handleAddInteraction(newInteraction);
-    setShowModal(false);
-  };
+  const filteredInteractions = interactions.filter(interaction => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      interaction.reactiveOutcomeNo.toLowerCase().includes(searchLower) ||
+      interaction.user.toLowerCase().includes(searchLower) ||
+      interaction.designation.toLowerCase().includes(searchLower) ||
+      interaction.medium.toLowerCase().includes(searchLower) ||
+      interaction.summary.toLowerCase().includes(searchLower) ||
+      interaction.action.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <div className="il_interaction_log_container">
@@ -268,8 +254,10 @@ const InteractionLog = () => {
           type="text"
           placeholder="Search interactions..."
           className="il_search_input"
+          value={searchTerm}
+          onChange={handleSearch}
         />
-        <button className="il_add_button">Add New</button>
+        <button className="il_add_button" onClick={handleAddInteraction}>Add New</button>
       </div>
       <div className="il_table_container">
         <table className="il_interaction_table">
@@ -286,7 +274,7 @@ const InteractionLog = () => {
             </tr>
           </thead>
           <tbody>
-            {interactions.map((interaction) => (
+            {filteredInteractions.map((interaction) => (
               <tr key={interaction.id}>
                 <td>{interaction.reactiveOutcomeNo}</td>
                 <td>{formatDateTime(interaction.dateTime)}</td>
@@ -301,6 +289,98 @@ const InteractionLog = () => {
           </tbody>
         </table>
       </div>
+
+      {showModal && (
+        <div className="il_modal">
+          <div className="il_modal_content">
+            <h3>Add New Interaction</h3>
+            <form onSubmit={handleSubmit}>
+              <div className="il_form_group">
+                <label>Reactive Outcome No</label>
+                <select
+                  name="reactiveOutcomeNo"
+                  value={newInteraction.reactiveOutcomeNo}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Outcome</option>
+                  {reactiveOutcomeOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="il_form_group">
+                <label>User</label>
+                <input
+                  type="text"
+                  name="user"
+                  value={newInteraction.user}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="il_form_group">
+                <label>Contact</label>
+                <input
+                  type="text"
+                  name="contact"
+                  value={newInteraction.contact}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="il_form_group">
+                <label>Designation</label>
+                <input
+                  type="text"
+                  name="designation"
+                  value={newInteraction.designation}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="il_form_group">
+                <label>Medium</label>
+                <select
+                  name="medium"
+                  value={newInteraction.medium}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Medium</option>
+                  <option value="Email">Email</option>
+                  <option value="Phone">Phone</option>
+                  <option value="Video Call">Video Call</option>
+                  <option value="Chat">Chat</option>
+                  <option value="In-Person">In-Person</option>
+                </select>
+              </div>
+              <div className="il_form_group">
+                <label>Summary</label>
+                <textarea
+                  name="summary"
+                  value={newInteraction.summary}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="il_form_group">
+                <label>Action</label>
+                <textarea
+                  name="action"
+                  value={newInteraction.action}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="il_modal_actions">
+                <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
+                <button type="submit">Add Interaction</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
