@@ -127,13 +127,13 @@ const getStatusMessage = (status) => {
 const getNextReviewDate = () => {
   const date = new Date();
   date.setDate(date.getDate() + 7); // Next review in 7 days
-  return date.toLocaleDateString();
+  return formatDate(date);
 };
 
 const getTodayMinusDays = (days) => {
   const date = new Date();
   date.setDate(date.getDate() - days);
-  return date.toLocaleDateString();
+  return formatDate(date);
 };
 
 const getTimelineIcon = (eventType) => {
@@ -160,7 +160,7 @@ const generateMockTimelineData = () => {
       id: 1,
       type: 'admission',
       title: 'Patient Admitted',
-      date: getTodayMinusDays(30),
+      date: formatDate(getTodayMinusDays(30)),
       description: 'Initial admission to care program',
       provider: 'Dr. Sarah Johnson',
       location: 'General Ward',
@@ -170,7 +170,7 @@ const generateMockTimelineData = () => {
       id: 2,
       type: 'evaluation',
       title: 'Initial Evaluation',
-      date: getTodayMinusDays(28),
+      date: formatDate(getTodayMinusDays(28)),
       description: 'Full physical evaluation completed',
       provider: 'Dr. Robert Chen',
       tags: ['Evaluation', 'Completed']
@@ -179,7 +179,7 @@ const generateMockTimelineData = () => {
       id: 3,
       type: 'document',
       title: 'Care Plan Created',
-      date: getTodayMinusDays(26),
+      date: formatDate(getTodayMinusDays(26)),
       description: 'Initial care plan documented and approved',
       provider: 'Care Team',
       tags: ['Care Plan', 'Documentation']
@@ -188,7 +188,7 @@ const generateMockTimelineData = () => {
       id: 4,
       type: 'treatment',
       title: 'Treatment Started',
-      date: getTodayMinusDays(25),
+      date: formatDate(getTodayMinusDays(25)),
       description: 'Treatment regimen initiated',
       provider: 'Dr. Sarah Johnson',
       tags: ['Treatment', 'Medication']
@@ -197,7 +197,7 @@ const generateMockTimelineData = () => {
       id: 5,
       type: 'status',
       title: 'Status Updated',
-      date: getTodayMinusDays(15),
+      date: formatDate(getTodayMinusDays(15)),
       description: 'Patient status updated to Active',
       provider: 'Care Team',
       tags: ['Status Change', 'Active']
@@ -206,7 +206,7 @@ const generateMockTimelineData = () => {
       id: 6,
       type: 'evaluation',
       title: 'Follow-up Evaluation',
-      date: getTodayMinusDays(10),
+      date: formatDate(getTodayMinusDays(10)),
       description: 'Regular follow-up evaluation',
       provider: 'Dr. Robert Chen',
       tags: ['Evaluation', 'Follow-up']
@@ -215,7 +215,7 @@ const generateMockTimelineData = () => {
       id: 7,
       type: 'document',
       title: 'Progress Report Filed',
-      date: getTodayMinusDays(5),
+      date: formatDate(getTodayMinusDays(5)),
       description: 'Monthly progress report completed',
       provider: 'Care Team',
       tags: ['Progress Report', 'Documentation']
@@ -635,7 +635,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
       id: 'DOC-001', 
       type: 'Evaluation', 
       status: 'New', 
-      receivedDate: '2023-05-10',
+      receivedDate: formatDate('2023-05-10'),
       fileName: 'initial_evaluation.pdf',
       size: '1.2 MB',
       uploadedBy: 'Dr. Johnson'
@@ -644,7 +644,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
       id: 'DOC-002', 
       type: '', 
       status: 'New', 
-      receivedDate: '2023-05-12',
+      receivedDate: formatDate('2023-05-12'),
       fileName: 'lab_results.pdf',
       size: '0.8 MB',
       uploadedBy: 'Lab Technician'
@@ -653,7 +653,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
       id: 'DOC-003', 
       type: 'Position Order', 
       status: 'Prepared', 
-      receivedDate: '2023-05-15',
+      receivedDate: formatDate('2023-05-15'),
       fileName: 'position_order.docx',
       size: '0.5 MB',
       uploadedBy: 'Dr. Chen'
@@ -664,7 +664,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     { 
       id: 'DOC-004', 
       type: 'Re-evaluation', 
-      signedDate: '2023-04-28',
+      signedDate: formatDate('2023-04-28'),
       fileName: 're_evaluation_signed.pdf',
       size: '1.5 MB',
       signedBy: 'Dr. Johnson'
@@ -672,7 +672,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     { 
       id: 'DOC-005', 
       type: 'Position Order', 
-      signedDate: '2023-04-30',
+      signedDate: formatDate('2023-04-30'),
       fileName: 'position_order_signed.pdf',
       size: '0.7 MB',
       signedBy: 'Dr. Chen'
@@ -684,7 +684,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     {
       id: 'CPO-001',
       name: 'Initial Care Plan',
-      creationDate: '2023-04-05',
+      creationDate: formatDate('2023-04-05'),
       minutes: 15,
       status: 'Completed',
       provider: 'Dr. Sarah Johnson'
@@ -692,7 +692,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     {
       id: 'CPO-002',
       name: 'Medication Review',
-      creationDate: '2023-04-15',
+      creationDate: formatDate('2023-04-15'),
       minutes: 10,
       status: 'Completed',
       provider: 'Dr. Robert Chen'
@@ -700,7 +700,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     {
       id: 'CPO-003',
       name: 'Progress Report',
-      creationDate: '2023-05-01',
+      creationDate: formatDate('2023-05-01'),
       minutes: 20,
       status: 'In Progress',
       provider: 'Dr. Sarah Johnson'
@@ -708,7 +708,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     {
       id: 'CPO-004',
       name: 'Care Coordination',
-      creationDate: '2023-05-10',
+      creationDate: formatDate('2023-05-10'),
       minutes: 30,
       status: 'Completed',
       provider: 'Care Team'
@@ -721,14 +721,14 @@ const PatientDetailView = ({ patient: propPatient }) => {
       id: "CPO_001",
       fileName: "CPO_Document_001.pdf",
       type: "CPO Assessment",
-      creationDate: "2023-04-05",
+      creationDate: formatDate("2023-04-05"),
       size: "1.2 MB"
     },
     {
       id: "CPO_002",
       fileName: "CPO_Document_002.pdf",
       type: "CPO Evaluation",
-      creationDate: "2023-05-10",
+      creationDate: formatDate("2023-05-10"),
       size: "0.9 MB"
     }
   ]);
@@ -2377,9 +2377,9 @@ Total documents: ${documents.length}
     }));
     
     if (date) {
-      // Format date as MM/DD/YYYY for display, but YYYY-MM-DD for API
-      const americanDate = date.toLocaleDateString('en-US');
-      const htmlDate = toHTMLDateFormat(americanDate);
+      // Format date as MM/DD/YYYY for display
+      const formattedDate = formatDate(date);
+      const htmlDate = toHTMLDateFormat(formattedDate);
       handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', htmlDate);
     } else {
       handleFilterChange(field === 'startDate' ? 'fromDate' : 'toDate', '');

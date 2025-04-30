@@ -1232,6 +1232,7 @@
   color: #374151;
   padding: 0.25rem 0;
   user-select: none;
+  -webkit-user-select: none;
   position: relative;
 }
 
@@ -1397,6 +1398,7 @@
 .sortable-header {
   position: relative;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   padding-right: 1.5rem !important;
 }

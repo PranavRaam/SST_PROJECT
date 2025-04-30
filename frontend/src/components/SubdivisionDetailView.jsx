@@ -328,21 +328,6 @@ const SubdivisionDetailView = ({
         </div>
       </div>
       
-      <div className="detail-header">
-        <h2>{subdivision} Details</h2>
-        <div className="subdivision-color" style={{ backgroundColor: subdivisionColors[subdivision] }}></div>
-        <div className="detail-actions">
-          <button className="action-button" onClick={handlePrint}>
-            <span className="action-icon">🖨️</span>
-            Print Report
-          </button>
-          <button className="action-button" onClick={handleDownloadCSV}>
-            <span className="action-icon">📊</span>
-            Export CSV
-          </button>
-        </div>
-      </div>
-      
       <div ref={printRef}>
         {/* Summary cards */}
         <div className="metric-cards">
@@ -378,7 +363,7 @@ const SubdivisionDetailView = ({
                 placeholder="Search Statistical Areas..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
+                className="search-inputt"
               />
               <button 
                 className="filter-button"
@@ -507,10 +492,7 @@ const SubdivisionDetailView = ({
           {/* Table view */}
           <div className="data-view">
             <div className="table-container">
-              <div className="table-header">
-                <h3>Statistical Areas in {subdivision}</h3>
-                <div className="area-count">{filteredAreas.length} Areas</div>
-              </div>
+              
               
               <table className="data-table">
                 <thead>

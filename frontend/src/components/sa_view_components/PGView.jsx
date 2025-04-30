@@ -292,9 +292,9 @@ const PGView = () => {
     newInteraction: "",
     newReportNote: "",
     newMBRTask: "",
-    newMBRTaskDate: "",
+    newMBRTaskDate: null,  // Changed from empty string to null
     newWeeklyTask: "",
-    newWeeklyTaskDate: "",
+    newWeeklyTaskDate: null,  // Changed from empty string to null
     showAllInteractions: false,
     selectedReport: null,
     isEditingReport: false,
@@ -2859,18 +2859,17 @@ const PGView = () => {
 
           <div className="mbr-stats">
             <div className="mbr-stat-item">
-              <span className="stat-label">MBRs Done:</span>
+              <span className="stat-label">Tasks Done:</span>
               <span className="stat-value">{valueCommunicationState.mbrsDone}</span>
             </div>
             <div className="mbr-stat-item">
-              <span className="stat-label">MBRs Upcoming:</span>
+              <span className="stat-label">Tasks Upcoming:</span>
               <span className="stat-value">{valueCommunicationState.mbrsUpcoming}</span>
             </div>
           </div>
 
           <div className="mbr-tasks-list weekly-tasks-list">
             {valueCommunicationState.mdrTasks
-              .filter(task => task.task.toLowerCase().includes('data') || task.task.toLowerCase().includes('metrics'))
               .map(task => (
                 <div key={task.id} className={`task-card ${task.completed ? 'completed' : ''}`}>
                   <div className="task-checkbox">
@@ -2910,7 +2909,7 @@ const PGView = () => {
               selected={valueCommunicationState.newMBRTaskDate}
               onChange={(date) => setValueCommunicationState(prev => ({
                 ...prev,
-                newMBRTaskDate: date ? date.toISOString().split('T')[0] : ''
+                newMBRTaskDate: date
               }))}
               dateFormat="MM-dd-yyyy"
               placeholderText="MM-DD-YYYY"
@@ -2923,12 +2922,12 @@ const PGView = () => {
                 if (valueCommunicationState.newMBRTask && valueCommunicationState.newMBRTaskDate) {
                   handleAddMDRTask(
                     valueCommunicationState.newMBRTask,
-                    valueCommunicationState.newMBRTaskDate
+                    valueCommunicationState.newMBRTaskDate.toISOString().split('T')[0]
                   );
                   setValueCommunicationState(prev => ({
                     ...prev,
                     newMBRTask: "",
-                    newMBRTaskDate: ""
+                    newMBRTaskDate: null
                   }));
                 } else {
                   alert("Please fill in both the task description and due date");
@@ -2997,7 +2996,7 @@ const PGView = () => {
               selected={valueCommunicationState.newWeeklyTaskDate}
               onChange={(date) => setValueCommunicationState(prev => ({
                 ...prev,
-                newWeeklyTaskDate: date ? date.toISOString().split('T')[0] : ''
+                newWeeklyTaskDate: date
               }))}
               dateFormat="MM-dd-yyyy"
               placeholderText="MM-DD-YYYY"
@@ -3010,12 +3009,12 @@ const PGView = () => {
                 if (valueCommunicationState.newWeeklyTask && valueCommunicationState.newWeeklyTaskDate) {
                   handleAddWeeklyTask(
                     valueCommunicationState.newWeeklyTask,
-                    valueCommunicationState.newWeeklyTaskDate
+                    valueCommunicationState.newWeeklyTaskDate.toISOString().split('T')[0]
                   );
                   setValueCommunicationState(prev => ({
                     ...prev,
                     newWeeklyTask: "",
-                    newWeeklyTaskDate: ""
+                    newWeeklyTaskDate: null
                   }));
                 } else {
                   alert("Please fill in both the task description and due date");
@@ -3890,7 +3889,7 @@ Operations Team
             <span className="summary-icon">💬</span>
           </div>
           <div className="summary-content">
-            <p className="summary-stat">MBRs: {valueCommunicationState.mbrsDone} Done, {valueCommunicationState.mbrsUpcoming} Upcoming</p>
+            <p className="summary-stat">Tasks: {valueCommunicationState.mbrsDone} Done, {valueCommunicationState.mbrsUpcoming} Upcoming</p>
           </div>
           <div className="summary-footer">
             <span className="view-more">View Details →</span>

@@ -32,34 +32,48 @@ export const formatDate = (dateString) => {
                 const [first, second, third] = parts;
                 const firstNum = parseInt(first);
                 const secondNum = parseInt(second);
+                const thirdNum = parseInt(third);
+                
+                // Validate year (must be 4 digits)
+                if (third.length !== 4 || isNaN(thirdNum)) {
+                    throw new Error('Invalid year format');
+                }
                 
                 // If first number is clearly a month (1-12)
                 if (firstNum >= 1 && firstNum <= 12) {
                     return `${first.padStart(2, '0')}/${second.padStart(2, '0')}/${third}`;
                 }
-                // If first number is clearly a day (13-31)
-                else if (firstNum > 12 && firstNum <= 31 && secondNum >= 1 && secondNum <= 12) {
+                // If second number is clearly a month (1-12)
+                else if (secondNum >= 1 && secondNum <= 12) {
                     return `${second.padStart(2, '0')}/${first.padStart(2, '0')}/${third}`;
+                }
+                // If neither is a valid month, try parsing as date
+                else {
+                    const date = new Date(dateString);
+                    if (!isNaN(date.getTime())) {
+                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const year = date.getFullYear();
+                        return `${month}/${day}/${year}`;
+                    }
+                    throw new Error('Invalid date format');
                 }
             }
         }
         
-        // Try parsing as date with explicit US locale
+        // Try parsing as date
         const date = new Date(dateString);
         if (!isNaN(date.getTime())) {
-            return date.toLocaleDateString('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric',
-            }).replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
-                return `${m.padStart(2, '0')}/${d.padStart(2, '0')}/${y}`;
-            });
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
         }
         
-        return dateString; // Return original if all parsing fails
+        throw new Error('Invalid date format');
     } catch (error) {
         console.error('Error formatting date:', error);
-        return dateString;
+        return ''; // Return empty string for invalid dates
     }
 };
 
@@ -68,19 +82,16 @@ export const formatDateTime = (dateTimeString) => {
     const date = new Date(dateTimeString);
     if (isNaN(date.getTime())) return dateTimeString;
     
-    // Convert to CST and format with explicit US locale
-    return date.toLocaleString('en-US', {
-        timeZone: 'America/Chicago',
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-        timeZoneName: 'short'
-    }).replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
-        return `${m.padStart(2, '0')}/${d.padStart(2, '0')}/${y}`;
-    });
+    // Convert to CST and format
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    
+    return `${month}/${day}/${year} ${formattedHours}:${minutes} ${ampm} CST`;
 };
 
 export const parseDateInput = (dateString) => {
@@ -150,16 +161,13 @@ export const toAmericanFormat = (dateString) => {
             return dateString;
         }
 
-        // Try parsing with explicit US locale
+        // Try parsing as date
         const date = new Date(dateString);
         if (!isNaN(date.getTime())) {
-            return date.toLocaleDateString('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric'
-            }).replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
-                return `${m.padStart(2, '0')}/${d.padStart(2, '0')}/${y}`;
-            });
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
         }
         
         return dateString;
@@ -198,28 +206,21 @@ export const toHTMLDateFormat = (dateString) => {
             
             // Otherwise, assume it's MM-DD-YYYY
             [month, day, year] = dateString.split('-');
-            // Make sure each component is valid
-            if (!month || !day || !year || isNaN(parseInt(month)) || isNaN(parseInt(day)) || isNaN(parseInt(year))) {
-                throw new Error('Invalid date components');
-            }
-            // Pad with zeros if needed
-            month = month.padStart(2, '0');
-            day = day.padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
         }
         
         // Try parsing as date
         const date = new Date(dateString);
         if (!isNaN(date.getTime())) {
-            year = date.getFullYear();
             month = (date.getMonth() + 1).toString().padStart(2, '0');
             day = date.getDate().toString().padStart(2, '0');
+            year = date.getFullYear();
             return `${year}-${month}-${day}`;
         }
         
-        return ''; // Return empty string for invalid dates
+        return dateString;
     } catch (error) {
         console.error('Error converting to HTML date format:', error);
-        return '';
+        return dateString;
     }
 }; 
