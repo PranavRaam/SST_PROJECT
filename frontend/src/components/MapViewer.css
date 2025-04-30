@@ -24,15 +24,26 @@
   backface-visibility: hidden;
 }
 
-/* Hide Metropolitan Statistical Areas elements */
-:global(.map-frame) :global(.leaflet-control-layers-overlays label:has(span:contains("Metropolitan"))),
-:global(.map-frame) :global(.leaflet-control-layers-overlays label:has(span:contains("MSA"))),
-:global(.map-frame) :global(.leaflet-legend-item:has(span:contains("Metropolitan"))),
-:global(.map-frame) :global(.leaflet-legend-item:has(span:contains("MSA"))) {
+/* Hide specifically the Metropolitan Statistical Areas checkbox and label */
+:global(.map-frame) :global(.leaflet-control-layers-overlays) :global(input[type="checkbox"] + span) {
+  visibility: visible !important;
+}
+
+:global(.map-frame) :global(.leaflet-control-layers-overlays label) {
+  display: block !important;
+}
+
+/* But hide explicitly the Metropolitan Statistical Areas (without Virgin) */
+:global(.map-frame) :global(.leaflet-control-layers-overlays label:has(span:contains("Metropolitan Statistical Areas"))) {
   display: none !important;
 }
 
-/* Hide the search control */
+/* Ensure Virgin and Non-Virgin remain visible */
+:global(.map-frame) :global(.leaflet-control-layers-overlays label:has(span:contains("Virgin Statistical Areas"))) {
+  display: block !important;
+}
+
+/* Keep the search control hidden */
 :global(.map-frame) :global(.leaflet-control-search),
 :global(.leaflet-control-search) {
   display: none !important;
@@ -41,7 +52,7 @@
   pointer-events: none !important;
 }
 
-/* Hide the entire "Metropolitan Statistical Areas" section in legend */
+/* Hide only the general "Metropolitan Statistical Areas" section in legend */
 .map-container iframe {
   --msa-display: none !important;
 }

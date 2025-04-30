@@ -1,5 +1,61 @@
 // Map error fix script - Immediate fix for Python True/False conversion
 
+// Add this function at the beginning of the file, before any existing code
+(function() {
+  // Function to hide the Metropolitan Statistical Areas checkbox immediately on load
+  function hideMSACheckbox() {
+    console.log('[MapFix] Attempting to hide Metropolitan Statistical Areas checkbox');
+    
+    // Add direct CSS to head
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Target Metropolitan Statistical Areas checkbox specifically */
+      .leaflet-control-layers-overlays label:has(span:contains("Metropolitan Statistical Areas"):not(:contains("Virgin"))) {
+        display: none !important;
+      }
+      /* Ensure Virgin and Non-Virgin checkboxes are visible */
+      .leaflet-control-layers-overlays label:has(span:contains("Virgin Statistical Areas")) {
+        display: block !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Find and hide with direct DOM manipulation
+    setTimeout(() => {
+      try {
+        // Direct targeting by text content
+        document.querySelectorAll('.leaflet-control-layers-overlays label').forEach(label => {
+          const text = label.textContent.trim();
+          if (text === "Metropolitan Statistical Areas" || 
+             (text.includes("Metropolitan Statistical Areas") && 
+              !text.includes("Virgin") && 
+              !text.includes("Non-Virgin"))) {
+            label.style.display = 'none';
+            console.log('[MapFix] Successfully hidden MSA checkbox');
+          }
+        });
+      } catch(e) {
+        console.error('[MapFix] Error hiding MSA checkbox:', e);
+      }
+    }, 500);
+  }
+  
+  // Run on page load
+  if (document.readyState === 'complete') {
+    hideMSACheckbox();
+  } else {
+    window.addEventListener('load', hideMSACheckbox);
+    // Also try DOMContentLoaded for earlier execution
+    window.addEventListener('DOMContentLoaded', hideMSACheckbox);
+  }
+  
+  // Execute immediately as well
+  setTimeout(hideMSACheckbox, 100);
+  
+  // Keep checking periodically to ensure it stays hidden
+  setInterval(hideMSACheckbox, 2000);
+})();
+
 // Fix Python True/False vs JavaScript true/false - RUN IMMEDIATELY
 (function initializeGlobalPythonValues() {
   // Force define True/False consistently

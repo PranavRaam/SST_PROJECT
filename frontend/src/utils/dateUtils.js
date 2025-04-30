@@ -3,50 +3,57 @@ export const formatDate = (dateString) => {
     if (!dateString) return '';
     
     try {
+        // First try to parse with explicit American format
+        const americanFormatRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(\d{4})$/;
+        if (americanFormatRegex.test(dateString)) {
+            return dateString; // Already in correct format
+        }
+
         // Handle ISO format (YYYY-MM-DD)
-        if (dateString.includes('-')) {
+        if (typeof dateString === 'string' && dateString.includes('-')) {
             const [year, month, day] = dateString.split('-');
-            // Ensure we're using American format MM/DD/YYYY
-            return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
+            if (year && month && day) {
+                return `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
+            }
         }
         
         // Handle date objects
         if (dateString instanceof Date) {
-            // Use American format MM/DD/YYYY
             const month = (dateString.getMonth() + 1).toString().padStart(2, '0');
             const day = dateString.getDate().toString().padStart(2, '0');
             const year = dateString.getFullYear();
             return `${month}/${day}/${year}`;
         }
         
-        // If already in a format with slashes, check format and convert to MM/DD/YYYY
+        // If in format with slashes, ensure MM/DD/YYYY
         if (typeof dateString === 'string' && dateString.includes('/')) {
             const parts = dateString.split('/');
-            
-            // If it's already in MM/DD/YYYY format (parts[0] is month, parts[1] is day)
             if (parts.length === 3) {
-                const month = parts[0].padStart(2, '0');
-                const day = parts[1].padStart(2, '0');
-                const year = parts[2];
+                const [first, second, third] = parts;
+                const firstNum = parseInt(first);
+                const secondNum = parseInt(second);
                 
-                // Ensure we're using valid month/day (if month > 12, it might be in DD/MM/YYYY format)
-                if (parseInt(month) <= 12) {
-                    return `${month}/${day}/${year}`;
-                } else {
-                    // If month > 12, it's probably in DD/MM/YYYY format, so convert to MM/DD/YYYY
-                    return `${parts[1].padStart(2, '0')}/${parts[0].padStart(2, '0')}/${year}`;
+                // If first number is clearly a month (1-12)
+                if (firstNum >= 1 && firstNum <= 12) {
+                    return `${first.padStart(2, '0')}/${second.padStart(2, '0')}/${third}`;
+                }
+                // If first number is clearly a day (13-31)
+                else if (firstNum > 12 && firstNum <= 31 && secondNum >= 1 && secondNum <= 12) {
+                    return `${second.padStart(2, '0')}/${first.padStart(2, '0')}/${third}`;
                 }
             }
         }
         
-        // Try parsing as date for any other format
+        // Try parsing as date with explicit US locale
         const date = new Date(dateString);
         if (!isNaN(date.getTime())) {
-            // Use American format MM/DD/YYYY
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            const year = date.getFullYear();
-            return `${month}/${day}/${year}`;
+            return date.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric',
+            }).replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
+                return `${m.padStart(2, '0')}/${d.padStart(2, '0')}/${y}`;
+            });
         }
         
         return dateString; // Return original if all parsing fails
@@ -61,19 +68,19 @@ export const formatDateTime = (dateTimeString) => {
     const date = new Date(dateTimeString);
     if (isNaN(date.getTime())) return dateTimeString;
     
-    // Convert to CST
-    const cstDate = new Date(date.toLocaleString('en-US', { timeZone: 'America/Chicago' }));
-    
-    const month = String(cstDate.getMonth() + 1).padStart(2, '0');
-    const day = String(cstDate.getDate()).padStart(2, '0');
-    const year = cstDate.getFullYear();
-    
-    const hours = cstDate.getHours();
-    const minutes = String(cstDate.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 || 12;
-    
-    return `${month}/${day}/${year} ${formattedHours}:${minutes} ${ampm} CST`;
+    // Convert to CST and format with explicit US locale
+    return date.toLocaleString('en-US', {
+        timeZone: 'America/Chicago',
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+        timeZoneName: 'short'
+    }).replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
+        return `${m.padStart(2, '0')}/${d.padStart(2, '0')}/${y}`;
+    });
 };
 
 export const parseDateInput = (dateString) => {
@@ -137,40 +144,22 @@ export const toAmericanFormat = (dateString) => {
     if (!dateString) return '';
     
     try {
-        let month, day, year;
-        
-        // If already in American format
-        if (typeof dateString === 'string' && dateString.includes('/')) {
-            const parts = dateString.split('/');
-            
-            // Validate if it's already in MM/DD/YYYY format
-            if (parts.length === 3) {
-                const potentialMonth = parseInt(parts[0]);
-                
-                // If the first part is a valid month (1-12)
-                if (potentialMonth >= 1 && potentialMonth <= 12) {
-                    return `${parts[0].padStart(2, '0')}/${parts[1].padStart(2, '0')}/${parts[2]}`;
-                } 
-                // If it's in DD/MM/YYYY format, swap day and month
-                else {
-                    return `${parts[1].padStart(2, '0')}/${parts[0].padStart(2, '0')}/${parts[2]}`;
-                }
-            }
+        // First check if already in American format
+        const americanFormatRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(\d{4})$/;
+        if (americanFormatRegex.test(dateString)) {
+            return dateString;
         }
-        
-        // If in ISO format
-        if (typeof dateString === 'string' && dateString.includes('-')) {
-            [year, month, day] = dateString.split('-');
-            return `${month}/${day}/${year}`;
-        }
-        
-        // Try parsing as date
+
+        // Try parsing with explicit US locale
         const date = new Date(dateString);
         if (!isNaN(date.getTime())) {
-            month = (date.getMonth() + 1).toString().padStart(2, '0');
-            day = date.getDate().toString().padStart(2, '0');
-            year = date.getFullYear();
-            return `${month}/${day}/${year}`;
+            return date.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+            }).replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
+                return `${m.padStart(2, '0')}/${d.padStart(2, '0')}/${y}`;
+            });
         }
         
         return dateString;

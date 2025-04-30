@@ -3079,17 +3079,6 @@ const PGView = () => {
               </button>
             )}
           </div>
-
-          <div className="weekly-report-stats">
-            <div className="weekly-stat-item">
-              <span className="stat-label">Reports Sent:</span>
-              <span className="stat-value">{valueCommunicationState.weeklyReportsSent}</span>
-            </div>
-            <div className="weekly-stat-item">
-              <span className="stat-label">Reports Upcoming:</span>
-              <span className="stat-value">{valueCommunicationState.weeklyReportsUpcoming}</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -3902,7 +3891,6 @@ Operations Team
           </div>
           <div className="summary-content">
             <p className="summary-stat">MBRs: {valueCommunicationState.mbrsDone} Done, {valueCommunicationState.mbrsUpcoming} Upcoming</p>
-            <p className="summary-stat">Weekly Reports: {valueCommunicationState.weeklyReportsSent} Sent, {valueCommunicationState.weeklyReportsUpcoming} Upcoming</p>
           </div>
           <div className="summary-footer">
             <span className="view-more">View Details →</span>

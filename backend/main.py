@@ -1,6 +1,6 @@
 import geopandas as gpd
 import folium
-from folium.plugins import MousePosition, Search, Fullscreen, MiniMap, Draw
+from folium.plugins import MousePosition, Fullscreen, MiniMap
 import branca.colormap as cm
 import pandas as pd
 import numpy as np
@@ -668,50 +668,6 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
         print(f"Warning: Could not add counties layer: {e}")
         all_counties_layer = None
     
-    # Add MSA layer with more subtle styling
-    try:
-        msa_json = msa_data.to_json()
-        msa_layer = folium.GeoJson(
-            data=msa_json,
-            name='Metropolitan Statistical Areas',
-            show=True,
-            style_function=lambda x: {
-                'fillColor': '#3388FF',
-                'color': '#3388FF',
-                'weight': 2,
-                'opacity': 0.6,
-                'fillOpacity': 0.05,
-                'dashArray': '5, 5'
-            },
-            tooltip=folium.GeoJsonTooltip(
-                fields=['NAME', 'STATE_COUNT', 'IS_VIRGIN', 'HAS_CUSTOMERS'],
-                aliases=['Metropolitan Area:', 'Number of States:', 'Virgin MSA:', 'Has Customers:'],
-                localize=True,
-                sticky=True,
-                labels=True,
-                style="""
-                    background-color: rgba(200, 225, 255, 0.9);
-                    border: 2px solid #3388FF;
-                    border-radius: 5px;
-                    box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
-                    font-size: 14px;
-                    padding: 8px;
-                    min-width: 200px;
-                """
-            ),
-            highlight_function=lambda x: {
-                'fillColor': '#66AAFF',
-                'color': '#3388FF',
-                'weight': 3,
-                'opacity': 1,
-                'fillOpacity': 0.2,
-                'dashArray': '5, 5'
-            }
-        ).add_to(m)
-    except Exception as e:
-        logger.error(f"Warning: Could not add MSA layer: {e}")
-        msa_layer = None
-    
     # Add Virgin Statistical Areas layer (MSAs with no customers)
     try:
         virgin_msa_data = msa_data[msa_data['IS_VIRGIN'] == True].copy()
@@ -720,7 +676,7 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
             virgin_msa_layer = folium.GeoJson(
                 data=virgin_msa_json,
                 name='Virgin Statistical Areas',
-                show=False,  # Hidden by default
+                show=True,  # Show by default
                 style_function=lambda x: {
                     'fillColor': '#FF5733',  # Orange-red
                     'color': '#FF5733',
@@ -765,7 +721,7 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
             non_virgin_msa_layer = folium.GeoJson(
                 data=non_virgin_msa_json,
                 name='Non-Virgin Statistical Areas',
-                show=False,  # Hidden by default
+                show=True,  # Show by default
                 style_function=lambda x: {
                     'fillColor': '#33A1FF',  # Bright blue
                     'color': '#33A1FF',
@@ -857,18 +813,6 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
                 background-color: white; padding: 12px; border-radius: 5px; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
         <div style="text-align: center; margin-bottom: 8px; font-weight: bold; font-size: 14px;">Metropolitan Statistical Areas</div>
         <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <svg height="18" width="50">
-                <line x1="0" y1="9" x2="50" y2="9" style="stroke:#3388FF;stroke-width:2;stroke-dasharray:5,5" />
-            </svg>
-            <span style="margin-left: 5px; font-size: 13px;">MSA Boundary</span>
-        </div>
-        <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <svg height="18" width="22">
-                <rect x="0" y="0" width="22" height="18" style="fill:rgba(51,136,255,0.05);stroke:#3388FF;stroke-width:1" />
-            </svg>
-            <span style="margin-left: 5px; font-size: 13px;">MSA Area</span>
-        </div>
-        <div style="display: flex; align-items: center; margin-bottom: 5px;">
             <svg height="18" width="22">
                 <rect x="0" y="0" width="22" height="18" style="fill:rgba(255,87,51,0.2);stroke:#FF5733;stroke-width:1" />
             </svg>
@@ -886,7 +830,6 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
     # Add map controls
     folium.LayerControl(collapsed=False).add_to(m)
     MousePosition().add_to(m)
-    Draw(export=True).add_to(m)
     Fullscreen().add_to(m)
     
     # Add minimap
@@ -898,39 +841,108 @@ def create_enhanced_interactive_map(county_data, msa_data, regions):
     )
     m.add_child(minimap)
     
-    # Add search functionality if counties layer exists
-    if all_counties_layer is not None:
-        search = Search(
-            layer=all_counties_layer,
-            geom_type='Polygon',
-            placeholder='Search for a county',
-            collapsed=True,
-            search_label='NAME',
-            search_zoom=10,
-            position='topleft'
-        )
-        m.add_child(search)
-    
-    # Add MSA search if MSA layer exists
-    if msa_layer is not None:
-        msa_search = Search(
-            layer=msa_layer,
-            geom_type='Polygon',
-            placeholder='Search for MSA',
-            collapsed=False,
-            search_label='NAME',
-            search_zoom=8,
-            position='topleft'
-        )
-        m.add_child(msa_search)
-    
-    # Add data source info
-    # m.get_root().html.add_child(folium.Element("""
-    # <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; background-color: rgba(255, 255, 255, 0.8); 
-    #             padding: 8px; border-radius: 5px; font-size: 12px; border: 1px solid #aaa">
-    #     Data sources: US Census TIGER/Line Shapefiles 2023
-    # </div>
-    # """))
+    # Add custom CSS to fix layer control alignment
+    m.get_root().html.add_child(folium.Element("""
+    <style>
+        .leaflet-control-layers {
+            clear: both;
+            margin-top: 10px !important;
+        }
+        .leaflet-control-layers-selector {
+            margin-right: 5px !important;
+            vertical-align: middle !important;
+        }
+        .leaflet-control-layers-list {
+            padding: 5px !important;
+        }
+        .leaflet-control-layers-base label, 
+        .leaflet-control-layers-overlays label {
+            display: flex !important;
+            align-items: center !important;
+            margin-bottom: 5px !important;
+        }
+        .leaflet-control-layers-selector {
+            margin: 0 5px 0 0 !important;
+        }
+        /* Hide search and export buttons */
+        .leaflet-control-search, 
+        .leaflet-draw-toolbar,
+        .leaflet-draw-section,
+        .leaflet-draw,
+        .leaflet-draw-actions,
+        .leaflet-bar a.leaflet-draw-toolbar-button,
+        a.leaflet-draw-draw-polyline,
+        a.leaflet-draw-draw-polygon,
+        a.leaflet-draw-draw-rectangle,
+        a.leaflet-draw-draw-circle,
+        a.leaflet-draw-draw-circlemarker,
+        a.leaflet-draw-edit-edit,
+        a.leaflet-draw-edit-remove,
+        a.search-button,
+        a.search-expand,
+        .leaflet-bar a[title="search locations"],
+        .leaflet-bar a[title="Search"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            z-index: -1 !important;
+        }
+    </style>
+    <script>
+        // Make sure the filters are clickable and properly aligned
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove any remaining search or draw controls that might appear
+            function removeControls() {
+                var searchControls = document.querySelectorAll('.leaflet-control-search, .search-button, .search-expand, a[title="search locations"], a[title="Search"]');
+                var drawControls = document.querySelectorAll('.leaflet-draw-toolbar, .leaflet-draw-section, .leaflet-draw, .leaflet-draw-actions, a.leaflet-draw-toolbar-button');
+                
+                searchControls.forEach(function(element) {
+                    if (element && element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                });
+                
+                drawControls.forEach(function(element) {
+                    if (element && element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                });
+                
+                // Also remove export buttons
+                var exportButtons = document.querySelectorAll('.export, button:contains("Export"), [title*="export"], [aria-label*="export"]');
+                exportButtons.forEach(function(element) {
+                    if (element && element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                });
+                
+                // Make sure the layer checkboxes are properly aligned
+                var layerCheckboxes = document.querySelectorAll('.leaflet-control-layers-selector');
+                layerCheckboxes.forEach(function(checkbox) {
+                    checkbox.style.marginRight = '5px';
+                    checkbox.style.verticalAlign = 'middle';
+                });
+            }
+            
+            // Run immediately and also after a delay to catch dynamically added elements
+            removeControls();
+            setTimeout(removeControls, 500);
+            setTimeout(removeControls, 1000);
+            setTimeout(removeControls, 2000);
+            
+            // Set an observer to catch dynamically added elements
+            var observer = new MutationObserver(function(mutations) {
+                removeControls();
+            });
+            
+            observer.observe(document.body, { 
+                childList: true, 
+                subtree: true 
+            });
+        });
+    </script>
+    """))
     
     return m, fig
 

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import enUS from 'date-fns/locale/en-US';
 import "react-datepicker/dist/react-datepicker.css";
 import './PatientDetailView.css';
 import { 
@@ -76,6 +78,10 @@ import {
   FaCaretDown
 } from 'react-icons/fa';
 import { formatDate, toAmericanFormat, toHTMLDateFormat } from '../../utils/dateUtils';
+
+// Register and set US locale as default
+registerLocale('en-US', enUS);
+setDefaultLocale('en-US');
 
 // Standard remarks values used across the application
 const standardRemarks = [
@@ -811,9 +817,59 @@ const PatientDetailView = ({ patient: propPatient }) => {
   }), [newPreparedDocs, signedDocs]);
 
   // Calculate total CPO minutes
-  const totalCpoMinutes = useMemo(() => {
-    return cpoDocuments.reduce((total, doc) => total + doc.minutes, 0);
-  }, [cpoDocuments]);
+  const calculateCPOMinutes = () => {
+    // Get all eligible signed documents (exclude CERT & RECERT)
+    const eligibleSignedDocs = signedDocs.filter(doc => 
+      doc.type && doc.type !== 'CERT' && doc.type !== 'RECERT'
+    );
+    
+    // Calculate total count of eligible documents
+    const totalEligibleDocs = cpoDocs.length + eligibleSignedDocs.length;
+    
+    // Calculate CPO minutes based on documents count * 2
+    const cpoMinutes = totalEligibleDocs * 2;
+    
+    // Update patient info with calculated CPO minutes
+    setPatientInfo(prev => ({
+      ...prev,
+      cpoMinsCaptured: cpoMinutes
+    }));
+    
+    // Update monthly CPO data
+    // This creates a distribution of CPO minutes across months
+    const updatedMonthlyCPOData = [...monthlyCPOData];
+    
+    // Reset all months to 0
+    updatedMonthlyCPOData.forEach(month => {
+      month.minutes = 0;
+    });
+    
+    // Distribute minutes from CPO docs across months
+    const minutesPerDoc = 2;
+    
+    // Add minutes from CPO docs
+    cpoDocs.forEach(doc => {
+      if (doc.creationDate) {
+        const docDate = new Date(doc.creationDate);
+        const monthIndex = docDate.getMonth();
+        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+      }
+    });
+    
+    // Add minutes from eligible signed docs
+    eligibleSignedDocs.forEach(doc => {
+      if (doc.signedDate) {
+        const docDate = new Date(doc.signedDate);
+        const monthIndex = docDate.getMonth();
+        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+      }
+    });
+    
+    setMonthlyCPOData(updatedMonthlyCPOData);
+    
+    // Log the calculation for debugging
+    console.log(`CPO Minutes: ${cpoMinutes} from ${cpoDocs.length} CPO docs and ${eligibleSignedDocs.length} eligible signed docs`);
+  };
 
   // Function to show notification
   const showNotification = useCallback((type, title, message) => {
@@ -974,7 +1030,11 @@ const PatientDetailView = ({ patient: propPatient }) => {
         signedDate: new Date().toISOString().split('T')[0],
         signedBy: 'Dr. Sarah Johnson'
       };
+      
+      // Add to signed documents
       setSignedDocs(prev => [...prev, signedDoc]);
+      
+      // Remove from new/prepared documents
       setNewPreparedDocs(prev => prev.filter(doc => doc.id !== docId));
       
       // Add to timeline
@@ -995,48 +1055,17 @@ const PatientDetailView = ({ patient: propPatient }) => {
         'Document Signed', 
         `Document ${docId} has been moved to signed documents`
       );
+      
+      // The CPO minutes will be automatically recalculated by our useEffect hook
+      // that watches for changes to signedDocs
     }
-  }, [newPreparedDocs, timelineData, showNotification]);
+  }, [newPreparedDocs, timelineData, showNotification, setSignedDocs, setNewPreparedDocs, setTimelineData]);
   
   // Function to show notification
   // Function to close notification
   const closeNotification = useCallback(() => {
     setNotification(null);
   }, []);
-  
-  // Calculate CPO minutes
-  const calculateCPOMinutes = () => {
-    // Calculate CPO minutes based on documents count * 2
-    const documentCount = cpoDocs.length;
-    const cpoMinutes = documentCount * 2;
-    
-    // Update patient info with calculated CPO minutes
-    setPatientInfo(prev => ({
-      ...prev,
-      cpoMinsCaptured: cpoMinutes
-    }));
-    
-    // Update monthly CPO data
-    // This creates a simple distribution of CPO minutes across months
-    const updatedMonthlyCPOData = [...monthlyCPOData];
-    
-    // Reset all months to 0
-    updatedMonthlyCPOData.forEach(month => {
-      month.minutes = 0;
-    });
-    
-    // Distribute minutes across months with documents
-    if (documentCount > 0) {
-      const minutesPerDoc = 2;
-      cpoDocs.forEach(doc => {
-        const docDate = new Date(doc.creationDate);
-        const monthIndex = docDate.getMonth();
-        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
-      });
-    }
-    
-    setMonthlyCPOData(updatedMonthlyCPOData);
-  };
   
   // Function to update document type
   const updateDocType = (docId, newType) => {
@@ -2309,6 +2338,11 @@ Total documents: ${documents.length}
     // Add to signed documents
     setSignedDocs(prev => [...prev, newSignedDoc]);
     
+    // Show a notification about CPO impact if the document contributes to CPO minutes
+    if (signedDocType !== 'CERT' && signedDocType !== 'RECERT') {
+        showNotification('info', 'CPO Minutes Updated', 'This document contributes to CPO minutes calculation.');
+    }
+    
     // Move to next file or close modal if done
     if (currentSignedFileIndex < uploadedSignedFiles.length - 1) {
         setCurrentSignedFileIndex(prev => prev + 1);
@@ -2398,6 +2432,11 @@ Total documents: ${documents.length}
     setIsEditingDocumentDetails(true);
     setViewerOpen(true);
   };
+
+  // Recalculate CPO minutes when cpoDocs or signedDocs change
+  useEffect(() => {
+    calculateCPOMinutes();
+  }, [cpoDocs, signedDocs]);
 
   return (
     <div className="patient-detail-view">
@@ -2876,6 +2915,11 @@ Total documents: ${documents.length}
                       dateFormat="MM-dd-yyyy"
                       className="date-input"
                       isClearable
+                      locale="en-US"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      strictParsing={true}
                     />
                     <span className="date-separator">to</span>
                     <DatePicker
@@ -2885,6 +2929,11 @@ Total documents: ${documents.length}
                       dateFormat="MM-dd-yyyy"
                       className="date-input"
                       isClearable
+                      locale="en-US"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      strictParsing={true}
                     />
                     <button 
                       className="filter-reset-button"
@@ -3453,6 +3502,7 @@ Total documents: ${documents.length}
                       showMonthDropdown
                       showYearDropdown
                       dropdownMode="select"
+                      strictParsing={true}
                     />
                     <span>to</span>
                     <DatePicker
@@ -3467,6 +3517,7 @@ Total documents: ${documents.length}
                       showMonthDropdown
                       showYearDropdown
                       dropdownMode="select"
+                      strictParsing={true}
                     />
                   </div>
                 </div>

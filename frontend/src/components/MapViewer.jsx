@@ -124,23 +124,70 @@ const MapViewer = () => {
     try {
       const iframe = iframeRef.current;
       if (iframe && iframe.contentWindow && iframe.contentDocument) {
-        // First approach: Try using iframe's contentDocument directly
+        // Wait for the map to fully load
         setTimeout(() => {
-          // Hide the Metropolitan Statistical Areas section in the legend
-          const legendItems = iframe.contentDocument.querySelectorAll('.leaflet-control-layers-overlays label');
-          legendItems.forEach(item => {
-            if (item.textContent.includes('Metropolitan') || 
-                item.textContent.includes('MSA') || 
-                item.textContent.includes('Statistical Area')) {
-              item.style.display = 'none';
-            }
-          });
-        }, 1500);
+          try {
+            // Direct approach: find and hide the checkbox with exact "Metropolitan Statistical Areas" text
+            const doc = iframe.contentDocument;
+            
+            // Approach 1: Using general selector
+            const labels = doc.querySelectorAll('.leaflet-control-layers-overlays label');
+            labels.forEach(label => {
+              const text = label.textContent.trim();
+              // Only hide exact "Metropolitan Statistical Areas"
+              if (text === "Metropolitan Statistical Areas" || 
+                 (text.includes("Metropolitan Statistical Areas") && !text.includes("Virgin"))) {
+                label.style.display = 'none';
+                console.log('[Map] Hidden MSA label via exact match');
+              }
+            });
+            
+            // Approach 2: Using span content
+            doc.querySelectorAll('.leaflet-control-layers-overlays span').forEach(span => {
+              if (span.textContent.trim() === "Metropolitan Statistical Areas") {
+                const parent = span.closest('label');
+                if (parent) {
+                  parent.style.display = 'none';
+                  console.log('[Map] Hidden MSA label via span content');
+                }
+              }
+            });
+            
+            // Approach 3: Using checkbox directly
+            doc.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+              const nextSibling = checkbox.nextElementSibling;
+              if (nextSibling && 
+                  nextSibling.textContent && 
+                  nextSibling.textContent.trim() === "Metropolitan Statistical Areas") {
+                const parent = checkbox.closest('label');
+                if (parent) {
+                  parent.style.display = 'none';
+                  console.log('[Map] Hidden MSA checkbox via nextSibling text');
+                }
+              }
+            });
+            
+            // Create a style element to ensure CSS-based hiding
+            const style = doc.createElement('style');
+            style.textContent = `
+              .leaflet-control-layers-overlays label:has(span:contains("Metropolitan Statistical Areas"):not(:contains("Virgin"))) {
+                display: none !important;
+              }
+            `;
+            doc.head.appendChild(style);
+            
+          } catch (innerError) {
+            console.error('[Map] Error in direct DOM manipulation:', innerError);
+          }
+        }, 2000); // Longer timeout for complete loading
         
-        // Second approach: Also send a message to the iframe
+        // Send a message to the iframe
         iframe.contentWindow.postMessage({
           type: 'HIDE_MSA_ELEMENTS',
-          data: { hide: true }
+          data: { 
+            hide: true,
+            exactMatch: "Metropolitan Statistical Areas" 
+          }
         }, '*');
       }
     } catch (e) {

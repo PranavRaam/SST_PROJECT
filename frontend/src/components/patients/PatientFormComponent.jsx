@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './PatientFormComponent.css';
@@ -272,10 +272,10 @@ const PatientFormComponent = ({ onPatientClick }) => {
     if (!formData.patientLastName.trim()) newErrors.patientLastName = 'Last name is required';
     if (!formData.patientFirstName.trim()) newErrors.patientFirstName = 'First name is required';
     if (!formData.patientDOB) newErrors.patientDOB = 'Date of birth is required';
+    if (!formData.renderingPractitioner) newErrors.renderingPractitioner = 'Rendering Practitioner is required';
     if (!formData.physicianName) newErrors.physicianName = 'Physician name is required';
     if (!formData.pg) newErrors.pg = 'PG is required';
     if (!formData.hhah) newErrors.hhah = 'HHAH is required';
-    if (!formData.patientInEHR) newErrors.patientInEHR = 'EHR status is required';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -337,6 +337,22 @@ const PatientFormComponent = ({ onPatientClick }) => {
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate the form before submission
+    const newErrors = {};
+    
+    // Required fields validation
+    if (!editingPatient.patientId.trim()) newErrors.patientId = 'Patient ID is required';
+    if (!editingPatient.patientLastName.trim()) newErrors.patientLastName = 'Last name is required';
+    if (!editingPatient.patientFirstName.trim()) newErrors.patientFirstName = 'First name is required';
+    if (!editingPatient.patientDOB) newErrors.patientDOB = 'Date of birth is required';
+    if (!editingPatient.renderingPractitioner) newErrors.renderingPractitioner = 'Rendering Practitioner is required';
+    if (!editingPatient.physicianName) newErrors.physicianName = 'Physician name is required';
+    if (!editingPatient.pg) newErrors.pg = 'PG is required';
+    if (!editingPatient.hhah) newErrors.hhah = 'HHAH is required';
+    
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
     
     // Update the patient in the context
     addPatient(editingPatient);
@@ -491,6 +507,26 @@ const PatientFormComponent = ({ onPatientClick }) => {
     setIsReversed(prev => !prev);
   };
 
+  // Function to remove double asterisks from form labels
+  useEffect(() => {
+    const removeExtraAsterisks = () => {
+      const formLabels = document.querySelectorAll('label');
+      formLabels.forEach(label => {
+        if (label.innerHTML.includes('**')) {
+          label.innerHTML = label.innerHTML.replace(/\*\*/g, '*');
+        }
+        if (label.innerHTML.includes('* *')) {
+          label.innerHTML = label.innerHTML.replace(/\* \*/g, '*');
+        }
+      });
+    };
+
+    // Run the function when the modal is shown or when editing a patient
+    if (showModal) {
+      setTimeout(removeExtraAsterisks, 50); // Small delay to ensure DOM is updated
+    }
+  }, [showModal, editingPatient]);
+
   return (
     <div className="patient-form-container">
       <div className="patient-form-header">
@@ -531,7 +567,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
               <div className="form-grid">
                 {/* Column 1 */}
                 <div className="form-group">
-                  <label>Patient ID <span className="required">*</span></label>
+                  <label>Patient ID *</label>
                   <input
                     type="text"
                     name="patientId"
@@ -553,7 +589,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 </div>
 
                 <div className="form-group">
-                  <label>Last Name <span className="required">*</span></label>
+                  <label>Last Name *</label>
                   <input
                     type="text"
                     name="patientLastName"
@@ -577,7 +613,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 </div>
 
                 <div className="form-group">
-                  <label>First Name <span className="required">*</span></label>
+                  <label>First Name *</label>
                   <input
                     type="text"
                     name="patientFirstName"
@@ -623,7 +659,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 </div>
 
                 <div className="form-group">
-                  <label>Date of Birth <span className="required">*</span></label>
+                  <label>Date of Birth *</label>
                   <DatePicker
                     selected={datePickerState.patientDOB}
                     onChange={(date) => handleDatePickerChange(date, 'patientDOB')}
@@ -637,7 +673,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
 
                 {/* Column 2 */}
                 <div className="form-group">
-                  <label>Rendering Practitioner</label>
+                  <label>Rendering Practitioner *</label>
                   <div className="searchable-dropdown">
                     <input
                       type="text"
@@ -645,6 +681,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                       onChange={(e) => handleSearchChange('renderingPractitioner', e.target.value)}
                       onFocus={(e) => setSearchTerm(prev => ({ ...prev, renderingPractitioner: e.target.value }))}
                       placeholder="Search or type practitioner name..."
+                      className={errors.renderingPractitioner ? 'error' : ''}
                     />
                     {searchTerm.renderingPractitioner && filteredPractitionerOptions.length > 0 && (
                       <div className="dropdown-options">
@@ -660,10 +697,11 @@ const PatientFormComponent = ({ onPatientClick }) => {
                       </div>
                     )}
                   </div>
+                  {errors.renderingPractitioner && <span className="error-text">{errors.renderingPractitioner}</span>}
                 </div>
 
                 <div className="form-group">
-                  <label>Physician Name <span className="required">*</span></label>
+                  <label>Physician Name *</label>
                   <div className="searchable-dropdown">
                     <input
                       type="text"
@@ -738,7 +776,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
 
                 {/* Column 3 */}
                 <div className="form-group">
-                  <label>PG <span className="required">*</span></label>
+                  <label>PG *</label>
                   <div className="searchable-dropdown">
                     <input
                       type="text"
@@ -766,7 +804,7 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 </div>
 
                 <div className="form-group">
-                  <label>HHAH <span className="required">*</span></label>
+                  <label>HHAH *</label>
                   <div className="searchable-dropdown">
                     <input
                       type="text"
@@ -867,18 +905,16 @@ const PatientFormComponent = ({ onPatientClick }) => {
                 </div>
 
                 <div className="form-group">
-                  <label>Patient Present in EHR <span className="required">*</span></label>
+                  <label>Patient Present in EHR</label>
                   <select
                     name="patientInEHR"
                     value={editingPatient ? editingPatient.patientInEHR : formData.patientInEHR}
                     onChange={handleChange}
-                    className={errors.patientInEHR ? 'error' : ''}
                   >
                     <option value="">Select</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                   </select>
-                  {errors.patientInEHR && <span className="error-text">{errors.patientInEHR}</span>}
                 </div>
 
                 <div className="form-group">

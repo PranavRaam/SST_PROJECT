@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_9be19bba4cb2d8152359bc2dbbb3956f {
+                #map_58ca462bc8886bdf00e397cb68ae53ca {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -38,21 +38,6 @@
 </head>
 <body>
     
-    
-            <div style="position: fixed; 
-                        top: 10px; left: 50px; width: 350px; height: auto;
-                        background-color: white; border-radius: 8px;
-                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
-                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-                <h4 style="margin-top: 0; color: #1F2937;">Map View of Santa Maria-Santa Barbara, CA</h4>
-                <p style="font-size: 12px; margin-bottom: 5px;">
-                    <span style="color: #33A1FF; font-weight: bold;">(Non-Virgin Area - Has Customers)</span>
-                </p>
-                <p style="font-size: 12px; margin-bottom: 0;">
-                    Showing 5 PGs and 7 HHAHs in this area.
-                </p>
-            </div>
-        
     
         <script>
         // Safe cross-origin communication
@@ -72,14 +57,14 @@
         </script>
         
     
-            <div class="folium-map" id="map_9be19bba4cb2d8152359bc2dbbb3956f" ></div>
+            <div class="folium-map" id="map_58ca462bc8886bdf00e397cb68ae53ca" ></div>
         
 </body>
 <script>
     
     
-            var map_9be19bba4cb2d8152359bc2dbbb3956f = L.map(
-                "map_9be19bba4cb2d8152359bc2dbbb3956f",
+            var map_58ca462bc8886bdf00e397cb68ae53ca = L.map(
+                "map_58ca462bc8886bdf00e397cb68ae53ca",
                 {
                     center: [34.54180927448531, -120.03166561053386],
                     crs: L.CRS.EPSG3857,
@@ -91,13 +76,13 @@
 
                 }
             );
-            L.control.scale().addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            L.control.scale().addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
 
             
 
         
     
-            var tile_layer_623eaa674045b3d1d6b620c68bbfe5d8 = L.tileLayer(
+            var tile_layer_2666629a785b22b1d03c3481be1db08c = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -114,47 +99,47 @@
             );
         
     
-            tile_layer_623eaa674045b3d1d6b620c68bbfe5d8.addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            tile_layer_2666629a785b22b1d03c3481be1db08c.addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-        function geo_json_534ce9c77d6037acd7d339b89b3f80cc_styler(feature) {
+        function geo_json_da31d6c024b5a85d0bddb384a3af0e7f_styler(feature) {
             switch(feature.id) {
                 default:
                     return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
             }
         }
 
-        function geo_json_534ce9c77d6037acd7d339b89b3f80cc_onEachFeature(feature, layer) {
+        function geo_json_da31d6c024b5a85d0bddb384a3af0e7f_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_534ce9c77d6037acd7d339b89b3f80cc = L.geoJson(null, {
-                onEachFeature: geo_json_534ce9c77d6037acd7d339b89b3f80cc_onEachFeature,
+        var geo_json_da31d6c024b5a85d0bddb384a3af0e7f = L.geoJson(null, {
+                onEachFeature: geo_json_da31d6c024b5a85d0bddb384a3af0e7f_onEachFeature,
             
-                style: geo_json_534ce9c77d6037acd7d339b89b3f80cc_styler,
+                style: geo_json_da31d6c024b5a85d0bddb384a3af0e7f_styler,
             ...{
 }
         });
 
-        function geo_json_534ce9c77d6037acd7d339b89b3f80cc_add (data) {
-            geo_json_534ce9c77d6037acd7d339b89b3f80cc
+        function geo_json_da31d6c024b5a85d0bddb384a3af0e7f_add (data) {
+            geo_json_da31d6c024b5a85d0bddb384a3af0e7f
                 .addData(data);
         }
-            geo_json_534ce9c77d6037acd7d339b89b3f80cc_add({"features": [{"geometry": {"coordinates": [[[[-120.734327, 34.904751], [-120.702795, 34.999975], [-120.634144, 34.959562], [-120.496222, 34.993155], [-120.44025, 34.988323], [-120.301827, 34.905571], [-120.294548, 34.946594], [-120.333922, 34.995631], [-120.323823, 35.017314], [-120.278619, 35.01156], [-120.249988, 35.030059], [-120.209907, 35.020582], [-120.180504, 35.038035], [-120.174575, 35.070242], [-120.142918, 35.082216], [-120.14317, 35.095739], [-120.082084, 35.114678], [-119.980122, 35.057573], [-119.928419, 35.059794], [-119.901968, 35.035793], [-119.854517, 35.032149], [-119.789292, 34.98867], [-119.673163, 34.973475], [-119.535757, 34.897576], [-119.443691, 34.901171], [-119.44564, 34.404257], [-119.477707, 34.379649], [-119.500953, 34.326922], [-119.617462, 34.36873], [-119.713644, 34.336029], [-119.797067, 34.365331], [-119.883874, 34.356144], [-120.024356, 34.409343], [-120.13512, 34.422061], [-120.287125, 34.417609], [-120.450998, 34.391184], [-120.500999, 34.403136], [-120.559439, 34.488466], [-120.656058, 34.508598], [-120.707951, 34.554898], [-120.707183, 34.616211], [-120.664691, 34.696344], [-120.702093, 34.748329], [-120.673281, 34.838624], [-120.720319, 34.869241], [-120.734327, 34.904751]]], [[[-120.582264, 34.107517], [-120.567847, 34.135618], [-120.538118, 34.150344], [-120.471654, 34.134102], [-120.418787, 34.160569], [-120.355161, 34.145021], [-120.252846, 34.058031], [-120.045154, 34.090606], [-119.991643, 34.064868], [-119.965471, 34.11256], [-119.913364, 34.130148], [-119.792601, 34.106375], [-119.750981, 34.112582], [-119.654931, 34.071218], [-119.614268, 34.099432], [-119.548251, 34.107783], [-119.468064, 34.063139], [-119.49229, 33.983215], [-119.538949, 33.947656], [-119.823208, 33.89939], [-119.904762, 33.939674], [-119.93919, 33.898643], [-120.117266, 33.84158], [-120.221128, 33.884187], [-120.298973, 33.968457], [-120.367073, 33.961036], [-120.488151, 33.984283], [-120.518784, 34.01408], [-120.523387, 34.051133], [-120.566995, 34.068638], [-120.582264, 34.107517]]], [[[-119.117174, 33.5056], [-119.076497, 33.535148], [-119.000932, 33.535895], [-118.971007, 33.510655], [-118.963751, 33.46683], [-118.988726, 33.423441], [-119.071893, 33.413799], [-119.106154, 33.445012], [-119.117174, 33.5056]]]], "type": "MultiPolygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+            geo_json_da31d6c024b5a85d0bddb384a3af0e7f_add({"features": [{"geometry": {"coordinates": [[[[-120.734327, 34.904751], [-120.702795, 34.999975], [-120.634144, 34.959562], [-120.496222, 34.993155], [-120.44025, 34.988323], [-120.301827, 34.905571], [-120.294548, 34.946594], [-120.333922, 34.995631], [-120.323823, 35.017314], [-120.278619, 35.01156], [-120.249988, 35.030059], [-120.209907, 35.020582], [-120.180504, 35.038035], [-120.174575, 35.070242], [-120.142918, 35.082216], [-120.14317, 35.095739], [-120.082084, 35.114678], [-119.980122, 35.057573], [-119.928419, 35.059794], [-119.901968, 35.035793], [-119.854517, 35.032149], [-119.789292, 34.98867], [-119.673163, 34.973475], [-119.535757, 34.897576], [-119.443691, 34.901171], [-119.44564, 34.404257], [-119.477707, 34.379649], [-119.500953, 34.326922], [-119.617462, 34.36873], [-119.713644, 34.336029], [-119.797067, 34.365331], [-119.883874, 34.356144], [-120.024356, 34.409343], [-120.13512, 34.422061], [-120.287125, 34.417609], [-120.450998, 34.391184], [-120.500999, 34.403136], [-120.559439, 34.488466], [-120.656058, 34.508598], [-120.707951, 34.554898], [-120.707183, 34.616211], [-120.664691, 34.696344], [-120.702093, 34.748329], [-120.673281, 34.838624], [-120.720319, 34.869241], [-120.734327, 34.904751]]], [[[-120.582264, 34.107517], [-120.567847, 34.135618], [-120.538118, 34.150344], [-120.471654, 34.134102], [-120.418787, 34.160569], [-120.355161, 34.145021], [-120.252846, 34.058031], [-120.045154, 34.090606], [-119.991643, 34.064868], [-119.965471, 34.11256], [-119.913364, 34.130148], [-119.792601, 34.106375], [-119.750981, 34.112582], [-119.654931, 34.071218], [-119.614268, 34.099432], [-119.548251, 34.107783], [-119.468064, 34.063139], [-119.49229, 33.983215], [-119.538949, 33.947656], [-119.823208, 33.89939], [-119.904762, 33.939674], [-119.93919, 33.898643], [-120.117266, 33.84158], [-120.221128, 33.884187], [-120.298973, 33.968457], [-120.367073, 33.961036], [-120.488151, 33.984283], [-120.518784, 34.01408], [-120.523387, 34.051133], [-120.566995, 34.068638], [-120.582264, 34.107517]]], [[[-119.117174, 33.5056], [-119.076497, 33.535148], [-119.000932, 33.535895], [-118.971007, 33.510655], [-118.963751, 33.46683], [-118.988726, 33.423441], [-119.071893, 33.413799], [-119.106154, 33.445012], [-119.117174, 33.5056]]]], "type": "MultiPolygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
 
         
     
-            geo_json_534ce9c77d6037acd7d339b89b3f80cc.addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            geo_json_da31d6c024b5a85d0bddb384a3af0e7f.addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var marker_c04bcc67cf166efe44f35d5c4fef3350 = L.marker(
-                [33.941888243256244, -119.84501439435756],
+            var marker_a02f6523e6225c01f117ce6279711345 = L.marker(
+                [34.557861642969876, -120.1880547520155],
                 {
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var icon_f1d6d3315eb8600204374ba837490e8c = L.AwesomeMarkers.icon(
+            var icon_debffbed948dbf4b5acbca821d88b620 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
@@ -165,24 +150,24 @@
             );
         
     
-        var popup_26bed59a0e792c435ecb13c4fb6f6f52 = L.popup({
+        var popup_ba57c144dbf3028eb130e39dff6ac773 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_dfd527bb2c613780953ec123ee7e77f1 = $(`<div id="html_dfd527bb2c613780953ec123ee7e77f1" style="width: 100.0%; height: 100.0%;">PG: PG-Group A-San1</div>`)[0];
-                popup_26bed59a0e792c435ecb13c4fb6f6f52.setContent(html_dfd527bb2c613780953ec123ee7e77f1);
+                var html_519447f2b33f3c3a5ebcd0ca21a508b1 = $(`<div id="html_519447f2b33f3c3a5ebcd0ca21a508b1" style="width: 100.0%; height: 100.0%;">PG: PG-Group A-San1</div>`)[0];
+                popup_ba57c144dbf3028eb130e39dff6ac773.setContent(html_519447f2b33f3c3a5ebcd0ca21a508b1);
             
         
 
-        marker_c04bcc67cf166efe44f35d5c4fef3350.bindPopup(popup_26bed59a0e792c435ecb13c4fb6f6f52)
+        marker_a02f6523e6225c01f117ce6279711345.bindPopup(popup_ba57c144dbf3028eb130e39dff6ac773)
         ;
 
         
     
     
-            marker_c04bcc67cf166efe44f35d5c4fef3350.bindTooltip(
+            marker_a02f6523e6225c01f117ce6279711345.bindTooltip(
                 `<div>
                      PG: PG-Group A-San1
                  </div>`,
@@ -192,17 +177,17 @@
             );
         
     
-                marker_c04bcc67cf166efe44f35d5c4fef3350.setIcon(icon_f1d6d3315eb8600204374ba837490e8c);
+                marker_a02f6523e6225c01f117ce6279711345.setIcon(icon_debffbed948dbf4b5acbca821d88b620);
             
     
-            var marker_b021250a6f767e79e1e3c796ef86f169 = L.marker(
-                [34.102424521377195, -120.5141947125862],
+            var marker_433808a7b874b46a231536809ffba8e0 = L.marker(
+                [34.73261804251871, -120.16264057552208],
                 {
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var icon_1368bcdf03545da26356ca1516bd96a8 = L.AwesomeMarkers.icon(
+            var icon_22fc23c982931775041a95d6df51e2ea = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
@@ -213,24 +198,24 @@
             );
         
     
-        var popup_7c82436c3a9d07f9da9d96941795bce3 = L.popup({
+        var popup_ea89b2164ab794f3534ae28d36b8234f = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_4c1cc92da620484a17872112392c262c = $(`<div id="html_4c1cc92da620484a17872112392c262c" style="width: 100.0%; height: 100.0%;">PG: PG-Group B-San2</div>`)[0];
-                popup_7c82436c3a9d07f9da9d96941795bce3.setContent(html_4c1cc92da620484a17872112392c262c);
+                var html_34409ffbb3a7af91bd0522a31f87e60b = $(`<div id="html_34409ffbb3a7af91bd0522a31f87e60b" style="width: 100.0%; height: 100.0%;">PG: PG-Group B-San2</div>`)[0];
+                popup_ea89b2164ab794f3534ae28d36b8234f.setContent(html_34409ffbb3a7af91bd0522a31f87e60b);
             
         
 
-        marker_b021250a6f767e79e1e3c796ef86f169.bindPopup(popup_7c82436c3a9d07f9da9d96941795bce3)
+        marker_433808a7b874b46a231536809ffba8e0.bindPopup(popup_ea89b2164ab794f3534ae28d36b8234f)
         ;
 
         
     
     
-            marker_b021250a6f767e79e1e3c796ef86f169.bindTooltip(
+            marker_433808a7b874b46a231536809ffba8e0.bindTooltip(
                 `<div>
                      PG: PG-Group B-San2
                  </div>`,
@@ -240,17 +225,17 @@
             );
         
     
-                marker_b021250a6f767e79e1e3c796ef86f169.setIcon(icon_1368bcdf03545da26356ca1516bd96a8);
+                marker_433808a7b874b46a231536809ffba8e0.setIcon(icon_22fc23c982931775041a95d6df51e2ea);
             
     
-            var marker_aac9aa856be7718dba874ae58fa7e60d = L.marker(
-                [34.48381952400033, -120.51748753587479],
+            var marker_3558121754ce9bd9974c3c96ff6b6dcb = L.marker(
+                [33.92320794811754, -119.96890250668638],
                 {
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var icon_cf58e130b83fa0f4c219e3cc722b2828 = L.AwesomeMarkers.icon(
+            var icon_0a5777a8c7f16a61e12c318a829bbfd4 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
@@ -261,24 +246,24 @@
             );
         
     
-        var popup_be9cf98060fa7bb9d187734a1d1c8085 = L.popup({
+        var popup_bed3119fe3d3e0e0a6761907cf47e538 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_3a02d3a41d4b6f0b5afd529f261fce49 = $(`<div id="html_3a02d3a41d4b6f0b5afd529f261fce49" style="width: 100.0%; height: 100.0%;">PG: PG-Group C-San3</div>`)[0];
-                popup_be9cf98060fa7bb9d187734a1d1c8085.setContent(html_3a02d3a41d4b6f0b5afd529f261fce49);
+                var html_b125175d449fd14c0ee0d84d67875abc = $(`<div id="html_b125175d449fd14c0ee0d84d67875abc" style="width: 100.0%; height: 100.0%;">PG: PG-Group C-San3</div>`)[0];
+                popup_bed3119fe3d3e0e0a6761907cf47e538.setContent(html_b125175d449fd14c0ee0d84d67875abc);
             
         
 
-        marker_aac9aa856be7718dba874ae58fa7e60d.bindPopup(popup_be9cf98060fa7bb9d187734a1d1c8085)
+        marker_3558121754ce9bd9974c3c96ff6b6dcb.bindPopup(popup_bed3119fe3d3e0e0a6761907cf47e538)
         ;
 
         
     
     
-            marker_aac9aa856be7718dba874ae58fa7e60d.bindTooltip(
+            marker_3558121754ce9bd9974c3c96ff6b6dcb.bindTooltip(
                 `<div>
                      PG: PG-Group C-San3
                  </div>`,
@@ -288,17 +273,17 @@
             );
         
     
-                marker_aac9aa856be7718dba874ae58fa7e60d.setIcon(icon_cf58e130b83fa0f4c219e3cc722b2828);
+                marker_3558121754ce9bd9974c3c96ff6b6dcb.setIcon(icon_0a5777a8c7f16a61e12c318a829bbfd4);
             
     
-            var marker_67a52bd706cb68fed3caa6c0f22edb6b = L.marker(
-                [33.98835111645571, -120.24048913710602],
+            var marker_1331a0273adb11d509ad952a2d6010db = L.marker(
+                [34.681099530314064, -119.77032837751158],
                 {
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var icon_d3cc317a65d7fd7b17a9d69a08b84182 = L.AwesomeMarkers.icon(
+            var icon_892d321dc23748b42f3e65f4c16ae041 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
@@ -309,24 +294,24 @@
             );
         
     
-        var popup_6cacce525728534f24325fa43439fb8c = L.popup({
+        var popup_1914a7b84fa643eb45ad3ca7cc15c25e = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_a09eecdd5893c1b450723480bee4ca84 = $(`<div id="html_a09eecdd5893c1b450723480bee4ca84" style="width: 100.0%; height: 100.0%;">PG: PG-Group D-San4</div>`)[0];
-                popup_6cacce525728534f24325fa43439fb8c.setContent(html_a09eecdd5893c1b450723480bee4ca84);
+                var html_f589e2738e62d7e211e63d13e7ba72f3 = $(`<div id="html_f589e2738e62d7e211e63d13e7ba72f3" style="width: 100.0%; height: 100.0%;">PG: PG-Group D-San4</div>`)[0];
+                popup_1914a7b84fa643eb45ad3ca7cc15c25e.setContent(html_f589e2738e62d7e211e63d13e7ba72f3);
             
         
 
-        marker_67a52bd706cb68fed3caa6c0f22edb6b.bindPopup(popup_6cacce525728534f24325fa43439fb8c)
+        marker_1331a0273adb11d509ad952a2d6010db.bindPopup(popup_1914a7b84fa643eb45ad3ca7cc15c25e)
         ;
 
         
     
     
-            marker_67a52bd706cb68fed3caa6c0f22edb6b.bindTooltip(
+            marker_1331a0273adb11d509ad952a2d6010db.bindTooltip(
                 `<div>
                      PG: PG-Group D-San4
                  </div>`,
@@ -336,17 +321,17 @@
             );
         
     
-                marker_67a52bd706cb68fed3caa6c0f22edb6b.setIcon(icon_d3cc317a65d7fd7b17a9d69a08b84182);
+                marker_1331a0273adb11d509ad952a2d6010db.setIcon(icon_892d321dc23748b42f3e65f4c16ae041);
             
     
-            var marker_02d3dc04e8935729a72a9f3d70a3324e = L.marker(
-                [33.96223799412306, -119.85799894846024],
+            var marker_5768df0fa3a9e04345ba8c0ef290fb74 = L.marker(
+                [33.90661115478869, -120.08928085428757],
                 {
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var icon_f720f5fcffb9c91e149496cd9736211b = L.AwesomeMarkers.icon(
+            var icon_ce6e44a1ff8c416f175413cd98443443 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
@@ -357,24 +342,24 @@
             );
         
     
-        var popup_ba12b2264120bb84f0af2084adf9b5bc = L.popup({
+        var popup_b0b1a1951e9ff4732154dd564643f5fa = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_887e8092494c5e5d7f264a96ae501432 = $(`<div id="html_887e8092494c5e5d7f264a96ae501432" style="width: 100.0%; height: 100.0%;">PG: PG-Group A-San5</div>`)[0];
-                popup_ba12b2264120bb84f0af2084adf9b5bc.setContent(html_887e8092494c5e5d7f264a96ae501432);
+                var html_960f90936445a560d71ddd7b9963edb3 = $(`<div id="html_960f90936445a560d71ddd7b9963edb3" style="width: 100.0%; height: 100.0%;">PG: PG-Group A-San5</div>`)[0];
+                popup_b0b1a1951e9ff4732154dd564643f5fa.setContent(html_960f90936445a560d71ddd7b9963edb3);
             
         
 
-        marker_02d3dc04e8935729a72a9f3d70a3324e.bindPopup(popup_ba12b2264120bb84f0af2084adf9b5bc)
+        marker_5768df0fa3a9e04345ba8c0ef290fb74.bindPopup(popup_b0b1a1951e9ff4732154dd564643f5fa)
         ;
 
         
     
     
-            marker_02d3dc04e8935729a72a9f3d70a3324e.bindTooltip(
+            marker_5768df0fa3a9e04345ba8c0ef290fb74.bindTooltip(
                 `<div>
                      PG: PG-Group A-San5
                  </div>`,
@@ -384,65 +369,17 @@
             );
         
     
-                marker_02d3dc04e8935729a72a9f3d70a3324e.setIcon(icon_f720f5fcffb9c91e149496cd9736211b);
+                marker_5768df0fa3a9e04345ba8c0ef290fb74.setIcon(icon_ce6e44a1ff8c416f175413cd98443443);
             
     
-            var marker_2169695d127cdd7bb58410a0f7425de5 = L.marker(
-                [34.0903361004142, -119.5363083007799],
+            var marker_84fd1c05349ef50728f6e72c214b1240 = L.marker(
+                [34.666418765474965, -119.79063513793537],
                 {
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
         
     
-            var icon_9cbde525cfb23c0e2130df8274b8e329 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "home",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_835031e857470194c1125343fc1eed82 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_a8884e77ce46bc7a493d0970d6ea69cc = $(`<div id="html_a8884e77ce46bc7a493d0970d6ea69cc" style="width: 100.0%; height: 100.0%;">HHAH: Wellness Services</div>`)[0];
-                popup_835031e857470194c1125343fc1eed82.setContent(html_a8884e77ce46bc7a493d0970d6ea69cc);
-            
-        
-
-        marker_2169695d127cdd7bb58410a0f7425de5.bindPopup(popup_835031e857470194c1125343fc1eed82)
-        ;
-
-        
-    
-    
-            marker_2169695d127cdd7bb58410a0f7425de5.bindTooltip(
-                `<div>
-                     HHAH: Wellness Services
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_2169695d127cdd7bb58410a0f7425de5.setIcon(icon_9cbde525cfb23c0e2130df8274b8e329);
-            
-    
-            var marker_bcfe72a194c98fa8786c8db2edd8741f = L.marker(
-                [34.716476944757105, -120.4765502428928],
-                {
-}
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
-        
-    
-            var icon_f84508c15f94f18a5bfa45bc815bd26e = L.AwesomeMarkers.icon(
+            var icon_d0fad64fd8ecc8409d722dd82d4d7af4 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
@@ -453,264 +390,24 @@
             );
         
     
-        var popup_0de4dd75b13fb8456951067aff4d4a29 = L.popup({
+        var popup_82672541dd2559a9a1944488a0e32d48 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_a4a9fbeb33df4816fb737a9da15705af = $(`<div id="html_a4a9fbeb33df4816fb737a9da15705af" style="width: 100.0%; height: 100.0%;">HHAH: Premier Group</div>`)[0];
-                popup_0de4dd75b13fb8456951067aff4d4a29.setContent(html_a4a9fbeb33df4816fb737a9da15705af);
+                var html_5a580550678c40fa864aff87532fae15 = $(`<div id="html_5a580550678c40fa864aff87532fae15" style="width: 100.0%; height: 100.0%;">HHAH: Elite Partners</div>`)[0];
+                popup_82672541dd2559a9a1944488a0e32d48.setContent(html_5a580550678c40fa864aff87532fae15);
             
         
 
-        marker_bcfe72a194c98fa8786c8db2edd8741f.bindPopup(popup_0de4dd75b13fb8456951067aff4d4a29)
+        marker_84fd1c05349ef50728f6e72c214b1240.bindPopup(popup_82672541dd2559a9a1944488a0e32d48)
         ;
 
         
     
     
-            marker_bcfe72a194c98fa8786c8db2edd8741f.bindTooltip(
-                `<div>
-                     HHAH: Premier Group
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_bcfe72a194c98fa8786c8db2edd8741f.setIcon(icon_f84508c15f94f18a5bfa45bc815bd26e);
-            
-    
-            var marker_de43e3caee9915830a1e2aadc4ab3f50 = L.marker(
-                [34.446880312633866, -120.01763092184427],
-                {
-}
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
-        
-    
-            var icon_e96562e13838996e35120d6698a64715 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "home",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_eba3411ac84e1bb818cd639aeb4976be = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_4c81806b2c9b6b801a1800f998d50f8e = $(`<div id="html_4c81806b2c9b6b801a1800f998d50f8e" style="width: 100.0%; height: 100.0%;">HHAH: CaringHands Care</div>`)[0];
-                popup_eba3411ac84e1bb818cd639aeb4976be.setContent(html_4c81806b2c9b6b801a1800f998d50f8e);
-            
-        
-
-        marker_de43e3caee9915830a1e2aadc4ab3f50.bindPopup(popup_eba3411ac84e1bb818cd639aeb4976be)
-        ;
-
-        
-    
-    
-            marker_de43e3caee9915830a1e2aadc4ab3f50.bindTooltip(
-                `<div>
-                     HHAH: CaringHands Care
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_de43e3caee9915830a1e2aadc4ab3f50.setIcon(icon_e96562e13838996e35120d6698a64715);
-            
-    
-            var marker_c39297f3820fda2f56150721529caaec = L.marker(
-                [34.092940328110565, -119.8760497990611],
-                {
-}
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
-        
-    
-            var icon_396032a6b9bd4a96e8129b6ba1976bc6 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "home",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_50647b941cdd436187c386642203ddaa = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_9992424eea2e2aacf43a8fd6fdb6dc58 = $(`<div id="html_9992424eea2e2aacf43a8fd6fdb6dc58" style="width: 100.0%; height: 100.0%;">HHAH: Elite Group</div>`)[0];
-                popup_50647b941cdd436187c386642203ddaa.setContent(html_9992424eea2e2aacf43a8fd6fdb6dc58);
-            
-        
-
-        marker_c39297f3820fda2f56150721529caaec.bindPopup(popup_50647b941cdd436187c386642203ddaa)
-        ;
-
-        
-    
-    
-            marker_c39297f3820fda2f56150721529caaec.bindTooltip(
-                `<div>
-                     HHAH: Elite Group
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_c39297f3820fda2f56150721529caaec.setIcon(icon_396032a6b9bd4a96e8129b6ba1976bc6);
-            
-    
-            var marker_a56289a8cbe8d4baa0989113855537a8 = L.marker(
-                [34.577684032077286, -120.21808350697823],
-                {
-}
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
-        
-    
-            var icon_eaf9574df33ef2271da35470cfacd9b3 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "home",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_44745964ce11eebdff1847a9061b5119 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_d879cb9b7204298c7f74c21de979495c = $(`<div id="html_d879cb9b7204298c7f74c21de979495c" style="width: 100.0%; height: 100.0%;">HHAH: CaringHands Agency</div>`)[0];
-                popup_44745964ce11eebdff1847a9061b5119.setContent(html_d879cb9b7204298c7f74c21de979495c);
-            
-        
-
-        marker_a56289a8cbe8d4baa0989113855537a8.bindPopup(popup_44745964ce11eebdff1847a9061b5119)
-        ;
-
-        
-    
-    
-            marker_a56289a8cbe8d4baa0989113855537a8.bindTooltip(
-                `<div>
-                     HHAH: CaringHands Agency
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_a56289a8cbe8d4baa0989113855537a8.setIcon(icon_eaf9574df33ef2271da35470cfacd9b3);
-            
-    
-            var marker_44e44e2f5792f41a08a0b0c256b52530 = L.marker(
-                [34.53845777092448, -120.09079445909113],
-                {
-}
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
-        
-    
-            var icon_435ff3839382beae30cad3a2ff5fcc2f = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "home",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_ee03ac7393e3d8e132594098e8665076 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_3691162ff0c74d660fc87d0b3ab1f302 = $(`<div id="html_3691162ff0c74d660fc87d0b3ab1f302" style="width: 100.0%; height: 100.0%;">HHAH: Wellness Agency</div>`)[0];
-                popup_ee03ac7393e3d8e132594098e8665076.setContent(html_3691162ff0c74d660fc87d0b3ab1f302);
-            
-        
-
-        marker_44e44e2f5792f41a08a0b0c256b52530.bindPopup(popup_ee03ac7393e3d8e132594098e8665076)
-        ;
-
-        
-    
-    
-            marker_44e44e2f5792f41a08a0b0c256b52530.bindTooltip(
-                `<div>
-                     HHAH: Wellness Agency
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_44e44e2f5792f41a08a0b0c256b52530.setIcon(icon_435ff3839382beae30cad3a2ff5fcc2f);
-            
-    
-            var marker_82717c8534658f31d443a19d05cb5508 = L.marker(
-                [34.88165344739642, -120.17738033706816],
-                {
-}
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
-        
-    
-            var icon_b26ba39221594a03d945560994046e2a = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "home",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_7b67e30daee944a612a8b635e8cd671b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_f6e041039a4c9feb023637b434e679f2 = $(`<div id="html_f6e041039a4c9feb023637b434e679f2" style="width: 100.0%; height: 100.0%;">HHAH: Elite Partners</div>`)[0];
-                popup_7b67e30daee944a612a8b635e8cd671b.setContent(html_f6e041039a4c9feb023637b434e679f2);
-            
-        
-
-        marker_82717c8534658f31d443a19d05cb5508.bindPopup(popup_7b67e30daee944a612a8b635e8cd671b)
-        ;
-
-        
-    
-    
-            marker_82717c8534658f31d443a19d05cb5508.bindTooltip(
+            marker_84fd1c05349ef50728f6e72c214b1240.bindTooltip(
                 `<div>
                      HHAH: Elite Partners
                  </div>`,
@@ -720,30 +417,318 @@
             );
         
     
-                marker_82717c8534658f31d443a19d05cb5508.setIcon(icon_b26ba39221594a03d945560994046e2a);
+                marker_84fd1c05349ef50728f6e72c214b1240.setIcon(icon_d0fad64fd8ecc8409d722dd82d4d7af4);
             
     
-            var layer_control_aa3f1df57d233a4cad80895bfc10458f_layers = {
+            var marker_23565a6bdc158b4b1f9428cd53499b4f = L.marker(
+                [33.990541407317515, -120.37357034542136],
+                {
+}
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
+        
+    
+            var icon_3fde0df438973f21ef9f055a528bc728 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0391509a9d5d51b148c9f4a8d168e8ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_47327cc1da87307b04fe197f00ca0e69 = $(`<div id="html_47327cc1da87307b04fe197f00ca0e69" style="width: 100.0%; height: 100.0%;">HHAH: ComfortCare Associates</div>`)[0];
+                popup_0391509a9d5d51b148c9f4a8d168e8ad.setContent(html_47327cc1da87307b04fe197f00ca0e69);
+            
+        
+
+        marker_23565a6bdc158b4b1f9428cd53499b4f.bindPopup(popup_0391509a9d5d51b148c9f4a8d168e8ad)
+        ;
+
+        
+    
+    
+            marker_23565a6bdc158b4b1f9428cd53499b4f.bindTooltip(
+                `<div>
+                     HHAH: ComfortCare Associates
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_23565a6bdc158b4b1f9428cd53499b4f.setIcon(icon_3fde0df438973f21ef9f055a528bc728);
+            
+    
+            var marker_8650a74c4e05d546a4b5918f562bef9c = L.marker(
+                [34.82676613137086, -120.35379409873772],
+                {
+}
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
+        
+    
+            var icon_eddeb6aa2935a773bd86bcc4c03a31cd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6319ee4c0ace48a5362a21af4a0f59ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_02cf7396c33ae3174bbe0478cdfb1e1d = $(`<div id="html_02cf7396c33ae3174bbe0478cdfb1e1d" style="width: 100.0%; height: 100.0%;">HHAH: Elite Associates</div>`)[0];
+                popup_6319ee4c0ace48a5362a21af4a0f59ad.setContent(html_02cf7396c33ae3174bbe0478cdfb1e1d);
+            
+        
+
+        marker_8650a74c4e05d546a4b5918f562bef9c.bindPopup(popup_6319ee4c0ace48a5362a21af4a0f59ad)
+        ;
+
+        
+    
+    
+            marker_8650a74c4e05d546a4b5918f562bef9c.bindTooltip(
+                `<div>
+                     HHAH: Elite Associates
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8650a74c4e05d546a4b5918f562bef9c.setIcon(icon_eddeb6aa2935a773bd86bcc4c03a31cd);
+            
+    
+            var marker_fb8ef2e6c45d0cc734fa717c2b37fb41 = L.marker(
+                [34.01420363574745, -119.99515860418013],
+                {
+}
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
+        
+    
+            var icon_3fcb24baad0ba5bfe372cbcb3cb6cfa3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_44defbeac895dae6a1e00ee8a5cc5a80 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4b8a934c71b72cbb0589ccacb88b1fc8 = $(`<div id="html_4b8a934c71b72cbb0589ccacb88b1fc8" style="width: 100.0%; height: 100.0%;">HHAH: HomeHealth Services</div>`)[0];
+                popup_44defbeac895dae6a1e00ee8a5cc5a80.setContent(html_4b8a934c71b72cbb0589ccacb88b1fc8);
+            
+        
+
+        marker_fb8ef2e6c45d0cc734fa717c2b37fb41.bindPopup(popup_44defbeac895dae6a1e00ee8a5cc5a80)
+        ;
+
+        
+    
+    
+            marker_fb8ef2e6c45d0cc734fa717c2b37fb41.bindTooltip(
+                `<div>
+                     HHAH: HomeHealth Services
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fb8ef2e6c45d0cc734fa717c2b37fb41.setIcon(icon_3fcb24baad0ba5bfe372cbcb3cb6cfa3);
+            
+    
+            var marker_c83414ee3b38b81688073d032c95ae8d = L.marker(
+                [34.61754889191346, -120.1407477216222],
+                {
+}
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
+        
+    
+            var icon_d3cb54a918772b3d53e5ad3fb6020150 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d5c1d865dcbdf8a6b6b938e5b834d6f6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e8fae2c727f4873053b29b6983a3b51c = $(`<div id="html_e8fae2c727f4873053b29b6983a3b51c" style="width: 100.0%; height: 100.0%;">HHAH: Wellness Associates</div>`)[0];
+                popup_d5c1d865dcbdf8a6b6b938e5b834d6f6.setContent(html_e8fae2c727f4873053b29b6983a3b51c);
+            
+        
+
+        marker_c83414ee3b38b81688073d032c95ae8d.bindPopup(popup_d5c1d865dcbdf8a6b6b938e5b834d6f6)
+        ;
+
+        
+    
+    
+            marker_c83414ee3b38b81688073d032c95ae8d.bindTooltip(
+                `<div>
+                     HHAH: Wellness Associates
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c83414ee3b38b81688073d032c95ae8d.setIcon(icon_d3cb54a918772b3d53e5ad3fb6020150);
+            
+    
+            var marker_fc45f45963a8ccbd3e11f3fe14e3da2b = L.marker(
+                [34.54059794633124, -120.37174319213058],
+                {
+}
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
+        
+    
+            var icon_8a02b4dd3070141095e8d6fda8526781 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4f7514fd906789082b83f31f9acbc02c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_00b459d334bafa65b098ca7961188d38 = $(`<div id="html_00b459d334bafa65b098ca7961188d38" style="width: 100.0%; height: 100.0%;">HHAH: Guardian Associates</div>`)[0];
+                popup_4f7514fd906789082b83f31f9acbc02c.setContent(html_00b459d334bafa65b098ca7961188d38);
+            
+        
+
+        marker_fc45f45963a8ccbd3e11f3fe14e3da2b.bindPopup(popup_4f7514fd906789082b83f31f9acbc02c)
+        ;
+
+        
+    
+    
+            marker_fc45f45963a8ccbd3e11f3fe14e3da2b.bindTooltip(
+                `<div>
+                     HHAH: Guardian Associates
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fc45f45963a8ccbd3e11f3fe14e3da2b.setIcon(icon_8a02b4dd3070141095e8d6fda8526781);
+            
+    
+            var marker_4018882094d44e8e2f846544e135cd7c = L.marker(
+                [34.03887744436212, -120.47817323473842],
+                {
+}
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
+        
+    
+            var icon_212a920ccd10ecbe0eb41d1e46fc35f8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b339db995e8f51625b41db0a96775214 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8dbb9f3c9c0ae08c183e3e385fed5e20 = $(`<div id="html_8dbb9f3c9c0ae08c183e3e385fed5e20" style="width: 100.0%; height: 100.0%;">HHAH: Guardian Services</div>`)[0];
+                popup_b339db995e8f51625b41db0a96775214.setContent(html_8dbb9f3c9c0ae08c183e3e385fed5e20);
+            
+        
+
+        marker_4018882094d44e8e2f846544e135cd7c.bindPopup(popup_b339db995e8f51625b41db0a96775214)
+        ;
+
+        
+    
+    
+            marker_4018882094d44e8e2f846544e135cd7c.bindTooltip(
+                `<div>
+                     HHAH: Guardian Services
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4018882094d44e8e2f846544e135cd7c.setIcon(icon_212a920ccd10ecbe0eb41d1e46fc35f8);
+            
+    
+            var layer_control_b9f11968b40b724d132614b709bea898_layers = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_623eaa674045b3d1d6b620c68bbfe5d8,
+                    "cartodbpositron" : tile_layer_2666629a785b22b1d03c3481be1db08c,
                 },
                 overlays :  {
-                    "Santa Maria-Santa Barbara, CA Boundary" : geo_json_534ce9c77d6037acd7d339b89b3f80cc,
+                    "Santa Maria-Santa Barbara, CA Boundary" : geo_json_da31d6c024b5a85d0bddb384a3af0e7f,
                 },
             };
-            let layer_control_aa3f1df57d233a4cad80895bfc10458f = L.control.layers(
-                layer_control_aa3f1df57d233a4cad80895bfc10458f_layers.base_layers,
-                layer_control_aa3f1df57d233a4cad80895bfc10458f_layers.overlays,
+            let layer_control_b9f11968b40b724d132614b709bea898 = L.control.layers(
+                layer_control_b9f11968b40b724d132614b709bea898_layers.base_layers,
+                layer_control_b9f11968b40b724d132614b709bea898_layers.overlays,
                 {
   "position": "topright",
   "collapsed": true,
   "autoZIndex": true,
 }
-            ).addTo(map_9be19bba4cb2d8152359bc2dbbb3956f);
+            ).addTo(map_58ca462bc8886bdf00e397cb68ae53ca);
 
         
     
-            map_9be19bba4cb2d8152359bc2dbbb3956f.fitBounds(
+            map_58ca462bc8886bdf00e397cb68ae53ca.fitBounds(
                 [[33.413799, -120.734327], [35.114678, -118.963751]],
                 {}
             );

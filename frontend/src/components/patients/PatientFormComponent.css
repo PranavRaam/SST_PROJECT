@@ -468,6 +468,38 @@
   margin-left: 2px;
 }
 
+/* Style for label elements with an asterisk to ensure consistent appearance */
+label[for]:after {
+  content: none !important;
+}
+
+/* Override any pseudo-elements that might be adding asterisks */
+label:after,
+label:before {
+  content: none !important;
+}
+
+/* Global style to normalize the appearance of all form labels */
+form label {
+  position: relative;
+}
+
+/* Remove all instances of double asterisks (*) */
+form label::after {
+  content: '' !important;
+}
+
+/* Override any content property that might be adding stars */
+*[class*="required"]::before,
+*[class*="required"]::after {
+  content: '' !important;
+}
+
+/* Target the specific pattern in the text where ** appears */
+label {
+  position: relative;
+}
+
 .error {
   border-color: #ef4444 !important;
 }
@@ -755,4 +787,44 @@
   transform: translateY(-50%);
   font-weight: bold;
   color: #3b82f6;
+}
+
+/* Add important styles to suppress any double asterisks */
+/* This style adds a layer that hides any double asterisk by replacing the content */
+.modal-content label {
+  display: inline-block !important;
+  position: relative !important;
+}
+
+/* Hide any spans that might contain asterisks */
+.modal-content label span.required,
+.modal-content label span[class*="required"] {
+  display: none !important;
+}
+
+/* Add a single asterisk to required fields using CSS */
+.modal-content label:contains('**'),
+.modal-content label:contains('* *') {
+  position: relative !important;
+}
+
+.modal-content label:contains('**'):after,
+.modal-content label:contains('* *'):after {
+  content: '*' !important;
+  color: #ef4444 !important;
+  margin-left: 2px !important;
+}
+
+/* Targets form controls and other elements that might have double stars */
+.modal-content *[class*="required"] {
+  position: relative !important;
+}
+
+.modal-content *[class*="required"]:before,
+.modal-content *[class*="required"]:after {
+  content: '' !important;
+}
+
+.error {
+  border-color: #ef4444 !important;
 }

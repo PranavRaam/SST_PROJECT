@@ -4,56 +4,55 @@
   function hideMSAElements() {
     console.log("[hide-msa] Attempting to hide MSA elements");
     
-    // Hide MSA elements in the layer control
+    // Use exact text matching to hide the Metropolitan Statistical Areas checkbox/label
     const layerLabels = document.querySelectorAll('.leaflet-control-layers-overlays label');
     layerLabels.forEach(label => {
-      const text = label.textContent || '';
-      if (text.includes('Metropolitan') || text.includes('MSA') || text.includes('Statistical Area')) {
+      // Look for exact match "Metropolitan Statistical Areas"
+      const spanText = label.querySelector('span')?.textContent?.trim();
+      if (spanText === "Metropolitan Statistical Areas") {
         label.style.display = 'none';
-        console.log("[hide-msa] Hidden layer control item:", text);
+        console.log("[hide-msa] Hidden exact MSA layer control item");
       }
     });
     
-    // Hide MSA elements in any legend
+    // Hide MSA elements in any legend with exact matching
     const legendItems = document.querySelectorAll('.legend-item, .info-legend-item');
     legendItems.forEach(item => {
-      const text = item.textContent || '';
-      if (text.includes('Metropolitan') || text.includes('MSA') || text.includes('Statistical Area')) {
+      const itemText = item.textContent?.trim();
+      if (itemText === "Metropolitan Statistical Areas" || 
+          item.querySelector('span')?.textContent?.trim() === "Metropolitan Statistical Areas") {
         item.style.display = 'none';
-        console.log("[hide-msa] Hidden legend item:", text);
+        console.log("[hide-msa] Hidden exact MSA legend item");
       }
     });
     
-    // Try to hide the MSA layer itself if it exists
-    if (window.L && window.L.map && window.L.map._layers) {
-      Object.values(window.L.map._layers).forEach(layer => {
-        if (layer.options && (
-            (layer.options.name && (
-              layer.options.name.includes('Metropolitan') || 
-              layer.options.name.includes('MSA') || 
-              layer.options.name.includes('Statistical Area')
-            )) || 
-            (layer._tooltipContent && (
-              layer._tooltipContent.includes('Metropolitan') || 
-              layer._tooltipContent.includes('MSA') || 
-              layer._tooltipContent.includes('Statistical Area')
-            ))
-          )) {
-          layer.remove();
-          console.log("[hide-msa] Removed MSA layer:", layer.options.name);
+    // Try to hide only the general MSA layer itself if it exists
+    if (window.L && window.map) {
+      Object.values(window.map._layers || {}).forEach(layer => {
+        if (layer.options && 
+            layer.options.name && 
+            layer.options.name === "Metropolitan Statistical Areas") {
+          try {
+            layer.remove();
+            console.log("[hide-msa] Removed exact MSA layer");
+          } catch (e) {
+            console.error("[hide-msa] Error removing layer:", e);
+          }
         }
       });
     }
     
-    // Specifically target the MSA heading element if it exists
-    const heading = document.querySelector('div.metropolitan-heading');
-    if (heading) {
-      heading.style.display = 'none';
-      console.log("[hide-msa] Hidden MSA heading");
-    }
-    
-    // Hide the search control
-    hideSearchControl();
+    // More aggressive approach - hide any element containing MSA checkbox
+    setTimeout(() => {
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const label = checkbox.parentElement;
+        if (label && label.textContent.includes("Metropolitan Statistical Areas") && 
+            !label.textContent.includes("Virgin")) {
+          label.style.display = 'none';
+          console.log("[hide-msa] Hidden MSA checkbox via parent label");
+        }
+      });
+    }, 500);
   }
   
   // Function to hide the search control
@@ -115,15 +114,11 @@
   // Create and append a style element to ensure MSA elements are hidden via CSS
   const styleEl = document.createElement('style');
   styleEl.textContent = `
-    /* Hide Metropolitan Statistical Areas elements */
-    .leaflet-control-layers-overlays label:has(span:contains("Metropolitan")),
-    .leaflet-control-layers-overlays label:has(span:contains("MSA")),
-    .leaflet-control-layers-overlays label:has(span:contains("Statistical Area")),
-    .legend-item:has(span:contains("Metropolitan")),
-    .legend-item:has(span:contains("MSA")),
-    .legend-item:has(span:contains("Statistical Area")),
-    div.metropolitan-heading,
-    .leaflet-control-layers-overlays > label > span > span,
+    /* Target the exact Metropolitan Statistical Areas checkbox label */
+    .leaflet-control-layers-overlays label:has(span:contains("Metropolitan Statistical Areas")),
+    .leaflet-control-layers-overlays input[type="checkbox"] + span:contains("Metropolitan Statistical Areas"),
+    /* Extra selectors to ensure it's hidden */
+    .leaflet-control-layers-selector[type="checkbox"] + span:contains("Metropolitan Statistical Areas"),
     /* Hide search control */
     .leaflet-control-search {
       display: none !important;
