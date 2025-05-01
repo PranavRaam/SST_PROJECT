@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_bec373dd49a353289b1fb8cd93c9f94d {
+                #map_e585a65b4daaf240397b0999c64bf932 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -44,9 +44,9 @@
                         background-color: white; border-radius: 8px;
                         border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
                         font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-                <h4 style="margin-top: 0; color: #1F2937;">Statistical Area: Lubbock (Approximate Location)</h4>
+                <h4 style="margin-top: 0; color: #1F2937;">Statistical Area: Amarillo (Approximate Location)</h4>
                 <p style="font-size: 12px; margin-bottom: 0;">
-                    This is a simplified view of the Lubbock area.
+                    This is a simplified view of the Amarillo area.
                 </p>
                 <p style="font-size: 12px; margin-bottom: 0;">
                     This static map is shown when the interactive map cannot be loaded.
@@ -54,14 +54,14 @@
             </div>
         
     
-            <div class="folium-map" id="map_bec373dd49a353289b1fb8cd93c9f94d" ></div>
+            <div class="folium-map" id="map_e585a65b4daaf240397b0999c64bf932" ></div>
         
 </body>
 <script>
     
     
-            var map_bec373dd49a353289b1fb8cd93c9f94d = L.map(
-                "map_bec373dd49a353289b1fb8cd93c9f94d",
+            var map_e585a65b4daaf240397b0999c64bf932 = L.map(
+                "map_e585a65b4daaf240397b0999c64bf932",
                 {
                     center: [39.8283, -98.5795],
                     crs: L.CRS.EPSG3857,
@@ -78,7 +78,7 @@
 
         
     
-            var tile_layer_d0b50823e8d1f639c3b070952a91548a = L.tileLayer(
+            var tile_layer_83c80e8568885ba4897b8b043c992f07 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -95,17 +95,17 @@
             );
         
     
-            tile_layer_d0b50823e8d1f639c3b070952a91548a.addTo(map_bec373dd49a353289b1fb8cd93c9f94d);
+            tile_layer_83c80e8568885ba4897b8b043c992f07.addTo(map_e585a65b4daaf240397b0999c64bf932);
         
     
-            var marker_a38ffe11292f292c793893b1def8916c = L.marker(
+            var marker_4a89e3bdcf3d17b91132718b66b759dd = L.marker(
                 [39.8283, -98.5795],
                 {
 }
-            ).addTo(map_bec373dd49a353289b1fb8cd93c9f94d);
+            ).addTo(map_e585a65b4daaf240397b0999c64bf932);
         
     
-            var icon_cb709550ec67f832cf39b2a9ed670039 = L.AwesomeMarkers.icon(
+            var icon_d934e87c3d0960655982e269c00b3193 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
@@ -114,30 +114,30 @@
   "extraClasses": "fa-rotate-0",
 }
             );
-            marker_a38ffe11292f292c793893b1def8916c.setIcon(icon_cb709550ec67f832cf39b2a9ed670039);
+            marker_4a89e3bdcf3d17b91132718b66b759dd.setIcon(icon_d934e87c3d0960655982e269c00b3193);
         
     
-        var popup_d0f03e14f3597e702e718f7b5e6e28e1 = L.popup({
+        var popup_217651d22a441eb3fce8d42a5caf0027 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_e5fd9a4125e1b114797b01f279b9b104 = $(`<div id="html_e5fd9a4125e1b114797b01f279b9b104" style="width: 100.0%; height: 100.0%;">Statistical Area: Lubbock (Approximate Location)</div>`)[0];
-                popup_d0f03e14f3597e702e718f7b5e6e28e1.setContent(html_e5fd9a4125e1b114797b01f279b9b104);
+                var html_3afdab37bcabc57b6a05361cb9ab824b = $(`<div id="html_3afdab37bcabc57b6a05361cb9ab824b" style="width: 100.0%; height: 100.0%;">Statistical Area: Amarillo (Approximate Location)</div>`)[0];
+                popup_217651d22a441eb3fce8d42a5caf0027.setContent(html_3afdab37bcabc57b6a05361cb9ab824b);
             
         
 
-        marker_a38ffe11292f292c793893b1def8916c.bindPopup(popup_d0f03e14f3597e702e718f7b5e6e28e1)
+        marker_4a89e3bdcf3d17b91132718b66b759dd.bindPopup(popup_217651d22a441eb3fce8d42a5caf0027)
         ;
 
         
     
     
-            var circle_19eae16cdce08843c574bb51934b0012 = L.circle(
+            var circle_047bb03bb3986967d07e188773c19a3f = L.circle(
                 [39.8283, -98.5795],
                 {"bubblingMouseEvents": true, "color": "#4F46E5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4F46E5", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 20000, "stroke": true, "weight": 3}
-            ).addTo(map_bec373dd49a353289b1fb8cd93c9f94d);
+            ).addTo(map_e585a65b4daaf240397b0999c64bf932);
         
 </script>
 </html>

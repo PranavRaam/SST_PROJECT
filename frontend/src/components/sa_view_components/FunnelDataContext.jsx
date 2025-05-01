@@ -47,6 +47,7 @@ const FunnelDataProvider = ({ children, initialArea }) => {
   const [pgAssignments, setPgAssignments] = useState({});
   const [hhahAssignments, setHhahAssignments] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [displayData, setDisplayData] = useState([]);
 
   // Update currentArea when initialArea changes
   useEffect(() => {
@@ -95,6 +96,19 @@ const FunnelDataProvider = ({ children, initialArea }) => {
     
     setPgData(pgs);
     setHhahData(hhahs);
+
+    // Transform PG data for display
+    const transformedPGs = pgs.map(pg => ({
+      name: pg.name,
+      address: pg.address || "Address not available",
+      city: currentArea,
+      state: pg.state || "State not available",
+      zipcode: pg.zipcode || "Zip not available",
+      phone: pg.phone || "Phone not available",
+      status: pg.status || "On the platform"
+    }));
+
+    setDisplayData(transformedPGs);
 
     // Create initial funnel data based on actual data
     const createFunnelData = (type, agencies) => {
@@ -293,6 +307,7 @@ const FunnelDataProvider = ({ children, initialArea }) => {
   return (
     <FunnelDataContext.Provider
       value={{
+        allAgencies,
         currentArea,
         setCurrentArea,
         pgData,
@@ -300,14 +315,21 @@ const FunnelDataProvider = ({ children, initialArea }) => {
         hhahData,
         setHhahData,
         pgFunnelData,
+        setPgFunnelData,
         hhahFunnelData,
+        setHhahFunnelData,
         pgAssignments,
+        setPgAssignments,
         hhahAssignments,
+        setHhahAssignments,
+        isLoading,
+        setIsLoading,
+        displayData,
+        setDisplayData,
         movePgToStage,
         moveHhahToStage,
         updatePgFunnelData,
-        updateHhahFunnelData,
-        isLoading
+        updateHhahFunnelData
       }}
     >
       {children}

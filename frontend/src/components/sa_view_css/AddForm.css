@@ -9,8 +9,8 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
-  will-change: opacity;
   animation: fade-in 0.2s ease-out;
 }
 
@@ -29,11 +29,9 @@
   position: relative;
   max-height: 90vh;
   overflow-y: auto;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
   animation: slide-up 0.25s ease-out;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
 }
 
 @keyframes slide-up {
@@ -66,6 +64,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .close-button:hover {
@@ -80,7 +79,6 @@
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transform: translateZ(0);
 }
 
 .section-title {
@@ -100,142 +98,123 @@
 }
 
 .form-group {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
-/* Last form-group in a section shouldn't have margin */
 .form-section .form-group:last-child {
   margin-bottom: 0;
 }
 
-/* Add form-row for horizontal layout */
 .form-row {
   display: flex;
-  gap: 16px;
-  margin-bottom: 22px;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-/* Last form-row in a section shouldn't have margin */
 .form-section .form-row:last-child {
   margin-bottom: 0;
 }
 
-/* Style for half-width form elements */
 .form-group.half {
   flex: 1;
-  margin-bottom: 0;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  font-weight: 600;
-  color: #34495e;
-  font-size: 15px;
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .form-group label::after {
-  content: " *";
+  content: '*';
   color: #e74c3c;
+  margin-left: 4px;
 }
 
 .form-group label.optional::after {
-  content: "";
+  content: '';
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  background-color: #fff;
-  color: #333;
-  transition: all 0.2s ease;
-  -webkit-appearance: none;
-  appearance: none;
-  transform: translateZ(0);
-}
-
-.form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px;
+  padding: 12px;
+  border: 1px solid #e0e6ed;
+  color: #000;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
 }
 
 .form-group input::placeholder {
-  color: #bdc3c7;
+  color: #95a5a6;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #3498db;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid #f0f0f0;
 }
 
 .cancel-button,
 .submit-button {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  border: none;
-  font-weight: 600;
   transition: all 0.2s ease;
-  transform: translateZ(0);
 }
 
 .cancel-button {
-  background-color: #f5f5f5;
-  color: #555;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e6ed;
+  color: #2c3e50;
 }
 
 .submit-button {
-  background-color: #2ecc71;
+  background-color: #3498db;
+  border: none;
   color: white;
 }
 
 .cancel-button:hover {
-  background-color: #e0e0e0;
+  background-color: #e9ecef;
 }
 
 .submit-button:hover {
-  background-color: #27ae60;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.2);
+  background-color: #2980b9;
 }
 
 .submit-button:active {
-  transform: translateY(0);
-  box-shadow: none;
+  transform: translateY(1px);
 }
 
-/* Add scrollbar styling for the form container */
 .add-form-container::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 .add-form-container::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 .add-form-container::-webkit-scrollbar-thumb {
   background: #c1c1c1;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 .add-form-container::-webkit-scrollbar-thumb:hover {

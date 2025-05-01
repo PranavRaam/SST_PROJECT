@@ -13,7 +13,16 @@ const MemoizedAddHHAHForm = memo(AddHHAHForm);
 const Listings = () => {
   const [showAddPGForm, setShowAddPGForm] = useState(false);
   const [showAddHHAHForm, setShowAddHHAHForm] = useState(false);
-  const { currentArea, isLoading } = useContext(FunnelDataContext);
+  const [newPGs, setNewPGs] = useState([]);
+  const { 
+    currentArea, 
+    isLoading, 
+    movePgToStage, 
+    pgFunnelData, 
+    setPgFunnelData,
+    pgAssignments,
+    setPgAssignments
+  } = useContext(FunnelDataContext);
 
   // Use callbacks for handlers to prevent recreation on each render
   const handleOpenPGForm = useCallback(() => {
@@ -23,6 +32,34 @@ const Listings = () => {
   const handleClosePGForm = useCallback(() => {
     setShowAddPGForm(false);
   }, []);
+
+  const handleAddPG = useCallback((newPg) => {
+    // Add to newPGs state for table display
+    setNewPGs(prevPGs => [...prevPGs, newPg]);
+
+    // Update funnel data and assignments
+    if (movePgToStage) {
+      // Update pgAssignments to include the new PG in its stage
+      const updatedAssignments = { ...pgAssignments };
+      if (!updatedAssignments[newPg.status]) {
+        updatedAssignments[newPg.status] = [];
+      }
+      updatedAssignments[newPg.status].push(newPg.name);
+      setPgAssignments(updatedAssignments);
+
+      // Update funnel data counts
+      const updatedFunnelData = pgFunnelData.map(stage => {
+        if (stage.name === newPg.status) {
+          return {
+            ...stage,
+            value: stage.value + 1
+          };
+        }
+        return stage;
+      });
+      setPgFunnelData(updatedFunnelData);
+    }
+  }, [movePgToStage, pgFunnelData, setPgFunnelData, pgAssignments, setPgAssignments]);
 
   const handleOpenHHAHForm = useCallback(() => {
     setShowAddHHAHForm(true);
@@ -65,9 +102,13 @@ const Listings = () => {
             + Add New PG
           </button>
         </div>
-        <PGListingTable />
+        <PGListingTable currentArea={currentArea} newPGs={newPGs} />
         {showAddPGForm && (
-          <MemoizedAddPGForm onClose={handleClosePGForm} />
+          <MemoizedAddPGForm 
+            onClose={handleClosePGForm} 
+            currentArea={currentArea}
+            onAddPG={handleAddPG}
+          />
         )}
       </div>
       

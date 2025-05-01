@@ -1,56 +1,34 @@
-import React, { useState, useContext } from 'react';
-import { FunnelDataContext, PG_STAGES } from './FunnelDataContext';
+import React, { useState } from 'react';
+import { PG_STAGES } from './FunnelDataContext';
 import '../sa_view_css/AddForm.css';
 
-const AddPGForm = ({ onClose }) => {
+const AddPGForm = ({ onClose, currentArea, onAddPG }) => {
   const [pgName, setPgName] = useState('');
-  const [patients, setPatients] = useState('');
-  const [remaining, setRemaining] = useState('');
-  const [outcomes, setOutcomes] = useState('');
-  const [funnelStage, setFunnelStage] = useState(PG_STAGES[0]);
-  const { pgData, setPgData, pgFunnelData, updatePgFunnelData } = useContext(FunnelDataContext) || {};
-
-  // Use the stages from the FunnelDataContext
-  const pgStages = PG_STAGES;
+  const [address, setAddress] = useState('');
+  const [contact, setContact] = useState('');
+  const [status, setStatus] = useState(PG_STAGES[0]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Validate form and context
-    if (!pgName || !patients || !remaining || !outcomes || !funnelStage) {
-      alert('Please fill in all fields');
-      return;
-    }
-    
-    if (!pgData || !setPgData || !pgFunnelData || !updatePgFunnelData) {
-      alert('Context data is not available. Please try again later.');
+    if (!pgName || !address || !contact) {
+      alert('Please fill in all required fields');
       return;
     }
 
-    // Add new PG to list
+    // Create new PG object
     const newPg = {
       name: pgName,
-      patients: parseInt(patients),
-      remaining: parseInt(remaining),
-      outcomes: parseInt(outcomes)
+      address: address,
+      city: currentArea,
+      state: "State not available",
+      zipcode: "Zip not available",
+      phone: contact,
+      status: status
     };
     
-    const updatedPgData = [...pgData, newPg];
-    setPgData(updatedPgData);
-    
-    // Update funnel data
-    const newFunnelData = [...pgFunnelData];
-    const stageIndex = pgStages.indexOf(funnelStage);
-    
-    if (stageIndex !== -1) {
-      // Update the value for the stage and cascade down through stages
-      for (let i = stageIndex; i < newFunnelData.length; i++) {
-        newFunnelData[i].value += parseInt(patients);
-      }
-      
-      // Update funnel assignments (add the new PG to its stage)
-      updatePgFunnelData(newFunnelData, pgName, funnelStage);
-    }
+    // Pass the new PG to the parent component
+    onAddPG(newPg);
     
     // Close the form
     onClose();
@@ -75,61 +53,43 @@ const AddPGForm = ({ onClose }) => {
           </div>
           
           <div className="form-group">
-            <label>Total Patients</label>
+            <label>Address</label>
             <input 
-              type="number" 
-              value={patients} 
-              onChange={(e) => setPatients(e.target.value)}
-              placeholder="Number of patients"
-              min="1"
+              type="text" 
+              value={address} 
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Enter address"
               required
             />
           </div>
           
           <div className="form-group">
-            <label>Patients Remaining (30 CPO)</label>
+            <label>Contact</label>
             <input 
-              type="number" 
-              value={remaining} 
-              onChange={(e) => setRemaining(e.target.value)}
-              placeholder="Patients remaining"
-              min="0"
+              type="text" 
+              value={contact} 
+              onChange={(e) => setContact(e.target.value)}
+              placeholder="Enter contact number"
               required
             />
           </div>
-          
+
           <div className="form-group">
-            <label>Active/Reactive OC</label>
-            <input 
-              type="number" 
-              value={outcomes} 
-              onChange={(e) => setOutcomes(e.target.value)}
-              placeholder="Number of outcomes"
-              min="0"
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>Funnel Stage</label>
+            <label>Status</label>
             <select 
-              value={funnelStage} 
-              onChange={(e) => setFunnelStage(e.target.value)}
+              value={status} 
+              onChange={(e) => setStatus(e.target.value)}
               required
             >
-              {pgStages.map((stage, index) => (
+              {PG_STAGES.map((stage, index) => (
                 <option key={index} value={stage}>{stage}</option>
               ))}
             </select>
           </div>
           
           <div className="form-actions">
-            <button type="button" className="cancel-button" onClick={onClose}>
-              Cancel
-            </button>
-            <button type="submit" className="submit-button">
-              Add PG
-            </button>
+            <button type="submit" className="submit-button">Add PG</button>
+            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>

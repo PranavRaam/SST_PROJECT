@@ -1,68 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FunnelDataContext, PG_STAGES } from './FunnelDataContext';
 import '../sa_view_css/PGListingTable.css';
 import westPGData from '../../assets/data/west_pg_data.json';
 import centralPGData from '../../assets/data/central_pg_data.json';
 import eastCentralPGData from '../../assets/data/east_central_pg_data.json';
 
-// Dummy data fallback for PG listing
-const dummyPGData = [
-  {
-    name: "PG Alpha",
-    address: "123 Main St",
-    city: "New York",
-    state: "NY",
-    zipcode: "10001",
-    phone: "(555) 123-4567",
-    status: "They exist but they haven't heard of us"
-  },
-  {
-    name: "PG Beta",
-    address: "456 Oak Ave",
-    city: "Los Angeles",
-    state: "CA",
-    zipcode: "90001",
-    phone: "(555) 234-5678",
-    status: "They've now heard of us but that's it"
-  },
-  {
-    name: "PG Gamma",
-    address: "789 Pine St",
-    city: "Chicago",
-    state: "IL",
-    zipcode: "60601",
-    phone: "(555) 345-6789",
-    status: "Enough interest that they're interacting with our content"
-  },
-  {
-    name: "PG Delta",
-    address: "321 Elm St",
-    city: "Houston",
-    state: "TX",
-    zipcode: "77001",
-    phone: "(555) 456-7890",
-    status: "On the platform"
-  },
-  {
-    name: "PG Epsilon",
-    address: "654 Maple Ave",
-    city: "Phoenix",
-    state: "AZ",
-    zipcode: "85001",
-    phone: "(555) 567-8901",
-    status: "Deal is so hot your hands will burn if you touch it"
-  }
-];
-
-const PGListingTable = () => {
-  const { currentArea, isLoading } = useContext(FunnelDataContext);
+const PGListingTable = ({ currentArea, newPGs = [] }) => {
   const [displayData, setDisplayData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (currentArea) {
-      // Check all three regions for PGs
+      // Get PGs from JSON files
       const westPGs = westPGData.West[currentArea] || [];
       const centralPGs = centralPGData.Central[currentArea] || [];
       const eastCentralPGs = eastCentralPGData.East_Central[currentArea] || [];
@@ -87,12 +36,14 @@ const PGListingTable = () => {
           };
         });
         
-        setDisplayData(transformedData);
+        // Add any new PGs that were added through the form
+        const combinedData = [...transformedData, ...newPGs];
+        setDisplayData(combinedData);
       } else {
-        setDisplayData([]);
+        setDisplayData(newPGs);
       }
     }
-  }, [currentArea]);
+  }, [currentArea, newPGs]);
 
   const handleRowClick = (pg) => {
     navigate(`/pg-view/${encodeURIComponent(pg.name)}`, {
@@ -101,10 +52,6 @@ const PGListingTable = () => {
       }
     });
   };
-
-  if (isLoading) {
-    return <div className="loading-message">Loading PG data...</div>;
-  }
 
   if (!currentArea) {
     return (
