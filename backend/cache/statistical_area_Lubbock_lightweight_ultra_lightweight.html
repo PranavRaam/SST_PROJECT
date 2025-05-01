@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_520af7969b69513e0546a6ed9904533a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_520af7969b69513e0546a6ed9904533a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_520af7969b69513e0546a6ed9904533a = L.map(
+                "map_520af7969b69513e0546a6ed9904533a",
+                {
+                    center: [33.465531819400034, -101.8823098890895],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_520af7969b69513e0546a6ed9904533a);
+
+            
+
+        
+    
+            var tile_layer_82cdd226a65817b4424485fcc2f6bc84 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_82cdd226a65817b4424485fcc2f6bc84.addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+        function geo_json_c98a5798a3fd52a5eada7bd2825a4e16_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_c98a5798a3fd52a5eada7bd2825a4e16_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_c98a5798a3fd52a5eada7bd2825a4e16 = L.geoJson(null, {
+                onEachFeature: geo_json_c98a5798a3fd52a5eada7bd2825a4e16_onEachFeature,
+            
+                style: geo_json_c98a5798a3fd52a5eada7bd2825a4e16_styler,
+            ...{
+}
+        });
+
+        function geo_json_c98a5798a3fd52a5eada7bd2825a4e16_add (data) {
+            geo_json_c98a5798a3fd52a5eada7bd2825a4e16
+                .addData(data);
+        }
+            geo_json_c98a5798a3fd52a5eada7bd2825a4e16_add({"features": [{"geometry": {"coordinates": [[[-101.038788, 33.397214], [-101.03866, 32.970225], [-102.076214, 32.959702], [-102.075929, 33.389586], [-103.056485, 33.388414], [-103.047409, 33.824674], [-101.041158, 33.833625], [-101.038788, 33.397214]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_c98a5798a3fd52a5eada7bd2825a4e16.addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var marker_4182c301633d2522a494217e5d1852ff = L.marker(
+                [33.13840779595756, -101.81869629408257],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_a6f2017d1d01f58d79b5ff2fd1e9ca79 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "hospital",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_02a41d114d3fb724267d7e313a08d972 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5ab754deb2e6b4228e897546efaa2a91 = $(`<div id="html_5ab754deb2e6b4228e897546efaa2a91" style="width: 100.0%; height: 100.0%;">PG: PG-Group A-Lub1</div>`)[0];
+                popup_02a41d114d3fb724267d7e313a08d972.setContent(html_5ab754deb2e6b4228e897546efaa2a91);
+            
+        
+
+        marker_4182c301633d2522a494217e5d1852ff.bindPopup(popup_02a41d114d3fb724267d7e313a08d972)
+        ;
+
+        
+    
+    
+            marker_4182c301633d2522a494217e5d1852ff.bindTooltip(
+                `<div>
+                     PG: PG-Group A-Lub1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4182c301633d2522a494217e5d1852ff.setIcon(icon_a6f2017d1d01f58d79b5ff2fd1e9ca79);
+            
+    
+            var marker_10327a068621a84b2d3f2c4a9126926d = L.marker(
+                [33.462738825717416, -102.33225867884953],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_d3b993b1e5957a14f91ba28ce1300437 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "hospital",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bfed6d111d642b2f5d773d4e6d4a8be9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_79ef03def72502b6450b14558c026837 = $(`<div id="html_79ef03def72502b6450b14558c026837" style="width: 100.0%; height: 100.0%;">PG: PG-Group B-Lub2</div>`)[0];
+                popup_bfed6d111d642b2f5d773d4e6d4a8be9.setContent(html_79ef03def72502b6450b14558c026837);
+            
+        
+
+        marker_10327a068621a84b2d3f2c4a9126926d.bindPopup(popup_bfed6d111d642b2f5d773d4e6d4a8be9)
+        ;
+
+        
+    
+    
+            marker_10327a068621a84b2d3f2c4a9126926d.bindTooltip(
+                `<div>
+                     PG: PG-Group B-Lub2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10327a068621a84b2d3f2c4a9126926d.setIcon(icon_d3b993b1e5957a14f91ba28ce1300437);
+            
+    
+            var marker_e0a935dcd3f2db476320bc82337fffd7 = L.marker(
+                [33.54712692259179, -101.52720808385857],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_705259b0c89e25ba5cc1e93b352aeac6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "hospital",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f4eb3ddd5c9f30ea2396f048bfae1b8b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3915fd1b46f8a4dcde59d7bd71b986d5 = $(`<div id="html_3915fd1b46f8a4dcde59d7bd71b986d5" style="width: 100.0%; height: 100.0%;">PG: PG-Group C-Lub3</div>`)[0];
+                popup_f4eb3ddd5c9f30ea2396f048bfae1b8b.setContent(html_3915fd1b46f8a4dcde59d7bd71b986d5);
+            
+        
+
+        marker_e0a935dcd3f2db476320bc82337fffd7.bindPopup(popup_f4eb3ddd5c9f30ea2396f048bfae1b8b)
+        ;
+
+        
+    
+    
+            marker_e0a935dcd3f2db476320bc82337fffd7.bindTooltip(
+                `<div>
+                     PG: PG-Group C-Lub3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e0a935dcd3f2db476320bc82337fffd7.setIcon(icon_705259b0c89e25ba5cc1e93b352aeac6);
+            
+    
+            var marker_cccc891ee0f6bb92f2ee821fa6cbfb5c = L.marker(
+                [33.196127549692356, -101.30292350667581],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_1662c4c66b35ba3f15a9214bdaa56093 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "hospital",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fe86f19ad4e36907f6879b0a4efd4aad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a8735d2f097f72ddc336039c6c3ac61c = $(`<div id="html_a8735d2f097f72ddc336039c6c3ac61c" style="width: 100.0%; height: 100.0%;">PG: PG-Group D-Lub4</div>`)[0];
+                popup_fe86f19ad4e36907f6879b0a4efd4aad.setContent(html_a8735d2f097f72ddc336039c6c3ac61c);
+            
+        
+
+        marker_cccc891ee0f6bb92f2ee821fa6cbfb5c.bindPopup(popup_fe86f19ad4e36907f6879b0a4efd4aad)
+        ;
+
+        
+    
+    
+            marker_cccc891ee0f6bb92f2ee821fa6cbfb5c.bindTooltip(
+                `<div>
+                     PG: PG-Group D-Lub4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cccc891ee0f6bb92f2ee821fa6cbfb5c.setIcon(icon_1662c4c66b35ba3f15a9214bdaa56093);
+            
+    
+            var marker_1b594e1662b08295c7fd64a5682f8cd4 = L.marker(
+                [33.11904876563714, -101.64203738665401],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_cd63b607cf35f85193af4b0773907d04 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "hospital",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cfd1985aef3731637c3cdf1956da32bb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5c3830d60b1d8205cd5eca6aef4d69b5 = $(`<div id="html_5c3830d60b1d8205cd5eca6aef4d69b5" style="width: 100.0%; height: 100.0%;">PG: PG-Group A-Lub5</div>`)[0];
+                popup_cfd1985aef3731637c3cdf1956da32bb.setContent(html_5c3830d60b1d8205cd5eca6aef4d69b5);
+            
+        
+
+        marker_1b594e1662b08295c7fd64a5682f8cd4.bindPopup(popup_cfd1985aef3731637c3cdf1956da32bb)
+        ;
+
+        
+    
+    
+            marker_1b594e1662b08295c7fd64a5682f8cd4.bindTooltip(
+                `<div>
+                     PG: PG-Group A-Lub5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1b594e1662b08295c7fd64a5682f8cd4.setIcon(icon_cd63b607cf35f85193af4b0773907d04);
+            
+    
+            var marker_8331af9ba3ba023bb99f03025053174b = L.marker(
+                [33.68161728740065, -102.74700173229954],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_fe3f945c6ec426af64400ad1ef9e7461 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cfe7dadcaa34f2af93ef478c23ddf752 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_97c22e88cdfbcfa6530846c26b4a1f49 = $(`<div id="html_97c22e88cdfbcfa6530846c26b4a1f49" style="width: 100.0%; height: 100.0%;">HHAH: Wellness Network</div>`)[0];
+                popup_cfe7dadcaa34f2af93ef478c23ddf752.setContent(html_97c22e88cdfbcfa6530846c26b4a1f49);
+            
+        
+
+        marker_8331af9ba3ba023bb99f03025053174b.bindPopup(popup_cfe7dadcaa34f2af93ef478c23ddf752)
+        ;
+
+        
+    
+    
+            marker_8331af9ba3ba023bb99f03025053174b.bindTooltip(
+                `<div>
+                     HHAH: Wellness Network
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8331af9ba3ba023bb99f03025053174b.setIcon(icon_fe3f945c6ec426af64400ad1ef9e7461);
+            
+    
+            var marker_99f7f835e943d0020bd31deffa16757a = L.marker(
+                [33.73554293130271, -102.14539216667498],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_4bd169d0c911854153aeb9574132b1b4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d43a7eae83a77f1e3cbe2dd4e0dc04d9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4512f8e6cf84666605c2845ade3215a9 = $(`<div id="html_4512f8e6cf84666605c2845ade3215a9" style="width: 100.0%; height: 100.0%;">HHAH: CaringHands Agency</div>`)[0];
+                popup_d43a7eae83a77f1e3cbe2dd4e0dc04d9.setContent(html_4512f8e6cf84666605c2845ade3215a9);
+            
+        
+
+        marker_99f7f835e943d0020bd31deffa16757a.bindPopup(popup_d43a7eae83a77f1e3cbe2dd4e0dc04d9)
+        ;
+
+        
+    
+    
+            marker_99f7f835e943d0020bd31deffa16757a.bindTooltip(
+                `<div>
+                     HHAH: CaringHands Agency
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_99f7f835e943d0020bd31deffa16757a.setIcon(icon_4bd169d0c911854153aeb9574132b1b4);
+            
+    
+            var marker_090bf6bb7e8594ff394f78d4d526ccce = L.marker(
+                [33.62443730560847, -102.21855216096996],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_e146794bea81644b736f8b32b503ed11 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4974069e4745adac2193e9140d9dc3f9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_68934214adcd248ad9b9b685d781b4e4 = $(`<div id="html_68934214adcd248ad9b9b685d781b4e4" style="width: 100.0%; height: 100.0%;">HHAH: Premier Group</div>`)[0];
+                popup_4974069e4745adac2193e9140d9dc3f9.setContent(html_68934214adcd248ad9b9b685d781b4e4);
+            
+        
+
+        marker_090bf6bb7e8594ff394f78d4d526ccce.bindPopup(popup_4974069e4745adac2193e9140d9dc3f9)
+        ;
+
+        
+    
+    
+            marker_090bf6bb7e8594ff394f78d4d526ccce.bindTooltip(
+                `<div>
+                     HHAH: Premier Group
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_090bf6bb7e8594ff394f78d4d526ccce.setIcon(icon_e146794bea81644b736f8b32b503ed11);
+            
+    
+            var marker_c0681c982a5f5a3d80b2a5c6bcec1832 = L.marker(
+                [33.57488494996681, -102.68173560339065],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_beab1af7fd9ac987a5cdb81d07a38940 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c8d7dd0a483594930a7e5ae9401410ef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1968404c53008c61adf2429cadf9e6e5 = $(`<div id="html_1968404c53008c61adf2429cadf9e6e5" style="width: 100.0%; height: 100.0%;">HHAH: Elite Network</div>`)[0];
+                popup_c8d7dd0a483594930a7e5ae9401410ef.setContent(html_1968404c53008c61adf2429cadf9e6e5);
+            
+        
+
+        marker_c0681c982a5f5a3d80b2a5c6bcec1832.bindPopup(popup_c8d7dd0a483594930a7e5ae9401410ef)
+        ;
+
+        
+    
+    
+            marker_c0681c982a5f5a3d80b2a5c6bcec1832.bindTooltip(
+                `<div>
+                     HHAH: Elite Network
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c0681c982a5f5a3d80b2a5c6bcec1832.setIcon(icon_beab1af7fd9ac987a5cdb81d07a38940);
+            
+    
+            var marker_d26b8a83e75ee4339b689f9683ef6b11 = L.marker(
+                [33.4075124492921, -101.64629086480764],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_32ec2b6dc98aca815319d95e62e780b7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_274d21e888fe6d6e7967c4d55431dce7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_edaa793c9b06ddc5f53eb7e4053b74de = $(`<div id="html_edaa793c9b06ddc5f53eb7e4053b74de" style="width: 100.0%; height: 100.0%;">HHAH: Elite Partners</div>`)[0];
+                popup_274d21e888fe6d6e7967c4d55431dce7.setContent(html_edaa793c9b06ddc5f53eb7e4053b74de);
+            
+        
+
+        marker_d26b8a83e75ee4339b689f9683ef6b11.bindPopup(popup_274d21e888fe6d6e7967c4d55431dce7)
+        ;
+
+        
+    
+    
+            marker_d26b8a83e75ee4339b689f9683ef6b11.bindTooltip(
+                `<div>
+                     HHAH: Elite Partners
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d26b8a83e75ee4339b689f9683ef6b11.setIcon(icon_32ec2b6dc98aca815319d95e62e780b7);
+            
+    
+            var marker_e340536cc8c00ce59bf90ea76fdf1ce1 = L.marker(
+                [33.55304340373377, -102.43252380373251],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_cec6f688b5020c87d3a6e1685be6fe90 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9c5a719376c0fa7b50a2ec51d39aef32 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1785a366f865be182a595c68d57de9b3 = $(`<div id="html_1785a366f865be182a595c68d57de9b3" style="width: 100.0%; height: 100.0%;">HHAH: Elite Care</div>`)[0];
+                popup_9c5a719376c0fa7b50a2ec51d39aef32.setContent(html_1785a366f865be182a595c68d57de9b3);
+            
+        
+
+        marker_e340536cc8c00ce59bf90ea76fdf1ce1.bindPopup(popup_9c5a719376c0fa7b50a2ec51d39aef32)
+        ;
+
+        
+    
+    
+            marker_e340536cc8c00ce59bf90ea76fdf1ce1.bindTooltip(
+                `<div>
+                     HHAH: Elite Care
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e340536cc8c00ce59bf90ea76fdf1ce1.setIcon(icon_cec6f688b5020c87d3a6e1685be6fe90);
+            
+    
+            var marker_01dbb117ca2c546d586ee25fe27bec40 = L.marker(
+                [33.490202838765, -101.92254494455993],
+                {
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+        
+    
+            var icon_76f1301e9dcef014b2c83ae790100e34 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c5de0f352214c870805858aa2c556565 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f46e1492a20fc898de64aa3109d5ab4c = $(`<div id="html_f46e1492a20fc898de64aa3109d5ab4c" style="width: 100.0%; height: 100.0%;">HHAH: HomeHealth Network</div>`)[0];
+                popup_c5de0f352214c870805858aa2c556565.setContent(html_f46e1492a20fc898de64aa3109d5ab4c);
+            
+        
+
+        marker_01dbb117ca2c546d586ee25fe27bec40.bindPopup(popup_c5de0f352214c870805858aa2c556565)
+        ;
+
+        
+    
+    
+            marker_01dbb117ca2c546d586ee25fe27bec40.bindTooltip(
+                `<div>
+                     HHAH: HomeHealth Network
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_01dbb117ca2c546d586ee25fe27bec40.setIcon(icon_76f1301e9dcef014b2c83ae790100e34);
+            
+    
+            var layer_control_73eddd28fdcb2746fd43cfc5d4f19d3a_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_82cdd226a65817b4424485fcc2f6bc84,
+                },
+                overlays :  {
+                    "Lubbock, TX Boundary" : geo_json_c98a5798a3fd52a5eada7bd2825a4e16,
+                },
+            };
+            let layer_control_73eddd28fdcb2746fd43cfc5d4f19d3a = L.control.layers(
+                layer_control_73eddd28fdcb2746fd43cfc5d4f19d3a_layers.base_layers,
+                layer_control_73eddd28fdcb2746fd43cfc5d4f19d3a_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_520af7969b69513e0546a6ed9904533a);
+
+        
+    
+            map_520af7969b69513e0546a6ed9904533a.fitBounds(
+                [[32.959702, -103.056485], [33.833625, -101.03866]],
+                {}
+            );
+        
+</script>
+</html>

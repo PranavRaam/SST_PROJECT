@@ -17,6 +17,8 @@ from functools import lru_cache
 import time
 from data_preloader import get_cached_msa_data, get_cached_county_data, get_cached_states_data, get_cached_county_msa_relationships, get_all_cached_data
 import sys
+import copy
+import math
 
 # Try to import customer_data_processor for virgin/non-virgin MSA information
 try:
@@ -446,9 +448,67 @@ def generate_mock_pgs_hhahs(area_name, target_area_geometry, num_pgs=5, num_hhah
     logger.info(f"Generated {len(pgs_data)} mock PGs and {len(hhahs_data)} mock HHAHs")
     return pgs_data, hhahs_data
 
-def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight=False, ultra_lightweight=False):
+def spread_markers(markers_data, min_distance=0.004):
+    """
+    Adjust marker positions to ensure they're not stacked on top of each other
+    
+    Parameters:
+    - markers_data: List of marker data with 'location' field
+    - min_distance: Minimum distance between markers in degrees
+    
+    Returns:
+    - Updated markers_data with adjusted locations
+    """
+    logger = logging.getLogger(__name__)
+    logger.info(f"Spreading out {len(markers_data)} markers to avoid overlapping")
+    
+    if len(markers_data) <= 1:
+        return markers_data
+    
+    # Create a deep copy to avoid modifying the original data
+    spread_markers_data = copy.deepcopy(markers_data)
+    
+    # First, group markers by their locations to identify duplicates
+    locations = {}
+    for i, marker in enumerate(spread_markers_data):
+        # Round location to 5 decimal places for grouping
+        key = (round(marker['location'][0], 5), round(marker['location'][1], 5))
+        if key not in locations:
+            locations[key] = []
+        locations[key].append(i)
+    
+    # Identify locations with multiple markers
+    for key, indices in locations.items():
+        if len(indices) > 1:
+            logger.info(f"Found {len(indices)} markers at location {key}")
+            
+            # Calculate radius and angle step for spreading
+            radius = min_distance
+            angle_step = 2 * math.pi / len(indices)
+            
+            # Place markers in a circle around the original point
+            for i, idx in enumerate(indices):
+                angle = i * angle_step
+                # Apply small offset in a circle around the original point
+                orig_lat, orig_lng = key
+                new_lat = orig_lat + radius * math.sin(angle)
+                new_lng = orig_lng + radius * math.cos(angle)
+                
+                # Update the marker location
+                spread_markers_data[idx]['location'] = [new_lat, new_lng]
+    
+    logger.info(f"Completed spreading {len(markers_data)} markers")
+    return spread_markers_data
+
+def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight=False, ultra_lightweight=False, spread_markers_flag=False):
     """Add PGs and HHAHs markers to the map"""
     logger = logging.getLogger(__name__)
+    
+    # Apply marker spreading if requested
+    if spread_markers_flag:
+        logger.info("Applying marker spreading to avoid overlapping")
+        pgs_data = spread_markers(pgs_data)
+        hhahs_data = spread_markers(hhahs_data)
     
     # For ultra_lightweight mode, use extremely simplified markers
     if ultra_lightweight:
@@ -613,7 +673,7 @@ def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight=False, ultra_light
     )
     m.add_child(legend)
 
-def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detailed=True, use_cached=True, force_regen=False, lightweight=False, ultra_lightweight=False):
+def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detailed=True, use_cached=True, force_regen=False, lightweight=False, ultra_lightweight=False, spread_markers=False):
     """
     Generate a map zoomed in on a specific statistical area (MSA)
     
@@ -626,11 +686,12 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
     - force_regen: Whether to force regeneration of the map (default: False)
     - lightweight: Whether to generate a lightweight version for faster loading (default: False)
     - ultra_lightweight: Whether to use extremely simplified rendering for areas with few markers (default: False)
+    - spread_markers: Whether to spread out markers to avoid overlapping (default: False)
     """
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     
-    logger.info(f"Generating map for statistical area: {area_name} with params: zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, use_cached={use_cached}, force_regen={force_regen}, lightweight={lightweight}, ultra_lightweight={ultra_lightweight}")
+    logger.info(f"Generating map for statistical area: {area_name} with params: zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, use_cached={use_cached}, force_regen={force_regen}, lightweight={lightweight}, ultra_lightweight={ultra_lightweight}, spread_markers={spread_markers}")
     start_time = time.time()
     
     # Generate cache filename
@@ -641,6 +702,8 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
         cache_file = cache_file.replace('.html', '_lightweight.html')
     if ultra_lightweight:
         cache_file = cache_file.replace('.html', '_ultra_lightweight.html')
+    if spread_markers:
+        cache_file = cache_file.replace('.html', '_spread.html')
     
     logger.info(f"Cache file path: {cache_file}")
     
@@ -873,7 +936,7 @@ def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detail
                 ).add_to(m)
         else:
             # Detailed markers for full version
-            add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight, ultra_lightweight)
+            add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight, ultra_lightweight, spread_markers)
         
         # Add essential controls - minimal for lightweight
         if not lightweight:

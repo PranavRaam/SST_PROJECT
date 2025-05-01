@@ -1,7 +1,7 @@
-    import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getApiUrl } from '../config'; // Import the API URL helper
 import './StatisticalAreaDetailView.css';
-import { fetchAgencyData, getStatisticsForArea } from '../utils/csvDataService';
+import { getAreaStatistics, getMapUrlWithProviders } from '../utils/providerDataService';
 
 // Import components from local sa_view_components
 import MapPlaceholder from './sa_view_components/MapPlaceholder';
@@ -10,6 +10,7 @@ import Listings from './sa_view_components/Listings';
 import ChartsSection from './sa_view_components/ChartsSection';
 import VivIntegratedServicesStatusMatrix from './sa_view_components/VivIntegratedServicesStatusMatrix';
 import { FunnelDataProvider } from './sa_view_components/FunnelDataContext';
+import ProviderCountOverlay from './sa_view_components/ProviderCountOverlay';
 
 // Import CSS files
 import './sa_view_css/MapPlaceholder.css';
@@ -46,27 +47,22 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
     });
   }, [statisticalArea, divisionalGroup]);
 
-  // Load the agency data
+  // Load the area statistics data
   useEffect(() => {
-    const loadAgencyData = async () => {
+    const loadAreaStatistics = async () => {
       try {
-        console.log(`Loading agency data for statistical area: ${statisticalArea}`);
-        const agencyData = await fetchAgencyData();
-        setAgencies(agencyData);
+        console.log(`Loading statistics for area: ${statisticalArea}`);
         
-        // Log the retrieved agency data for debugging
-        console.log(`Total agencies loaded: ${agencyData.length}`);
-        
-        // Calculate statistics for this area
-        const areaStats = getStatisticsForArea(agencyData, statisticalArea);
+        // Calculate statistics for this area using our new service
+        const areaStats = await getAreaStatistics(statisticalArea);
         console.log(`Statistics for ${statisticalArea}:`, areaStats);
         setStats(areaStats);
       } catch (error) {
-        console.error('Error loading agency data:', error);
+        console.error('Error loading area statistics:', error);
       }
     };
     
-    loadAgencyData();
+    loadAreaStatistics();
   }, [statisticalArea]);
 
   useEffect(() => {
@@ -127,15 +123,21 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         // Optimize map loading: prefer cached maps, reduce quality for faster loading
         const timestamp = new Date().getTime();
         // Use a lighter weight map with less detail for faster loading
-        const apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}?force_regen=${isAnchorage ? 'true' : 'false'}&use_cached=true&detailed=false&zoom=${isAnchorage ? '7' : '10'}&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&t=${timestamp}`);
+        const isLubbock = statisticalArea.toLowerCase().includes('lubbock');
+        // Force regeneration for Anchorage and Lubbock for better marker placement
+        let apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}?force_regen=${isAnchorage || isLubbock ? 'true' : 'false'}&use_cached=true&detailed=false&zoom=${isAnchorage ? '7' : '10'}&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&spread_markers=${isLubbock ? 'true' : 'false'}&t=${timestamp}`);
         
         try {
           // Attempt to fetch the map with a timeout
-          console.log(`Full request URL: ${apiUrl}`);
+          console.log(`Initial request URL: ${apiUrl}`);
+          
+          // Update the URL to include provider data
+          apiUrl = await getMapUrlWithProviders(statisticalArea, apiUrl);
+          console.log(`Updated URL with provider data: ${apiUrl}`);
           
           // Set up fetch with a timeout
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+          const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout for map generation
           
           const response = await fetch(apiUrl, {
             method: 'GET',
@@ -150,7 +152,7 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
             throw new Error(`Map request failed with status: ${response.status}`);
           }
           
-          // Set the URL directly instead of creating a blob
+          // Set the URL directly
           setMapUrl(apiUrl);
           setIsLoading(false);
           
@@ -385,7 +387,7 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         <div className="area-map-container">
           <h3>Map View of {statisticalArea}</h3>
           <div className="area-map-wrapper" style={{ position: 'relative' }}>
-            <MapPlaceholder />
+            <MapPlaceholder statisticalArea={statisticalArea} />
             <div className="map-error-overlay">
               <button className="retry-button" onClick={handleRetry}>
                 Retry Loading Map
@@ -453,78 +455,54 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
       </div>
 
       {/* Map container */}
-      <div className="area-map-container">
-        <h3>Map View of {statisticalArea}</h3>
-        <div className="area-map-wrapper">
-          {isLoading && (
-            <div className="map-loading">
-              <div className="spinner"></div>
-              {renderLoadingMessage()}
-            </div>
-          )}
-          {/* Only show iframe when mapUrl is available */}
-          {mapUrl && (
-            <iframe
+      <div className="map-container">
+        {isLoading ? (
+          renderLoadingMessage()
+        ) : error ? (
+          <div className="map-error">
+            <p>{error}</p>
+            <button onClick={handleRetry}>Retry Loading Map</button>
+          </div>
+        ) : mapUrl ? (
+          <div className="responsive-iframe-container">
+            <iframe 
               ref={iframeRef}
               src={mapUrl}
               title={`Map of ${statisticalArea}`}
-              className="area-map-frame"
+              className="map-iframe"
               onLoad={handleIframeLoad}
               onError={handleIframeError}
               allowFullScreen
-              sandbox="allow-scripts allow-same-origin allow-popups"
-              loading="eager"
-              importance="high"
-              referrerPolicy="no-referrer-when-downgrade"
-              style={{ width: '100%', height: '100%', border: 'none' }}
+              loading="lazy"
             />
-          )}
-        </div>
-        <div className="area-map-info">
-          <p>The highlighted area shows the boundaries of {statisticalArea}. Use the zoom controls to explore further.</p>
-          {useFallbackMap && (
-            <p className="fallback-notice">Using simplified map view. For better performance, refresh the page.</p>
-          )}
-          {!useFallbackMap && (
-            <>
-              <div className="map-info-legend">
-                <div className="legend-item">
-                  <span className="legend-color" style={{ backgroundColor: 'rgba(79, 70, 229, 0.2)', border: '2px solid #312E81' }}></span>
-                  <span className="legend-label">Statistical Area Boundary</span>
-                </div>
-                <div className="legend-item">
-                  <span className="legend-color marker-circle" style={{ backgroundColor: 'blue' }}></span>
-                  <span className="legend-label">Physician Groups (PGs)</span>
-                </div>
-                <div className="legend-item">
-                  <span className="legend-color marker-circle" style={{ backgroundColor: 'green' }}></span>
-                  <span className="legend-label">Home Health At Home (HHAHs)</span>
-                </div>
-              </div>
-              <p className="map-controls-info">
-                <strong>Map Controls:</strong> You can toggle layers on/off using the layers control icon <span style={{ backgroundColor: '#fff', padding: '2px 6px', border: '1px solid #ccc', borderRadius: '4px' }}><b>⊞</b></span> in the top-right corner. The "Statistical Area Boundary" checkbox toggles the highlighted region, and the "Exact Border" checkbox (if present) controls state/county borders.
-              </p>
-            </>
-          )}
-        </div>
+            {/* Add provider count overlay on top of the iframe */}
+            <ProviderCountOverlay statisticalArea={statisticalArea} />
+          </div>
+        ) : (
+          // Fallback to a placeholder if no map URL is available
+          <MapPlaceholder statisticalArea={statisticalArea} />
+        )}
       </div>
-      
-      {/* Wrap the integration content with the FunnelDataProvider */}
-      <FunnelDataProvider initialArea={statisticalArea}>
-        <div className="sa-view-integration">
-          {/* Navigation buttons for PG and HHAH services */}
-          <NavigationButtons />
-          
-          {/* Viv Integrated Services Statistics table */}
-          <VivIntegratedServicesStatusMatrix />
-          
-          {/* Listings section with tables */}
-          <Listings />
-          
-          {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
-          <ChartsSection />
-        </div>
-      </FunnelDataProvider>
+
+      {/* Main content area */}
+      <div className="main-content-area">
+        {/* Integrated services section will go here */}
+        <FunnelDataProvider initialArea={statisticalArea}>
+          <div className="sa-view-integration">
+            {/* Navigation buttons for PG and HHAH services */}
+            <NavigationButtons />
+            
+            {/* Viv Integrated Services Statistics table */}
+            <VivIntegratedServicesStatusMatrix />
+            
+            {/* Listings section with tables */}
+            <Listings />
+            
+            {/* Charts section with PieChart, PGFunnel, and HHAHFunnel */}
+            <ChartsSection />
+          </div>
+        </FunnelDataProvider>
+      </div>
     </div>
   );
 };

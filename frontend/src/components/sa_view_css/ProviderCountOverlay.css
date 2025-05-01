@@ -1,0 +1,109 @@
+.provider-count-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  pointer-events: none; /* Allow clicking through the overlay */
+}
+
+.provider-count-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.provider-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.provider-count-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.pg-icon {
+  background-color: #0000FF; /* Blue for PGs */
+  box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.3);
+}
+
+.hhah-icon {
+  background-color: #008000; /* Green for HHAHs */
+  box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.3);
+}
+
+.provider-count-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.provider-count-number {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.provider-count-label {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Loading state */
+.provider-count-overlay.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+  min-width: 180px;
+}
+
+.provider-count-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error state */
+.provider-count-overlay.error {
+  padding: 10px 15px;
+  background-color: rgba(255, 235, 235, 0.9);
+}
+
+.provider-count-error {
+  color: #e74c3c;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 768px) {
+  .provider-count-overlay {
+    top: 5px;
+    right: 5px;
+    padding: 8px;
+  }
+  
+  .provider-count-number {
+    font-size: 16px;
+  }
+  
+  .provider-count-label {
+    font-size: 10px;
+  }
+} 

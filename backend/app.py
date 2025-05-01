@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_file, request, Response
+from flask import Flask, jsonify, send_file, request, Response, make_response
 from flask_cors import CORS
 import os
 import main
@@ -14,6 +14,7 @@ import gzip
 import functools
 from io import BytesIO
 from dotenv import load_dotenv
+import csv
 
 # Load environment variables from .env file if it exists
 load_dotenv()
@@ -750,6 +751,7 @@ def get_statistical_area_map(area_name):
         zoom = int(request.args.get('zoom', 9))
         exact_boundary = request.args.get('exact_boundary', 'true').lower() == 'true'
         lightweight = request.args.get('lightweight', 'true').lower() == 'true'
+        spread_markers = request.args.get('spread_markers', 'false').lower() == 'true'
         
         # If we have real map data for this area, force regeneration
         has_few_markers = False
@@ -766,7 +768,8 @@ def get_statistical_area_map(area_name):
                 logger.info(f"Area has only {total_markers} markers, using ultra-lightweight rendering")
         
         logger.info(f"Processing parameters: force_regen={force_regen}, use_cached={use_cached}, "
-                   f"detailed={detailed}, zoom={zoom}, exact_boundary={exact_boundary}, lightweight={lightweight}")
+                   f"detailed={detailed}, zoom={zoom}, exact_boundary={exact_boundary}, lightweight={lightweight}, "
+                   f"spread_markers={spread_markers}")
         
         # Generate the map - pass has_few_markers for ultra-lightweight rendering optimization
         map_file = generate_statistical_area_map(
@@ -777,7 +780,8 @@ def get_statistical_area_map(area_name):
             use_cached=use_cached,
             force_regen=force_regen,
             lightweight=lightweight,
-            ultra_lightweight=has_few_markers  # New parameter for special optimization
+            ultra_lightweight=has_few_markers,  # New parameter for special optimization
+            spread_markers=spread_markers  # Pass parameter to spread markers
         )
         
         if map_file and os.path.exists(map_file):
@@ -917,7 +921,7 @@ def preload_data():
             "message": f"Error starting preload: {str(e)}"
         }), 500
 
-# Storage for real PG and HHAH data by statistical area
+# Global variable to store real map data for use in map generation
 real_map_data = {}
 
 @app.route('/api/update-map-data', methods=['POST'])
@@ -955,116 +959,332 @@ def update_map_data():
             "message": f"Error: {str(e)}"
         }), 500
 
-
-# Auto-sync listings with map data
-real_map_data = {}
-
-def load_listings_data():
-    """Load PG and HHAH data from listings CSV files"""
+# New API endpoint to fetch PG and HHAH data from CSV files
+@app.route('/api/fetch-provider-data', methods=['GET'])
+def fetch_provider_data():
+    """Fetch PG and HHAH data from CSV files in Actual_Data directory"""
+    logger = logging.getLogger(__name__)
+    
     try:
-        import csv
-        import os
+        area_name = request.args.get('area')
+        if not area_name:
+            return jsonify({
+                'error': 'Statistical area name is required'
+            }), 400
+            
+        # Initialize data structures for results
+        pg_data = []
+        hhah_data = []
         
-        pg_csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Listing of all PG and HHAH - PG.csv")
+        # Deduplication tracking
+        pg_names_set = set()
+        hhah_ids_set = set()
+        
+        logger.info(f"Fetching provider data for area: {area_name}")
+        
+        # Path to PG CSV file
+        pg_csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all PG.csv")
+        
+        # Path to HHAH CSV files (all three regions)
+        hhah_csv_paths = [
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH - Central_Details.csv"),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH - East_Central_Details.csv"),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH- West_Details.csv")
+        ]
+        
+        # Check if PG file exists
         if not os.path.exists(pg_csv_path):
             logger.warning(f"PG listings file not found: {pg_csv_path}")
-            return
-        
-        areas_data = {}
-        
-        with open(pg_csv_path, 'r') as f:
-            reader = csv.reader(f)
-            rows = list(reader)
-            
-            if len(rows) < 2:
-                logger.warning(f"PG CSV file has insufficient data")
-                return
-            
-            # First row contains PG names, second row contains locations
-            pg_names = rows[0]
-            pg_locations = rows[1]
-            
-            # Process each column
-            for i in range(1, len(pg_names)):
-                if not pg_names[i] or pg_names[i].strip() == '':
-                    continue
+        else:
+            # Parse PG data
+            try:
+                with open(pg_csv_path, 'r') as f:
+                    # The PG file has a specific format we need to handle
+                    # First row contains regions, second row contains cities, third row is empty, fourth row contains PG names
+                    rows = list(csv.reader(f))
                     
-                pg_name = pg_names[i].strip()
-                location = pg_locations[i].strip() if i < len(pg_locations) else ""
-                
-                if not location:
-                    continue
-                    
-                # Initialize area data if this is a new area
-                if location not in areas_data:
-                    areas_data[location] = {
-                        "area": location,
-                        "pgs": [],
-                        "hhahs": []
-                    }
-                
-                # Add PG to the appropriate area
-                areas_data[location]["pgs"].append({
-                    "name": pg_name,
-                    "Agency Type": "PG",
-                    "Address": f"{pg_name} Office, {location}",
-                    "Telephone": "(555) 123-4567"  # Placeholder
-                })
+                    if len(rows) < 4:
+                        logger.warning("PG CSV file has insufficient data")
+                    else:
+                        regions = rows[0]
+                        cities = rows[1]
+                        pg_names = rows[3]
+                        
+                        area_name_parts = area_name.lower().split()
+                        
+                        # Loop through each column to process PGs
+                        for i in range(1, len(pg_names)):
+                            if i >= len(regions) or i >= len(cities) or not pg_names[i]:
+                                continue
+                                
+                            region = regions[i] if i < len(regions) and regions[i] else regions[i-1]
+                            city = cities[i] if i < len(cities) else ""
+                            pg_name = pg_names[i]
+                            
+                            # If city contains the requested area name or a simplified version of it
+                            city_matches = (
+                                area_name.lower() in city.lower() or 
+                                any(part.lower() in city.lower() for part in area_name_parts)
+                            )
+                            
+                            if city_matches and pg_name and pg_name not in pg_names_set:
+                                # Add PG data only if we haven't seen this name before
+                                pg_names_set.add(pg_name)
+                                pg_data.append({
+                                    "name": pg_name,
+                                    "city": city,
+                                    "region": region,
+                                    "type": "PG"
+                                })
+                                logger.debug(f"Found PG in {city}: {pg_name}")
+                                
+            except Exception as e:
+                logger.error(f"Error reading PG CSV file: {str(e)}")
         
-        # Now add HHAH data if available
-        hhah_csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Listing of all PG and HHAH - HHAH.csv")
-        if os.path.exists(hhah_csv_path):
-            with open(hhah_csv_path, 'r') as f:
-                reader = csv.reader(f)
-                rows = list(reader)
+        # Process HHAH data from all three region files
+        for hhah_csv_path in hhah_csv_paths:
+            if not os.path.exists(hhah_csv_path):
+                logger.warning(f"HHAH listings file not found: {hhah_csv_path}")
+                continue
                 
-                if len(rows) >= 2:
-                    # First row contains HHAH names
-                    hhah_names = rows[0] 
-                    hhah_locations = rows[1]
+            try:
+                with open(hhah_csv_path, 'r') as f:
+                    reader = csv.reader(f)
+                    header_row = True
                     
-                    # Process each column
-                    for i in range(1, len(hhah_names)):
-                        if not hhah_names[i] or hhah_names[i].strip() == '':
+                    # Process each row in the HHAH file
+                    for row in reader:
+                        # Skip header row
+                        if header_row:
+                            header_row = False
                             continue
                             
-                        hhah_name = hhah_names[i].strip()
-                        location = hhah_locations[i].strip() if i < len(hhah_locations) else ""
-                        
-                        if not location:
+                        if len(row) < 6:
                             continue
                             
-                        # Initialize area data if this is a new area
-                        if location not in areas_data:
-                            areas_data[location] = {
-                                "area": location,
-                                "pgs": [],
-                                "hhahs": []
-                            }
+                        # Extract relevant fields
+                        # Format is approximately: ID, Name, Address, State, City, ZIP, Area, Phone, Email, Status
+                        hhah_id = row[0] if len(row) > 0 else ""
+                        hhah_name = row[1] if len(row) > 1 else ""
+                        city = row[4] if len(row) > 4 else ""
+                        area = row[6] if len(row) > 6 else ""
                         
-                        # Add HHAH to the appropriate area
-                        areas_data[location]["hhahs"].append({
-                            "Agency Name": hhah_name,
-                            "Agency Type": "HHAH",
-                            "Address": f"{hhah_name} Office, {location}",
-                            "Telephone": "(555) 987-6543"  # Placeholder
-                        })
+                        area_name_parts = area_name.lower().split()
+                        
+                        # Filter by the requested area with improved matching logic
+                        area_matches = (
+                            area_name.lower() in area.lower() or 
+                            area_name.lower() in city.lower() or 
+                            any(part.lower() in area.lower() for part in area_name_parts) or
+                            any(part.lower() in city.lower() for part in area_name_parts)
+                        )
+                        
+                        if area_matches and hhah_id and hhah_id not in hhah_ids_set:
+                            # Add HHAH data only if we haven't seen this ID before
+                            hhah_ids_set.add(hhah_id)
+                            hhah_data.append({
+                                "id": hhah_id,
+                                "name": hhah_name,
+                                "city": city,
+                                "area": area,
+                                "type": "HHAH"
+                            })
+                            logger.debug(f"Found HHAH in {city}/{area}: {hhah_name}")
+            
+            except Exception as e:
+                logger.error(f"Error reading HHAH CSV file {hhah_csv_path}: {str(e)}")
         
-        # Now update real_map_data with our loaded data
-        global real_map_data
-        real_map_data = areas_data
+        # Generate statistics
+        result = {
+            "area": area_name,
+            "pg_count": len(pg_data),
+            "hhah_count": len(hhah_data),
+            "pg_data": pg_data,
+            "hhah_data": hhah_data
+        }
         
-        # Log what we loaded
-        for area, data in areas_data.items():
-            logger.info(f"Loaded listings data for {area}: {len(data['pgs'])} PGs and {len(data['hhahs'])} HHAHs")
+        logger.info(f"Retrieved {len(pg_data)} unique PGs and {len(hhah_data)} unique HHAHs for area '{area_name}'")
         
-        return areas_data
+        return jsonify(result)
+        
     except Exception as e:
-        logger.exception(f"Error loading listings data: {str(e)}")
-        return {}
+        logger.error(f"Error processing provider data: {str(e)}")
+        return jsonify({
+            'error': f'Failed to process provider data: {str(e)}'
+        }), 500
 
-# Load listings data at startup
-load_listings_data()
+# Enable CORS for the new endpoint
+@app.route('/api/fetch-provider-data', methods=['OPTIONS'])
+def fetch_provider_data_options():
+    """Enable CORS for fetch-provider-data endpoint"""
+    response = make_response()
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,OPTIONS')
+    return response
+
+def update_real_map_data():
+    """
+    Update the real_map_data global variable with provider data from CSV files
+    This ensures that maps are generated with real provider data
+    """
+    logger = logging.getLogger(__name__)
+    logger.info("Updating real map data from CSV files")
+    
+    try:
+        # Path to PG CSV file
+        pg_csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all PG.csv")
+        
+        # Path to HHAH CSV files (all three regions)
+        hhah_csv_paths = [
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH - Central_Details.csv"),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH - East_Central_Details.csv"),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH- West_Details.csv")
+        ]
+        
+        # Create dictionary to map cities to areas/regions
+        city_to_area = {}
+        # Dictionary to store the real map data
+        area_data = {}
+        
+        # Process PG file to identify areas/regions
+        if os.path.exists(pg_csv_path):
+            try:
+                with open(pg_csv_path, 'r') as f:
+                    rows = list(csv.reader(f))
+                    
+                    if len(rows) >= 4:
+                        regions = rows[0]
+                        cities = rows[1]
+                        
+                        # Create mapping from cities to areas
+                        for i in range(1, len(cities)):
+                            if cities[i] and i < len(regions):
+                                region = regions[i] if regions[i] else regions[i-1]
+                                city = cities[i]
+                                
+                                # Map city to area (simplify the area name to match more easily)
+                                city_to_area[city.lower()] = city
+                                
+                                # Initialize data for this area
+                                if city not in area_data:
+                                    area_data[city] = {
+                                        'pgs': [],
+                                        'hhahs': []
+                                    }
+                                    
+                        # Process PGs
+                        pg_names = rows[3]
+                        
+                        for i in range(1, len(pg_names)):
+                            if i >= len(regions) or i >= len(cities) or not pg_names[i]:
+                                continue
+                                
+                            region = regions[i] if i < len(regions) and regions[i] else regions[i-1]
+                            city = cities[i]
+                            pg_name = pg_names[i]
+                            
+                            if city in area_data:
+                                # Add PG to area data
+                                area_data[city]['pgs'].append({
+                                    'name': pg_name,
+                                    'group': 'Primary Provider',
+                                    'physicians': 5,  # Default value
+                                    'patients': 75,   # Default value
+                                    'status': 'Active',
+                                    'address': f"{pg_name}, {city}",
+                                    'contact': "Contact information unavailable"
+                                })
+                
+            except Exception as e:
+                logger.error(f"Error processing PG file for real map data: {str(e)}")
+        
+        # Process HHAH files
+        for hhah_csv_path in hhah_csv_paths:
+            if not os.path.exists(hhah_csv_path):
+                continue
+                
+            try:
+                with open(hhah_csv_path, 'r') as f:
+                    reader = csv.reader(f)
+                    header_row = True
+                    
+                    for row in reader:
+                        # Skip header row
+                        if header_row:
+                            header_row = False
+                            continue
+                            
+                        if len(row) < 6:
+                            continue
+                            
+                        # Extract relevant fields
+                        hhah_id = row[0] if len(row) > 0 else ""
+                        hhah_name = row[1] if len(row) > 1 else ""
+                        address = row[2] if len(row) > 2 else ""
+                        state = row[3] if len(row) > 3 else ""
+                        city = row[4] if len(row) > 4 else ""
+                        zipcode = row[5] if len(row) > 5 else ""
+                        area = row[6] if len(row) > 6 else ""
+                        phone = row[7] if len(row) > 7 else ""
+                        agency_type = row[9] if len(row) > 9 else "Not Specified"
+                        
+                        # Find matching area
+                        area_key = None
+                        
+                        # Try matching by exact city name
+                        if city in area_data:
+                            area_key = city
+                        
+                        # Try matching by area name
+                        if not area_key and area in area_data:
+                            area_key = area
+                            
+                        # Try matching by normalized city name
+                        if not area_key:
+                            city_lower = city.lower()
+                            if city_lower in city_to_area:
+                                matched_city = city_to_area[city_lower]
+                                if matched_city in area_data:
+                                    area_key = matched_city
+                        
+                        # Try matching by area parts
+                        if not area_key:
+                            for known_area in area_data.keys():
+                                if known_area.lower() in area.lower() or area.lower() in known_area.lower():
+                                    area_key = known_area
+                                    break
+                        
+                        # If we found a matching area, add HHAH data
+                        if area_key:
+                            # Add HHAH to area data
+                            area_data[area_key]['hhahs'].append({
+                                'id': hhah_id,
+                                'Agency Name': hhah_name,
+                                'services': 3,  # Default value
+                                'patients': 50,  # Default value
+                                'Agency Type': agency_type,
+                                'Address': f"{address}, {city}, {state} {zipcode}",
+                                'Telephone': phone
+                            })
+                
+            except Exception as e:
+                logger.error(f"Error processing HHAH file for real map data: {str(e)}")
+        
+        # Update the global variable
+        global real_map_data
+        real_map_data = area_data
+        
+        # Log the areas found
+        logger.info(f"Updated real map data for {len(area_data)} areas: {', '.join(area_data.keys())}")
+        for area, data in area_data.items():
+            logger.info(f"  • {area}: {len(data['pgs'])} PGs, {len(data['hhahs'])} HHAHs")
+                
+    except Exception as e:
+        logger.error(f"Error updating real map data: {str(e)}")
+    
+# Initialize real map data when the server starts
+update_real_map_data()
 
 if __name__ == '__main__':
     # Try to preload data at startup
