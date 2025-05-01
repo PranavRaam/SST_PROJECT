@@ -2748,24 +2748,7 @@ const PGView = () => {
           <div className="reports-section">
             <div className="reports-section-header">
               <h4 className="reports-section-title">MBR Reports</h4>
-              <button className="action-button" onClick={() => {
-                const fileName = `MBR_Report_${new Date().toISOString().split('T')[0]}.pdf`;
-                const notes = window.prompt("Enter MBR report notes:", "Monthly business review");
-                if (notes) {
-                  setValueCommunicationState(prev => ({
-                    ...prev,
-                    reports: [
-                      ...prev.reports,
-                      {
-                        id: prev.reports.length + 1,
-                        fileName,
-                        notes,
-                        date: new Date().toISOString().split('T')[0]
-                      }
-                    ]
-                  }));
-                }
-              }}>
+              <button className="action-button" onClick={() => handleReportUpload('mbr')}>
                 <span className="icon">+</span> Add MBR Report
               </button>
             </div>
@@ -2801,24 +2784,7 @@ const PGView = () => {
           <div className="reports-section">
             <div className="reports-section-header">
               <h4 className="reports-section-title">Weekly Reports</h4>
-              <button className="action-button" onClick={() => {
-                const fileName = `Weekly_Update_${new Date().getDate()}.pdf`;
-                const notes = window.prompt("Enter weekly report notes:", "Weekly progress report");
-                if (notes) {
-                  setValueCommunicationState(prev => ({
-                    ...prev,
-                    reports: [
-                      ...prev.reports,
-                      {
-                        id: prev.reports.length + 1,
-                        fileName,
-                        notes,
-                        date: new Date().toISOString().split('T')[0]
-                      }
-                    ]
-                  }));
-                }
-              }}>
+              <button className="action-button" onClick={() => handleReportUpload('weekly')}>
                 <span className="icon">+</span> Add Weekly Report
               </button>
             </div>
@@ -4327,6 +4293,114 @@ Operations Team
     )
   );
 
+  const [showReportUploadModal, setShowReportUploadModal] = useState(false);
+  const [reportUploadData, setReportUploadData] = useState({
+    type: '', // 'mbr' or 'weekly'
+    file: null,
+    notes: '',
+    date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+  });
+
+  const handleReportUpload = (type) => {
+    setReportUploadData(prev => ({
+      ...prev,
+      type,
+      file: null,
+      notes: '',
+      date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+    }));
+    setShowReportUploadModal(true);
+  };
+
+  const handleFileChange = (e) => {
+    setReportUploadData(prev => ({
+      ...prev,
+      file: e.target.files[0]
+    }));
+  };
+
+  const handleNotesChange = (e) => {
+    setReportUploadData(prev => ({
+      ...prev,
+      notes: e.target.value
+    }));
+  };
+
+  const handleReportSubmit = () => {
+    if (!reportUploadData.file || !reportUploadData.notes) {
+      alert('Please upload a file and enter notes');
+      return;
+    }
+
+    const fileName = reportUploadData.type === 'mbr' 
+      ? `MBR_Report_${new Date().toISOString().split('T')[0]}.pdf`
+      : `Weekly_Update_${new Date().getDate()}.pdf`;
+
+    setValueCommunicationState(prev => ({
+      ...prev,
+      reports: [
+        ...prev.reports,
+        {
+          id: prev.reports.length + 1,
+          fileName,
+          notes: reportUploadData.notes,
+          date: reportUploadData.date,
+          file: reportUploadData.file
+        }
+      ]
+    }));
+
+    setShowReportUploadModal(false);
+  };
+
+  const renderReportUploadModal = () => {
+    if (!showReportUploadModal) return null;
+    
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h3>Upload {reportUploadData.type === 'mbr' ? 'MBR' : 'Weekly'} Report</h3>
+            <button className="close-button" onClick={() => setShowReportUploadModal(false)}>×</button>
+          </div>
+          <div className="modal-body">
+            <div className="form-group">
+              <label>Upload File</label>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                className="file-input"
+              />
+            </div>
+            <div className="form-group">
+              <label>Notes</label>
+              <textarea
+                value={reportUploadData.notes}
+                onChange={handleNotesChange}
+                placeholder="Enter report summary..."
+                className="notes-input"
+              />
+            </div>
+            <div className="form-group">
+              <label>Date</label>
+              <input
+                type="text"
+                value={reportUploadData.date}
+                readOnly
+                className="date-input"
+              />
+            </div>
+          </div>
+          <div className="modal-footer">
+            <button className="cancel-button" onClick={() => setShowReportUploadModal(false)}>Cancel</button>
+            <button className="submit-button" onClick={handleReportSubmit}>Upload Report</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="pg-view-container">
       {renderHeader()}
@@ -4340,6 +4414,7 @@ Operations Team
         </div>
       )}
       {renderValidationModal()}
+      {renderReportUploadModal()}
     </div>
   );
 };
