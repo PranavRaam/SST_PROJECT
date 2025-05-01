@@ -18,6 +18,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker as MUIDatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
+import dayjs from 'dayjs';
 
 const PGView = () => {
   const navigate = useNavigate();
@@ -2056,11 +2057,10 @@ const PGView = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                       label="Billing Start Date"
-                      value={selectedDateRange.start ? new Date(selectedDateRange.start) : null}
-                      onChange={(date) => handleDateRangeChange({ target: { name: 'start', value: date ? date.toISOString().split('T')[0] : '' } })}
-                      renderInput={(params) => <TextField {...params} size="small" fullWidth />}
-                      inputFormat="MM-dd-yyyy"
-                      clearable
+                      value={selectedDateRange.start ? dayjs(selectedDateRange.start) : null}
+                      onChange={(date) => handleDateRangeChange({ target: { name: 'start', value: date ? date.format('YYYY-MM-DD') : '' } })}
+                      slotProps={{ textField: { size: 'small', fullWidth: true } }}
+                      format="MM-DD-YYYY"
                     />
                   </LocalizationProvider>
                 </div>
@@ -2069,11 +2069,10 @@ const PGView = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                       label="Billing End Date"
-                      value={selectedDateRange.end ? new Date(selectedDateRange.end) : null}
-                      onChange={(date) => handleDateRangeChange({ target: { name: 'end', value: date ? date.toISOString().split('T')[0] : '' } })}
-                      renderInput={(params) => <TextField {...params} size="small" fullWidth />}
-                      inputFormat="MM-dd-yyyy"
-                      clearable
+                      value={selectedDateRange.end ? dayjs(selectedDateRange.end) : null}
+                      onChange={(date) => handleDateRangeChange({ target: { name: 'end', value: date ? date.format('YYYY-MM-DD') : '' } })}
+                      slotProps={{ textField: { size: 'small', fullWidth: true } }}
+                      format="MM-DD-YYYY"
                     />
                   </LocalizationProvider>
                 </div>

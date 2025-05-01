@@ -14,7 +14,9 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "postinstall": "[ -d \"node_modules\" ] || npm install concurrently --no-save"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dayjs": "^1.11.13"
+  },
   "devDependencies": {
     "concurrently": "^7.6.0"
   },
@@ -22,4 +24,4 @@
     "node_modules",
     "frontend/node_modules"
   ]
-} 
+}
