@@ -41,7 +41,8 @@ export const fetchWithCORSHandling = async (url, options = {}) => {
         'Content-Type': 'application/json',
         ...options.headers,
       },
-      mode: 'cors', // Ensure CORS mode is set
+      mode: 'cors',
+      credentials: 'include', // Include credentials in the request
     });
     
     if (!response.ok) {
@@ -53,20 +54,28 @@ export const fetchWithCORSHandling = async (url, options = {}) => {
   } catch (error) {
     console.error('CORS or Fetch Error:', error);
     
-    // For CORS errors, try again with a no-cors mode as a fallback (this will return an opaque response)
+    // For CORS errors, try again without credentials
     if (error.message && error.message.includes('CORS')) {
-      console.log('Trying again with no-cors mode...');
+      console.log('Trying again without credentials...');
       try {
-        await fetch(url, {
+        const response = await fetch(url, {
           ...options,
-          mode: 'no-cors',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            ...options.headers,
+          },
+          mode: 'cors',
+          credentials: 'omit',
         });
         
-        // If we get here, no-cors worked but we can't read the response
-        // Return a default "success" to prevent UI errors
-        return { success: true, fallback: true };
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+        
+        return await response.json();
       } catch (fallbackError) {
-        console.error('Even no-cors failed:', fallbackError);
+        console.error('Fallback request failed:', fallbackError);
         throw fallbackError;
       }
     }

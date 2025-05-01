@@ -22,19 +22,19 @@ load_dotenv()
 app = Flask(__name__)
 
 # Get CORS settings from environment
-cors_origins = os.environ.get('CORS_ORIGINS', 'https://sst-frontend-swart.vercel.app,http://localhost:3000,https://sst-project.onrender.com,https://sst-project-kappa.vercel.app,https://sst-project-kappa.vercel.app').split(',')
+cors_origins = os.environ.get('CORS_ORIGINS', 'https://sst-frontend-swart.vercel.app,http://localhost:3000,https://sst-project.onrender.com,https://sst-project-kappa.vercel.app').split(',')
 cors_origins.extend(['https://sst-project-kappa.vercel.app', 'https://sst-project-git-main-vivnovation.vercel.app', 'https://sst-project-kappa-git-main-vivnovation.vercel.app', 'https://sst-project.vercel.app'])
 logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
 
 # Enable CORS with specific options for production
 CORS(app, 
     resources={r"/api/*": {
-        "origins": cors_origins,  # Use the specific origins from environment variable
+        "origins": cors_origins,
         "supports_credentials": True,
-        "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With"],
+        "allow_headers": ["Content-Type", "Authorization", "Cache-Control", "X-Requested-With", "Accept", "Origin"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "expose_headers": ["Content-Type", "Content-Length", "Content-Disposition", "X-Frame-Options"],
-        "max_age": 86400  # Cache preflight requests for 24 hours
+        "max_age": 86400
     }}
 )
 
@@ -183,7 +183,6 @@ def compress_response(response):
 # Custom middleware to handle CORS for ALL responses
 @app.after_request
 def add_cors_headers(response):
-    # Add CORS headers to all responses
     origin = request.headers.get('Origin', '')
     
     # Log the incoming origin for debugging
@@ -194,35 +193,23 @@ def add_cors_headers(response):
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
     elif origin and 'vercel.app' in origin:
-        # Allow all Vercel domains
         response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         logger.info(f"Allowed Vercel origin: {origin}")
-    elif '*' in cors_origins:
-        # Only use wildcard when explicitly configured and no credentials are needed
-        response.headers['Access-Control-Allow-Origin'] = '*'
     else:
-        # Fallback to allow the origin for API endpoints
+        # For API endpoints, allow the origin
         if request.path.startswith('/api/'):
             response.headers['Access-Control-Allow-Origin'] = origin if origin else '*'
-            logger.info(f"Fallback: Allowed origin for API endpoint: {origin if origin else '*'}")
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            logger.info(f"Allowed origin for API endpoint: {origin if origin else '*'}")
     
     # Always set these headers for OPTIONS requests (preflight)
     if request.method == 'OPTIONS':
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Cache-Control, X-Requested-With, Accept, Origin'
-        response.headers['Access-Control-Max-Age'] = '86400'  # 24 hours in seconds
-    else:
-        # For non-preflight requests, still set basic CORS headers
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS, PUT, DELETE'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Cache-Control, X-Requested-With'
-        response.headers['Access-Control-Max-Age'] = '86400'  # 24 hours in seconds
+        response.headers['Access-Control-Max-Age'] = '86400'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
     
-    # For iframe embedding
-    if response.mimetype == 'text/html':
-        response.headers['X-Frame-Options'] = 'ALLOWALL'
-        response.headers['Content-Security-Policy'] = "frame-ancestors *"
-        
     return response
 
 # Specific route for handling preflight CORS OPTIONS requests
