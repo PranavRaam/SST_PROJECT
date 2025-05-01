@@ -111,11 +111,42 @@ const MapViewer = () => {
       setMapDebugInfo(prev => `${prev}\nMap load timeout reached`);
     }, 10000); // 10 second timeout
 
+    // Create a MutationObserver to watch for DOM changes in the iframe
+    let observer = null;
+    const watchForExportButton = () => {
+      try {
+        if (iframeRef.current && iframeRef.current.contentDocument) {
+          // Set up the observer
+          observer = new MutationObserver((mutations) => {
+            hideExportButton();
+          });
+          
+          // Start observing
+          observer.observe(iframeRef.current.contentDocument.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+          });
+          
+          console.log('[Map Diagnostic] Export button observer installed');
+        }
+      } catch (e) {
+        console.error('[Map Diagnostic] Failed to set up export button observer:', e);
+      }
+    };
+    
+    // Try to set up the observer after a delay to ensure iframe is loaded
+    const observerTimeout = setTimeout(watchForExportButton, 3000);
+
     return () => {
       window.removeEventListener('message', handleIframeMessage);
       if (loadTimeoutRef.current) {
         clearTimeout(loadTimeoutRef.current);
       }
+      if (observer) {
+        observer.disconnect();
+      }
+      clearTimeout(observerTimeout);
     };
   }, []);
   
@@ -205,12 +236,152 @@ const MapViewer = () => {
             enableControls: true,
             enableSearch: false,
             showLayerControl: true,
-            hideMSA: true
+            hideMSA: true,
+            disableExport: true
           }
         }, '*');
+        
+        // Try to directly disable export via DOM manipulation
+        setTimeout(() => {
+          hideExportButton();
+        }, 500);
       }
     } catch (e) {
       console.error('[Map Controls] Failed to initialize controls:', e);
+    }
+  };
+
+  // Function to hide the search control
+  const hideSearchControl = () => {
+    try {
+      const iframe = iframeRef.current;
+      if (iframe && iframe.contentDocument) {
+        const searchControl = iframe.contentDocument.querySelector('.leaflet-control-search');
+        if (searchControl) {
+          searchControl.style.display = 'none';
+          console.log('[Map Diagnostic] Hidden search control');
+          setMapDebugInfo(prev => `${prev}\nHidden search control`);
+        }
+      }
+    } catch (e) {
+      console.error('[Map Diagnostic] Failed to hide search control:', e);
+    }
+  };
+
+  // Function to hide the export button
+  const hideExportButton = () => {
+    try {
+      const iframe = iframeRef.current;
+      if (iframe && iframe.contentDocument) {
+        // Try multiple selectors to find the export button
+        const exportSelectors = [
+          '.export-button',
+          '.leaflet-control-export',
+          'button:contains("Export")',
+          'div:contains("Export")',
+          '[class*="export"]',
+          '.leaflet-top.leaflet-right button',
+          '.leaflet-top.leaflet-right div'
+        ];
+        
+        let found = false;
+        
+        for (const selector of exportSelectors) {
+          try {
+            const elements = iframe.contentDocument.querySelectorAll(selector);
+            elements.forEach(el => {
+              if (el.innerText && el.innerText.includes('Export') || 
+                  el.className && el.className.includes('export')) {
+                el.style.display = 'none';
+                el.style.visibility = 'hidden';
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+                found = true;
+                console.log('[Map Diagnostic] Hidden export element via selector:', selector);
+              }
+            });
+          } catch (selectorError) {
+            console.warn('[Map Diagnostic] Error with selector', selector, selectorError);
+          }
+        }
+        
+        // Inject a style tag to ensure export is hidden
+        const styleTag = iframe.contentDocument.createElement('style');
+        styleTag.textContent = `
+          .export-button, 
+          [class*="export"], 
+          button:contains("Export"), 
+          div:contains("Export"),
+          .leaflet-top.leaflet-right .export-button,
+          .leaflet-control-export {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            width: 0 !important;
+            height: 0 !important;
+          }
+        `;
+        iframe.contentDocument.head.appendChild(styleTag);
+        
+        // Inject a script to find and hide the export button
+        const scriptTag = iframe.contentDocument.createElement('script');
+        scriptTag.textContent = `
+          (function() {
+            function hideExportElements() {
+              // Find by text content
+              document.querySelectorAll('button, div').forEach(el => {
+                if (el.innerText && el.innerText.includes('Export')) {
+                  el.style.display = 'none';
+                  el.style.visibility = 'hidden';
+                }
+              });
+              
+              // Find by class name
+              document.querySelectorAll('[class*="export"]').forEach(el => {
+                el.style.display = 'none';
+                el.style.visibility = 'hidden';
+              });
+              
+              // Find specific button in leaflet controls
+              var topRightControls = document.querySelector('.leaflet-top.leaflet-right');
+              if (topRightControls) {
+                topRightControls.querySelectorAll('button, div').forEach(el => {
+                  if (el.innerText && el.innerText.includes('Export')) {
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                  }
+                });
+              }
+            }
+            
+            // Run immediately
+            hideExportElements();
+            
+            // Also run on any DOM changes
+            var observer = new MutationObserver(hideExportElements);
+            observer.observe(document.body, { 
+              childList: true, 
+              subtree: true,
+              attributes: true
+            });
+            
+            // Also run on any window messages about map controls
+            window.addEventListener('message', function(event) {
+              if (event.data && (event.data.type === 'MAP_INIT' || event.data.type === 'MAP_CONTROLS_INIT')) {
+                setTimeout(hideExportElements, 100);
+              }
+            });
+          })();
+        `;
+        iframe.contentDocument.head.appendChild(scriptTag);
+        
+        if (found) {
+          setMapDebugInfo(prev => `${prev}\nHidden export elements`);
+        }
+      }
+    } catch (e) {
+      console.error('[Map Diagnostic] Failed to hide export button:', e);
     }
   };
 
@@ -231,7 +402,8 @@ const MapViewer = () => {
             show_msas: false,
             enableControls: true,
             enableSearch: false,
-            hideMSA: true
+            hideMSA: true,
+            disableExport: true
           }
         }, '*');
         setMapDebugInfo(prev => `${prev}\nMAP_INIT message sent to iframe`);
@@ -240,6 +412,7 @@ const MapViewer = () => {
         setTimeout(() => {
           hideMSAElements();
           hideSearchControl();
+          hideExportButton();
           
           // Inject the hide-msa.js script into the iframe
           try {
@@ -255,14 +428,21 @@ const MapViewer = () => {
             console.error('[Map Diagnostic] Failed to inject hide-msa.js script:', e);
             setMapDebugInfo(prev => `${prev}\nError injecting script: ${e.message}`);
           }
-        }, 2000);
+        }, 1000);
       }
     } catch (e) {
-      console.log('[Map Diagnostic] Failed to initialize map:', e);
-      setMapDebugInfo(prev => `${prev}\nError initializing map: ${e.message}`);
+      console.error('[Map Diagnostic] Error in iframe load handler:', e);
+      setMapDebugInfo(prev => `${prev}\nError in iframe load: ${e.message}`);
     }
     
-    setIsLoading(false);
+    // Try again to hide elements after a longer delay to ensure the map is fully rendered
+    setTimeout(() => {
+      try {
+        hideExportButton();
+      } catch (e) {
+        console.error('[Map Diagnostic] Error in delayed export button hide:', e);
+      }
+    }, 2500);
   };
 
   const handleIframeError = (e) => {
@@ -317,23 +497,6 @@ const MapViewer = () => {
     }
   };
 
-  // Function to hide the search control
-  const hideSearchControl = () => {
-    try {
-      const iframe = iframeRef.current;
-      if (iframe && iframe.contentDocument) {
-        const searchControl = iframe.contentDocument.querySelector('.leaflet-control-search');
-        if (searchControl) {
-          searchControl.style.display = 'none';
-          console.log('[Map Diagnostic] Hidden search control');
-          setMapDebugInfo(prev => `${prev}\nHidden search control`);
-        }
-      }
-    } catch (e) {
-      console.error('[Map Diagnostic] Failed to hide search control:', e);
-    }
-  };
-
   if (error) {
     return (
       <div className="map-error">
@@ -355,7 +518,7 @@ const MapViewer = () => {
   }
 
   // Prepare iframe src with cache-busting strategy that won't cause flickering
-  const iframeSrc = `${getApiUrl('/api/map')}?stable=true&r=${mapKey}&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true`;
+  const iframeSrc = `${getApiUrl('/api/map')}?stable=true&r=${mapKey}&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false`;
 
   return (
     <div className="map-container">

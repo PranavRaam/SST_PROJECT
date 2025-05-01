@@ -15,7 +15,7 @@ import autoTable from 'jspdf-autotable';
 import { usePatientContext } from '../../context/PatientContext';
 import { getMockPatientsByPG, mockDataDates } from '../../utils/mockDataService';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker as MUIDatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 
@@ -2053,7 +2053,7 @@ const PGView = () => {
                 
                 <div className="form-group">
                   <label>Billing Start Date</label>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                       label="Billing Start Date"
                       value={selectedDateRange.start ? new Date(selectedDateRange.start) : null}
@@ -2066,7 +2066,7 @@ const PGView = () => {
                 </div>
                 <div className="form-group">
                   <label>Billing End Date</label>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                       label="Billing End Date"
                       value={selectedDateRange.end ? new Date(selectedDateRange.end) : null}

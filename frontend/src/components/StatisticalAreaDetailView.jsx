@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+    import React, { useState, useEffect, useRef } from 'react';
 import { getApiUrl } from '../config'; // Import the API URL helper
 import './StatisticalAreaDetailView.css';
 import { fetchAgencyData, getStatisticsForArea } from '../utils/csvDataService';

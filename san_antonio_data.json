@@ -1,0 +1,25 @@
+{
+  "area": "San Antonio",
+  "pgs": [
+    {
+      "name": "Sample PG 1",
+      "Agency Type": "PG",
+      "Address": "123 Main St, San Antonio",
+      "Telephone": "(555) 123-4567"
+    }
+  ],
+  "hhahs": [
+    {
+      "Agency Name": "Sample HHAH 1",
+      "Agency Type": "HHAH",
+      "Address": "456 Elm St, San Antonio",
+      "Telephone": "(555) 765-4321"
+    },
+    {
+      "Agency Name": "Sample HHAH 2",
+      "Agency Type": "HHAH",
+      "Address": "789 Oak St, San Antonio",
+      "Telephone": "(555) 987-6543"
+    }
+  ]
+}

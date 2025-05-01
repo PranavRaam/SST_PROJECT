@@ -1,8 +1,8 @@
 .map-container {
   position: relative;
   width: 100%;
-  height: 100vh;
-  min-height: 600px;
+  height: 85vh;
+  min-height: 700px;
   background-color: #FAFAFA;
   overflow: hidden;
   border-radius: 8px;
@@ -11,6 +11,7 @@
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  margin-bottom: 20px;
 }
 
 .map-frame {
@@ -134,8 +135,12 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .map-container {
-    height: calc(100vh - 60px);
-    min-height: 400px;
+    height: calc(85vh - 60px);
+    min-height: 500px;
+  }
+  
+  :global(.map-frame) :global(.leaflet-control-layers) {
+    min-width: 180px !important;
   }
 }
 
@@ -250,4 +255,85 @@
   right: 10px;
   z-index: 1000;
   width: 240px;
+}
+
+/* Improve filter controls visibility and clickability */
+:global(.map-frame) :global(.leaflet-control-layers) {
+  top: 10px !important;
+  right: 10px !important;
+  position: absolute !important;
+  background: white !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  min-width: 200px !important;
+  z-index: 999 !important;
+}
+
+:global(.map-frame) :global(.leaflet-control-layers-list) {
+  margin: 0 !important;
+  padding: 4px !important;
+}
+
+:global(.map-frame) :global(.leaflet-control-layers label) {
+  margin: 0 !important;
+  padding: 6px 8px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+:global(.map-frame) :global(.leaflet-control-layers label:hover) {
+  background-color: #f3f4f6 !important;
+}
+
+:global(.map-frame) :global(.leaflet-control-layers input[type="checkbox"]) {
+  margin: 0 !important;
+  cursor: pointer !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+:global(.map-frame) :global(.leaflet-control-layers span) {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+/* Hide export button and related elements - more specific selectors */
+:global(.map-frame) :global(.leaflet-top.leaflet-right) :global(.export-button),
+:global(.map-frame) :global(.leaflet-top.leaflet-right) :global(.export-control),
+:global(.map-frame) :global(.leaflet-control-layers-toggle),
+:global(.map-frame) :global(.leaflet-control-layers-expanded),
+:global(.map-frame) :global(.leaflet-control-layers),
+:global(.map-frame) :global([class*="export"]),
+:global(.map-frame) button:contains("Export"),
+:global(.map-frame) div:contains("Export"),
+.export-button,
+.export-control {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Ensure layer controls are positioned correctly */
+:global(.map-frame) :global(.leaflet-control-layers) {
+  top: 10px !important;
+  right: 10px !important;
+  position: absolute !important;
+}
+
+/* Remove export-related responsive adjustments */
+@media (max-width: 768px) {
+  :global(.map-frame) :global(.leaflet-control-layers) {
+    top: 10px !important;  /* Reset to top position */
+  }
 } 
