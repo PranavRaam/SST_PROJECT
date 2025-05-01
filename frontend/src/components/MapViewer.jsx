@@ -8,8 +8,10 @@ const MapViewer = () => {
   const [mapDebugInfo, setMapDebugInfo] = useState(null);
   const iframeRef = useRef(null);
   const loadTimeoutRef = useRef(null);
+  const resizeObserverRef = useRef(null);
   const [mapKey, setMapKey] = useState(`map-${Date.now()}`); // Stable key for iframe
   const [showLayerControls, setShowLayerControls] = useState(true);
+  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     const checkMap = async () => {
@@ -111,6 +113,34 @@ const MapViewer = () => {
       setMapDebugInfo(prev => `${prev}\nMap load timeout reached`);
     }, 10000); // 10 second timeout
 
+    // Set up resize observer to track container size changes
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserverRef.current = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          const { width, height } = entry.contentRect;
+          setContainerDimensions({ width, height });
+          
+          // If iframe is loaded, send resize message
+          if (iframeRef.current && iframeRef.current.contentWindow) {
+            try {
+              iframeRef.current.contentWindow.postMessage({
+                type: 'MAP_RESIZE',
+                data: { width, height }
+              }, '*');
+            } catch (e) {
+              console.error('[Map Resize] Failed to notify iframe of resize:', e);
+            }
+          }
+        }
+      });
+      
+      // Start observing the container
+      const container = document.querySelector('.map-container');
+      if (container) {
+        resizeObserverRef.current.observe(container);
+      }
+    }
+
     // Create a MutationObserver to watch for DOM changes in the iframe
     let observer = null;
     const watchForExportButton = () => {
@@ -142,6 +172,9 @@ const MapViewer = () => {
       window.removeEventListener('message', handleIframeMessage);
       if (loadTimeoutRef.current) {
         clearTimeout(loadTimeoutRef.current);
+      }
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
       }
       if (observer) {
         observer.disconnect();
@@ -386,63 +419,52 @@ const MapViewer = () => {
   };
 
   const handleIframeLoad = () => {
-    // When iframe loads, inject necessary variables
-    console.log('[Map Diagnostic] Iframe onLoad event fired');
-    setMapDebugInfo(prev => `${prev}\nIframe onLoad event fired`);
+    console.log('[Map Diagnostic] Iframe loaded');
+    setMapDebugInfo(prev => `${prev}\nIframe loaded`);
     
+    // Try to access iframe content
     try {
-      const iframe = iframeRef.current;
-      if (iframe && iframe.contentWindow) {
-        console.log('[Map Diagnostic] Sending MAP_INIT message to iframe');
-        iframe.contentWindow.postMessage({
-          type: 'MAP_INIT',
-          data: {
-            show_states: true,
-            show_counties: true,
-            show_msas: false,
-            enableControls: true,
-            enableSearch: false,
-            hideMSA: true,
-            disableExport: true
-          }
-        }, '*');
-        setMapDebugInfo(prev => `${prev}\nMAP_INIT message sent to iframe`);
+      if (iframeRef.current && iframeRef.current.contentWindow) {
+        // Try to hide export button
+        hideExportButton();
         
-        // Also try hiding MSA elements directly after iframe has loaded
+        // Try to hide search control
+        hideSearchControl();
+        
+        // Try to hide MSA elements
+        hideMSAElements();
+        
+        // Notify the iframe about its container size
+        const container = iframeRef.current.parentElement;
+        if (container) {
+          const { width, height } = container.getBoundingClientRect();
+          iframeRef.current.contentWindow.postMessage({
+            type: 'MAP_RESIZE',
+            data: { width, height }
+          }, '*');
+        }
+        
+        // Force iframe to refresh layout
         setTimeout(() => {
-          hideMSAElements();
-          hideSearchControl();
-          hideExportButton();
-          
-          // Inject the hide-msa.js script into the iframe
-          try {
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            const scriptElement = iframeDoc.createElement('script');
-            scriptElement.src = '/hide-msa.js';
-            scriptElement.type = 'text/javascript';
-            scriptElement.async = true;
-            iframeDoc.head.appendChild(scriptElement);
-            console.log('[Map Diagnostic] Injected hide-msa.js script');
-            setMapDebugInfo(prev => `${prev}\nInjected hide-msa.js script into iframe`);
-          } catch (e) {
-            console.error('[Map Diagnostic] Failed to inject hide-msa.js script:', e);
-            setMapDebugInfo(prev => `${prev}\nError injecting script: ${e.message}`);
+          if (iframeRef.current) {
+            iframeRef.current.style.height = iframeRef.current.offsetHeight + 'px';
+            setTimeout(() => {
+              if (iframeRef.current) {
+                iframeRef.current.style.height = '100%';
+              }
+            }, 10);
           }
-        }, 1000);
+        }, 500);
       }
     } catch (e) {
-      console.error('[Map Diagnostic] Error in iframe load handler:', e);
-      setMapDebugInfo(prev => `${prev}\nError in iframe load: ${e.message}`);
+      console.error('[Map Diagnostic] Error accessing iframe content:', e);
+      setMapDebugInfo(prev => `${prev}\nError accessing iframe: ${e.message}`);
     }
     
-    // Try again to hide elements after a longer delay to ensure the map is fully rendered
+    // Set loading to false only if not already set by message handler
     setTimeout(() => {
-      try {
-        hideExportButton();
-      } catch (e) {
-        console.error('[Map Diagnostic] Error in delayed export button hide:', e);
-      }
-    }, 2500);
+      setIsLoading(false);
+    }, 1000); // Short delay to ensure controls initialize
   };
 
   const handleIframeError = (e) => {
@@ -518,7 +540,7 @@ const MapViewer = () => {
   }
 
   // Prepare iframe src with cache-busting strategy that won't cause flickering
-  const iframeSrc = `${getApiUrl('/api/map')}?stable=true&r=${mapKey}&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false`;
+  const iframeSrc = `${getApiUrl('/api/map')}?stable=true&r=${mapKey}&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false&responsive=true&containerWidth=${containerDimensions.width}&containerHeight=${containerDimensions.height}`;
 
   return (
     <div className="map-container">

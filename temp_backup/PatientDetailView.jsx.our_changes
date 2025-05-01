@@ -826,9 +826,16 @@ const PatientDetailView = ({ patient: propPatient }) => {
   
   // Calculate CPO minutes
   const calculateCPOMinutes = () => {
+    // Get all eligible signed documents (exclude CERT & RECERT)
+    const eligibleSignedDocs = signedDocs.filter(doc => 
+      doc.type && doc.type !== 'CERT' && doc.type !== 'RECERT'
+    );
+    
+    // Calculate total count of eligible documents
+    const totalEligibleDocs = cpoDocs.length + eligibleSignedDocs.length;
+    
     // Calculate CPO minutes based on documents count * 2
-    const documentCount = cpoDocs.length;
-    const cpoMinutes = documentCount * 2;
+    const cpoMinutes = totalEligibleDocs * 2;
     
     // Update patient info with calculated CPO minutes
     setPatientInfo(prev => ({
@@ -837,7 +844,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     }));
     
     // Update monthly CPO data
-    // This creates a simple distribution of CPO minutes across months
+    // This creates a distribution of CPO minutes across months
     const updatedMonthlyCPOData = [...monthlyCPOData];
     
     // Reset all months to 0
@@ -845,17 +852,35 @@ const PatientDetailView = ({ patient: propPatient }) => {
       month.minutes = 0;
     });
     
-    // Distribute minutes across months with documents
-    if (documentCount > 0) {
-      const minutesPerDoc = 2;
-      cpoDocs.forEach(doc => {
+    // Distribute minutes from CPO docs across months
+    const minutesPerDoc = 2;
+    
+    // Add minutes from CPO docs
+    cpoDocs.forEach(doc => {
+      if (doc.creationDate) {
         const docDate = new Date(doc.creationDate);
         const monthIndex = docDate.getMonth();
-        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
-      });
-    }
+        if (monthIndex >= 0 && monthIndex < updatedMonthlyCPOData.length) {
+          updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+        }
+      }
+    });
+    
+    // Add minutes from eligible signed docs
+    eligibleSignedDocs.forEach(doc => {
+      if (doc.signedDate) {
+        const docDate = new Date(doc.signedDate);
+        const monthIndex = docDate.getMonth();
+        if (monthIndex >= 0 && monthIndex < updatedMonthlyCPOData.length) {
+          updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+        }
+      }
+    });
     
     setMonthlyCPOData(updatedMonthlyCPOData);
+    
+    // Log the calculation for debugging
+    console.log(`CPO Minutes: ${cpoMinutes} from ${cpoDocs.length} CPO docs and ${eligibleSignedDocs.length} eligible signed docs`);
   };
   
   // Function to update document type
@@ -1844,7 +1869,7 @@ Total documents: ${documents.length}
   useEffect(() => {
     // Call calculateCPOMinutes when component mounts or cpoDocs changes
     calculateCPOMinutes();
-  }, [cpoDocs]);
+  }, [cpoDocs, signedDocs]);
 
   // Add function to export CPO report
   const exportCPOReport = () => {
@@ -2860,7 +2885,7 @@ Total documents: ${documents.length}
                                     onChange={(e) => handleUpdateDocumentType(doc.id, true, e.target.value)}
                                   >
                                     <option value="">Select Type</option>
-                                    {documentCategories.map((category, idx) => (
+                                    {documentTypes.map((category, idx) => (
                                       <option key={idx} value={category}>{category}</option>
                                     ))}
                                   </select>

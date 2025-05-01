@@ -852,7 +852,9 @@ const PatientDetailView = ({ patient: propPatient }) => {
       if (doc.creationDate) {
         const docDate = new Date(doc.creationDate);
         const monthIndex = docDate.getMonth();
-        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+        if (monthIndex >= 0 && monthIndex < updatedMonthlyCPOData.length) {
+          updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+        }
       }
     });
     
@@ -861,7 +863,9 @@ const PatientDetailView = ({ patient: propPatient }) => {
       if (doc.signedDate) {
         const docDate = new Date(doc.signedDate);
         const monthIndex = docDate.getMonth();
-        updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+        if (monthIndex >= 0 && monthIndex < updatedMonthlyCPOData.length) {
+          updatedMonthlyCPOData[monthIndex].minutes += minutesPerDoc;
+        }
       }
     });
     
@@ -916,7 +920,7 @@ const PatientDetailView = ({ patient: propPatient }) => {
     const newDocument = {
       id: documentId,
       status: "New",
-      receivedDate: formattedDate,
+      receivedDate: receivedDate, // Fix: use receivedDate directly instead of undefined formattedDate
       fileName: file.name,
       fileSize: file.size,
       type: newDocType || '', // Use custom document type if provided

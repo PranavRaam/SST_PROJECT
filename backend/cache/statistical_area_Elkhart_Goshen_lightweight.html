@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_7d9b603687c79a5c138573fe46238671 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_7d9b603687c79a5c138573fe46238671" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_7d9b603687c79a5c138573fe46238671 = L.map(
+                "map_7d9b603687c79a5c138573fe46238671",
+                {
+                    center: [41.59775533091651, -85.85901418568581],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_7d9b603687c79a5c138573fe46238671);
+
+            
+
+        
+    
+            var tile_layer_20cb8caa74047b156b49bf9951576867 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_20cb8caa74047b156b49bf9951576867.addTo(map_7d9b603687c79a5c138573fe46238671);
+        
+    
+        function geo_json_a4ad56df947d070d7b6b6c5cf214ed19_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_a4ad56df947d070d7b6b6c5cf214ed19_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_a4ad56df947d070d7b6b6c5cf214ed19 = L.geoJson(null, {
+                onEachFeature: geo_json_a4ad56df947d070d7b6b6c5cf214ed19_onEachFeature,
+            
+                style: geo_json_a4ad56df947d070d7b6b6c5cf214ed19_styler,
+            ...{
+}
+        });
+
+        function geo_json_a4ad56df947d070d7b6b6c5cf214ed19_add (data) {
+            geo_json_a4ad56df947d070d7b6b6c5cf214ed19
+                .addData(data);
+        }
+            geo_json_a4ad56df947d070d7b6b6c5cf214ed19_add({"features": [{"geometry": {"coordinates": [[[-85.888769, 41.759443], [-85.65975, 41.759068], [-85.653507, 41.436856], [-86.05923, 41.435812], [-86.062575, 41.760513], [-85.888769, 41.759443]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_a4ad56df947d070d7b6b6c5cf214ed19.addTo(map_7d9b603687c79a5c138573fe46238671);
+        
+    
+            var layer_control_35bdccd58cf970329c359147b3c472fe_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_20cb8caa74047b156b49bf9951576867,
+                },
+                overlays :  {
+                    "Elkhart-Goshen, IN Boundary" : geo_json_a4ad56df947d070d7b6b6c5cf214ed19,
+                },
+            };
+            let layer_control_35bdccd58cf970329c359147b3c472fe = L.control.layers(
+                layer_control_35bdccd58cf970329c359147b3c472fe_layers.base_layers,
+                layer_control_35bdccd58cf970329c359147b3c472fe_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_7d9b603687c79a5c138573fe46238671);
+
+        
+    
+            map_7d9b603687c79a5c138573fe46238671.fitBounds(
+                [[41.435812, -86.062575], [41.760513, -85.653507]],
+                {}
+            );
+        
+</script>
+</html>

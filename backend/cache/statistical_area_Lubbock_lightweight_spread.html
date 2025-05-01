@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_bec373dd49a353289b1fb8cd93c9f94d {
+                #map_6ff0b14ed46628096b27c20fcf9ccff8 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,46 +39,50 @@
 <body>
     
     
-            <div style="position: fixed; 
-                        top: 10px; left: 50px; width: 300px; height: auto;
-                        background-color: white; border-radius: 8px;
-                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
-                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-                <h4 style="margin-top: 0; color: #1F2937;">Statistical Area: Lubbock (Approximate Location)</h4>
-                <p style="font-size: 12px; margin-bottom: 0;">
-                    This is a simplified view of the Lubbock area.
-                </p>
-                <p style="font-size: 12px; margin-bottom: 0;">
-                    This static map is shown when the interactive map cannot be loaded.
-                </p>
-            </div>
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
         
     
-            <div class="folium-map" id="map_bec373dd49a353289b1fb8cd93c9f94d" ></div>
+            <div class="folium-map" id="map_6ff0b14ed46628096b27c20fcf9ccff8" ></div>
         
 </body>
 <script>
     
     
-            var map_bec373dd49a353289b1fb8cd93c9f94d = L.map(
-                "map_bec373dd49a353289b1fb8cd93c9f94d",
+            var map_6ff0b14ed46628096b27c20fcf9ccff8 = L.map(
+                "map_6ff0b14ed46628096b27c20fcf9ccff8",
                 {
-                    center: [39.8283, -98.5795],
+                    center: [33.465531819400034, -101.8823098890895],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 4,
+  "zoom": 10,
   "zoomControl": true,
-  "preferCanvas": false,
+  "preferCanvas": true,
 }
 
                 }
             );
+            L.control.scale().addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
 
             
 
         
     
-            var tile_layer_d0b50823e8d1f639c3b070952a91548a = L.tileLayer(
+            var tile_layer_e07becb07ff2eacf23eaca3851dad5ff = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -95,49 +99,639 @@
             );
         
     
-            tile_layer_d0b50823e8d1f639c3b070952a91548a.addTo(map_bec373dd49a353289b1fb8cd93c9f94d);
+            tile_layer_e07becb07ff2eacf23eaca3851dad5ff.addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
         
     
-            var marker_a38ffe11292f292c793893b1def8916c = L.marker(
-                [39.8283, -98.5795],
+        function geo_json_0d008c02eff605635fccf122c5fdfd3d_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_0d008c02eff605635fccf122c5fdfd3d_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_0d008c02eff605635fccf122c5fdfd3d = L.geoJson(null, {
+                onEachFeature: geo_json_0d008c02eff605635fccf122c5fdfd3d_onEachFeature,
+            
+                style: geo_json_0d008c02eff605635fccf122c5fdfd3d_styler,
+            ...{
+}
+        });
+
+        function geo_json_0d008c02eff605635fccf122c5fdfd3d_add (data) {
+            geo_json_0d008c02eff605635fccf122c5fdfd3d
+                .addData(data);
+        }
+            geo_json_0d008c02eff605635fccf122c5fdfd3d_add({"features": [{"geometry": {"coordinates": [[[-101.038788, 33.397214], [-101.03866, 32.970225], [-102.076214, 32.959702], [-102.075929, 33.389586], [-103.056485, 33.388414], [-103.047409, 33.824674], [-101.041158, 33.833625], [-101.038788, 33.397214]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_0d008c02eff605635fccf122c5fdfd3d.addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var marker_435cf7c4419d07cb15129fa73a6bcc85 = L.marker(
+                [33.37048419717377, -101.905131732422],
                 {
 }
-            ).addTo(map_bec373dd49a353289b1fb8cd93c9f94d);
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
         
     
-            var icon_cb709550ec67f832cf39b2a9ed670039 = L.AwesomeMarkers.icon(
+            var icon_9e9bce022e431569bd5d26b82f00df0d = L.AwesomeMarkers.icon(
                 {
   "markerColor": "blue",
   "iconColor": "white",
-  "icon": "info-sign",
-  "prefix": "glyphicon",
+  "icon": "hospital",
+  "prefix": "fa",
   "extraClasses": "fa-rotate-0",
 }
             );
-            marker_a38ffe11292f292c793893b1def8916c.setIcon(icon_cb709550ec67f832cf39b2a9ed670039);
         
     
-        var popup_d0f03e14f3597e702e718f7b5e6e28e1 = L.popup({
+        var popup_b49b79eb4432e23b52957fb4c5f7fba7 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_e5fd9a4125e1b114797b01f279b9b104 = $(`<div id="html_e5fd9a4125e1b114797b01f279b9b104" style="width: 100.0%; height: 100.0%;">Statistical Area: Lubbock (Approximate Location)</div>`)[0];
-                popup_d0f03e14f3597e702e718f7b5e6e28e1.setContent(html_e5fd9a4125e1b114797b01f279b9b104);
+                var html_94bf3f92b8e3723efdd4cb59c79cc310 = $(`<div id="html_94bf3f92b8e3723efdd4cb59c79cc310" style="width: 100.0%; height: 100.0%;">PG: Centric Physicians Group</div>`)[0];
+                popup_b49b79eb4432e23b52957fb4c5f7fba7.setContent(html_94bf3f92b8e3723efdd4cb59c79cc310);
             
         
 
-        marker_a38ffe11292f292c793893b1def8916c.bindPopup(popup_d0f03e14f3597e702e718f7b5e6e28e1)
+        marker_435cf7c4419d07cb15129fa73a6bcc85.bindPopup(popup_b49b79eb4432e23b52957fb4c5f7fba7)
         ;
 
         
     
     
-            var circle_19eae16cdce08843c574bb51934b0012 = L.circle(
-                [39.8283, -98.5795],
-                {"bubblingMouseEvents": true, "color": "#4F46E5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4F46E5", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.9, "radius": 20000, "stroke": true, "weight": 3}
-            ).addTo(map_bec373dd49a353289b1fb8cd93c9f94d);
+            marker_435cf7c4419d07cb15129fa73a6bcc85.bindTooltip(
+                `<div>
+                     PG: Centric Physicians Group
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_435cf7c4419d07cb15129fa73a6bcc85.setIcon(icon_9e9bce022e431569bd5d26b82f00df0d);
+            
+    
+            var marker_86714e77ab50f986ef46e49b0e77320d = L.marker(
+                [33.649534115769725, -102.7047981258424],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_18b5e0abd36f86cc9780825d1c55d750 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5e67dd714068816a0f8cfcc3630d3722 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aeab4972720dd7e8b94900143dc1bf5a = $(`<div id="html_aeab4972720dd7e8b94900143dc1bf5a" style="width: 100.0%; height: 100.0%;">HHAH: Caprock Home Health Services - Lubbock</div>`)[0];
+                popup_5e67dd714068816a0f8cfcc3630d3722.setContent(html_aeab4972720dd7e8b94900143dc1bf5a);
+            
+        
+
+        marker_86714e77ab50f986ef46e49b0e77320d.bindPopup(popup_5e67dd714068816a0f8cfcc3630d3722)
+        ;
+
+        
+    
+    
+            marker_86714e77ab50f986ef46e49b0e77320d.bindTooltip(
+                `<div>
+                     HHAH: Caprock Home Health Services - Lubbock
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_86714e77ab50f986ef46e49b0e77320d.setIcon(icon_18b5e0abd36f86cc9780825d1c55d750);
+            
+    
+            var marker_cc7b9c20feb08d1faa0659f6c29c6f28 = L.marker(
+                [33.599991351751456, -102.60124180701246],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_2a3802017696e397bb20a7ee846bdfb2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_24ef9addf65143d8e96161f3ecbde77f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c134bf341372a773c7eb63d659df7080 = $(`<div id="html_c134bf341372a773c7eb63d659df7080" style="width: 100.0%; height: 100.0%;">HHAH: Enhabit - LUBBOCK</div>`)[0];
+                popup_24ef9addf65143d8e96161f3ecbde77f.setContent(html_c134bf341372a773c7eb63d659df7080);
+            
+        
+
+        marker_cc7b9c20feb08d1faa0659f6c29c6f28.bindPopup(popup_24ef9addf65143d8e96161f3ecbde77f)
+        ;
+
+        
+    
+    
+            marker_cc7b9c20feb08d1faa0659f6c29c6f28.bindTooltip(
+                `<div>
+                     HHAH: Enhabit - LUBBOCK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cc7b9c20feb08d1faa0659f6c29c6f28.setIcon(icon_2a3802017696e397bb20a7ee846bdfb2);
+            
+    
+            var marker_a09bbcc009f0958bdf1af189e0daf659 = L.marker(
+                [33.74517683210589, -101.45170706946283],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_f0b2006eafd0effc1a6685d6e2951b50 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_95c1b55c3af8b7566404932e3f6512d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_20f9adac830ee300f87dad2b7961a21f = $(`<div id="html_20f9adac830ee300f87dad2b7961a21f" style="width: 100.0%; height: 100.0%;">HHAH: Calvert Home Health Care, LLC Lubbock-CAL-LUB</div>`)[0];
+                popup_95c1b55c3af8b7566404932e3f6512d7.setContent(html_20f9adac830ee300f87dad2b7961a21f);
+            
+        
+
+        marker_a09bbcc009f0958bdf1af189e0daf659.bindPopup(popup_95c1b55c3af8b7566404932e3f6512d7)
+        ;
+
+        
+    
+    
+            marker_a09bbcc009f0958bdf1af189e0daf659.bindTooltip(
+                `<div>
+                     HHAH: Calvert Home Health Care, LLC Lubbock-CAL-LUB
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a09bbcc009f0958bdf1af189e0daf659.setIcon(icon_f0b2006eafd0effc1a6685d6e2951b50);
+            
+    
+            var marker_a380f37d7a4718f73a12156bbca5977a = L.marker(
+                [33.33640727287118, -101.9634350345505],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_24e8ebb38e21c8b8892adb3cdb1bac10 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_abedaef14419ebb9f830c12708fcebec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9d91704ef4a1bf6903ad9c6b427bf1de = $(`<div id="html_9d91704ef4a1bf6903ad9c6b427bf1de" style="width: 100.0%; height: 100.0%;">HHAH: Accolade Home Care-Lubbock</div>`)[0];
+                popup_abedaef14419ebb9f830c12708fcebec.setContent(html_9d91704ef4a1bf6903ad9c6b427bf1de);
+            
+        
+
+        marker_a380f37d7a4718f73a12156bbca5977a.bindPopup(popup_abedaef14419ebb9f830c12708fcebec)
+        ;
+
+        
+    
+    
+            marker_a380f37d7a4718f73a12156bbca5977a.bindTooltip(
+                `<div>
+                     HHAH: Accolade Home Care-Lubbock
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a380f37d7a4718f73a12156bbca5977a.setIcon(icon_24e8ebb38e21c8b8892adb3cdb1bac10);
+            
+    
+            var marker_0fe9b48d42832689f2347c2b4284e678 = L.marker(
+                [33.218125906415125, -101.85431556613266],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_7a08e898c38a7db2c939e2e89635bba3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_646eb2538767edca518e7535c8a49386 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aa98b2270b8df6ed4954fe0ce790b203 = $(`<div id="html_aa98b2270b8df6ed4954fe0ce790b203" style="width: 100.0%; height: 100.0%;">HHAH: Interim Healthcare Lubbock</div>`)[0];
+                popup_646eb2538767edca518e7535c8a49386.setContent(html_aa98b2270b8df6ed4954fe0ce790b203);
+            
+        
+
+        marker_0fe9b48d42832689f2347c2b4284e678.bindPopup(popup_646eb2538767edca518e7535c8a49386)
+        ;
+
+        
+    
+    
+            marker_0fe9b48d42832689f2347c2b4284e678.bindTooltip(
+                `<div>
+                     HHAH: Interim Healthcare Lubbock
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0fe9b48d42832689f2347c2b4284e678.setIcon(icon_7a08e898c38a7db2c939e2e89635bba3);
+            
+    
+            var marker_08d6ede62df03230744c5ba58d73372e = L.marker(
+                [33.41389786818216, -101.33259608033438],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_46ce01e7559e94b7944fdcbee6e2f2a4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8e043f10b1e95ffa2c1f9762d19a58f5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e04334a0b6f480a580fe72a02271d6bd = $(`<div id="html_e04334a0b6f480a580fe72a02271d6bd" style="width: 100.0%; height: 100.0%;">HHAH: Interim Hospice Brownfield</div>`)[0];
+                popup_8e043f10b1e95ffa2c1f9762d19a58f5.setContent(html_e04334a0b6f480a580fe72a02271d6bd);
+            
+        
+
+        marker_08d6ede62df03230744c5ba58d73372e.bindPopup(popup_8e043f10b1e95ffa2c1f9762d19a58f5)
+        ;
+
+        
+    
+    
+            marker_08d6ede62df03230744c5ba58d73372e.bindTooltip(
+                `<div>
+                     HHAH: Interim Hospice Brownfield
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_08d6ede62df03230744c5ba58d73372e.setIcon(icon_46ce01e7559e94b7944fdcbee6e2f2a4);
+            
+    
+            var marker_430a9a3ad384d60fcd242d381e7ee2b4 = L.marker(
+                [33.546508968142426, -102.60132425543067],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_30f0903b2b60d4458cab030e639918f2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1cfaa206620de9359743d12301038d77 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d135d6466751cca1b8c557ab381f769e = $(`<div id="html_d135d6466751cca1b8c557ab381f769e" style="width: 100.0%; height: 100.0%;">HHAH: Enhabit - LUBBOCK</div>`)[0];
+                popup_1cfaa206620de9359743d12301038d77.setContent(html_d135d6466751cca1b8c557ab381f769e);
+            
+        
+
+        marker_430a9a3ad384d60fcd242d381e7ee2b4.bindPopup(popup_1cfaa206620de9359743d12301038d77)
+        ;
+
+        
+    
+    
+            marker_430a9a3ad384d60fcd242d381e7ee2b4.bindTooltip(
+                `<div>
+                     HHAH: Enhabit - LUBBOCK
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_430a9a3ad384d60fcd242d381e7ee2b4.setIcon(icon_30f0903b2b60d4458cab030e639918f2);
+            
+    
+            var marker_aa7e903a6e6cf92f217a7e4e5aaadcdf = L.marker(
+                [33.72741157849487, -101.71819830877814],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_aed68ede0affc99b58ed0bcee18127aa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_18233d7158d3dc7405f77ba03e19a25c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_72d45b4306914d54985facbd3f0ce415 = $(`<div id="html_72d45b4306914d54985facbd3f0ce415" style="width: 100.0%; height: 100.0%;">HHAH: Angels Care Home Health-Lamesa</div>`)[0];
+                popup_18233d7158d3dc7405f77ba03e19a25c.setContent(html_72d45b4306914d54985facbd3f0ce415);
+            
+        
+
+        marker_aa7e903a6e6cf92f217a7e4e5aaadcdf.bindPopup(popup_18233d7158d3dc7405f77ba03e19a25c)
+        ;
+
+        
+    
+    
+            marker_aa7e903a6e6cf92f217a7e4e5aaadcdf.bindTooltip(
+                `<div>
+                     HHAH: Angels Care Home Health-Lamesa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_aa7e903a6e6cf92f217a7e4e5aaadcdf.setIcon(icon_aed68ede0affc99b58ed0bcee18127aa);
+            
+    
+            var marker_ef6ca7faa1297233ab5a4e9b60d1a620 = L.marker(
+                [33.732341246541196, -102.32591720931508],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_19715e48adc21e489ccaa2c4a3c65f78 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a8959dca65c149de1cf72ab13e0d100a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0337e3abb05f79efafca10af6b0aedf0 = $(`<div id="html_0337e3abb05f79efafca10af6b0aedf0" style="width: 100.0%; height: 100.0%;">HHAH: Interim Healthcare-Brownfield</div>`)[0];
+                popup_a8959dca65c149de1cf72ab13e0d100a.setContent(html_0337e3abb05f79efafca10af6b0aedf0);
+            
+        
+
+        marker_ef6ca7faa1297233ab5a4e9b60d1a620.bindPopup(popup_a8959dca65c149de1cf72ab13e0d100a)
+        ;
+
+        
+    
+    
+            marker_ef6ca7faa1297233ab5a4e9b60d1a620.bindTooltip(
+                `<div>
+                     HHAH: Interim Healthcare-Brownfield
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ef6ca7faa1297233ab5a4e9b60d1a620.setIcon(icon_19715e48adc21e489ccaa2c4a3c65f78);
+            
+    
+            var marker_0035ed7831534e76752c516e5885d5cd = L.marker(
+                [33.56693976504694, -101.43140677062634],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_7f0c7979cbd5b92b98b4e131b81e652d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4e0a2b41a7a9477d735e0edfeccf1c27 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c65be4f2a27977ebee6513291ee3457f = $(`<div id="html_c65be4f2a27977ebee6513291ee3457f" style="width: 100.0%; height: 100.0%;">HHAH: BRMC Home Care -Brownfield</div>`)[0];
+                popup_4e0a2b41a7a9477d735e0edfeccf1c27.setContent(html_c65be4f2a27977ebee6513291ee3457f);
+            
+        
+
+        marker_0035ed7831534e76752c516e5885d5cd.bindPopup(popup_4e0a2b41a7a9477d735e0edfeccf1c27)
+        ;
+
+        
+    
+    
+            marker_0035ed7831534e76752c516e5885d5cd.bindTooltip(
+                `<div>
+                     HHAH: BRMC Home Care -Brownfield
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0035ed7831534e76752c516e5885d5cd.setIcon(icon_7f0c7979cbd5b92b98b4e131b81e652d);
+            
+    
+            var marker_a3d4b6187a3f50f69b479a1e454ba376 = L.marker(
+                [33.06432015695735, -101.58625902582143],
+                {
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+        
+    
+            var icon_fdefb7e57833878eed4c560006fb6b01 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a0e1f8471f7f7fed6a963a223b67dde8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6db3c1d745de0817b95afa1e7410f94b = $(`<div id="html_6db3c1d745de0817b95afa1e7410f94b" style="width: 100.0%; height: 100.0%;">HHAH: Caprock Home Health Services - Lubbock</div>`)[0];
+                popup_a0e1f8471f7f7fed6a963a223b67dde8.setContent(html_6db3c1d745de0817b95afa1e7410f94b);
+            
+        
+
+        marker_a3d4b6187a3f50f69b479a1e454ba376.bindPopup(popup_a0e1f8471f7f7fed6a963a223b67dde8)
+        ;
+
+        
+    
+    
+            marker_a3d4b6187a3f50f69b479a1e454ba376.bindTooltip(
+                `<div>
+                     HHAH: Caprock Home Health Services - Lubbock
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a3d4b6187a3f50f69b479a1e454ba376.setIcon(icon_fdefb7e57833878eed4c560006fb6b01);
+            
+    
+            var layer_control_7441d0b69090d6b6553672f2797ae3a9_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_e07becb07ff2eacf23eaca3851dad5ff,
+                },
+                overlays :  {
+                    "Lubbock, TX Boundary" : geo_json_0d008c02eff605635fccf122c5fdfd3d,
+                },
+            };
+            let layer_control_7441d0b69090d6b6553672f2797ae3a9 = L.control.layers(
+                layer_control_7441d0b69090d6b6553672f2797ae3a9_layers.base_layers,
+                layer_control_7441d0b69090d6b6553672f2797ae3a9_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_6ff0b14ed46628096b27c20fcf9ccff8);
+
+        
+    
+            map_6ff0b14ed46628096b27c20fcf9ccff8.fitBounds(
+                [[32.959702, -103.056485], [33.833625, -101.03866]],
+                {}
+            );
         
 </script>
 </html>
