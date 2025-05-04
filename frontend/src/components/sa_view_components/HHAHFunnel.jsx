@@ -86,17 +86,11 @@ const HHAHFunnel = () => {
   // Initialize localAssignments on first load or when hhahNames change
   useEffect(() => {
     if (hhahNames.length > 0) {
-      setLocalAssignments(prev => {
-        // Only initialize if prev is empty
-        if (Object.keys(prev).length === 0) {
-          const initial = {"99 cent model": [...hhahNames]};
-          HHAH_STAGES.forEach(stage => {
-            if (!initial[stage]) initial[stage] = [];
-          });
-          return initial;
-        }
-        return prev;
+      const initial = {"99 cent model": [...hhahNames]};
+      HHAH_STAGES.forEach(stage => {
+        if (!initial[stage]) initial[stage] = [];
       });
+      setLocalAssignments(initial);
     }
   }, [hhahNames]);
 
