@@ -182,7 +182,7 @@ const PGFunnel = () => {
     <div className="funnel-container">
       {!expandedStage ? (
         <>
-          <div className="funnel-title">PG Funnel for {currentArea || 'Selected Area'}</div>
+          <div className="funnel-title">PG Funnel</div>
           <div className="funnel-chart-wrapper">
             <svg width="400" height="650">
               {/* First section */}

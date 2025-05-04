@@ -29,10 +29,11 @@ export const PG_STAGES = [
 ];
 
 export const HHAH_STAGES = [
-  "Freemium",
-  "Not Using",
-  "Order360 Lite",
-  "Order360 Full",
+  "They exist but they haven't heard of us",
+  "They've now heard of us but that's it",
+  "Enough interest that they're interacting with our content",
+  "Enough interest that they're now talking to us",
+  "99 cent model",
   "Upsold (Fully subscribed)"
 ];
 
@@ -154,15 +155,8 @@ const FunnelDataProvider = ({ children, initialArea }) => {
         // Initialize counts for each stage for HHAH funnel
         const stageCounts = {};
         HHAH_STAGES.forEach(stage => {
-          stageCounts[stage] = 0;
-        });
-
-        // Count HHAHs in each stage
-        agencies.forEach(agency => {
-          const stage = agency['Agency Type'] || 'Not Using'; // Default to 'Not Using' if no type specified
-          if (stageCounts[stage] !== undefined) {
-            stageCounts[stage]++;
-          }
+          // Set all stages except "99 cent model" to 0
+          stageCounts[stage] = stage === "99 cent model" ? agencies.length : 0;
         });
 
         // Create funnel data from counts
@@ -234,6 +228,12 @@ const FunnelDataProvider = ({ children, initialArea }) => {
   // Function to move an HHAH from one stage to another
   const moveHhahToStage = (hhahName, fromStage, toStage) => {
     const newAssignments = { ...hhahAssignments };
+    
+    // Only allow moving from "99 cent model" to other stages
+    if (fromStage !== "99 cent model") {
+      console.error("HHAH Funnel - Can only move HHAHs from 99 cent model stage");
+      return;
+    }
     
     // Remove from current stage
     if (newAssignments[fromStage]) {

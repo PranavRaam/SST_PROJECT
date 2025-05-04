@@ -7,6 +7,7 @@ import combinedData from '../../assets/data/combined_data.json';
 const HHAHListingTable = memo(() => {
   const { currentArea, hhahData, hhahAssignments } = useContext(FunnelDataContext);
   const [filteredData, setFilteredData] = useState([]);
+  const [hhahNames, setHhahNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -78,6 +79,8 @@ const HHAHListingTable = memo(() => {
       });
       
       setFilteredData(dataWithSyncedStatus);
+      // Store HHAH names
+      setHhahNames(dataWithSyncedStatus.map(agency => agency['Agency Name']));
       return;
     }
     
@@ -102,9 +105,12 @@ const HHAHListingTable = memo(() => {
       });
       console.log('Filtered Data Length:', filtered.length);
       setFilteredData(filtered);
+      // Store HHAH names
+      setHhahNames(filtered.map(agency => agency['Agency Name']));
       setIsLoading(false);
     } else {
       setFilteredData([]);
+      setHhahNames([]);
     }
   }, [currentArea, hhahData, hhahAssignments, getAgencyStage]);
 

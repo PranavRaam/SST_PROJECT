@@ -18,13 +18,17 @@ const hhahFunnelStages = HHAH_STAGES.map((name, index) => {
 });
 
 const HHAHFunnel = () => {
-  const { currentArea, hhahAssignments, moveHhahToStage, hhahFunnelData } = useContext(FunnelDataContext) || {};
+  const { currentArea, hhahAssignments, moveHhahToStage, hhahFunnelData, hhahData } = useContext(FunnelDataContext) || {};
   const [expandedStage, setExpandedStage] = useState(null);
   const [showMoveOptions, setShowMoveOptions] = useState(false);
   const [selectedHHAH, setSelectedHHAH] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
   const [funnelData, setFunnelData] = useState(hhahFunnelStages);
   const [hoveredSection, setHoveredSection] = useState(null);
+  const [hhahNames, setHhahNames] = useState([]);
+  const [moveStatus, setMoveStatus] = useState(null); // For move feedback
+  const [movedHHAHs, setMovedHHAHs] = useState({}); // Track moved HHAHs and their new stages
+  const [localAssignments, setLocalAssignments] = useState({});
   
   // Debug logging in useEffect
   useEffect(() => {
@@ -33,10 +37,16 @@ const HHAHFunnel = () => {
       hasAssignments: !!hhahAssignments,
       moveHhahToStageDefined: !!moveHhahToStage,
       hasFunnelData: !!hhahFunnelData,
-      funnelDataLength: hhahFunnelData?.length
+      funnelDataLength: hhahFunnelData?.length,
+      hhahDataLength: hhahData?.length
     });
     
-    if (currentArea) {
+    if (currentArea && hhahData && hhahData.length > 0) {
+      console.log("HHAH Funnel - Using HHAH data from context");
+      setFilteredData(hhahData);
+      // Store HHAH names
+      setHhahNames(hhahData.map(agency => agency['Agency Name']));
+    } else if (currentArea) {
       console.log("HHAH Funnel - Filtering data for area:", currentArea);
       // Extract all HHAH data from the nested structure
       const allHHAHData = [
@@ -56,9 +66,12 @@ const HHAHFunnel = () => {
 
       console.log(`HHAH Funnel - Filtered records for area "${currentArea}":`, filtered.length);
       setFilteredData(filtered);
+      // Store HHAH names
+      setHhahNames(filtered.map(agency => agency['Agency Name']));
     } else {
       console.log("HHAH Funnel - No current area specified, filtered data cleared");
       setFilteredData([]);
+      setHhahNames([]);
     }
     
     // Use real data if available
@@ -68,84 +81,75 @@ const HHAHFunnel = () => {
     } else {
       console.log("HHAH Funnel - Using default funnel stages:", hhahFunnelStages);
     }
-  }, [currentArea, hhahFunnelData, hhahAssignments, moveHhahToStage]);
+  }, [currentArea, hhahFunnelData, hhahAssignments, moveHhahToStage, hhahData]);
 
-  // Get actual counts for display
+  // Initialize localAssignments on first load or when hhahNames change
+  useEffect(() => {
+    if (hhahNames.length > 0) {
+      setLocalAssignments(prev => {
+        // Only initialize if prev is empty
+        if (Object.keys(prev).length === 0) {
+          const initial = {"99 cent model": [...hhahNames]};
+          HHAH_STAGES.forEach(stage => {
+            if (!initial[stage]) initial[stage] = [];
+          });
+          return initial;
+        }
+        return prev;
+      });
+    }
+  }, [hhahNames]);
+
+  const getHHAHsForStage = (stageName) => {
+    return localAssignments[stageName] || [];
+  };
+
   const getValueForStage = (stage) => {
-    const count = filteredData.filter(item => item['Agency Type'] === stage).length || 0;
-    console.log(`HHAH Funnel - Count for stage "${stage}":`, count);
-    return count;
+    return (localAssignments[stage] || []).length;
   };
 
   const handleFunnelClick = (entry) => {
-    console.log("HHAH Funnel - Section clicked:", entry);
-    if (entry.value === 0) {
-      console.log("HHAH Funnel - Ignoring click on empty section");
-      return;
-    }
+    if (getValueForStage(entry.name) === 0) return;
     setExpandedStage(entry.name);
     setShowMoveOptions(false);
     setSelectedHHAH(null);
+    setMoveStatus(null);
   };
 
-  const handleHHAHClick = (hhahName) => {
-    console.log("HHAH Funnel - HHAH selected for move:", hhahName);
-    setSelectedHHAH(hhahName);
+  const handleMoveHHAH = (hhah) => {
+    console.log("Selected HHAH for move:", hhah);
+    setSelectedHHAH(hhah);
     setShowMoveOptions(true);
   };
 
-  const handleMoveHHAH = (toStage) => {
-    console.log("HHAH Funnel - Attempting to move HHAH:", {
-      hhah: selectedHHAH,
-      fromStage: expandedStage,
-      toStage: toStage,
-      moveHhahToStageDefined: !!moveHhahToStage
+  const handleMoveToStage = (targetStage) => {
+    if (!selectedHHAH || !targetStage) return;
+    setLocalAssignments(prev => {
+      // Find the current stage of the HHAH
+      let fromStage = null;
+      for (const [stage, list] of Object.entries(prev)) {
+        if (list.includes(selectedHHAH)) {
+          fromStage = stage;
+          break;
+        }
+      }
+      if (!fromStage) return prev;
+      // Remove from current stage and add to target stage
+      const newAssignments = {...prev};
+      newAssignments[fromStage] = newAssignments[fromStage].filter(hhah => hhah !== selectedHHAH);
+      newAssignments[targetStage] = [...(newAssignments[targetStage] || []), selectedHHAH];
+      return newAssignments;
     });
-    
-    if (!selectedHHAH || !expandedStage || !moveHhahToStage) {
-      console.error("HHAH Funnel - Cannot move HHAH: missing required data", {
-        selectedHHAH,
-        expandedStage,
-        moveHhahToStageDefined: !!moveHhahToStage
-      });
-      return;
-    }
-    
-    try {
-      moveHhahToStage(selectedHHAH, expandedStage, toStage);
-      console.log("HHAH Funnel - HHAH moved successfully");
-    } catch (error) {
-      console.error("HHAH Funnel - Error moving HHAH:", error);
-    }
-    
     setShowMoveOptions(false);
     setSelectedHHAH(null);
+    setMoveStatus({ success: true, message: `Moved to '${targetStage}' successfully!` });
+    setTimeout(() => setMoveStatus(null), 2000);
   };
-  
+
   const handleBack = () => {
-    console.log("HHAH Funnel - Return to main funnel view");
     setExpandedStage(null);
     setShowMoveOptions(false);
     setSelectedHHAH(null);
-  };
-  
-  // Get HHAH names for the expanded stage view
-  const getHHAHsForStage = (stageName) => {
-    console.log(`HHAH Funnel - Getting HHAHs for stage "${stageName}"`);
-    
-    // Use real data if available
-    if (hhahAssignments && hhahAssignments[stageName] && hhahAssignments[stageName].length > 0) {
-      console.log(`HHAH Funnel - Found ${hhahAssignments[stageName].length} assigned HHAHs in stage "${stageName}"`);
-      return hhahAssignments[stageName];
-    }
-    
-    // Use filtered data based on agency type
-    const hhahs = filteredData
-      .filter(item => item['Agency Type'] === stageName)
-      .map(item => item['Agency Name']);
-      
-    console.log(`HHAH Funnel - Found ${hhahs.length} HHAHs from filtered data for stage "${stageName}"`);
-    return hhahs;
   };
 
   const handleMouseOver = (index) => {
@@ -167,11 +171,14 @@ const HHAHFunnel = () => {
               ← Back to Funnel
             </button>
           </div>
+          {moveStatus && (
+            <div className={`move-status-message ${moveStatus.success ? 'success' : 'error'}`}>{moveStatus.message}</div>
+          )}
           {getHHAHsForStage(expandedStage).map((hhah, index) => (
             <div key={index} className="hhah-entry">
               {hhah}
               {!showMoveOptions && (
-                <button onClick={() => handleHHAHClick(hhah)}>Move</button>
+                <button onClick={() => handleMoveHHAH(hhah)}>Move</button>
               )}
             </div>
           ))}
@@ -183,7 +190,7 @@ const HHAHFunnel = () => {
                 .map((stage, index) => (
                   <button
                     key={index}
-                    onClick={() => handleMoveHHAH(stage.name)}
+                    onClick={() => handleMoveToStage(stage.name)}
                     className="move-option-button"
                   >
                     {stage.name}
@@ -197,83 +204,37 @@ const HHAHFunnel = () => {
           <svg width="350" height="500" viewBox="0 0 350 500" preserveAspectRatio="xMidYMid meet">
             {/* Main funnel shape (inverted triangle) */}
             <g>
-              {/* First section */}
-              <path d="M50,50 L300,50 L290,120 L60,120 Z" 
-                    fill={funnelData[0]?.fill || "#C0392B"} 
-                    stroke="#fff" 
+              {funnelData.map((stage, idx) => (
+                <React.Fragment key={stage.name}>
+                  <path
+                    d={
+                      idx === 0 ? "M50,50 L300,50 L290,120 L60,120 Z" :
+                      idx === 1 ? "M60,120 L290,120 L280,190 L70,190 Z" :
+                      idx === 2 ? "M70,190 L280,190 L270,260 L80,260 Z" :
+                      idx === 3 ? "M80,260 L270,260 L260,330 L90,330 Z" :
+                      idx === 4 ? "M90,330 L260,330 L250,400 L100,400 Z" :
+                      "M100,400 L250,400 L240,470 L110,470 Z"
+                    }
+                    fill={stage.fill}
+                    stroke="#fff"
                     strokeWidth="1"
-                    onClick={() => handleFunnelClick(funnelData[0])}
-                    onMouseOver={() => handleMouseOver(0)}
-                    onMouseOut={handleMouseOut} />
-              <text x="175" y="85" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {funnelData[0]?.value || 0}
-              </text>
-              
-              {/* Second section */}
-              <path d="M60,120 L290,120 L280,190 L70,190 Z" 
-                    fill={funnelData[1]?.fill || "#E74C3C"} 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(funnelData[1])}
-                    onMouseOver={() => handleMouseOver(1)}
-                    onMouseOut={handleMouseOut} />
-              <text x="175" y="155" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {funnelData[1]?.value || 0}
-              </text>
-              
-              {/* Third section */}
-              <path d="M70,190 L280,190 L270,260 L80,260 Z" 
-                    fill={funnelData[2]?.fill || "#D35400"} 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(funnelData[2])}
-                    onMouseOver={() => handleMouseOver(2)}
-                    onMouseOut={handleMouseOut} />
-              <text x="175" y="225" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {funnelData[2]?.value || 0}
-              </text>
-              
-              {/* Fourth section */}
-              <path d="M80,260 L270,260 L260,330 L90,330 Z" 
-                    fill={funnelData[3]?.fill || "#9B59B6"} 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(funnelData[3])}
-                    onMouseOver={() => handleMouseOver(3)}
-                    onMouseOut={handleMouseOut} />
-              <text x="175" y="295" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {funnelData[3]?.value || 0}
-              </text>
-              
-              {/* Fifth section */}
-              <path d="M90,330 L260,330 L250,400 L100,400 Z" 
-                    fill={funnelData[4]?.fill || "#F1C40F"} 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(funnelData[4])}
-                    onMouseOver={() => handleMouseOver(4)}
-                    onMouseOut={handleMouseOut} />
-              <text x="175" y="365" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {funnelData[4]?.value || 0}
-              </text>
-              
-              {/* Sixth section */}
-              <path d="M100,400 L250,400 L240,470 L110,470 Z" 
-                    fill={funnelData[5]?.fill || "#2ECC71"} 
-                    stroke="#fff" 
-                    strokeWidth="1"
-                    onClick={() => handleFunnelClick(funnelData[5])}
-                    onMouseOver={() => handleMouseOver(5)}
-                    onMouseOut={handleMouseOut} />
-              <text x="175" y="435" textAnchor="middle" 
-                    fill="#fff" fontSize="16" fontWeight="bold">
-                {funnelData[5]?.value || 0}
-              </text>
+                    onClick={() => handleFunnelClick(stage)}
+                    onMouseOver={() => handleMouseOver(idx)}
+                    onMouseOut={handleMouseOut}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <text
+                    x="175"
+                    y={85 + idx * 70}
+                    textAnchor="middle"
+                    fill="#fff"
+                    fontSize="16"
+                    fontWeight="bold"
+                  >
+                    {getValueForStage(stage.name)}
+                  </text>
+                </React.Fragment>
+              ))}
             </g>
           </svg>
           

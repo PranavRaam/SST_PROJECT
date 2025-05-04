@@ -1,24 +1,41 @@
 .funnel-container {
+    position: relative;
     width: 100%;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .funnel-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
     text-align: center;
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    font-weight: 600;
+}
+
+.funnel-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #E74C3C;
+    border-radius: 3px;
 }
 
 .funnel-chart-wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+    margin-top: 1.5rem;
+    padding: 0.5rem;
 }
 
 .funnel-chart-wrapper svg {
