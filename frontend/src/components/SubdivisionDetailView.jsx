@@ -9,132 +9,132 @@ import './SubdivisionDetailView.css'; // Import subdivision-specific styles
 
 // List of non-virgin MSAs for each region
 const nonVirginMSAs = {
-  'West': new Set([
-    'Amarillo',
-    'Boulder',
-    'Broomfield',
-    'Casper',
-    'Chicago–Naperville–Elgin',
-    'Cleveland–Elyria',
-    'Clovis Micropolitan Statistical Area',
-    'Colorado Springs',
-    'Corpus Christi',
-    'Dallas–Fort Worth–Arlington',
-    'Denver-Aurora-Lakewood',
-    'El Paso',
-    'Fort Collins',
-    'Fort Morgan Micropolitan Statistical Area',
-    'Greeley',
-    'Laredo',
-    'Las Vegas-Henderson-Paradise',
-    'Levelland Micropolitan Statistical Area',
-    'Los Angeles-Long Beach-Anaheim',
-    'Lubbock',
-    'McAllen-Edinburg-Mission',
-    'New York–Newark–Jersey City',
-    'Odessa',
-    'Ogden-Clearfield',
-    'Pampa Micropolitan Statistical Area',
-    'Phoenix-Mesa-Scottsdale',
-    'Pueblo',
-    'Salt Lake City',
-    'Santa Barbara',
-    'Santa Maria-Santa Barbara',
-    'St. George',
-    'Sterling Micropolitan Statistical Area'
-  ]),
-  'East Central': new Set([
-    'Bryan-College Station',
-    'Chicago-Naperville-Elgin',
-    'Clarksville',
-    'Cleveland-Elyria',
-    'Cleveland',
-    'Dallas-Fort Worth-Arlington',
-    'Detroit-Warren-Dearborn',
-    'Detroit-Warren-Flint',
-    'Houston-The Woodlands-Sugar Land',
-    'Indianapolis-Carmel-Anderson',
-    'Jackson',
-    'Lafayette',
-    'Los Angeles-Long Beach-Anaheim',
-    'McAllen-Edinburg-Mission',
-    'Minneapolis-St. Paul-Bloomington',
-    'Monroe',
-    'Nashville-Davidson-Murfreesboro-Franklin',
-    'New York-Newark-Jersey City',
-    'Oklahoma City',
-    'Philadelphia-Camden-Wilmington',
-    'Pittsburgh',
-    'Port St. Lucie',
-    'Salt Lake City',
-    'San Antonio-New Braunfels',
-    'Sebastian-Vero Beach',
-    'St. Louis',
-    'Wichita Falls'
-  ]),
-  'Central': new Set([
-    'Alexandria',
-    'Alice Micropolitan Statistical Area',
-    'Ardmore Micropolitan Statistical Area',
-    'Ashtabula',
-    'Austin-Round Rock',
-    'Benavides Micropolitan Statistical Area',
-    'Brownsville–Harlingen',
-    'Brownwood Micropolitan Statistical Area',
-    'Bryan-College Station',
-    'Carlsbad Micropolitan Statistical Area',
-    'Casper',
-    'Chicago-Naperville-Elgin',
-    'Cleveland',
-    'Cleveland-Elyria',
-    'Corpus Christi',
-    'Dallas-Fort Worth-Arlington',
-    'Del Rio Micropolitan Statistical Area',
-    'Denver-Aurora-Lakewood',
-    'Durant Micropolitan Statistical Area',
-    'Eagle Pass Micropolitan Statistical Area',
-    'El Paso',
-    'Fort Worth-Arlington',
-    'Houston-The Woodlands-Sugar Land',
-    'Huntsville Micropolitan Statistical Area',
-    'Jackson',
-    'Kerrville Micropolitan Statistical Area',
-    'Killeen-Temple',
-    'Lafayette-Opelousas-Morgan City Combined Statistical Area',
-    'Lafayette',
-    'Lake Charles',
-    'Laredo',
-    'Laredo Micropolitan Statistical Area',
-    'Lawton',
-    'Livingston Micropolitan Statistical Area',
-    'Los Angeles-Long Beach-Anaheim',
-    'McAllen-Edinburg-Mission',
-    'Minneapolis-St. Paul-Bloomington',
-    'Monroe',
-    'Nacogdoches Micropolitan Statistical Area',
-    'Natchez Micropolitan Statistical Area',
-    'Odessa',
-    'Ogden-Clearfield',
-    'Oklahoma City',
-    'Palestine Micropolitan Statistical Area',
-    'Paris Micropolitan Statistical Area',
-    'Philadelphia-Camden-Wilmington',
-    'Pittsburgh',
-    'Salt Lake City',
-    'San Antonio-New Braunfels',
-    'San Marcos',
-    'Sarasota-Bradenton-Venice',
-    'Sebastian-Vero Beach',
-    'Sherman-Denison',
-    'St. George',
-    'St. Louis',
-    'Sweetwater Micropolitan Statistical Area',
-    'Tyler',
-    'Victoria',
-    'Waco',
-    'Wichita Falls',
-    'Youngstown-Warren-Boardman'
-  ]),
+  'West': [
+    { name: 'Amarillo', pg: 1, hhah: 4 },
+    { name: 'Boulder', pg: 0, hhah: 3 },
+    { name: 'Broomfield', pg: 0, hhah: 1 },
+    { name: 'Casper', pg: 0, hhah: 2 },
+    { name: 'Chicago–Naperville–Elgin', pg: 0, hhah: 0 },
+    { name: 'Cleveland–Elyria', pg: 0, hhah: 0 },
+    { name: 'Clovis Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Colorado Springs', pg: 1, hhah: 9 },
+    { name: 'Corpus Christi', pg: 0, hhah: 25 },
+    { name: 'Dallas–Fort Worth–Arlington', pg: 0, hhah: 1 },
+    { name: 'Denver-Aurora-Lakewood', pg: 0, hhah: 36 },
+    { name: 'El Paso', pg: 1, hhah: 34 },
+    { name: 'Fort Collins', pg: 0, hhah: 8 },
+    { name: 'Fort Morgan Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Greeley', pg: 0, hhah: 1 },
+    { name: 'Laredo', pg: 0, hhah: 5 },
+    { name: 'Las Vegas-Henderson-Paradise', pg: 0, hhah: 1 },
+    { name: 'Levelland Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Los Angeles-Long Beach-Anaheim', pg: 1, hhah: 7 },
+    { name: 'Lubbock', pg: 1, hhah: 8 },
+    { name: 'McAllen-Edinburg-Mission', pg: 0, hhah: 1 },
+    { name: 'New York–Newark–Jersey City', pg: 0, hhah: 0 },
+    { name: 'Odessa', pg: 0, hhah: 2 },
+    { name: 'Ogden-Clearfield', pg: 0, hhah: 1 },
+    { name: 'Pampa Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Phoenix-Mesa-Scottsdale', pg: 0, hhah: 1 },
+    { name: 'Pueblo', pg: 0, hhah: 12 },
+    { name: 'Salt Lake City', pg: 0, hhah: 1 },
+    { name: 'Santa Barbara', pg: 0, hhah: 1 },
+    { name: 'Santa Maria-Santa Barbara', pg: 0, hhah: 1 },
+    { name: 'St. George', pg: 0, hhah: 1 },
+    { name: 'Sterling Micropolitan Statistical Area', pg: 0, hhah: 0 }
+  ],
+  'East Central': [
+    { name: 'Bryan-College Station', pg: 0, hhah: 0 },
+    { name: 'Chicago-Naperville-Elgin', pg: 0, hhah: 1 },
+    { name: 'Clarksville', pg: 1, hhah: 0 },
+    { name: 'Cleveland-Elyria', pg: 1, hhah: 1 },
+    { name: 'Cleveland', pg: 1, hhah: 1 },
+    { name: 'Dallas-Fort Worth-Arlington', pg: 0, hhah: 0 },
+    { name: 'Detroit-Warren-Dearborn', pg: 1, hhah: 0 },
+    { name: 'Detroit-Warren-Flint', pg: 0, hhah: 0 },
+    { name: 'Houston-The Woodlands-Sugar Land', pg: 0, hhah: 0 },
+    { name: 'Indianapolis-Carmel-Anderson', pg: 1, hhah: 0 },
+    { name: 'Jackson', pg: 0, hhah: 1 },
+    { name: 'Lafayette', pg: 0, hhah: 16 },
+    { name: 'Los Angeles-Long Beach-Anaheim', pg: 0, hhah: 0 },
+    { name: 'McAllen-Edinburg-Mission', pg: 0, hhah: 0 },
+    { name: 'Minneapolis-St. Paul-Bloomington', pg: 0, hhah: 0 },
+    { name: 'Monroe', pg: 0, hhah: 11 },
+    { name: 'Nashville-Davidson-Murfreesboro-Franklin', pg: 1, hhah: 0 },
+    { name: 'New York-Newark-Jersey City', pg: 0, hhah: 1 },
+    { name: 'Oklahoma City', pg: 0, hhah: 0 },
+    { name: 'Philadelphia-Camden-Wilmington', pg: 0, hhah: 2 },
+    { name: 'Pittsburgh', pg: 0, hhah: 1 },
+    { name: 'Port St. Lucie', pg: 1, hhah: 0 },
+    { name: 'Salt Lake City', pg: 0, hhah: 0 },
+    { name: 'San Antonio-New Braunfels', pg: 0, hhah: 0 },
+    { name: 'Sebastian-Vero Beach', pg: 0, hhah: 1 },
+    { name: 'St. Louis', pg: 0, hhah: 0 },
+    { name: 'Wichita Falls', pg: 0, hhah: 0 }
+  ],
+  'Central': [
+    { name: 'Alexandria', pg: 0, hhah: 2 },
+    { name: 'Alice Micropolitan Statistical Area', pg: 0, hhah: 3 },
+    { name: 'Ardmore Micropolitan Statistical Area', pg: 0, hhah: 2 },
+    { name: 'Ashtabula', pg: 0, hhah: 0 },
+    { name: 'Austin-Round Rock', pg: 0, hhah: 27 },
+    { name: 'Benavides Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Brownsville–Harlingen', pg: 0, hhah: 1 },
+    { name: 'Brownwood Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Bryan-College Station', pg: 0, hhah: 3 },
+    { name: 'Carlsbad Micropolitan Statistical Area', pg: 0, hhah: 0 },
+    { name: 'Casper', pg: 0, hhah: 0 },
+    { name: 'Chicago-Naperville-Elgin', pg: 0, hhah: 1 },
+    { name: 'Cleveland', pg: 1, hhah: 1 },
+    { name: 'Cleveland-Elyria', pg: 1, hhah: 1 },
+    { name: 'Corpus Christi', pg: 0, hhah: 25 },
+    { name: 'Dallas-Fort Worth-Arlington', pg: 10, hhah: 1 },
+    { name: 'Del Rio Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Denver-Aurora-Lakewood', pg: 0, hhah: 0 },
+    { name: 'Durant Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Eagle Pass Micropolitan Statistical Area', pg: 0, hhah: 2 },
+    { name: 'El Paso', pg: 1, hhah: 34 },
+    { name: 'Fort Worth-Arlington', pg: 0, hhah: 1 },
+    { name: 'Houston-The Woodlands-Sugar Land', pg: 2, hhah: 0 },
+    { name: 'Huntsville Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Jackson', pg: 0, hhah: 1 },
+    { name: 'Kerrville Micropolitan Statistical Area', pg: 0, hhah: 4 },
+    { name: 'Killeen-Temple', pg: 0, hhah: 2 },
+    { name: 'Lafayette-Opelousas-Morgan City Combined Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Lafayette', pg: 0, hhah: 16 },
+    { name: 'Lake Charles', pg: 0, hhah: 1 },
+    { name: 'Laredo', pg: 0, hhah: 5 },
+    { name: 'Laredo Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Lawton', pg: 0, hhah: 3 },
+    { name: 'Livingston Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Los Angeles-Long Beach-Anaheim', pg: 0, hhah: 0 },
+    { name: 'McAllen-Edinburg-Mission', pg: 0, hhah: 1 },
+    { name: 'Minneapolis-St. Paul-Bloomington', pg: 0, hhah: 1 },
+    { name: 'Monroe', pg: 0, hhah: 11 },
+    { name: 'Nacogdoches Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Natchez Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Odessa', pg: 0, hhah: 2 },
+    { name: 'Ogden-Clearfield', pg: 0, hhah: 0 },
+    { name: 'Oklahoma City', pg: 0, hhah: 1 },
+    { name: 'Palestine Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Paris Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Philadelphia-Camden-Wilmington', pg: 0, hhah: 0 },
+    { name: 'Pittsburgh', pg: 0, hhah: 0 },
+    { name: 'Salt Lake City', pg: 0, hhah: 0 },
+    { name: 'San Antonio-New Braunfels', pg: 9, hhah: 104 },
+    { name: 'San Marcos', pg: 0, hhah: 2 },
+    { name: 'Sarasota-Bradenton-Venice', pg: 0, hhah: 0 },
+    { name: 'Sebastian-Vero Beach', pg: 0, hhah: 0 },
+    { name: 'Sherman-Denison', pg: 1, hhah: 11 },
+    { name: 'St. George', pg: 0, hhah: 0 },
+    { name: 'St. Louis', pg: 0, hhah: 1 },
+    { name: 'Sweetwater Micropolitan Statistical Area', pg: 0, hhah: 1 },
+    { name: 'Tyler', pg: 0, hhah: 2 },
+    { name: 'Victoria', pg: 0, hhah: 2 },
+    { name: 'Waco', pg: 0, hhah: 2 },
+    { name: 'Wichita Falls', pg: 2, hhah: 15 },
+    { name: 'Youngstown-Warren-Boardman', pg: 0, hhah: 1 }
+  ],
   'East': new Set([]) // Empty set for East region as all areas are virgin
 };
 
@@ -192,21 +192,40 @@ const SubdivisionDetailView = ({
     
     // Filter by tab (virgin/non-virgin)
     if (activeTab === 'non-virgin') {
-      return regionNonVirginMSAs.has(area);
+      if (divisionalGroup === 'East Central' || divisionalGroup === 'West' || divisionalGroup === 'Central') {
+        // Check if area matches any entry.name in the array
+        return regionNonVirginMSAs.some(entry => area.toLowerCase().startsWith(entry.name.toLowerCase()));
+      } else {
+        return regionNonVirginMSAs.has(area);
+      }
     } else {
-      return !regionNonVirginMSAs.has(area);
+      if (divisionalGroup === 'East Central' || divisionalGroup === 'West' || divisionalGroup === 'Central') {
+        return !regionNonVirginMSAs.some(entry => area.toLowerCase().startsWith(entry.name.toLowerCase()));
+      } else {
+        return !regionNonVirginMSAs.has(area);
+      }
     }
   });
 
   // Calculate totals for the filtered areas
   const areaTotals = filteredAreas.reduce((totals, area) => {
     const stats = statisticalAreaStatistics[area] || {};
-    
+    if ((divisionalGroup === 'East Central' || divisionalGroup === 'West' || divisionalGroup === 'Central') && activeTab === 'non-virgin') {
+      // Find the best match in the region's array
+      const match = nonVirginMSAs[divisionalGroup].find(entry => area.toLowerCase().startsWith(entry.name.toLowerCase()));
+      if (match) {
+        totals.physicianGroups += match.pg;
+        totals.agencies += match.hhah;
+      } else {
+        totals.physicianGroups += 0;
+        totals.agencies += 0;
+      }
+    } else {
+      totals.physicianGroups += stats.physicianGroups || 0;
+      totals.agencies += stats.agencies || 0;
+    }
     totals.patients += stats.patients || 0;
-    totals.physicianGroups += stats.physicianGroups || 0;
-    totals.agencies += stats.agencies || 0;
     totals.activeOutcomes += stats.activeOutcomes || 0;
-    
     return totals;
   }, {
     patients: 0,
@@ -635,19 +654,34 @@ const SubdivisionDetailView = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedAreas.map((area, index) => (
-                    <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
-                      <td className="area-name">{area}</td>
-                      {activeTab !== 'virgin' && (
-                        <>
-                          <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
-                          <td>{formatNumber(statisticalAreaStatistics[area]?.activeOutcomes || 0)}</td>
-                        </>
-                      )}
-                      <td>{activeTab === 'virgin' ? '0' : formatNumber(statisticalAreaStatistics[area]?.physicianGroups || 0)}</td>
-                      <td>{activeTab === 'virgin' ? '0' : formatNumber(statisticalAreaStatistics[area]?.agencies || 0)}</td>
-                    </tr>
-                  ))}
+                  {sortedAreas.map((area, index) => {
+                    let pgCount = statisticalAreaStatistics[area]?.physicianGroups || 0;
+                    let hhahCount = statisticalAreaStatistics[area]?.agencies || 0;
+                    if ((divisionalGroup === 'East Central' || divisionalGroup === 'West' || divisionalGroup === 'Central') && activeTab === 'non-virgin') {
+                      // Find the best match in the region's array
+                      const match = nonVirginMSAs[divisionalGroup].find(entry => area.toLowerCase().startsWith(entry.name.toLowerCase()));
+                      if (match) {
+                        pgCount = match.pg;
+                        hhahCount = match.hhah;
+                      } else {
+                        pgCount = 0;
+                        hhahCount = 0;
+                      }
+                    }
+                    return (
+                      <tr key={`${area}-${index}`} onClick={() => handleStatisticalAreaClick(area)} className="clickable-row">
+                        <td className="area-name">{area}</td>
+                        {activeTab !== 'virgin' && (
+                          <>
+                            <td>{formatNumber(statisticalAreaStatistics[area]?.patients || 0)}</td>
+                            <td>{formatNumber(statisticalAreaStatistics[area]?.activeOutcomes || 0)}</td>
+                          </>
+                        )}
+                        <td>{activeTab === 'virgin' ? '0' : formatNumber(pgCount)}</td>
+                        <td>{activeTab === 'virgin' ? '0' : formatNumber(hhahCount)}</td>
+                      </tr>
+                    );
+                  })}
                   <tr className="total-row">
                     <td><strong>Totals</strong></td>
                     {activeTab !== 'virgin' && (
