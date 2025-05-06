@@ -1056,27 +1056,27 @@ export const regionToStatisticalAreas = {
 // Statistics for each region (consolidated from previous regions)
 export const regionStatistics = {
   West: {
-    patients: 51230, // Sum of Pacific Northwest, Southwest, Northern California, Southern California, and Mountain divisions
-    physicianGroups: 412,
-    agencies: 178,
+    patients: 51230,
+    physicianGroups: 5,
+    agencies: 170,
     activeOutcomes: 18670,
   },
   Central: {
-    patients: 33120, // Sum of Southeast, South Central, Gulf Coast, Central Plains, and NEMA divisions
-    physicianGroups: 276,
-    agencies: 113,
+    patients: 33120,
+    physicianGroups: 27,
+    agencies: 309,
     activeOutcomes: 9840,
   },
   "East Central": {
-    patients: 38750, // Sum of Midwest 1&2, Great Lakes, Ohio Valley, and East Central divisions
-    physicianGroups: 295,
-    agencies: 124,
+    patients: 38750,
+    physicianGroups: 7,
+    agencies: 37,
     activeOutcomes: 10250,
   },
   East: {
-    patients: 42650, // Sum of Northeast 1&2, Atlantic, New England, and Mid-Atlantic divisions
-    physicianGroups: 358,
-    agencies: 147,
+    patients: 42650,
+    physicianGroups: 0,
+    agencies: 0,
     activeOutcomes: 12330,
   },
 };
@@ -1144,12 +1144,70 @@ export const getSubdivisionStatistics = (subdivision) => {
     activeOutcomes: 0
   };
   
-  // Sum up statistics for all MSAs in this subdivision
+  // Hardcoded values for East subdivisions
+  if (subdivision.startsWith('NEMA Divisional GRP Division')) {
+    stats.physicianGroups = 0;
+    stats.agencies = 0;
+  }
+  
+  // Hardcoded values for East Central subdivisions
+  else if (subdivision === "East Central Divisional GRP Division 1") {
+    stats.physicianGroups = 2;
+    stats.agencies = 6;
+  } else if (subdivision === "East Central Divisional GRP Division 2") {
+    stats.physicianGroups = 2;
+    stats.agencies = 17;
+  } else if (subdivision === "East Central Divisional GRP Division 3") {
+    stats.physicianGroups = 2;
+    stats.agencies = 2;
+  } else if (subdivision === "East Central Divisional GRP Division 4") {
+    stats.physicianGroups = 0;
+    stats.agencies = 11;
+  } else if (subdivision === "East Central Divisional GRP Division 5") {
+    stats.physicianGroups = 1;
+    stats.agencies = 1;
+  }
+  
+  // Hardcoded values for West subdivisions
+  else if (subdivision === "Pacific Northwest Division") {
+    stats.physicianGroups = 0;
+    stats.agencies = 0;
+  } else if (subdivision === "Intermountain Division") {
+    stats.physicianGroups = 1;
+    stats.agencies = 77;
+  } else if (subdivision === "Southwest Division") {
+    stats.physicianGroups = 3;
+    stats.agencies = 85;
+  } else if (subdivision === "LA CA Division") {
+    stats.physicianGroups = 1;
+    stats.agencies = 7;
+  } else if (subdivision === "Bay Area Central CA Division") {
+    stats.physicianGroups = 0;
+    stats.agencies = 1;
+  }
+  
+  // Hardcoded values for Central subdivisions
+  else if (subdivision === "Great Plains Division") {
+    stats.physicianGroups = 0;
+    stats.agencies = 1;
+  } else if (subdivision === "Illinois Wisconsin Division") {
+    stats.physicianGroups = 1;
+    stats.agencies = 3;
+  } else if (subdivision === "Central Division 3") {
+    stats.physicianGroups = 0;
+    stats.agencies = 8;
+  } else if (subdivision === "The South Division") {
+    stats.physicianGroups = 0;
+    stats.agencies = 35;
+  } else if (subdivision === "Central & East Texas Division") {
+    stats.physicianGroups = 26;
+    stats.agencies = 262;
+  }
+  
+  // Calculate patients and active outcomes from MSAs
   msas.forEach(msa => {
     const msaStats = statisticalAreaStatistics[msa] || {};
     stats.patients += msaStats.patients || 0;
-    stats.physicianGroups += msaStats.physicianGroups || 0;
-    stats.agencies += msaStats.agencies || 0;
     stats.activeOutcomes += msaStats.activeOutcomes || 0;
   });
   

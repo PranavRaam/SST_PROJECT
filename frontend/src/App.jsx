@@ -54,29 +54,29 @@ function App() {
     { 
       group: 'East', 
       patients: 42650, 
-      physicianGroups: 387, 
-      agencies: 156, 
-      activeOutcomes: 12480 
+      physicianGroups: 0, 
+      agencies: 0, 
+      activeOutcomes: 12330 
     },
     { 
       group: 'East Central', 
       patients: 38750, 
-      physicianGroups: 295, 
-      agencies: 124, 
+      physicianGroups: 7, 
+      agencies: 37, 
       activeOutcomes: 10250 
     },
     { 
       group: 'West', 
       patients: 51230, 
-      physicianGroups: 412, 
-      agencies: 178, 
+      physicianGroups: 5, 
+      agencies: 170, 
       activeOutcomes: 18670 
     },
     { 
       group: 'Central', 
       patients: 33120, 
-      physicianGroups: 276, 
-      agencies: 98, 
+      physicianGroups: 27, 
+      agencies: 309, 
       activeOutcomes: 9840 
     }
   ];
