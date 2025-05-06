@@ -61,7 +61,7 @@ function App() {
     { 
       group: 'East Central', 
       patients: 38750, 
-      physicianGroups: 7, 
+      physicianGroups: 6, 
       agencies: 37, 
       activeOutcomes: 10250 
     },

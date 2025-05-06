@@ -350,7 +350,6 @@ export const subdivisionToMSAs = {
     "Buffalo-Cheektowaga-Niagara Falls",
     "Canton-Massillon",
     "Charleston",
-    "Cleveland-Elyria",
     "Cleveland",
     "Elmira",
     "Erie",
@@ -1152,7 +1151,7 @@ export const getSubdivisionStatistics = (subdivision) => {
   
   // Hardcoded values for East Central subdivisions
   else if (subdivision === "East Central Divisional GRP Division 1") {
-    stats.physicianGroups = 2;
+    stats.physicianGroups = 1;
     stats.agencies = 6;
   } else if (subdivision === "East Central Divisional GRP Division 2") {
     stats.physicianGroups = 2;
