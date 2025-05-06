@@ -75,7 +75,7 @@ function App() {
     { 
       group: 'Central', 
       patients: 33120, 
-      physicianGroups: 27, 
+      physicianGroups: 24, 
       agencies: 309, 
       activeOutcomes: 9840 
     }

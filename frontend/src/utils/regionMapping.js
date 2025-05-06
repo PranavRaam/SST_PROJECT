@@ -228,7 +228,6 @@ export const subdivisionToMSAs = {
     "Carbondale-Marion",
     "Champaign-Urbana",
     "Chicago-Naperville-Elgin",
-    "Cleveland-Elyria",
     "Danville",
     "Eau Claire",
     "Fond du Lac",
@@ -308,13 +307,13 @@ export const subdivisionToMSAs = {
     "Brownsville–Harlingen",
     "Brownwood Micropolitan Statistical Area",
     "Bryan-College Station",
-    "Cleveland",
+    
     "Corpus Christi",
     "Dallas-Fort Worth-Arlington",
     "Decatur",
     "Del Rio Micropolitan Statistical Area",
     "Eagle Pass Micropolitan Statistical Area",
-    "El Paso",
+    
     "Fort Worth-Arlington",
     "Houston-The Woodlands-Sugar Land",
     "Kerrville Micropolitan Statistical Area",
@@ -1190,7 +1189,7 @@ export const getSubdivisionStatistics = (subdivision) => {
     stats.physicianGroups = 0;
     stats.agencies = 1;
   } else if (subdivision === "Illinois Wisconsin Division") {
-    stats.physicianGroups = 1;
+    stats.physicianGroups = 0;
     stats.agencies = 3;
   } else if (subdivision === "Central Division 3") {
     stats.physicianGroups = 0;
@@ -1199,7 +1198,7 @@ export const getSubdivisionStatistics = (subdivision) => {
     stats.physicianGroups = 0;
     stats.agencies = 35;
   } else if (subdivision === "Central & East Texas Division") {
-    stats.physicianGroups = 26;
+    stats.physicianGroups = 24;
     stats.agencies = 262;
   }
   
