@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2fa7fe4a49c627fa955112f251334a99 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+</head>
+<body>
+    
+    
+            <div style="position: fixed; 
+                        top: 10px; left: 50px; width: 300px; height: auto;
+                        background-color: white; border-radius: 8px;
+                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0; color: #1F2937;">Springfield</h4>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    PGs: 0 | HHAHs: 0
+                </p>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    <i>Click markers to view details</i>
+                </p>
+            </div>
+        
+    
+            <div class="folium-map" id="map_2fa7fe4a49c627fa955112f251334a99" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2fa7fe4a49c627fa955112f251334a99 = L.map(
+                "map_2fa7fe4a49c627fa955112f251334a99",
+                {
+                    center: [37.361710857891744, -93.1772366672266],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_2fa7fe4a49c627fa955112f251334a99);
+
+            
+
+        
+    
+            var tile_layer_d8a2c5ac845d85e32cbe183e22f37207 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d8a2c5ac845d85e32cbe183e22f37207.addTo(map_2fa7fe4a49c627fa955112f251334a99);
+        
+    
+        function geo_json_448379ece2be254da79903f8f99546ec_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.1, "weight": 2};
+            }
+        }
+
+        function geo_json_448379ece2be254da79903f8f99546ec_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_448379ece2be254da79903f8f99546ec = L.geoJson(null, {
+                onEachFeature: geo_json_448379ece2be254da79903f8f99546ec_onEachFeature,
+            
+                style: geo_json_448379ece2be254da79903f8f99546ec_styler,
+            ...{
+}
+        });
+
+        function geo_json_448379ece2be254da79903f8f99546ec_add (data) {
+            geo_json_448379ece2be254da79903f8f99546ec
+                .addData(data);
+        }
+            geo_json_448379ece2be254da79903f8f99546ec_add({"features": [{"geometry": {"coordinates": [[[-93.187915, 37.802737], [-93.182648, 37.904232], [-92.855384, 37.895736], [-92.853481, 37.48397], [-92.686671, 37.481545], [-92.685867, 37.067051], [-92.903273, 37.070651], [-92.909336, 36.809178], [-93.342041, 36.817301], [-93.337451, 36.992494], [-93.610126, 36.99581], [-93.605095, 37.281482], [-93.625844, 37.282011], [-93.609489, 37.741755], [-93.632439, 37.742302], [-93.628404, 37.829435], [-93.573202, 37.828035], [-93.574103, 37.813336], [-93.187915, 37.802737]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_448379ece2be254da79903f8f99546ec.bindTooltip(
+                `<div>
+                     <div style='font-weight:bold;'>Springfield</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            geo_json_448379ece2be254da79903f8f99546ec.addTo(map_2fa7fe4a49c627fa955112f251334a99);
+        
+    
+            var feature_group_b319d039869b33bd4eee2da4cf77d13b = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_b319d039869b33bd4eee2da4cf77d13b.addTo(map_2fa7fe4a49c627fa955112f251334a99);
+        
+    
+            var feature_group_8af7618fc222fdca29eb8890dee4fc44 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_8af7618fc222fdca29eb8890dee4fc44.addTo(map_2fa7fe4a49c627fa955112f251334a99);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "View Fullscreen",
+  "titleCancel": "Exit Fullscreen",
+  "forceSeparateButton": true,
+}
+            ).addTo(map_2fa7fe4a49c627fa955112f251334a99);
+        
+    
+            var measure_control_f92a90f809d6508e42169a4e5395ae2c = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "meters",
+  "secondaryLengthUnit": "kilometers",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_2fa7fe4a49c627fa955112f251334a99.addControl(measure_control_f92a90f809d6508e42169a4e5395ae2c);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+</script>
+</html>

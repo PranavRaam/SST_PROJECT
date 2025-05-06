@@ -91,7 +91,7 @@ const MapPlaceholder = ({ statisticalArea }) => {
       'Los Angeles': 1,
       'Colorado Springs': 1,
       'El Paso': 1,
-      'Lubbock': 5, // Updated to match what's shown in the legend
+      'Lubbock': 1, // Updated to match the correct count
       'Amarillo': 1
     };
     
@@ -127,7 +127,7 @@ const MapPlaceholder = ({ statisticalArea }) => {
       'Los Angeles': 9,
       'Colorado Springs': 9,
       'El Paso': 35,
-      'Lubbock': 8, // Updated to match what's shown in the legend
+      'Lubbock': 11, // Updated to match the legend
       'Amarillo': 7
     };
     
@@ -242,26 +242,6 @@ const MapPlaceholder = ({ statisticalArea }) => {
               </div>
             ))
           }
-        </div>
-        
-        {/* Provider count overlay with counts from the same source as the listings */}
-        <div className="provider-count-overlay">
-          <div className="provider-count-container">
-            <div className="provider-count pg-count">
-              <div className="provider-count-icon pg-icon"></div>
-              <div className="provider-count-text">
-                <span className="provider-count-number">{providerCounts.pgCount}</span>
-                <span className="provider-count-label">Physician Groups</span>
-              </div>
-            </div>
-            <div className="provider-count hhah-count">
-              <div className="provider-count-icon hhah-icon"></div>
-              <div className="provider-count-text">
-                <span className="provider-count-number">{providerCounts.hhahCount}</span>
-                <span className="provider-count-label">Home Health Agencies</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

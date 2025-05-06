@@ -816,8 +816,18 @@ def get_statistical_area_map(area_name):
                 # Create a response with the correct Content-Length
                 response = Response(html_content, mimetype='text/html')
                 response.headers['Content-Length'] = str(len(html_content))
-                response.headers['Content-Security-Policy'] = "frame-ancestors *"
-                response.headers['X-Frame-Options'] = "ALLOWALL"
+                # Remove these as they are handled by the add_security_headers @app.after_request hook
+                # response.headers['Content-Security-Policy'] = "frame-ancestors *"
+                # response.headers['X-Frame-Options'] = "ALLOWALL"
+
+                # Add cache-control headers to ensure fresh content when needed
+                if force_regen:
+                    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+                    response.headers['Pragma'] = 'no-cache' # HTTP/1.0 caches
+                    response.headers['Expires'] = '0' # Proxies
+                else:
+                    # Allow caching for a reasonable period if not forcing regen (e.g., 15 minutes)
+                    response.headers['Cache-Control'] = 'public, max-age=900'
                 return response
             except Exception as file_error:
                 logger.error(f"Error reading map file: {file_error}")
@@ -1142,117 +1152,131 @@ def fetch_provider_data_options():
     return response
 
 def update_real_map_data():
-    """
-    Update the real_map_data global variable with provider data from JSON files
-    This ensures that maps are generated with real provider data
-    """
+    """Update the real map data from PG and HHAH JSON files"""
     logger = logging.getLogger(__name__)
-    logger.info("Updating real map data from JSON files")
+    logger.info("Updating real map data...")
     
-    try:
-        # Paths to JSON data files
-        pg_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "PG.json")
-        west_hhah_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "West_HHAH.json")
-        central_hhah_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Central_HHAH.json")
-        east_central_hhah_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "East_Central_HHAH.json")
-        
-        # Dictionary to store the real map data
-        area_data = {}
-        
-        # Load and process PG JSON file
-        if os.path.exists(pg_json_path):
-            try:
-                with open(pg_json_path, 'r') as f:
-                    pg_data = json.load(f)
-                    
-                    # Process PGs
-                    for pg in pg_data:
-                        if not pg.get("Metropolitan (or Micropolitan) Area"):
-                            continue
-                            
-                        area = pg.get("Metropolitan (or Micropolitan) Area")
-                        
-                        # Initialize data for this area if it doesn't exist
-                        if area not in area_data:
-                            area_data[area] = {
-                                'pgs': [],
-                                'hhahs': []
-                            }
-                        
-                        # Add PG to area data
-                        area_data[area]['pgs'].append({
-                            'name': pg.get("Agency Name", "Unknown PG"),
-                            'group': 'Primary Provider',
-                            'physicians': 5,  # Default value
-                            'patients': 75,   # Default value
-                            'status': pg.get("Agency Type", "Active"),
-                            'address': f"{pg.get('Address', 'No address')}, {pg.get('City', 'Unknown')}, {pg.get('State', 'Unknown')} {pg.get('Zipcode', '')}",
-                            'contact': pg.get("Telephone", "Contact information unavailable")
-                        })
-                
-            except Exception as e:
-                logger.error(f"Error processing PG file for real map data: {str(e)}")
-                logger.error(traceback.format_exc())
-        
-        # Process HHAH JSON files
-        hhah_files = [
-            west_hhah_json_path,
-            central_hhah_json_path,
-            east_central_hhah_json_path
-        ]
-        
-        for hhah_json_path in hhah_files:
-            if not os.path.exists(hhah_json_path):
-                continue
-                
-            try:
-                with open(hhah_json_path, 'r') as f:
-                    hhah_data = json.load(f)
-                    
-                    # Process HHAHs
-                    for hhah in hhah_data:
-                        if not hhah.get("Metropolitan (or Micropolitan) Area"):
-                            continue
-                            
-                        area = hhah.get("Metropolitan (or Micropolitan) Area")
-                        
-                        # Initialize data for this area if it doesn't exist
-                        if area not in area_data:
-                            area_data[area] = {
-                                'pgs': [],
-                                'hhahs': []
-                            }
-                        
-                        # Add HHAH to area data
-                        area_data[area]['hhahs'].append({
-                            'id': hhah.get("Agency Id", ""),
-                            'name': hhah.get("Agency Name", "Unknown HHAH"),
-                            'services': 3,  # Default value
-                            'patients': 50,  # Default value
-                            'status': hhah.get("Agency Type", "Not Using"),
-                            'address': f"{hhah.get('Address', 'No address')}, {hhah.get('City', 'Unknown')}, {hhah.get('State', 'Unknown')} {hhah.get('Zipcode', '')}",
-                            'contact': hhah.get("Telephone", "Contact information unavailable")
-                        })
-                
-            except Exception as e:
-                logger.error(f"Error processing HHAH file for real map data: {str(e)}")
-                logger.error(traceback.format_exc())
-        
-        # Update the global variable
-        global real_map_data
-        real_map_data = area_data
-        
-        # Log the areas found
-        logger.info(f"Updated real map data for {len(area_data)} areas: {', '.join(area_data.keys())}")
-        for area, data in area_data.items():
-            logger.info(f"  • {area}: {len(data['pgs'])} PGs, {len(data['hhahs'])} HHAHs")
-                
-    except Exception as e:
-        logger.error(f"Error updating real map data: {str(e)}")
-        logger.error(traceback.format_exc())
+    # Initialize area data dictionary
+    area_data = {}
     
+    # Get file paths
+    data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
+    pg_json_path = os.path.join(data_dir, 'pg_data.json')
+    west_hhah_json_path = os.path.join(data_dir, 'west_hhah_data.json')
+    central_hhah_json_path = os.path.join(data_dir, 'central_hhah_data.json')
+    east_central_hhah_json_path = os.path.join(data_dir, 'east_central_hhah_data.json')
+    
+    # Load and process PG JSON file
+    if os.path.exists(pg_json_path):
+        try:
+            with open(pg_json_path, 'r') as f:
+                pg_data = json.load(f)
+                
+                # Process PGs
+                for pg in pg_data:
+                    area = pg.get("Metropolitan (or Micropolitan) Area")
+                    if not area:
+                        continue
+                        
+                    # Normalize area name
+                    area = area.strip()
+                    
+                    # Initialize data for this area if it doesn't exist
+                    if area not in area_data:
+                        area_data[area] = {
+                            'pgs': [],
+                            'hhahs': []
+                        }
+                    
+                    # Add PG to area data
+                    area_data[area]['pgs'].append({
+                        'name': pg.get("Agency Name", "Unknown PG"),
+                        'group': 'Primary Provider',
+                        'physicians': 5,  # Default value
+                        'patients': 75,   # Default value
+                        'status': pg.get("Agency Type", "Active"),
+                        'address': f"{pg.get('Address', 'No address')}, {pg.get('City', 'Unknown')}, {pg.get('State', 'Unknown')} {pg.get('Zipcode', '')}",
+                        'contact': pg.get("Telephone", "Contact information unavailable")
+                    })
+            
+        except Exception as e:
+            logger.error(f"Error processing PG file: {str(e)}")
+            logger.error(traceback.format_exc())
+    
+    # Process HHAH JSON files
+    hhah_files = [
+        (west_hhah_json_path, "West"),
+        (central_hhah_json_path, "Central"),
+        (east_central_hhah_json_path, "East Central")
+    ]
+    
+    for hhah_json_path, region in hhah_files:
+        if not os.path.exists(hhah_json_path):
+            logger.warning(f"HHAH file not found for {region} region: {hhah_json_path}")
+            continue
+            
+        try:
+            with open(hhah_json_path, 'r') as f:
+                hhah_data = json.load(f)
+                
+                # Process HHAHs
+                for hhah in hhah_data:
+                    area = hhah.get("Metropolitan (or Micropolitan) Area")
+                    if not area:
+                        continue
+                        
+                    # Normalize area name
+                    area = area.strip()
+                    
+                    # Initialize data for this area if it doesn't exist
+                    if area not in area_data:
+                        area_data[area] = {
+                            'pgs': [],
+                            'hhahs': []
+                        }
+                    
+                    # Add HHAH to area data
+                    area_data[area]['hhahs'].append({
+                        'id': hhah.get("Agency Id", ""),
+                        'name': hhah.get("Agency Name", "Unknown HHAH"),
+                        'services': 3,  # Default value
+                        'patients': 50,  # Default value
+                        'status': hhah.get("Agency Type", "Not Using"),
+                        'address': f"{hhah.get('Address', 'No address')}, {hhah.get('City', 'Unknown')}, {hhah.get('State', 'Unknown')} {hhah.get('Zipcode', '')}",
+                        'contact': hhah.get("Telephone", "Contact information unavailable")
+                    })
+            
+            logger.info(f"Processed {len(hhah_data)} HHAHs from {region} region")
+            
+        except Exception as e:
+            logger.error(f"Error processing HHAH file for {region} region: {str(e)}")
+            logger.error(traceback.format_exc())
+    
+    # Ensure all areas have both pgs and hhahs arrays even if empty
+    for area in area_data:
+        if 'pgs' not in area_data[area]:
+            area_data[area]['pgs'] = []
+        if 'hhahs' not in area_data[area]:
+            area_data[area]['hhahs'] = []
+    
+    # Update the global variable
+    global real_map_data
+    real_map_data = area_data
+    
+    logger.info(f"Updated real map data with {len(area_data)} areas")
+    return area_data
+
 # Initialize real map data when the server starts
 update_real_map_data()
+
+@app.after_request
+def add_security_headers(response):
+    """Add security headers to all responses"""
+    if response.mimetype == 'text/html':
+        # Set CSP header properly for iframe embedding
+        response.headers['Content-Security-Policy'] = "frame-ancestors 'self' https://*.onrender.com https://*.vercel.app http://localhost:* http://127.0.0.1:*"
+        response.headers['X-Frame-Options'] = 'ALLOW-FROM https://*.onrender.com https://*.vercel.app http://localhost:* http://127.0.0.1:*'
+    return response
 
 if __name__ == '__main__':
     # Try to preload data at startup

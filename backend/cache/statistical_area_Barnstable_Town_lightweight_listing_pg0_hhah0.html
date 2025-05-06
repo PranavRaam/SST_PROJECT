@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_0be2b802dbd9fd0f87677a166a31b691 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+</head>
+<body>
+    
+    
+            <div style="position: fixed; 
+                        top: 10px; left: 50px; width: 300px; height: auto;
+                        background-color: white; border-radius: 8px;
+                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                <h4 style="margin-top: 0; color: #1F2937;">Barnstable Town</h4>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    PGs: 0 | HHAHs: 0
+                </p>
+                <p style="font-size: 12px; margin-bottom: 0;">
+                    <i>Click markers to view details</i>
+                </p>
+            </div>
+        
+    
+            <div class="folium-map" id="map_0be2b802dbd9fd0f87677a166a31b691" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_0be2b802dbd9fd0f87677a166a31b691 = L.map(
+                "map_0be2b802dbd9fd0f87677a166a31b691",
+                {
+                    center: [41.77405788342621, -70.24077626905832],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_0be2b802dbd9fd0f87677a166a31b691);
+
+            
+
+        
+    
+            var tile_layer_909c73d1abc1526418d93fd3b76eeddb = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_909c73d1abc1526418d93fd3b76eeddb.addTo(map_0be2b802dbd9fd0f87677a166a31b691);
+        
+    
+        function geo_json_086bb446e0fecabb10002637847971d1_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.1, "weight": 2};
+            }
+        }
+
+        function geo_json_086bb446e0fecabb10002637847971d1_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_086bb446e0fecabb10002637847971d1 = L.geoJson(null, {
+                onEachFeature: geo_json_086bb446e0fecabb10002637847971d1_onEachFeature,
+            
+                style: geo_json_086bb446e0fecabb10002637847971d1_styler,
+            ...{
+}
+        });
+
+        function geo_json_086bb446e0fecabb10002637847971d1_add (data) {
+            geo_json_086bb446e0fecabb10002637847971d1
+                .addData(data);
+        }
+            geo_json_086bb446e0fecabb10002637847971d1_add({"features": [{"geometry": {"coordinates": [[[-70.690964, 41.660457], [-70.620785, 41.74753], [-70.632555, 41.762904], [-70.565281, 41.786705], [-70.355004, 42.000104], [-70.322522, 42.117915], [-70.150676, 42.131465], [-70.011591, 42.073378], [-69.917706, 41.959247], [-69.866525, 41.817011], [-69.862876, 41.673153], [-69.915399, 41.589243], [-69.928994, 41.532152], [-70.040313, 41.46596], [-70.101508, 41.474444], [-70.126677, 41.503698], [-70.122559, 41.537833], [-70.063352, 41.590173], [-70.077934, 41.612528], [-70.1815, 41.593547], [-70.249463, 41.560146], [-70.311254, 41.571062], [-70.395164, 41.556722], [-70.472473, 41.504765], [-70.602979, 41.511802], [-70.650009, 41.488009], [-70.674646, 41.519385], [-70.758464, 41.560931], [-70.690964, 41.660457]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_086bb446e0fecabb10002637847971d1.bindTooltip(
+                `<div>
+                     <div style='font-weight:bold;'>Barnstable Town</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            geo_json_086bb446e0fecabb10002637847971d1.addTo(map_0be2b802dbd9fd0f87677a166a31b691);
+        
+    
+            var feature_group_9815e04ca067f651d166489eecfe2f40 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_9815e04ca067f651d166489eecfe2f40.addTo(map_0be2b802dbd9fd0f87677a166a31b691);
+        
+    
+            var feature_group_31c5c36f49d75022fa0b2c1c5d54bd30 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_31c5c36f49d75022fa0b2c1c5d54bd30.addTo(map_0be2b802dbd9fd0f87677a166a31b691);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "View Fullscreen",
+  "titleCancel": "Exit Fullscreen",
+  "forceSeparateButton": true,
+}
+            ).addTo(map_0be2b802dbd9fd0f87677a166a31b691);
+        
+    
+            var measure_control_0b79d4b7e5d7ce80b535569bb7b859ec = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "meters",
+  "secondaryLengthUnit": "kilometers",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_0be2b802dbd9fd0f87677a166a31b691.addControl(measure_control_0b79d4b7e5d7ce80b535569bb7b859ec);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+</script>
+</html>

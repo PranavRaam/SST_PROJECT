@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_91551bc9411528934d9248b6f0389e3d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+</head>
+<body>
+    
+    
+                <div style="position: fixed; 
+                            top: 10px; left: 50px; width: 300px; height: auto;
+                            background-color: white; border-radius: 8px;
+                            border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                            font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-top: 0; color: #1F2937;">McAllen-Edinburg-Mission</h4>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        PGs: 0 | HHAHs: 4
+                    </p>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        <i>Click markers to view details</i>
+                    </p>
+                </div>
+            
+    
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Send a message to the parent window that the map has loaded
+                if (window.parent) {
+                    window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                }
+            });
+            </script>
+            
+    
+            <div class="folium-map" id="map_91551bc9411528934d9248b6f0389e3d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_91551bc9411528934d9248b6f0389e3d = L.map(
+                "map_91551bc9411528934d9248b6f0389e3d",
+                {
+                    center: [26.3971692432127, -98.18027246851543],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_91551bc9411528934d9248b6f0389e3d);
+
+            
+
+        
+    
+            var tile_layer_7b15271e4e1c30debc1d1801d6e86239 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7b15271e4e1c30debc1d1801d6e86239.addTo(map_91551bc9411528934d9248b6f0389e3d);
+        
+    
+        function geo_json_ddeb7fc24ac4c78f7ffe91058083988c_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.1, "weight": 2};
+            }
+        }
+
+        function geo_json_ddeb7fc24ac4c78f7ffe91058083988c_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_ddeb7fc24ac4c78f7ffe91058083988c = L.geoJson(null, {
+                onEachFeature: geo_json_ddeb7fc24ac4c78f7ffe91058083988c_onEachFeature,
+            
+                style: geo_json_ddeb7fc24ac4c78f7ffe91058083988c_styler,
+            ...{
+}
+        });
+
+        function geo_json_ddeb7fc24ac4c78f7ffe91058083988c_add (data) {
+            geo_json_ddeb7fc24ac4c78f7ffe91058083988c
+                .addData(data);
+        }
+            geo_json_ddeb7fc24ac4c78f7ffe91058083988c_add({"features": [{"geometry": {"coordinates": [[[-97.996514, 26.49191], [-98.004189, 26.448784], [-97.86192, 26.433579], [-97.868673, 26.056947], [-97.933431, 26.065626], [-97.933273, 26.052978], [-97.966748, 26.051715], [-97.980372, 26.067374], [-98.012012, 26.056083], [-98.027558, 26.067005], [-98.038811, 26.041263], [-98.076788, 26.036269], [-98.079717, 26.070884], [-98.093528, 26.05859], [-98.132108, 26.074187], [-98.146457, 26.049044], [-98.176543, 26.07524], [-98.194319, 26.05319], [-98.288215, 26.104457], [-98.266039, 26.120757], [-98.29665, 26.120255], [-98.305697, 26.103144], [-98.335567, 26.138414], [-98.335744, 26.165891], [-98.351759, 26.151154], [-98.359657, 26.172524], [-98.386858, 26.157894], [-98.444018, 26.2006], [-98.443673, 26.224064], [-98.481269, 26.219879], [-98.481339, 26.200779], [-98.485377, 26.212712], [-98.507016, 26.209225], [-98.501034, 26.22256], [-98.524086, 26.220893], [-98.522159, 26.235624], [-98.534875, 26.225395], [-98.543802, 26.243822], [-98.556595, 26.248002], [-98.545698, 26.237202], [-98.561778, 26.22412], [-98.565688, 26.241292], [-98.585012, 26.244018], [-98.32067, 26.783081], [-97.985494, 26.780917], [-97.985303, 26.615809], [-97.957405, 26.611769], [-97.963912, 26.5335], [-97.984367, 26.536578], [-97.996514, 26.49191]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_ddeb7fc24ac4c78f7ffe91058083988c.bindTooltip(
+                `<div>
+                     <div style='font-weight:bold;'>McAllen-Edinburg-Mission</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            geo_json_ddeb7fc24ac4c78f7ffe91058083988c.addTo(map_91551bc9411528934d9248b6f0389e3d);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "View Fullscreen",
+  "titleCancel": "Exit Fullscreen",
+  "forceSeparateButton": true,
+}
+            ).addTo(map_91551bc9411528934d9248b6f0389e3d);
+        
+    
+            var measure_control_8473b5a02af60aa4844d5363f812663e = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "meters",
+  "secondaryLengthUnit": "kilometers",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_91551bc9411528934d9248b6f0389e3d.addControl(measure_control_8473b5a02af60aa4844d5363f812663e);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+</script>
+</html>

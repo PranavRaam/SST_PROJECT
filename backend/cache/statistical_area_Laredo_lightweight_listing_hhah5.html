@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_212c07d8971416a8204d790a45a1a604 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+</head>
+<body>
+    
+    
+                <div style="position: fixed; 
+                            top: 10px; left: 50px; width: 300px; height: auto;
+                            background-color: white; border-radius: 8px;
+                            border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                            font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-top: 0; color: #1F2937;">Laredo</h4>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        PGs: 0 | HHAHs: 5
+                    </p>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        <i>Click markers to view details</i>
+                    </p>
+                </div>
+            
+    
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Send a message to the parent window that the map has loaded
+                if (window.parent) {
+                    window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                }
+            });
+            </script>
+            
+    
+            <div class="folium-map" id="map_212c07d8971416a8204d790a45a1a604" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_212c07d8971416a8204d790a45a1a604 = L.map(
+                "map_212c07d8971416a8204d790a45a1a604",
+                {
+                    center: [27.761069345009858, -99.3309084721881],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_212c07d8971416a8204d790a45a1a604);
+
+            
+
+        
+    
+            var tile_layer_336ef136a0558377c7c7f92e4affc119 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_336ef136a0558377c7c7f92e4affc119.addTo(map_212c07d8971416a8204d790a45a1a604);
+        
+    
+        function geo_json_ae71f0bb46f20453af31e56be956eb10_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.1, "weight": 2};
+            }
+        }
+
+        function geo_json_ae71f0bb46f20453af31e56be956eb10_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_ae71f0bb46f20453af31e56be956eb10 = L.geoJson(null, {
+                onEachFeature: geo_json_ae71f0bb46f20453af31e56be956eb10_onEachFeature,
+            
+                style: geo_json_ae71f0bb46f20453af31e56be956eb10_styler,
+            ...{
+}
+        });
+
+        function geo_json_ae71f0bb46f20453af31e56be956eb10_add (data) {
+            geo_json_ae71f0bb46f20453af31e56be956eb10
+                .addData(data);
+        }
+            geo_json_ae71f0bb46f20453af31e56be956eb10_add({"features": [{"geometry": {"coordinates": [[[-100.212189, 28.196837], [-99.394177, 28.204627], [-99.388946, 28.030419], [-98.803325, 28.05748], [-98.798087, 27.268012], [-99.33361, 27.273223], [-99.370621, 27.319174], [-99.453794, 27.265058], [-99.48791, 27.260721], [-99.49202, 27.300666], [-99.538035, 27.316961], [-99.504575, 27.338741], [-99.487521, 27.411572], [-99.495104, 27.451518], [-99.479251, 27.478635], [-99.496826, 27.500106], [-99.528392, 27.49855], [-99.512132, 27.568288], [-99.554945, 27.614456], [-99.584843, 27.603903], [-99.577636, 27.618597], [-99.596231, 27.639858], [-99.624311, 27.644001], [-99.638929, 27.626758], [-99.666108, 27.636088], [-99.668942, 27.659974], [-99.711511, 27.658365], [-99.77074, 27.732134], [-99.796342, 27.735586], [-99.813118, 27.773997], [-99.838791, 27.764181], [-99.850877, 27.793974], [-99.876761, 27.797845], [-99.8772, 27.84218], [-99.904385, 27.875284], [-99.893456, 27.899208], [-99.937142, 27.940537], [-99.931811, 27.980968], [-99.991447, 27.99456], [-100.017913, 28.064788], [-100.053122, 28.084731], [-100.084328, 28.144819], [-100.212189, 28.196837]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_ae71f0bb46f20453af31e56be956eb10.bindTooltip(
+                `<div>
+                     <div style='font-weight:bold;'>Laredo</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            geo_json_ae71f0bb46f20453af31e56be956eb10.addTo(map_212c07d8971416a8204d790a45a1a604);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "View Fullscreen",
+  "titleCancel": "Exit Fullscreen",
+  "forceSeparateButton": true,
+}
+            ).addTo(map_212c07d8971416a8204d790a45a1a604);
+        
+    
+            var measure_control_eb1543e489d428ad813a36de70fcdfc2 = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "meters",
+  "secondaryLengthUnit": "kilometers",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_212c07d8971416a8204d790a45a1a604.addControl(measure_control_eb1543e489d428ad813a36de70fcdfc2);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+</script>
+</html>
