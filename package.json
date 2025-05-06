@@ -15,6 +15,7 @@
     "postinstall": "[ -d \"node_modules\" ] || npm install concurrently --no-save"
   },
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "dayjs": "^1.11.13"
   },
   "devDependencies": {

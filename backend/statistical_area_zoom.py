@@ -673,339 +673,427 @@ def add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight=False, ultra_light
     )
     m.add_child(legend)
 
-def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detailed=True, use_cached=True, force_regen=False, lightweight=False, ultra_lightweight=False, spread_markers=False):
-    """
-    Generate a map zoomed in on a specific statistical area (MSA)
+def generate_exact_markers(area_name, geometry, marker_type, count, spread=True):
+    """Generate exactly count markers of given type with precise positioning
     
-    Parameters:
-    - area_name: Name of the statistical area/MSA
-    - zoom: Initial zoom level (default: 9)
-    - exact_boundary: Whether to show exact boundaries (default: True)
-    - detailed: Whether to show detailed features (default: True)
-    - use_cached: Whether to use cached maps if available (default: True) 
-    - force_regen: Whether to force regeneration of the map (default: False)
-    - lightweight: Whether to generate a lightweight version for faster loading (default: False)
-    - ultra_lightweight: Whether to use extremely simplified rendering for areas with few markers (default: False)
-    - spread_markers: Whether to spread out markers to avoid overlapping (default: False)
+    Args:
+        area_name: Name of the statistical area 
+        geometry: The geometry of the area (shapely object)
+        marker_type: Type of marker ('pg' or 'hhah')
+        count: Number of markers to generate
+        spread: Whether to spread markers around the centroid
+        
+    Returns:
+        List of marker data objects positioned within the area
     """
-    logging.basicConfig(level=logging.INFO)
+    markers = []
     logger = logging.getLogger(__name__)
+    logger.info(f"Generating exactly {count} {marker_type.upper()} markers for {area_name}")
     
-    logger.info(f"Generating map for statistical area: {area_name} with params: zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, use_cached={use_cached}, force_regen={force_regen}, lightweight={lightweight}, ultra_lightweight={ultra_lightweight}, spread_markers={spread_markers}")
+    # Get area centroid for consistent positioning
+    center = geometry.centroid
+    
+    # For a single marker, place it exactly at the center
+    if count == 1:
+        return [{
+            "id": 1,
+            "name": f"{marker_type.upper()}-1",
+            "location": [center.y, center.x],  # [lat, lng]
+            "group": "Group A" if marker_type == 'pg' else "Agency",
+            "physicians": random.randint(3, 15) if marker_type == 'pg' else None,
+            "patients": random.randint(50, 300),
+            "status": "Active",
+            "address": f"{random.randint(100, 999)} {'Healthcare Ave' if marker_type == 'pg' else 'Medical Blvd'}, {area_name.split(',')[0]}",
+            "contact": f"(555) {random.randint(100, 999)}-{random.randint(1000, 9999)}"
+        }]
+    
+    # For multiple markers, place them in a pattern around center
+    radius = 0.01  # approx 1km in lng/lat units
+    for i in range(count):
+        angle = (i / count) * 2 * math.pi
+        lng = center.x + radius * math.cos(angle)
+        lat = center.y + radius * math.sin(angle)
+        
+        # Ensure the point is within the geometry
+        point = Point(lng, lat)
+        if not geometry.contains(point):
+            # Move point closer to center if outside the geometry
+            lng = center.x + (radius * 0.5) * math.cos(angle)
+            lat = center.y + (radius * 0.5) * math.sin(angle)
+        
+        markers.append({
+            "id": i + 1,
+            "name": f"{marker_type.upper()}-{i+1}",
+            "location": [lat, lng],
+            "group": f"Group {chr(65 + (i % 4))}" if marker_type == 'pg' else "Agency",
+            "physicians": random.randint(3, 15) if marker_type == 'pg' else None,
+            "services": random.randint(2, 8) if marker_type == 'hhah' else None,
+            "patients": random.randint(50, 300),
+            "status": "Active",
+            "address": f"{random.randint(100, 999)} {'Healthcare Ave' if marker_type == 'pg' else 'Medical Blvd'}, {area_name.split(',')[0]}",
+            "contact": f"(555) {random.randint(100, 999)}-{random.randint(1000, 9999)}"
+        })
+    
+    return markers
+
+def generate_statistical_area_map(area_name, zoom=9, exact_boundary=True, detailed=True, use_cached=True, force_regen=False, lightweight=False, ultra_lightweight=False, spread_markers=False, clear_mock_markers=False, use_exact_count=False, display_pgs=True, display_hhahs=True, pg_count=0, hhah_count=0, marker_source=None, spread_distance=None):
+    """
+    Generate a map for a specific statistical area
+    
+    Args:
+        area_name: Name of the statistical area
+        zoom: Zoom level for the map
+        exact_boundary: Whether to use exact boundary
+        detailed: Whether to use detailed map
+        use_cached: Whether to use cached map
+        force_regen: Force regeneration of the map
+        lightweight: Generate a lightweight map
+        ultra_lightweight: Generate an ultra-lightweight map
+        spread_markers: Whether to spread markers
+        clear_mock_markers: Whether to clear mock markers
+        use_exact_count: Whether to use exact counts
+        display_pgs: Whether to display PGs
+        display_hhahs: Whether to display HHAHs
+        pg_count: Number of PGs to display
+        hhah_count: Number of HHAHs to display
+        marker_source: Source of marker data ('actual_data', 'listing', etc.)
+        spread_distance: Distance to spread markers
+    
+    Returns:
+        Path to the generated map file
+    """
+    logger = logging.getLogger(__name__)
     start_time = time.time()
     
-    # Generate cache filename
-    cache_file = os.path.join(CACHE_DIR, f"statistical_area_{area_name.replace(' ', '_').replace(',', '').replace('-', '_')}.html")
-    
-    # Add suffix for lightweight version
-    if lightweight:
-        cache_file = cache_file.replace('.html', '_lightweight.html')
-    if ultra_lightweight:
-        cache_file = cache_file.replace('.html', '_ultra_lightweight.html')
-    if spread_markers:
-        cache_file = cache_file.replace('.html', '_spread.html')
-    
-    logger.info(f"Cache file path: {cache_file}")
-    
-    # Check cache first if use_cached is True and force_regen is False
-    if use_cached and not force_regen and os.path.exists(cache_file):
-        file_age = time.time() - os.path.getmtime(cache_file)
-        # Use cache if file exists and is less than 24 hours old
-        if file_age < 86400:  # 24 hours in seconds
-            logger.info(f"Using cached map from {cache_file} (age: {file_age/3600:.1f} hours)")
-            elapsed_time = time.time() - start_time
-            logger.info(f"Map retrieval completed in {elapsed_time:.2f} seconds (from cache)")
-            return cache_file
-        else:
-            logger.info(f"Cached map is {file_age/3600:.1f} hours old, regenerating...")
-    
-    # Get pre-processed data
-    data_load_start = time.time()
-    logger.info("Loading map data...")
-    msa_data, county_data, states_data, county_to_msa = get_processed_data()
-    data_load_time = time.time() - data_load_start
-    logger.info(f"Data loaded in {data_load_time:.2f} seconds")
-    
-    if msa_data is None or len(msa_data) == 0:
-        logger.error("Failed to load MSA data or MSA data is empty")
-        return create_fallback_map(area_name, cache_file)
-    
-    # If customer_data_processor is available, get virgin/non-virgin information
-    if has_customer_data:
-        try:
-            virgin_msas, non_virgin_msas = customer_data_processor.identify_virgin_statistical_areas(msa_data)
-            
-            # Add virgin/non-virgin status to MSA data
-            msa_data['IS_VIRGIN'] = False
-            msa_data['HAS_CUSTOMERS'] = False
-            
-            for idx, msa in msa_data.iterrows():
-                if msa['CBSAFP'] in virgin_msas:
-                    msa_data.at[idx, 'IS_VIRGIN'] = True
-                if msa['CBSAFP'] in non_virgin_msas:
-                    msa_data.at[idx, 'HAS_CUSTOMERS'] = True
-                    
-            logger.info(f"Added virgin/non-virgin status to MSA data")
-        except Exception as e:
-            logger.error(f"Error applying virgin/non-virgin status: {e}")
-    
     try:
-        # Normalize the area name for comparison
-        normalized_area_name = area_name.lower().strip()
-        logger.info(f"Normalized area name: {normalized_area_name}")
-        
-        # Create normalized versions of MSA names
-        msa_data['normalized_name'] = msa_data['NAME'].str.lower().str.strip()
-        
-        # Try exact match first
-        target_area = None
-        exact_matches = msa_data[msa_data['normalized_name'] == normalized_area_name]
-        if not exact_matches.empty:
-            target_area = exact_matches.iloc[0]
-            logger.info(f"Found exact match: {target_area['NAME']}")
-        
-        # If no exact match, try matching main city name
-        if target_area is None:
-            city_name = normalized_area_name.split(',')[0].split('-')[0].strip()
-            logger.info(f"Trying to match city name: {city_name}")
+        # Filter the area name to make it safe for filenames
+        if not area_name:
+            logger.error("No area name provided")
+            return None
             
-            # Try exact city match first
-            city_matches = msa_data[msa_data['normalized_name'].str.startswith(city_name + ',', na=False)]
-            if not city_matches.empty:
-                target_area = city_matches.iloc[0]
-                logger.info(f"Found exact city match: {target_area['NAME']}")
-            else:
-                # Try fuzzy city match
-                city_matches = msa_data[msa_data['normalized_name'].str.contains(f"^{city_name}", regex=True, case=False, na=False)]
+        # Normalize the area name
+        area_name_normalized = area_name
+        
+        # Generate cache path
+        # Include important parameters in the filename for caching
+        parts = ["statistical_area", area_name.replace(" ", "_")]
+        if lightweight:
+            parts.append("lightweight")
+        if ultra_lightweight:
+            parts.append("ultra")
+        if spread_markers:
+            parts.append("spread")
+        if marker_source:
+            parts.append(marker_source)
+        if display_pgs and pg_count > 0:
+            parts.append(f"pg{pg_count}")
+        if display_hhahs and hhah_count > 0:
+            parts.append(f"hhah{hhah_count}")
+            
+        cache_filename = "_".join(parts) + ".html"
+        cache_path = os.path.join(CACHE_DIR, cache_filename)
+        
+        # Check if cached file exists and is not a force regeneration
+        if os.path.exists(cache_path) and use_cached and not force_regen:
+            logger.info(f"Returning cached map for {area_name} from {cache_path}")
+            return cache_path
+            
+        logger.info(f"Generating map for {area_name} with zoom={zoom}, exact_boundary={exact_boundary}, detailed={detailed}, lightweight={lightweight}")
+        
+        # Try to get data from cache using the original implementation approach
+        try:
+            data_load_start = time.time()
+            logger.info("Loading map data...")
+            msa_data, county_data, states_data, county_to_msa = get_processed_data()
+            data_load_time = time.time() - data_load_start
+            logger.info(f"Data loaded in {data_load_time:.2f} seconds")
+            
+            if msa_data is None or len(msa_data) == 0:
+                logger.error("Failed to load MSA data or MSA data is empty")
+                return create_fallback_map(area_name, cache_path)
+            
+            # Normalize the area name for comparison
+            normalized_area_name = area_name.lower().strip()
+            logger.info(f"Normalized area name: {normalized_area_name}")
+            
+            # Create normalized versions of MSA names
+            msa_data['normalized_name'] = msa_data['NAME'].str.lower().str.strip()
+            
+            # Try exact match first
+            target_area = None
+            exact_matches = msa_data[msa_data['normalized_name'] == normalized_area_name]
+            if not exact_matches.empty:
+                target_area = exact_matches.iloc[0]
+                logger.info(f"Found exact match: {target_area['NAME']}")
+            
+            # If no exact match, try matching main city name
+            if target_area is None:
+                city_name = normalized_area_name.split(',')[0].split('-')[0].strip()
+                logger.info(f"Trying to match city name: {city_name}")
+                
+                # Try exact city match first
+                city_matches = msa_data[msa_data['normalized_name'].str.startswith(city_name + ',', na=False)]
                 if not city_matches.empty:
                     target_area = city_matches.iloc[0]
-                    logger.info(f"Found fuzzy city match: {target_area['NAME']}")
-        
-        # If still no match, try partial match
-        if target_area is None:
-            partial_matches = msa_data[msa_data['normalized_name'].str.contains(normalized_area_name, case=False, na=False)]
-            if not partial_matches.empty:
-                target_area = partial_matches.iloc[0]
-                logger.info(f"Found partial match: {target_area['NAME']}")
-        
-        if target_area is None:
-            logger.error(f"Could not find any matching MSA for: {area_name}")
-            fallback_file = create_fallback_map(area_name, cache_file)
-            logger.info(f"Created fallback map at: {fallback_file}")
-            return fallback_file
-        
-        # Verify geometry
-        logger.info(f"Validating geometry...")
-        if not hasattr(target_area, 'geometry') or target_area.geometry is None:
-            logger.error(f"No geometry data for MSA: {target_area['NAME']}")
-            fallback_file = create_fallback_map(area_name, cache_file)
-            logger.info(f"Created fallback map at: {fallback_file}")
-            return fallback_file
-        
-        # Validate and fix geometry if needed
-        logger.info("Validating geometry...")
-        if not target_area.geometry.is_valid:
-            try:
-                logger.info("Attempting to fix invalid geometry...")
-                target_area.geometry = target_area.geometry.buffer(0)
-                if not target_area.geometry.is_valid:
-                    logger.error("Failed to fix invalid geometry")
-                    fallback_file = create_fallback_map(area_name, cache_file)
-                    logger.info(f"Created fallback map at: {fallback_file}")
-                    return fallback_file
-            except Exception as e:
-                logger.error(f"Error fixing geometry: {str(e)}")
-                fallback_file = create_fallback_map(area_name, cache_file)
+                    logger.info(f"Found exact city match: {target_area['NAME']}")
+                else:
+                    # Try fuzzy city match
+                    city_matches = msa_data[msa_data['normalized_name'].str.contains(f"^{city_name}", regex=True, case=False, na=False)]
+                    if not city_matches.empty:
+                        target_area = city_matches.iloc[0]
+                        logger.info(f"Found fuzzy city match: {target_area['NAME']}")
+            
+            # If still no match, try partial match
+            if target_area is None:
+                partial_matches = msa_data[msa_data['normalized_name'].str.contains(normalized_area_name, case=False, na=False)]
+                if not partial_matches.empty:
+                    target_area = partial_matches.iloc[0]
+                    logger.info(f"Found partial match: {target_area['NAME']}")
+            
+            if target_area is None:
+                logger.error(f"Could not find any matching MSA for: {area_name}")
+                fallback_file = create_fallback_map(area_name, cache_path)
                 logger.info(f"Created fallback map at: {fallback_file}")
                 return fallback_file
-        
-        # Get centroid and bounds
-        try:
+            
+            # Verify geometry
+            logger.info(f"Validating geometry...")
+            if not hasattr(target_area, 'geometry') or target_area.geometry is None:
+                logger.error(f"No geometry data for MSA: {target_area['NAME']}")
+                fallback_file = create_fallback_map(area_name, cache_path)
+                logger.info(f"Created fallback map at: {fallback_file}")
+                return fallback_file
+            
+            # Get centroid and bounds
             center_lng, center_lat = target_area.geometry.centroid.x, target_area.geometry.centroid.y
             min_x, min_y, max_x, max_y = target_area.geometry.bounds
             
-            # Generate mock PGs and HHAHs data for this statistical area
-            logger.info(f"Generating mock PGs and HHAHs for {area_name}")
-            pgs_data, hhahs_data = generate_mock_pgs_hhahs(area_name, target_area.geometry)
-            logger.info(f"Generated {len(pgs_data)} mock PGs and {len(hhahs_data)} mock HHAHs")
+            # Generate PG and HHAH marker data
+            pgs_data = []
+            hhahs_data = []
             
-            # Check if this is a virgin or non-virgin MSA
-            is_virgin = target_area.get('IS_VIRGIN', False)
-            has_customers = target_area.get('HAS_CUSTOMERS', False)
+            # Try to use real map data if available
+            from app import real_map_data
+            real_data_available = False
             
-            # If it's a virgin MSA, don't show any PGs/HHAHs
-            if is_virgin:
-                logger.info(f"This is a VIRGIN statistical area - no customers (PGs/HHAHs)")
-                pgs_data = []
-                hhahs_data = []
+            # Check if we have real data for this area
+            if area_name in real_map_data:
+                logger.info(f"Using real map data for {area_name}")
+                real_data_available = True
+                area_data = real_map_data[area_name]
+                
+                # Use the exact pg_count and hhah_count from parameters if provided
+                if use_exact_count:
+                    logger.info(f"Using exact counts from parameters: PGs={pg_count}, HHAHs={hhah_count}")
+                    
+                    # When using listing counts, we might want to limit the actual markers shown to match those counts
+                    pg_limit = int(pg_count) if pg_count > 0 else len(area_data.get('pgs', []))
+                    hhah_limit = int(hhah_count) if hhah_count > 0 else len(area_data.get('hhahs', []))
+                    
+                    # Ensure we don't exceed the available data
+                    pg_limit = min(pg_limit, len(area_data.get('pgs', [])))
+                    hhah_limit = min(hhah_limit, len(area_data.get('hhahs', [])))
+                    
+                    logger.info(f"Using {pg_limit} PGs and {hhah_limit} HHAHs from real data based on listing counts")
+                else:
+                    # Use all available data
+                    pg_limit = len(area_data.get('pgs', []))
+                    hhah_limit = len(area_data.get('hhahs', []))
+                
+                # Process PGs from real data
+                if display_pgs:
+                    # Get PG data but limit to pg_limit
+                    limited_pgs = area_data.get('pgs', [])[:pg_limit]
+                    logger.info(f"Processing {len(limited_pgs)} PGs for display out of {len(area_data.get('pgs', []))} total")
+                    
+                    for pg in limited_pgs:
+                        # Get random coordinates within the area
+                        point = target_area.geometry.centroid
+                        coords = [point.y + random.uniform(-0.03, 0.03), point.x + random.uniform(-0.03, 0.03)]
+                        
+                        # Ensure point is within the area boundary
+                        attempt = 0
+                        while attempt < 5 and not target_area.geometry.contains(Point(coords[1], coords[0])):
+                            coords = [point.y + random.uniform(-0.02, 0.02), point.x + random.uniform(-0.02, 0.02)]
+                            attempt += 1
+                        
+                        pgs_data.append({
+                            'name': pg.get('name', 'Unknown PG'),
+                            'location': coords,
+                            'group': pg.get('group', 'Primary Provider'),
+                            'physicians': pg.get('physicians', 5),
+                            'patients': pg.get('patients', 75),
+                            'status': pg.get('status', 'Active'),
+                            'address': pg.get('address', 'Address not available'),
+                            'contact': pg.get('contact', 'Contact not available')
+                        })
+                
+                # Process HHAHs from real data
+                if display_hhahs:
+                    # Get HHAH data but limit to hhah_limit
+                    limited_hhahs = area_data.get('hhahs', [])[:hhah_limit]
+                    logger.info(f"Processing {len(limited_hhahs)} HHAHs for display out of {len(area_data.get('hhahs', []))} total")
+                    
+                    for hhah in limited_hhahs:
+                        # Get random coordinates within the area
+                        point = target_area.geometry.centroid
+                        coords = [point.y + random.uniform(-0.03, 0.03), point.x + random.uniform(-0.03, 0.03)]
+                        
+                        # Ensure point is within the area boundary
+                        attempt = 0
+                        while attempt < 5 and not target_area.geometry.contains(Point(coords[1], coords[0])):
+                            coords = [point.y + random.uniform(-0.02, 0.02), point.x + random.uniform(-0.02, 0.02)]
+                            attempt += 1
+                        
+                        hhahs_data.append({
+                            'name': hhah.get('name', hhah.get('Agency Name', 'Unknown HHAH')),
+                            'location': coords,
+                            'services': hhah.get('services', 3),
+                            'patients': hhah.get('patients', 50),
+                            'status': hhah.get('status', hhah.get('Agency Type', 'Not Using')),
+                            'address': hhah.get('address', hhah.get('Address', 'Address not available')),
+                            'contact': hhah.get('contact', hhah.get('Telephone', 'Contact not available'))
+                        })
             
-            logger.info(f"Center: {center_lat}, {center_lng}")
-            logger.info(f"Bounds: {min_x}, {min_y}, {max_x}, {max_y}")
-        except Exception as e:
-            logger.error(f"Error calculating centroid or bounds: {str(e)}")
-            fallback_file = create_fallback_map(area_name, cache_file)
-            logger.info(f"Created fallback map at: {fallback_file}")
-            return fallback_file
-        
-        # Create base map with error handling
-        try:
+            # Handle the marker source parameter to control where markers come from
+            if marker_source == 'listing':
+                logger.info("Using listing as marker source - generating exact number of markers from listing data")
+                
+                # If we have listing counts but no real data or not enough real data, generate the exact number requested
+                if use_exact_count:
+                    # Only generate mock PGs if we don't have enough real ones and mock markers are allowed
+                    if display_pgs and pg_count > 0 and len(pgs_data) < int(pg_count) and not clear_mock_markers:
+                        missing_pg_count = int(pg_count) - len(pgs_data)
+                        logger.info(f"Generating {missing_pg_count} additional mock PG markers to match listing count")
+                        mock_pgs = generate_exact_markers(area_name, target_area.geometry, 'pg', missing_pg_count, spread=spread_markers)
+                        pgs_data.extend(mock_pgs)
+                    
+                    # Only generate mock HHAHs if we don't have enough real ones and mock markers are allowed
+                    if display_hhahs and hhah_count > 0 and len(hhahs_data) < int(hhah_count) and not clear_mock_markers:
+                        missing_hhah_count = int(hhah_count) - len(hhahs_data)
+                        logger.info(f"Generating {missing_hhah_count} additional mock HHAH markers to match listing count")
+                        mock_hhahs = generate_exact_markers(area_name, target_area.geometry, 'hhah', missing_hhah_count, spread=spread_markers)
+                        hhahs_data.extend(mock_hhahs)
+            # If no real data or not enough markers, and not using listing source, generate mock data to match counts
+            elif (not real_data_available or len(pgs_data) == 0) and display_pgs and pg_count > 0 and not clear_mock_markers:
+                logger.info(f"Generating {pg_count} mock PG markers for {area_name}")
+                mock_pgs = generate_exact_markers(area_name, target_area.geometry, 'pg', pg_count, spread=spread_markers)
+                pgs_data.extend(mock_pgs)
+            
+            if (not real_data_available or len(hhahs_data) == 0) and display_hhahs and hhah_count > 0 and not clear_mock_markers:
+                logger.info(f"Generating {hhah_count} mock HHAH markers for {area_name}")
+                mock_hhahs = generate_exact_markers(area_name, target_area.geometry, 'hhah', hhah_count, spread=spread_markers)
+                hhahs_data.extend(mock_hhahs)
+            
+            # Create a map centered on the MSA
+            center = [center_lat, center_lng]
+            
+            # Create the map
+            figure = Figure(width=800, height=600)
             m = folium.Map(
-                location=[center_lat, center_lng],
+                location=center,
                 zoom_start=zoom,
-                tiles='cartodbpositron',
-                prefer_canvas=True,
-                control_scale=True
+                tiles='cartodbpositron',  # Use a lightweight map style
+                control_scale=True,
+                prefer_canvas=True
             )
-        except Exception as e:
-            logger.error(f"Error creating base map: {str(e)}")
-            return create_fallback_map(area_name, cache_file)
-        
-        # Add state boundaries with error handling
-        """
-        try:
-            style_function = lambda x: {
-                'fillColor': '#f5f5f5',
-                'color': '#6b7280',
-                'weight': 1,
+            figure.add_child(m)
+            
+            # Add MSA boundary to the map with nicer styling
+            msa_style_function = lambda x: {
+                'fillColor': '#4F46E5',
+                'color': '#312E81',
+                'weight': 2,
                 'fillOpacity': 0.1
             }
             
-            highlight_function = lambda x: {
-                'fillColor': '#f5f5f5',
-                'color': '#4b5563', 
-                'weight': 2,
-                'fillOpacity': 0.2
-            }
+            # Add the area boundary
+            folium.GeoJson(
+                target_area.geometry.__geo_interface__,
+                name='Statistical Area',
+                style_function=lambda x: msa_style_function(x),
+                tooltip=f"<div style='font-weight:bold;'>{area_name}</div>"
+            ).add_to(m)
             
-            state_popup = folium.GeoJsonPopup(
-                fields=['NAME'],
-                aliases=['State:'],
-                localize=True,
-                labels=True
-            )
+            # Add PGs and HHAHs to the map
+            if pgs_data or hhahs_data:
+                add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight=lightweight, ultra_lightweight=ultra_lightweight, spread_markers_flag=spread_markers)
             
-            # Add the state boundaries from GeoPandas directly
-            states_layer = folium.GeoJson(
-                states_data,
-                name='State Boundaries',
-                style_function=style_function,
-                highlight_function=highlight_function,
-                tooltip=folium.GeoJsonTooltip(fields=['NAME'], aliases=['State:'], sticky=False),
-                popup=state_popup,
-                show=True
-            )
-            states_layer.add_to(m)
+            # Add simplified map controls to improve load time
+            # Fullscreen button is helpful for users
+            Fullscreen(
+                position='topleft',
+                title='View Fullscreen',
+                title_cancel='Exit Fullscreen',
+                force_separate_button=True
+            ).add_to(m)
             
-        except Exception as e:
-            logger.error(f"Error adding state boundaries: {str(e)}")
-            # Continue without states
-        """
-        
-        # Add MSA boundary (simpler style for lightweight version)
-        style_params = {
-            'fillColor': '#4F46E5',
-            'color': '#312E81',
-            'weight': 3 if not lightweight else 2,
-            'fillOpacity': 0.2 if not lightweight else 0.15,
-            'opacity': 0.9 if not lightweight else 0.8
-        }
-        
-        folium.GeoJson(
-            target_area.geometry.__geo_interface__,
-            style_function=lambda x: style_params,
-            name=f"{target_area['NAME']} Boundary"
-        ).add_to(m)
-        
-        # Add PGs and HHAHs to the map - use simplified markers for lightweight version
-        if lightweight:
-            # Simplified markers for lightweight version
-            for i, pg in enumerate(pgs_data):
-                folium.Marker(
-                    location=pg['location'],
-                    popup=f"PG: {pg['name']}",
-                    tooltip=f"PG: {pg['name']}",
-                    icon=folium.Icon(color='blue', icon='hospital', prefix='fa')
-                ).add_to(m)
+            # Add scale - Fixed: use measure control instead of ScaleControl which doesn't exist
+            folium.plugins.MeasureControl(
+                position='bottomleft',
+                primary_length_unit='meters',
+                secondary_length_unit='kilometers'
+            ).add_to(m)
             
-            for i, hhah in enumerate(hhahs_data):
-                folium.Marker(
-                    location=hhah['location'],
-                    popup=f"HHAH: {hhah['name']}",
-                    tooltip=f"HHAH: {hhah['name']}",
-                    icon=folium.Icon(color='green', icon='home', prefix='fa')
-                ).add_to(m)
-        else:
-            # Detailed markers for full version
-            add_pgs_hhahs_to_map(m, pgs_data, hhahs_data, lightweight, ultra_lightweight, spread_markers)
-        
-        # Add essential controls - minimal for lightweight
-        if not lightweight:
-            folium.plugins.Fullscreen().add_to(m)
-            folium.plugins.MousePosition().add_to(m)
-        folium.LayerControl().add_to(m)
-        
-        # Set bounds
-        m.fit_bounds([[min_y, min_x], [max_y, max_x]])
-        
-        # Add MSA title overlay box
-        try:
-            # Use CSS with flex layout for better appearance
-            is_virgin_text = "VIRGIN Area - No Existing Customers" if is_virgin else "Non-Virgin Area - Has Customers"
-            pg_hhah_count_text = f"Showing {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs in this area."
-            info_box_html = f"""
-            <div style="position: fixed; 
-                        top: 10px; left: 50px; width: 350px; height: auto;
-                        background-color: white; border-radius: 8px;
-                        border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
-                        font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-                <h4 style="margin-top: 0; color: #1F2937;">Map View of {area_name}</h4>
-                <p style="font-size: 12px; margin-bottom: 5px;">
-                    <span style="color: {'#FF5733' if is_virgin else '#33A1FF'}; font-weight: bold;">({is_virgin_text})</span>
-                </p>
-                <p style="font-size: 12px; margin-bottom: 0;">
-                    {pg_hhah_count_text}
-                </p>
-            </div>
-            """
+            # Add a simple title box
+            title_html = f'''
+                <div style="position: fixed; 
+                            top: 10px; left: 50px; width: 300px; height: auto;
+                            background-color: white; border-radius: 8px;
+                            border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                            font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-top: 0; color: #1F2937;">{area_name}</h4>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        PGs: {pg_count if use_exact_count and pg_count > 0 else len(pgs_data)} | HHAHs: {hhah_count if use_exact_count and hhah_count > 0 else len(hhahs_data)}
+                    </p>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        <i>Click markers to view details</i>
+                    </p>
+                </div>
+            '''
+            m.get_root().html.add_child(folium.Element(title_html))
             
-            folium.Element(info_box_html).add_to(m)
-            logger.info(f"Added title overlay with {len(pgs_data)} PGs and {len(hhahs_data)} HHAHs")
-        except Exception as e:
-            logger.error(f"Error adding title: {str(e)}")
-        
-        # Add safe script for cross-origin communication - simplified for lightweight
-        safe_script = """
-        <script>
-        // Safe cross-origin communication
-        document.addEventListener('DOMContentLoaded', function() {
-            // Notify parent when map is loaded
-            setTimeout(function() {
-                try {
-                    console.log('Map loaded, sending message to parent');
-                    if (window.parent && window.parent !== window) {
-                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
-                    }
-                } catch (e) {
-                    console.error('Error in cross-origin communication:', e);
+            # Add a notification script to inform the parent frame when the map is loaded
+            notification_script = """
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Send a message to the parent window that the map has loaded
+                if (window.parent) {
+                    window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
                 }
-            }, 500);
-        });
-        </script>
-        """
-        m.get_root().html.add_child(folium.Element(safe_script))
+            });
+            </script>
+            """
+            m.get_root().html.add_child(folium.Element(notification_script))
+            
+            # Make sure the cache directory exists
+            os.makedirs(CACHE_DIR, exist_ok=True)
+            
+            # Save the map
+            figure.save(cache_path)
+            
+            # Create cross-origin friendly map with custom headers
+            with open(cache_path, 'r') as f:
+                map_content = f.read()
+                
+            # Ensure map can be embedded in iframes by fixing Content-Security-Policy
+            map_content = map_content.replace('</head>', '<meta http-equiv="Content-Security-Policy" content="frame-ancestors *"></head>')
+                
+            # Write the updated content back to the file
+            with open(cache_path, 'w') as f:
+                f.write(map_content)
+            
+            elapsed_time = time.time() - start_time
+            logger.info(f"Map generated in {elapsed_time:.2f} seconds")
+            
+            return cache_path
         
-        # Ensure the cache directory exists
-        if not os.path.exists(CACHE_DIR):
-            os.makedirs(CACHE_DIR)
-        
-        # Save the map
-        m.save(cache_file)
-        logger.info(f"Map saved to {cache_file}")
-        
-        return cache_file
+        except Exception as e:
+            logger.exception(f"Error in primary map generation approach: {str(e)}")
+            # Fall back to the alternative approach with a simpler map
+            return create_fallback_map(area_name, cache_path)
         
     except Exception as e:
-        logger.error(f"Error generating map: {str(e)}")
-        fallback_file = create_fallback_map(area_name, cache_file)
-        logger.info(f"Created fallback map at: {fallback_file}")
-        return fallback_file 
+        logger.exception(f"Error generating statistical area map: {str(e)}")
+        # Create a simple fallback map as a last resort
+        return create_fallback_map(area_name, None) 

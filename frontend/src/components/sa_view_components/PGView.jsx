@@ -2053,7 +2053,6 @@ const PGView = () => {
                 </div>
                 
                 <div className="form-group">
-                  <label>Billing Start Date</label>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                       label="Billing Start Date"
@@ -2065,7 +2064,6 @@ const PGView = () => {
                   </LocalizationProvider>
                 </div>
                 <div className="form-group">
-                  <label>Billing End Date</label>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                       label="Billing End Date"
@@ -3394,77 +3392,79 @@ const PGView = () => {
 
   // New function to download a report
   const handleDownloadReport = (report) => {
-    // Create mock report content based on report type
-    let content = '';
-    
+    // Use jsPDF to generate a PDF file
+    const doc = new jsPDF();
+    let y = 15;
+    doc.setFontSize(16);
+    doc.text(report.fileName.replace('.pdf', ''), 10, y);
+    y += 10;
+    doc.setFontSize(12);
+    doc.text(`Date: ${report.date}`, 10, y);
+    y += 8;
     if (report.fileName.toLowerCase().includes('communication') || report.fileName.toLowerCase().includes('mbr')) {
-      // MBR report content
-      content = `
-# ${report.fileName.replace('.pdf', '')}
-Date: ${report.date}
-Type: Monthly Business Review
-
-## Summary
-${report.notes}
-
-## Performance Metrics
-- Patient Satisfaction: 87%
-- Care Quality: 92%
-- Response Time: 4.3 hours (average)
-
-## Physician Engagement
-- Dr. Sarah Johnson: High engagement
-- Dr. Robert Chen: Medium engagement
-- Dr. Maria Garcia: High engagement
-
-## Action Items
-1. Improve response time for urgent cases
-2. Schedule follow-up meeting with key physicians
-3. Review patient feedback for Q1
-
-## Prepared by
-Healthcare Analytics Team
-`;
+      doc.text('Type: Monthly Business Review', 10, y);
+      y += 8;
+      doc.text('Summary:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text(doc.splitTextToSize(report.notes, 180), 10, y);
+      y += 16;
+      doc.setFontSize(12);
+      doc.text('Performance Metrics:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text('- Patient Satisfaction: 87%', 14, y); y += 6;
+      doc.text('- Care Quality: 92%', 14, y); y += 6;
+      doc.text('- Response Time: 4.3 hours (average)', 14, y); y += 10;
+      doc.setFontSize(12);
+      doc.text('Physician Engagement:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text('- Dr. Sarah Johnson: High engagement', 14, y); y += 6;
+      doc.text('- Dr. Robert Chen: Medium engagement', 14, y); y += 6;
+      doc.text('- Dr. Maria Garcia: High engagement', 14, y); y += 10;
+      doc.setFontSize(12);
+      doc.text('Action Items:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text('1. Improve response time for urgent cases', 14, y); y += 6;
+      doc.text('2. Schedule follow-up meeting with key physicians', 14, y); y += 6;
+      doc.text('3. Review patient feedback for Q1', 14, y); y += 10;
+      doc.setFontSize(12);
+      doc.text('Prepared by: Healthcare Analytics Team', 10, y);
     } else {
-      // Weekly report content
-      content = `
-# ${report.fileName.replace('.pdf', '')}
-Date: ${report.date}
-Type: Weekly Progress Report
-
-## Summary
-${report.notes}
-
-## Weekly Metrics
-- New Patients: 12
-- Follow-up Appointments: 28
-- Emergency Cases: 3
-
-## Notable Events
-- Staff meeting on Tuesday
-- New equipment training on Thursday
-- Patient satisfaction survey distributed
-
-## Next Week Focus
-- Complete patient outreach program
-- Finalize schedule for next month
-- Review inventory needs
-
-## Prepared by
-Operations Team
-`;
+      doc.text('Type: Weekly Progress Report', 10, y);
+      y += 8;
+      doc.text('Summary:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text(doc.splitTextToSize(report.notes, 180), 10, y);
+      y += 16;
+      doc.setFontSize(12);
+      doc.text('Weekly Metrics:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text('- New Patients: 12', 14, y); y += 6;
+      doc.text('- Follow-up Appointments: 28', 14, y); y += 6;
+      doc.text('- Emergency Cases: 3', 14, y); y += 10;
+      doc.setFontSize(12);
+      doc.text('Notable Events:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text('- Staff meeting on Tuesday', 14, y); y += 6;
+      doc.text('- New equipment training on Thursday', 14, y); y += 6;
+      doc.text('- Patient satisfaction survey distributed', 14, y); y += 10;
+      doc.setFontSize(12);
+      doc.text('Next Week Focus:', 10, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.text('- Complete patient outreach program', 14, y); y += 6;
+      doc.text('- Finalize schedule for next month', 14, y); y += 6;
+      doc.text('- Review inventory needs', 14, y); y += 10;
+      doc.setFontSize(12);
+      doc.text('Prepared by: Operations Team', 10, y);
     }
-    
-    // Create blob and trigger download
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = report.fileName.replace('.pdf', '.txt');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    doc.save(report.fileName);
   };
 
   // Fix for Rapport record editing

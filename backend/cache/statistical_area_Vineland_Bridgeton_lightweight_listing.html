@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d5f4b18b580640d962022b7193a7a098 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_d5f4b18b580640d962022b7193a7a098" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d5f4b18b580640d962022b7193a7a098 = L.map(
+                "map_d5f4b18b580640d962022b7193a7a098",
+                {
+                    center: [39.32835324134223, -75.1287191742025],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_d5f4b18b580640d962022b7193a7a098);
+
+            
+
+        
+    
+            var tile_layer_5e58e1eb5179946864abc34464f765ad = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_5e58e1eb5179946864abc34464f765ad.addTo(map_d5f4b18b580640d962022b7193a7a098);
+        
+    
+        function geo_json_d389509a530528f3b563f0a3711ca946_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_d389509a530528f3b563f0a3711ca946_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_d389509a530528f3b563f0a3711ca946 = L.geoJson(null, {
+                onEachFeature: geo_json_d389509a530528f3b563f0a3711ca946_onEachFeature,
+            
+                style: geo_json_d389509a530528f3b563f0a3711ca946_styler,
+            ...{
+}
+        });
+
+        function geo_json_d389509a530528f3b563f0a3711ca946_add (data) {
+            geo_json_d389509a530528f3b563f0a3711ca946
+                .addData(data);
+        }
+            geo_json_d389509a530528f3b563f0a3711ca946_add({"features": [{"geometry": {"coordinates": [[[-75.418723, 39.432496], [-75.407786, 39.458718], [-75.368213, 39.456479], [-75.342376, 39.490622], [-75.31802, 39.49204], [-75.238434, 39.559039], [-75.083339, 39.45753], [-75.061854, 39.568746], [-74.855978, 39.424238], [-74.851968, 39.376587], [-74.896384, 39.235054], [-74.925736, 39.218904], [-74.912237, 39.17841], [-75.168462, 39.056179], [-75.321021, 39.251379], [-75.444751, 39.355089], [-75.406685, 39.380295], [-75.418723, 39.432496]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_d389509a530528f3b563f0a3711ca946.addTo(map_d5f4b18b580640d962022b7193a7a098);
+        
+    
+            var layer_control_677e5ecb5bd4265b857e4c4f3ee8d38c_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_5e58e1eb5179946864abc34464f765ad,
+                },
+                overlays :  {
+                    "Vineland, NJ Boundary" : geo_json_d389509a530528f3b563f0a3711ca946,
+                },
+            };
+            let layer_control_677e5ecb5bd4265b857e4c4f3ee8d38c = L.control.layers(
+                layer_control_677e5ecb5bd4265b857e4c4f3ee8d38c_layers.base_layers,
+                layer_control_677e5ecb5bd4265b857e4c4f3ee8d38c_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_d5f4b18b580640d962022b7193a7a098);
+
+        
+    
+            map_d5f4b18b580640d962022b7193a7a098.fitBounds(
+                [[39.056179, -75.444751], [39.568746, -74.851968]],
+                {}
+            );
+        
+</script>
+</html>

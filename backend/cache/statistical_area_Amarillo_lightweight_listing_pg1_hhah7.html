@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6b7dfe4f368e1c456f00da687ad5b083 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+<meta http-equiv="Content-Security-Policy" content="frame-ancestors *"></head>
+<body>
+    
+    
+                <div style="position: fixed; 
+                            top: 10px; left: 50px; width: 300px; height: auto;
+                            background-color: white; border-radius: 8px;
+                            border: 2px solid #4F46E5; z-index: 9999; padding: 10px;
+                            font-family: Arial; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-top: 0; color: #1F2937;">Amarillo</h4>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        PGs: 1 | HHAHs: 7
+                    </p>
+                    <p style="font-size: 12px; margin-bottom: 0;">
+                        <i>Click markers to view details</i>
+                    </p>
+                </div>
+            
+    
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Send a message to the parent window that the map has loaded
+                if (window.parent) {
+                    window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                }
+            });
+            </script>
+            
+    
+            <div class="folium-map" id="map_6b7dfe4f368e1c456f00da687ad5b083" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6b7dfe4f368e1c456f00da687ad5b083 = L.map(
+                "map_6b7dfe4f368e1c456f00da687ad5b083",
+                {
+                    center: [35.24911323330244, -101.90956056279622],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_6b7dfe4f368e1c456f00da687ad5b083);
+
+            
+
+        
+    
+            var tile_layer_d3ab0ec61cc6a55c52433f8151726d4d = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d3ab0ec61cc6a55c52433f8151726d4d.addTo(map_6b7dfe4f368e1c456f00da687ad5b083);
+        
+    
+        function geo_json_c4c394d6754a98074447bad19147c339_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.1, "weight": 2};
+            }
+        }
+
+        function geo_json_c4c394d6754a98074447bad19147c339_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_c4c394d6754a98074447bad19147c339 = L.geoJson(null, {
+                onEachFeature: geo_json_c4c394d6754a98074447bad19147c339_onEachFeature,
+            
+                style: geo_json_c4c394d6754a98074447bad19147c339_styler,
+            ...{
+}
+        });
+
+        function geo_json_c4c394d6754a98074447bad19147c339_add (data) {
+            geo_json_c4c394d6754a98074447bad19147c339
+                .addData(data);
+        }
+            geo_json_c4c394d6754a98074447bad19147c339_add({"features": [{"geometry": {"coordinates": [[[-102.559043, 35.186651], [-103.042511, 35.183157], [-103.041706, 35.622488], [-101.086068, 35.625267], [-101.090749, 34.748246], [-102.168839, 34.747417], [-102.167471, 35.183233], [-102.559043, 35.186651]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_c4c394d6754a98074447bad19147c339.bindTooltip(
+                `<div>
+                     <div style='font-weight:bold;'>Amarillo</div>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            geo_json_c4c394d6754a98074447bad19147c339.addTo(map_6b7dfe4f368e1c456f00da687ad5b083);
+        
+    
+            var feature_group_6a787df5b065dd75341f31421259d70f = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_2dcbcad2bad48ab8b109941ffd2b8adf = L.marker(
+                [35.24217889090826, -101.89464418867139],
+                {
+}
+            ).addTo(feature_group_6a787df5b065dd75341f31421259d70f);
+        
+    
+            var icon_aa6ac5e475c225dd6d61e3a421089539 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "h-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f536fc27b8b5fabf77ab098091369722 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bb6eb0cd03f85e8fbd927d965fe0f9ca = $(`<div id="html_bb6eb0cd03f85e8fbd927d965fe0f9ca" style="width: 100.0%; height: 100.0%;">             <div style="min-width: 120px; max-width: 200px;">                 <h4 style="margin: 4px 0; color: #1F2937;">CenterWell Home Health - Amarillo</h4>                 <p style="margin: 2px 0;"><strong>Status:</strong> Freemium</p>             </div>             </div>`)[0];
+                popup_f536fc27b8b5fabf77ab098091369722.setContent(html_bb6eb0cd03f85e8fbd927d965fe0f9ca);
+            
+        
+
+        marker_2dcbcad2bad48ab8b109941ffd2b8adf.bindPopup(popup_f536fc27b8b5fabf77ab098091369722)
+        ;
+
+        
+    
+    
+            marker_2dcbcad2bad48ab8b109941ffd2b8adf.bindTooltip(
+                `<div>
+                     PG: CenterWell Home Health - Amarillo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2dcbcad2bad48ab8b109941ffd2b8adf.setIcon(icon_aa6ac5e475c225dd6d61e3a421089539);
+            
+    
+            feature_group_6a787df5b065dd75341f31421259d70f.addTo(map_6b7dfe4f368e1c456f00da687ad5b083);
+        
+    
+            var feature_group_76adf3982f4ebe78f756b45d7a2c77fb = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_790b1dc25d92e4c1d3dfee3b3d2d1779 = L.marker(
+                [35.2787112152376, -101.93527459778419],
+                {
+}
+            ).addTo(feature_group_76adf3982f4ebe78f756b45d7a2c77fb);
+        
+    
+            var icon_9780be55686767de0f127e33f8b25bbb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plus-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_816a399162164ad2065c75216bc825f3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_111257f37ac567d82ae7a83931a7050d = $(`<div id="html_111257f37ac567d82ae7a83931a7050d" style="width: 100.0%; height: 100.0%;">             <div style="min-width: 120px; max-width: 200px;">                 <h4 style="margin: 4px 0; color: #1F2937;">CenterWell Home Health - Amarillo</h4>                 <p style="margin: 2px 0;"><strong>Status:</strong> Freemium</p>             </div>             </div>`)[0];
+                popup_816a399162164ad2065c75216bc825f3.setContent(html_111257f37ac567d82ae7a83931a7050d);
+            
+        
+
+        marker_790b1dc25d92e4c1d3dfee3b3d2d1779.bindPopup(popup_816a399162164ad2065c75216bc825f3)
+        ;
+
+        
+    
+    
+            marker_790b1dc25d92e4c1d3dfee3b3d2d1779.bindTooltip(
+                `<div>
+                     HHAH: CenterWell Home Health - Amarillo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_790b1dc25d92e4c1d3dfee3b3d2d1779.setIcon(icon_9780be55686767de0f127e33f8b25bbb);
+            
+    
+            var marker_d83b302aba0df6f75dc39da5e39fd9b4 = L.marker(
+                [35.261284195437156, -101.93099356062118],
+                {
+}
+            ).addTo(feature_group_76adf3982f4ebe78f756b45d7a2c77fb);
+        
+    
+            var icon_1ed5f75636cc50be9e5d609b822fe831 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plus-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_62db86e136a99dd1a1b2f4e1e4fc4386 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a13447cd89486e5b9d27bedb1c25ef94 = $(`<div id="html_a13447cd89486e5b9d27bedb1c25ef94" style="width: 100.0%; height: 100.0%;">             <div style="min-width: 120px; max-width: 200px;">                 <h4 style="margin: 4px 0; color: #1F2937;">Compassion Home Care-Amarillo</h4>                 <p style="margin: 2px 0;"><strong>Status:</strong> Freemium</p>             </div>             </div>`)[0];
+                popup_62db86e136a99dd1a1b2f4e1e4fc4386.setContent(html_a13447cd89486e5b9d27bedb1c25ef94);
+            
+        
+
+        marker_d83b302aba0df6f75dc39da5e39fd9b4.bindPopup(popup_62db86e136a99dd1a1b2f4e1e4fc4386)
+        ;
+
+        
+    
+    
+            marker_d83b302aba0df6f75dc39da5e39fd9b4.bindTooltip(
+                `<div>
+                     HHAH: Compassion Home Care-Amarillo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d83b302aba0df6f75dc39da5e39fd9b4.setIcon(icon_1ed5f75636cc50be9e5d609b822fe831);
+            
+    
+            var marker_7ac6fd74c3a5dec846f547118e6846b8 = L.marker(
+                [35.27166936367778, -101.905870881507],
+                {
+}
+            ).addTo(feature_group_76adf3982f4ebe78f756b45d7a2c77fb);
+        
+    
+            var icon_4c205006e252f07a528d0c29de6a4346 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plus-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b151176a9df0624e7b23b5c23ee8aef5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_40218ddd983f66e636dc64c629ba9ec8 = $(`<div id="html_40218ddd983f66e636dc64c629ba9ec8" style="width: 100.0%; height: 100.0%;">             <div style="min-width: 120px; max-width: 200px;">                 <h4 style="margin: 4px 0; color: #1F2937;">A01 - Enhabit OF THE PANHANDLE</h4>                 <p style="margin: 2px 0;"><strong>Status:</strong> Order360 Lite</p>             </div>             </div>`)[0];
+                popup_b151176a9df0624e7b23b5c23ee8aef5.setContent(html_40218ddd983f66e636dc64c629ba9ec8);
+            
+        
+
+        marker_7ac6fd74c3a5dec846f547118e6846b8.bindPopup(popup_b151176a9df0624e7b23b5c23ee8aef5)
+        ;
+
+        
+    
+    
+            marker_7ac6fd74c3a5dec846f547118e6846b8.bindTooltip(
+                `<div>
+                     HHAH: A01 - Enhabit OF THE PANHANDLE
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7ac6fd74c3a5dec846f547118e6846b8.setIcon(icon_4c205006e252f07a528d0c29de6a4346);
+            
+    
+            var marker_c0b512d7824e7d96e35b3727841387e1 = L.marker(
+                [35.26526352034432, -101.93592219001228],
+                {
+}
+            ).addTo(feature_group_76adf3982f4ebe78f756b45d7a2c77fb);
+        
+    
+            var icon_6e5ae0f168d2f79262777f7ffcd7423b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plus-square",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4e06a62c5e386a57edfc92a4514befd0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_958a2ce1a500843789afd49dffab03b9 = $(`<div id="html_958a2ce1a500843789afd49dffab03b9" style="width: 100.0%; height: 100.0%;">             <div style="min-width: 120px; max-width: 200px;">                 <h4 style="margin: 4px 0; color: #1F2937;">Accolade Home Care-Amarillo</h4>                 <p style="margin: 2px 0;"><strong>Status:</strong> Freemium</p>             </div>             </div>`)[0];
+                popup_4e06a62c5e386a57edfc92a4514befd0.setContent(html_958a2ce1a500843789afd49dffab03b9);
+            
+        
+
+        marker_c0b512d7824e7d96e35b3727841387e1.bindPopup(popup_4e06a62c5e386a57edfc92a4514befd0)
+        ;
+
+        
+    
+    
+            marker_c0b512d7824e7d96e35b3727841387e1.bindTooltip(
+                `<div>
+                     HHAH: Accolade Home Care-Amarillo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c0b512d7824e7d96e35b3727841387e1.setIcon(icon_6e5ae0f168d2f79262777f7ffcd7423b);
+            
+    
+            feature_group_76adf3982f4ebe78f756b45d7a2c77fb.addTo(map_6b7dfe4f368e1c456f00da687ad5b083);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "View Fullscreen",
+  "titleCancel": "Exit Fullscreen",
+  "forceSeparateButton": true,
+}
+            ).addTo(map_6b7dfe4f368e1c456f00da687ad5b083);
+        
+    
+            var measure_control_c1bde625679fcbc44ce91bef75c4a663 = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "meters",
+  "secondaryLengthUnit": "kilometers",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_6b7dfe4f368e1c456f00da687ad5b083.addControl(measure_control_c1bde625679fcbc44ce91bef75c4a663);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+</script>
+</html>

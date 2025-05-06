@@ -3,23 +3,25 @@
   top: 10px;
   right: 10px;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  pointer-events: none; /* Allow clicking through the overlay */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  pointer-events: auto; /* Allow interaction with the overlay */
+  min-width: 180px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .provider-count-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .provider-count {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   padding: 4px 0;
 }
 
@@ -27,16 +29,17 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .pg-icon {
   background-color: #0000FF; /* Blue for PGs */
-  box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.3);
+  box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.2);
 }
 
 .hhah-icon {
   background-color: #008000; /* Green for HHAHs */
-  box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.3);
+  box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.2);
 }
 
 .provider-count-text {
@@ -46,8 +49,9 @@
 
 .provider-count-number {
   font-weight: bold;
-  font-size: 18px;
-  line-height: 1;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #333;
 }
 
 .provider-count-label {
@@ -55,12 +59,53 @@
   color: #666;
 }
 
+.refresh-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.refresh-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.refresh-button:hover {
+  background-color: #e9ecef;
+  color: #333;
+  transform: rotate(30deg);
+}
+
+.retry-button {
+  margin-top: 5px;
+  background-color: #f1f3f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: #e9ecef;
+}
+
 /* Loading state */
 .provider-count-overlay.loading {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80px;
+  min-height: 100px;
   min-width: 180px;
 }
 
@@ -81,14 +126,18 @@
 
 /* Error state */
 .provider-count-overlay.error {
-  padding: 10px 15px;
-  background-color: rgba(255, 235, 235, 0.9);
+  padding: 12px 15px;
+  background-color: rgba(255, 235, 235, 0.95);
+  border: 1px solid rgba(231, 76, 60, 0.3);
 }
 
 .provider-count-error {
   color: #e74c3c;
   font-size: 12px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Media queries for responsive design */
@@ -105,5 +154,11 @@
   
   .provider-count-label {
     font-size: 10px;
+  }
+  
+  .refresh-button {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
   }
 } 

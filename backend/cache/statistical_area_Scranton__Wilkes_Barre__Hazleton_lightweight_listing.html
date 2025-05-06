@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6da38170dddb56b8de346a3c8368f0f4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_6da38170dddb56b8de346a3c8368f0f4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6da38170dddb56b8de346a3c8368f0f4 = L.map(
+                "map_6da38170dddb56b8de346a3c8368f0f4",
+                {
+                    center: [41.32337333222318, -75.8957577581774],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_6da38170dddb56b8de346a3c8368f0f4);
+
+            
+
+        
+    
+            var tile_layer_969b656fcb598c7e4c74c26dc3b3f860 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_969b656fcb598c7e4c74c26dc3b3f860.addTo(map_6da38170dddb56b8de346a3c8368f0f4);
+        
+    
+        function geo_json_e16ceaded134f1034e3211907951c3c3_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_e16ceaded134f1034e3211907951c3c3_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_e16ceaded134f1034e3211907951c3c3 = L.geoJson(null, {
+                onEachFeature: geo_json_e16ceaded134f1034e3211907951c3c3_onEachFeature,
+            
+                style: geo_json_e16ceaded134f1034e3211907951c3c3_styler,
+            ...{
+}
+        });
+
+        function geo_json_e16ceaded134f1034e3211907951c3c3_add (data) {
+            geo_json_e16ceaded134f1034e3211907951c3c3
+                .addData(data);
+        }
+            geo_json_e16ceaded134f1034e3211907951c3c3_add({"features": [{"geometry": {"coordinates": [[[-75.719887, 41.642263], [-75.462411, 41.641587], [-75.440389, 41.25813], [-75.496057, 41.242948], [-75.516671, 41.219272], [-75.543886, 41.223596], [-75.63455, 41.123019], [-75.693071, 41.130974], [-75.766888, 41.093537], [-75.770337, 41.05019], [-75.732183, 41.008124], [-76.028006, 40.902313], [-76.207827, 40.94974], [-76.231359, 41.050725], [-76.228975, 41.138466], [-76.27739, 41.131795], [-76.32022, 41.215063], [-76.310848, 41.308949], [-76.228131, 41.511137], [-76.197998, 41.647823], [-75.719887, 41.642263]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_e16ceaded134f1034e3211907951c3c3.addTo(map_6da38170dddb56b8de346a3c8368f0f4);
+        
+    
+            var layer_control_10210b531d413be8fa0b2d348913f1f4_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_969b656fcb598c7e4c74c26dc3b3f860,
+                },
+                overlays :  {
+                    "Scranton--Wilkes-Barre, PA Boundary" : geo_json_e16ceaded134f1034e3211907951c3c3,
+                },
+            };
+            let layer_control_10210b531d413be8fa0b2d348913f1f4 = L.control.layers(
+                layer_control_10210b531d413be8fa0b2d348913f1f4_layers.base_layers,
+                layer_control_10210b531d413be8fa0b2d348913f1f4_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_6da38170dddb56b8de346a3c8368f0f4);
+
+        
+    
+            map_6da38170dddb56b8de346a3c8368f0f4.fitBounds(
+                [[40.902313, -76.32022], [41.647823, -75.440389]],
+                {}
+            );
+        
+</script>
+</html>

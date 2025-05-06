@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e84f3bfb66b33f9af4f211499c50a4f9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if markers are present on the map
+            function checkForMarkers() {
+                try {
+                    // Look for marker elements
+                    const pgMarkers = document.querySelectorAll('.leaflet-marker-icon');
+                    const markerCount = pgMarkers.length;
+                    console.log('Found ' + markerCount + ' markers on the map');
+                    
+                    // Notify parent about marker presence
+                    window.parent.postMessage({
+                        type: 'markerStatus', 
+                        markersPresent: markerCount > 0,
+                        count: markerCount
+                    }, '*');
+                    
+                    return markerCount > 0;
+                } catch (e) {
+                    console.error('Error checking for markers:', e);
+                    return false;
+                }
+            }
+            
+            // Listen for messages from parent
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'checkMarkers') {
+                    checkForMarkers();
+                }
+            });
+            
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                        
+                        // Check for markers after a short delay to ensure they're loaded
+                        setTimeout(checkForMarkers, 1000);
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_e84f3bfb66b33f9af4f211499c50a4f9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e84f3bfb66b33f9af4f211499c50a4f9 = L.map(
+                "map_e84f3bfb66b33f9af4f211499c50a4f9",
+                {
+                    center: [41.687128485461756, -72.54610580775801],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_e84f3bfb66b33f9af4f211499c50a4f9);
+
+            
+
+        
+    
+            var tile_layer_571ebb4b2df300996283cdf842ca1428 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_571ebb4b2df300996283cdf842ca1428.addTo(map_e84f3bfb66b33f9af4f211499c50a4f9);
+        
+    
+        function geo_json_45dd6229befe5f6e70efc3fbb84c7ee2_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_45dd6229befe5f6e70efc3fbb84c7ee2_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_45dd6229befe5f6e70efc3fbb84c7ee2 = L.geoJson(null, {
+                onEachFeature: geo_json_45dd6229befe5f6e70efc3fbb84c7ee2_onEachFeature,
+            
+                style: geo_json_45dd6229befe5f6e70efc3fbb84c7ee2_styler,
+            ...{
+}
+        });
+
+        function geo_json_45dd6229befe5f6e70efc3fbb84c7ee2_add (data) {
+            geo_json_45dd6229befe5f6e70efc3fbb84c7ee2
+                .addData(data);
+        }
+            geo_json_45dd6229befe5f6e70efc3fbb84c7ee2_add({"features": [{"geometry": {"coordinates": [[[-72.334226, 41.643598], [-72.328095, 41.605471], [-72.46673, 41.583899], [-72.430767, 41.524567], [-72.323394, 41.53425], [-72.304868, 41.432728], [-72.276636, 41.440449], [-72.282154, 41.405899], [-72.248678, 41.299572], [-72.248529, 41.230711], [-72.527901, 41.177774], [-72.527902, 41.250115], [-72.585599, 41.307348], [-72.585943, 41.324014], [-72.614269, 41.32962], [-72.612328, 41.386179], [-72.650416, 41.418964], [-72.642257, 41.429236], [-72.746141, 41.423297], [-72.733886, 41.485368], [-72.752181, 41.578894], [-72.801243, 41.573098], [-72.819145, 41.554298], [-72.827644, 41.570999], [-72.848541, 41.567329], [-72.84428, 41.544725], [-72.883885, 41.563812], [-72.94635, 41.556797], [-72.938501, 41.644311], [-72.883388, 41.649468], [-72.90848, 41.776043], [-72.924946, 41.787785], [-72.921183, 41.807117], [-72.949024, 41.806431], [-72.936348, 41.839798], [-72.953647, 41.853885], [-72.940647, 41.895196], [-72.915346, 41.896797], [-72.86364, 42.037528], [-72.813784, 42.036744], [-72.817053, 41.997685], [-72.766733, 42.003266], [-72.755894, 42.036349], [-72.205081, 42.031069], [-72.234898, 41.957583], [-72.21698, 41.958161], [-72.217719, 41.835184], [-72.164498, 41.834913], [-72.156321, 41.753491], [-72.187656, 41.755181], [-72.198126, 41.728176], [-72.252643, 41.728202], [-72.239559, 41.714191], [-72.274307, 41.692607], [-72.268418, 41.671137], [-72.334226, 41.643598]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_45dd6229befe5f6e70efc3fbb84c7ee2.addTo(map_e84f3bfb66b33f9af4f211499c50a4f9);
+        
+    
+            var layer_control_4b323769dd8dec0e38307e7ddc83d0e4_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_571ebb4b2df300996283cdf842ca1428,
+                },
+                overlays :  {
+                    "Hartford-West Hartford-East Hartford, CT Boundary" : geo_json_45dd6229befe5f6e70efc3fbb84c7ee2,
+                },
+            };
+            let layer_control_4b323769dd8dec0e38307e7ddc83d0e4 = L.control.layers(
+                layer_control_4b323769dd8dec0e38307e7ddc83d0e4_layers.base_layers,
+                layer_control_4b323769dd8dec0e38307e7ddc83d0e4_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_e84f3bfb66b33f9af4f211499c50a4f9);
+
+        
+    
+            map_e84f3bfb66b33f9af4f211499c50a4f9.fitBounds(
+                [[41.177774, -72.953647], [42.037528, -72.156321]],
+                {}
+            );
+        
+</script>
+</html>

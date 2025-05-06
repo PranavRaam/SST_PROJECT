@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d686b39a1e92669d591f120ab0f3c9eb {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_d686b39a1e92669d591f120ab0f3c9eb" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d686b39a1e92669d591f120ab0f3c9eb = L.map(
+                "map_d686b39a1e92669d591f120ab0f3c9eb",
+                {
+                    center: [46.268766046083414, -116.9442774043458],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_d686b39a1e92669d591f120ab0f3c9eb);
+
+            
+
+        
+    
+            var tile_layer_091754035be06c8770ab45f4b598a89e = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_091754035be06c8770ab45f4b598a89e.addTo(map_d686b39a1e92669d591f120ab0f3c9eb);
+        
+    
+        function geo_json_51e128544055290a037710ab965dbb38_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_51e128544055290a037710ab965dbb38_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_51e128544055290a037710ab965dbb38 = L.geoJson(null, {
+                onEachFeature: geo_json_51e128544055290a037710ab965dbb38_onEachFeature,
+            
+                style: geo_json_51e128544055290a037710ab965dbb38_styler,
+            ...{
+}
+        });
+
+        function geo_json_51e128544055290a037710ab965dbb38_add (data) {
+            geo_json_51e128544055290a037710ab965dbb38
+                .addData(data);
+        }
+            geo_json_51e128544055290a037710ab965dbb38_add({"features": [{"geometry": {"coordinates": [[[-117.42077, 46.33866], [-117.419334, 46.383139], [-117.398341, 46.383457], [-117.398429, 46.397996], [-117.355764, 46.397645], [-117.355982, 46.412187], [-117.228796, 46.411306], [-117.22812, 46.462245], [-117.206532, 46.448874], [-117.214487, 46.430372], [-117.19986, 46.420177], [-117.039766, 46.425887], [-117.039777, 46.541706], [-116.719085, 46.542874], [-116.697892, 46.586789], [-116.61174, 46.631245], [-116.456098, 46.629097], [-116.451662, 46.490736], [-116.369311, 46.500492], [-116.369122, 46.466923], [-116.418245, 46.467292], [-116.367947, 46.416374], [-116.368801, 46.343217], [-116.468874, 46.350985], [-116.492509, 46.338772], [-116.489671, 46.325586], [-116.713496, 46.325527], [-116.683171, 46.243448], [-116.702543, 46.237792], [-116.701819, 45.996381], [-116.757042, 45.942103], [-116.730343, 45.894105], [-116.789423, 45.855316], [-116.857254, 45.904159], [-116.87598, 45.954775], [-116.916071, 45.995357], [-117.479935, 45.997801], [-117.479988, 46.121994], [-117.419482, 46.121956], [-117.42077, 46.33866]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_51e128544055290a037710ab965dbb38.addTo(map_d686b39a1e92669d591f120ab0f3c9eb);
+        
+    
+            var layer_control_51cad76015f8a318a5c1a4ae43041261_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_091754035be06c8770ab45f4b598a89e,
+                },
+                overlays :  {
+                    "Lewiston, ID-WA Boundary" : geo_json_51e128544055290a037710ab965dbb38,
+                },
+            };
+            let layer_control_51cad76015f8a318a5c1a4ae43041261 = L.control.layers(
+                layer_control_51cad76015f8a318a5c1a4ae43041261_layers.base_layers,
+                layer_control_51cad76015f8a318a5c1a4ae43041261_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_d686b39a1e92669d591f120ab0f3c9eb);
+
+        
+    
+            map_d686b39a1e92669d591f120ab0f3c9eb.fitBounds(
+                [[45.855316, -117.479988], [46.631245, -116.367947]],
+                {}
+            );
+        
+</script>
+</html>

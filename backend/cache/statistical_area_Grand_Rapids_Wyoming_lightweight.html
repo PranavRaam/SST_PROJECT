@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_733b0fcc0b86f85ca99c3ad14f810574 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_733b0fcc0b86f85ca99c3ad14f810574" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_733b0fcc0b86f85ca99c3ad14f810574 = L.map(
+                "map_733b0fcc0b86f85ca99c3ad14f810574",
+                {
+                    center: [42.9782875336257, -85.71461231494274],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_733b0fcc0b86f85ca99c3ad14f810574);
+
+            
+
+        
+    
+            var tile_layer_abcd73aba896338321e880236ee1b3a0 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_abcd73aba896338321e880236ee1b3a0.addTo(map_733b0fcc0b86f85ca99c3ad14f810574);
+        
+    
+        function geo_json_906072b5a47db81bf5586346deb834d5_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_906072b5a47db81bf5586346deb834d5_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_906072b5a47db81bf5586346deb834d5 = L.geoJson(null, {
+                onEachFeature: geo_json_906072b5a47db81bf5586346deb834d5_onEachFeature,
+            
+                style: geo_json_906072b5a47db81bf5586346deb834d5_styler,
+            ...{
+}
+        });
+
+        function geo_json_906072b5a47db81bf5586346deb834d5_add (data) {
+            geo_json_906072b5a47db81bf5586346deb834d5
+                .addData(data);
+        }
+            geo_json_906072b5a47db81bf5586346deb834d5_add({"features": [{"geometry": {"coordinates": [[[-84.836583, 43.180524], [-84.837085, 42.770479], [-85.074245, 42.770784], [-85.071609, 42.421428], [-85.543191, 42.421433], [-85.545564, 42.768139], [-87.058716, 42.765202], [-87.107669, 43.118243], [-85.907435, 43.118911], [-85.908388, 43.20592], [-85.790662, 43.205167], [-85.790448, 43.293003], [-85.562538, 43.294271], [-85.562348, 43.46813], [-84.845962, 43.466158], [-84.836583, 43.180524]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_906072b5a47db81bf5586346deb834d5.addTo(map_733b0fcc0b86f85ca99c3ad14f810574);
+        
+    
+            var layer_control_1048691ca6cfd2a4948be26afe662dd8_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_abcd73aba896338321e880236ee1b3a0,
+                },
+                overlays :  {
+                    "Grand Rapids-Wyoming-Kentwood, MI Boundary" : geo_json_906072b5a47db81bf5586346deb834d5,
+                },
+            };
+            let layer_control_1048691ca6cfd2a4948be26afe662dd8 = L.control.layers(
+                layer_control_1048691ca6cfd2a4948be26afe662dd8_layers.base_layers,
+                layer_control_1048691ca6cfd2a4948be26afe662dd8_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_733b0fcc0b86f85ca99c3ad14f810574);
+
+        
+    
+            map_733b0fcc0b86f85ca99c3ad14f810574.fitBounds(
+                [[42.421428, -87.107669], [43.46813, -84.836583]],
+                {}
+            );
+        
+</script>
+</html>

@@ -7,36 +7,38 @@
   }
   
   .map-wrapper {
-    text-align: center;
-    padding: 2rem;
-    background-color: #ffffff;
-    width: 90%;
-    margin: auto;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
   
   .map-title {
-    font-family: 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #000;
-    margin-bottom: 1 rem;
-    letter-spacing: -0.02em;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
   }
   
   .map-container {
+    position: relative;
     width: 100%;
     height: 25rem;
-    margin: 0 auto;
-    position: relative;
-    border-radius: 0.75rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 0.5rem;
+    border: 1px solid #eaeaea;
   }
   
   .map-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
   
   .map-overlay {
@@ -45,12 +47,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      to bottom, 
-      rgba(0, 0, 0, 0.1), 
-      rgba(0, 0, 0, 0.3)
-    );
-    opacity: 0.8;
+    background-color: rgba(255, 255, 255, 0.2);
   }
   
   /* Simulated boundary for the statistical area */
@@ -61,21 +58,23 @@
     width: 70%;
     height: 70%;
     border: 3px solid rgba(79, 70, 229, 0.8);
-    border-radius: 40% 60% 50% 45% / 45% 50% 55% 60%;
+    border-radius: 40% 60% 50% 45% / 40% 50% 55% 45%;
     background-color: rgba(79, 70, 229, 0.1);
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.2);
     pointer-events: none;
-    animation: pulseBoundary 4s infinite alternate;
-    z-index: 10;
+    transition: all 0.3s ease;
+    animation: boundaryPulse 15s infinite ease-in-out;
   }
   
-  @keyframes pulseBoundary {
+  @keyframes boundaryPulse {
     0% {
-      transform: scale(1);
-      opacity: 0.7;
+      border-radius: 40% 60% 50% 45% / 40% 50% 55% 45%;
+    }
+    50% {
+      border-radius: 45% 55% 52% 48% / 45% 48% 52% 50%;
     }
     100% {
-      transform: scale(1.02);
-      opacity: 0.9;
+      border-radius: 40% 60% 50% 45% / 40% 50% 55% 45%;
     }
   }
   
@@ -86,7 +85,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 20;
     pointer-events: none;
   }
   
@@ -96,61 +94,144 @@
     flex-direction: column;
     align-items: center;
     transform: translate(-50%, -50%);
-    animation: markerPulse 2s infinite;
+    transition: all 0.3s ease;
+    z-index: 5;
+  }
+  
+  .mock-marker:hover {
+    z-index: 10;
+    transform: translate(-50%, -50%) scale(1.2);
   }
   
   .pg-marker .marker-dot {
-    width: 12px;
-    height: 12px;
-    background-color: #0000FF; /* Blue for PGs */
+    width: 14px;
+    height: 14px;
+    background-color: #1E40AF; /* Deeper blue for better visibility */
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.3);
+    box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.3), 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   
   .hhah-marker .marker-dot {
-    width: 12px;
-    height: 12px;
-    background-color: #008000; /* Green for HHAHs */
+    width: 14px;
+    height: 14px;
+    background-color: #15803D; /* Deeper green for better visibility */
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.3);
+    box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.3), 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .mock-marker:hover .marker-dot {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px rgba(30, 64, 175, 0.4), 0 0 12px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hhah-marker:hover .marker-dot {
+    box-shadow: 0 0 0 6px rgba(21, 128, 61, 0.4), 0 0 12px rgba(0, 0, 0, 0.5);
   }
   
   .marker-label {
     margin-top: 4px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-size: 10px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 3px 5px;
+    border-radius: 4px;
+    font-size: 11px;
     font-weight: bold;
-    color: #333;
+    color: #111827;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    white-space: nowrap;
   }
   
+  /* Marker animation */
   @keyframes markerPulse {
     0% {
       transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
     }
     50% {
-      transform: translate(-50%, -50%) scale(1.1);
+      transform: translate(-50%, -50%) scale(1.15);
+      opacity: 0.85;
     }
     100% {
       transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
     }
+  }
+  
+  .mock-marker {
+    animation: markerPulse 3s infinite;
+  }
+  
+  /* Stagger animations for less visual chaos */
+  .pg-marker:nth-child(odd) {
+    animation-delay: 0.5s;
+  }
+  
+  .hhah-marker:nth-child(odd) {
+    animation-delay: 1s;
+  }
+  
+  .pg-marker:nth-child(3n) {
+    animation-delay: 1.5s;
+  }
+  
+  .hhah-marker:nth-child(3n) {
+    animation-delay: 2s;
+  }
+  
+  /* Map error overlay */
+  .map-error-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .map-error-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .retry-button {
+    padding: 8px 16px;
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .retry-button:hover {
+    background-color: #3367D6;
   }
   
   /* Responsive Adjustments */
   @media screen and (max-width: 768px) {
     .map-wrapper {
-        width: 95%;
-        padding: 1rem;
+      width: 95%;
+      padding: 1rem;
     }
     
     .map-container {
-        height: 20rem;
-        border-radius: 0.5rem;
+      height: 20rem;
+      border-radius: 0.5rem;
     }
   
     .map-title {
-        font-size: 1.25rem;
+      font-size: 1.25rem;
     }
     
     .simulated-boundary {

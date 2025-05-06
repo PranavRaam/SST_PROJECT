@@ -15,6 +15,8 @@ import functools
 from io import BytesIO
 from dotenv import load_dotenv
 import csv
+import json
+import traceback
 
 # Load environment variables from .env file if it exists
 load_dotenv()
@@ -739,6 +741,25 @@ def get_statistical_area_map(area_name):
         exact_boundary = request.args.get('exact_boundary', 'true').lower() == 'true'
         lightweight = request.args.get('lightweight', 'true').lower() == 'true'
         spread_markers = request.args.get('spread_markers', 'false').lower() == 'true'
+        clear_mock_markers = request.args.get('clear_mock_markers', 'false').lower() == 'true'
+        use_exact_count = request.args.get('use_exact_count', 'false').lower() == 'true'
+        display_pgs = request.args.get('display_pgs', 'true').lower() == 'true'
+        display_hhahs = request.args.get('display_hhahs', 'true').lower() == 'true'
+        pg_count = int(request.args.get('pg_count', '0'))
+        hhah_count = int(request.args.get('hhah_count', '0'))
+        marker_source = request.args.get('marker_source', None)
+        
+        # Handle force_accurate_markers specially for areas with known display issues
+        force_accurate_markers = request.args.get('force_accurate_markers', 'false').lower() == 'true'
+        no_mock_data = request.args.get('no_mock_data', 'false').lower() == 'true'
+        
+        # Special handling for New York and similar areas with display issues
+        if force_accurate_markers or no_mock_data:
+            clear_mock_markers = True
+            use_exact_count = True
+            # If there's a specific requirement for accurate markers, always use listing source
+            if marker_source is None:
+                marker_source = 'listing'
         
         # If we have real map data for this area, force regeneration
         has_few_markers = False
@@ -755,8 +776,11 @@ def get_statistical_area_map(area_name):
                 logger.info(f"Area has only {total_markers} markers, using ultra-lightweight rendering")
         
         logger.info(f"Processing parameters: force_regen={force_regen}, use_cached={use_cached}, "
-                   f"detailed={detailed}, zoom={zoom}, exact_boundary={exact_boundary}, lightweight={lightweight}, "
-                   f"spread_markers={spread_markers}")
+                   f"detailed={detailed}, zoom={zoom}, exact_boundary={exact_boundary}, "
+                   f"lightweight={lightweight}, spread_markers={spread_markers}, "
+                   f"clear_mock_markers={clear_mock_markers}, use_exact_count={use_exact_count}, "
+                   f"display_pgs={display_pgs}, display_hhahs={display_hhahs}, "
+                   f"pg_count={pg_count}, hhah_count={hhah_count}, marker_source={marker_source}")
         
         # Generate the map - pass has_few_markers for ultra-lightweight rendering optimization
         map_file = generate_statistical_area_map(
@@ -768,7 +792,14 @@ def get_statistical_area_map(area_name):
             force_regen=force_regen,
             lightweight=lightweight,
             ultra_lightweight=has_few_markers,  # New parameter for special optimization
-            spread_markers=spread_markers  # Pass parameter to spread markers
+            spread_markers=spread_markers,  # Pass parameter to spread markers
+            clear_mock_markers=clear_mock_markers,  # Pass parameter to clear mock markers
+            use_exact_count=use_exact_count,  # Pass parameter to use exact counts
+            display_pgs=display_pgs,  # Pass parameter to control PG marker display
+            display_hhahs=display_hhahs,  # Pass parameter to control HHAH marker display
+            pg_count=pg_count,  # Pass exact PG count
+            hhah_count=hhah_count,  # Pass exact HHAH count
+            marker_source=marker_source  # Pass marker source parameter
         )
         
         if map_file and os.path.exists(map_file):
@@ -1112,151 +1143,100 @@ def fetch_provider_data_options():
 
 def update_real_map_data():
     """
-    Update the real_map_data global variable with provider data from CSV files
+    Update the real_map_data global variable with provider data from JSON files
     This ensures that maps are generated with real provider data
     """
     logger = logging.getLogger(__name__)
-    logger.info("Updating real map data from CSV files")
+    logger.info("Updating real map data from JSON files")
     
     try:
-        # Path to PG CSV file
-        pg_csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all PG.csv")
+        # Paths to JSON data files
+        pg_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "PG.json")
+        west_hhah_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "West_HHAH.json")
+        central_hhah_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Central_HHAH.json")
+        east_central_hhah_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "East_Central_HHAH.json")
         
-        # Path to HHAH CSV files (all three regions)
-        hhah_csv_paths = [
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH - Central_Details.csv"),
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH - East_Central_Details.csv"),
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Actual_Data", "Listing of all HHAH- West_Details.csv")
-        ]
-        
-        # Create dictionary to map cities to areas/regions
-        city_to_area = {}
         # Dictionary to store the real map data
         area_data = {}
         
-        # Process PG file to identify areas/regions
-        if os.path.exists(pg_csv_path):
+        # Load and process PG JSON file
+        if os.path.exists(pg_json_path):
             try:
-                with open(pg_csv_path, 'r') as f:
-                    rows = list(csv.reader(f))
+                with open(pg_json_path, 'r') as f:
+                    pg_data = json.load(f)
                     
-                    if len(rows) >= 4:
-                        regions = rows[0]
-                        cities = rows[1]
-                        
-                        # Create mapping from cities to areas
-                        for i in range(1, len(cities)):
-                            if cities[i] and i < len(regions):
-                                region = regions[i] if regions[i] else regions[i-1]
-                                city = cities[i]
-                                
-                                # Map city to area (simplify the area name to match more easily)
-                                city_to_area[city.lower()] = city
-                                
-                                # Initialize data for this area
-                                if city not in area_data:
-                                    area_data[city] = {
-                                        'pgs': [],
-                                        'hhahs': []
-                                    }
-                                    
-                        # Process PGs
-                        pg_names = rows[3]
-                        
-                        for i in range(1, len(pg_names)):
-                            if i >= len(regions) or i >= len(cities) or not pg_names[i]:
-                                continue
-                                
-                            region = regions[i] if i < len(regions) and regions[i] else regions[i-1]
-                            city = cities[i]
-                            pg_name = pg_names[i]
+                    # Process PGs
+                    for pg in pg_data:
+                        if not pg.get("Metropolitan (or Micropolitan) Area"):
+                            continue
                             
-                            if city in area_data:
-                                # Add PG to area data
-                                area_data[city]['pgs'].append({
-                                    'name': pg_name,
-                                    'group': 'Primary Provider',
-                                    'physicians': 5,  # Default value
-                                    'patients': 75,   # Default value
-                                    'status': 'Active',
-                                    'address': f"{pg_name}, {city}",
-                                    'contact': "Contact information unavailable"
-                                })
+                        area = pg.get("Metropolitan (or Micropolitan) Area")
+                        
+                        # Initialize data for this area if it doesn't exist
+                        if area not in area_data:
+                            area_data[area] = {
+                                'pgs': [],
+                                'hhahs': []
+                            }
+                        
+                        # Add PG to area data
+                        area_data[area]['pgs'].append({
+                            'name': pg.get("Agency Name", "Unknown PG"),
+                            'group': 'Primary Provider',
+                            'physicians': 5,  # Default value
+                            'patients': 75,   # Default value
+                            'status': pg.get("Agency Type", "Active"),
+                            'address': f"{pg.get('Address', 'No address')}, {pg.get('City', 'Unknown')}, {pg.get('State', 'Unknown')} {pg.get('Zipcode', '')}",
+                            'contact': pg.get("Telephone", "Contact information unavailable")
+                        })
                 
             except Exception as e:
                 logger.error(f"Error processing PG file for real map data: {str(e)}")
+                logger.error(traceback.format_exc())
         
-        # Process HHAH files
-        for hhah_csv_path in hhah_csv_paths:
-            if not os.path.exists(hhah_csv_path):
+        # Process HHAH JSON files
+        hhah_files = [
+            west_hhah_json_path,
+            central_hhah_json_path,
+            east_central_hhah_json_path
+        ]
+        
+        for hhah_json_path in hhah_files:
+            if not os.path.exists(hhah_json_path):
                 continue
                 
             try:
-                with open(hhah_csv_path, 'r') as f:
-                    reader = csv.reader(f)
-                    header_row = True
+                with open(hhah_json_path, 'r') as f:
+                    hhah_data = json.load(f)
                     
-                    for row in reader:
-                        # Skip header row
-                        if header_row:
-                            header_row = False
+                    # Process HHAHs
+                    for hhah in hhah_data:
+                        if not hhah.get("Metropolitan (or Micropolitan) Area"):
                             continue
                             
-                        if len(row) < 6:
-                            continue
-                            
-                        # Extract relevant fields
-                        hhah_id = row[0] if len(row) > 0 else ""
-                        hhah_name = row[1] if len(row) > 1 else ""
-                        address = row[2] if len(row) > 2 else ""
-                        state = row[3] if len(row) > 3 else ""
-                        city = row[4] if len(row) > 4 else ""
-                        zipcode = row[5] if len(row) > 5 else ""
-                        area = row[6] if len(row) > 6 else ""
-                        phone = row[7] if len(row) > 7 else ""
-                        agency_type = row[9] if len(row) > 9 else "Not Specified"
+                        area = hhah.get("Metropolitan (or Micropolitan) Area")
                         
-                        # Find matching area
-                        area_key = None
+                        # Initialize data for this area if it doesn't exist
+                        if area not in area_data:
+                            area_data[area] = {
+                                'pgs': [],
+                                'hhahs': []
+                            }
                         
-                        # Try matching by exact city name
-                        if city in area_data:
-                            area_key = city
-                        
-                        # Try matching by area name
-                        if not area_key and area in area_data:
-                            area_key = area
-                            
-                        # Try matching by normalized city name
-                        if not area_key:
-                            city_lower = city.lower()
-                            if city_lower in city_to_area:
-                                matched_city = city_to_area[city_lower]
-                                if matched_city in area_data:
-                                    area_key = matched_city
-                        
-                        # Try matching by area parts
-                        if not area_key:
-                            for known_area in area_data.keys():
-                                if known_area.lower() in area.lower() or area.lower() in known_area.lower():
-                                    area_key = known_area
-                                    break
-                        
-                        # If we found a matching area, add HHAH data
-                        if area_key:
-                            # Add HHAH to area data
-                            area_data[area_key]['hhahs'].append({
-                                'id': hhah_id,
-                                'Agency Name': hhah_name,
-                                'services': 3,  # Default value
-                                'patients': 50,  # Default value
-                                'Agency Type': agency_type,
-                                'Address': f"{address}, {city}, {state} {zipcode}",
-                                'Telephone': phone
-                            })
+                        # Add HHAH to area data
+                        area_data[area]['hhahs'].append({
+                            'id': hhah.get("Agency Id", ""),
+                            'name': hhah.get("Agency Name", "Unknown HHAH"),
+                            'services': 3,  # Default value
+                            'patients': 50,  # Default value
+                            'status': hhah.get("Agency Type", "Not Using"),
+                            'address': f"{hhah.get('Address', 'No address')}, {hhah.get('City', 'Unknown')}, {hhah.get('State', 'Unknown')} {hhah.get('Zipcode', '')}",
+                            'contact': hhah.get("Telephone", "Contact information unavailable")
+                        })
                 
             except Exception as e:
                 logger.error(f"Error processing HHAH file for real map data: {str(e)}")
+                logger.error(traceback.format_exc())
         
         # Update the global variable
         global real_map_data
@@ -1269,6 +1249,7 @@ def update_real_map_data():
                 
     except Exception as e:
         logger.error(f"Error updating real map data: {str(e)}")
+        logger.error(traceback.format_exc())
     
 # Initialize real map data when the server starts
 update_real_map_data()

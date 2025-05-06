@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getApiUrl } from '../config'; // Import the API URL helper
 import './StatisticalAreaDetailView.css';
-import { getAreaStatistics, getMapUrlWithProviders } from '../utils/providerDataService';
+import { getAreaStatistics, getMapUrlWithProviders, countPGsFromRawData, countHHAHsFromRawData } from '../utils/providerDataService';
 
 // Import components from local sa_view_components
 import MapPlaceholder from './sa_view_components/MapPlaceholder';
@@ -117,15 +117,53 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
         const encodedArea = encodeURIComponent(statisticalArea);
         console.log(`Requesting map for ${encodedArea}`);
         
-        // For Anchorage specifically, use different params
+        // Special handling for specific areas with known issues
         const isAnchorage = statisticalArea.toLowerCase().includes('anchorage');
+        const isBoston = statisticalArea.toLowerCase().includes('boston');
+        const isNewYork = statisticalArea.toLowerCase().includes('new york');
+        
+        // For areas with zero providers, use a simplified map to avoid confusing markers
+        const pgCount = countPGsFromRawData(statisticalArea);
+        const hhahCount = countHHAHsFromRawData(statisticalArea);
+        const hasNoProviders = pgCount === 0 && hhahCount === 0;
         
         // Optimize map loading: prefer cached maps, reduce quality for faster loading
         const timestamp = new Date().getTime();
         // Use a lighter weight map with less detail for faster loading
         const isLubbock = statisticalArea.toLowerCase().includes('lubbock');
-        // Force regeneration for Anchorage and Lubbock for better marker placement
-        let apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}?force_regen=${isAnchorage || isLubbock ? 'true' : 'false'}&use_cached=true&detailed=false&zoom=${isAnchorage ? '7' : '10'}&exact_boundary=true&display_pgs=true&display_hhahs=true&lightweight=true&spread_markers=${isLubbock ? 'true' : 'false'}&t=${timestamp}`);
+        
+        // Base URL with standard parameters
+        let apiUrl = getApiUrl(`/api/statistical-area-map/${encodedArea}`);
+        
+        // Add query parameters
+        const queryParams = [
+          // Force regeneration for specific areas for better marker placement
+          `force_regen=${isAnchorage || isLubbock || isBoston || isNewYork ? 'true' : 'false'}`,
+          `use_cached=true`,
+          `detailed=false`,
+          `zoom=${isAnchorage ? '7' : '10'}`,
+          `exact_boundary=true`,
+          `display_pgs=${pgCount > 0 ? 'true' : 'false'}`,
+          `display_hhahs=${hhahCount > 0 ? 'true' : 'false'}`,
+          `pg_count=${pgCount}`,
+          `hhah_count=${hhahCount}`,
+          `lightweight=true`,
+          `spread_markers=${isLubbock || isNewYork ? 'true' : 'false'}`,
+          `clear_mock_markers=true`,
+          `use_exact_count=true`,
+          `provider_source=actual_data`,
+          `t=${timestamp}`
+        ];
+        
+        // If New York or similar areas with display issues, add extra parameters
+        if (isNewYork) {
+          queryParams.push('force_accurate_markers=true');
+          queryParams.push('no_mock_data=true');
+          queryParams.push('marker_size=large');
+        }
+        
+        // Combine URL with parameters
+        apiUrl = `${apiUrl}?${queryParams.join('&')}`;
         
         try {
           // Attempt to fetch the map with a timeout
@@ -475,12 +513,16 @@ const StatisticalAreaDetailView = ({ statisticalArea, divisionalGroup, onBack })
               allowFullScreen
               loading="lazy"
             />
-            {/* Add provider count overlay on top of the iframe */}
-            <ProviderCountOverlay statisticalArea={statisticalArea} />
+            {/* Add provider count overlay on top of the iframe - ensure it uses the same data source as listings */}
+            <FunnelDataProvider initialArea={statisticalArea}>
+              <ProviderCountOverlay statisticalArea={statisticalArea} />
+            </FunnelDataProvider>
           </div>
         ) : (
-          // Fallback to a placeholder if no map URL is available
-          <MapPlaceholder statisticalArea={statisticalArea} />
+          // Fallback to a placeholder if no map URL is available - ensure it uses the same data source as listings
+          <FunnelDataProvider initialArea={statisticalArea}>
+            <MapPlaceholder statisticalArea={statisticalArea} />
+          </FunnelDataProvider>
         )}
       </div>
 

@@ -1,0 +1,1492 @@
+Cursor-0.48.8-x86_64.AppImage: ignoring input
+INFO:data_preloader:Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+INFO:__main__:Updating real map data from CSV files
+INFO:__main__:Updated real map data for 5 areas: Los Angeles, Colorado Springs, El Paso, Lubbock, Amarillo
+INFO:__main__:  • Los Angeles: 1 PGs, 9 HHAHs
+INFO:__main__:  • Colorado Springs: 1 PGs, 9 HHAHs
+INFO:__main__:  • El Paso: 1 PGs, 35 HHAHs
+INFO:__main__:  • Lubbock: 1 PGs, 11 HHAHs
+INFO:__main__:  • Amarillo: 1 PGs, 7 HHAHs
+INFO:__main__:Checking for cached data at startup
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.91:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:data_preloader:Using existing data cache directory: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/data_cache
+INFO:__main__:Updating real map data from CSV files
+INFO:__main__:Updated real map data for 5 areas: Los Angeles, Colorado Springs, El Paso, Lubbock, Amarillo
+INFO:__main__:  • Los Angeles: 1 PGs, 9 HHAHs
+INFO:__main__:  • Colorado Springs: 1 PGs, 9 HHAHs
+INFO:__main__:  • El Paso: 1 PGs, 35 HHAHs
+INFO:__main__:  • Lubbock: 1 PGs, 11 HHAHs
+INFO:__main__:  • Amarillo: 1 PGs, 7 HHAHs
+INFO:__main__:Checking for cached data at startup
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 566-291-386
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:53] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:53] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:53] "GET /api/map?stable=true&r=map-1746282173536&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false&responsive=true&containerWidth=0&containerHeight=0&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282173536 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:53] "GET /api/map?stable=true&r=map-1746282173536&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false&responsive=true&containerWidth=1436&containerHeight=498&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282173572 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:59] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Rochester
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282179824'), ('marker_source', 'listing'), ('timestamp', '1746282179824')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Rochester with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Rochester_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Loading data from cache...
+INFO:data_preloader:Loading all cached data...
+INFO:statistical_area_zoom:Loaded MSA data with 393 entries
+INFO:statistical_area_zoom:Sample MSA names: Morgantown, WV, Muncie, IN, Muskegon-Norton Shores, MI, Napa, CA, Naples-Marco Island, FL
+INFO:statistical_area_zoom:Data loaded in 0.02 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: rochester
+INFO:statistical_area_zoom:Trying to match city name: rochester
+INFO:statistical_area_zoom:Found exact city match: Rochester, NY
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 43.188885495483014, -77.55533904761097
+INFO:statistical_area_zoom:Bounds: -78.468711, 42.471216, -76.702325, 43.684275
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Rochester_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Rochester_lightweight_listing.html
+INFO:__main__:Request completed in 0.07 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:59] "GET /api/statistical-area-map/Rochester?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282179824&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282179824 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:52:59] "GET /api/statistical-area-map/Rochester?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282179824&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282179824&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282179906 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:04] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Albany-Schenectady-Troy
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282184328'), ('marker_source', 'listing'), ('timestamp', '1746282184328')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Albany-Schenectady-Troy with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: albany-schenectady-troy
+INFO:statistical_area_zoom:Trying to match city name: albany
+INFO:statistical_area_zoom:Found exact city match: Albany, GA
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 31.646744439375833, -84.11533344502577
+INFO:statistical_area_zoom:Bounds: -84.603086, 31.318412, -83.649384, 31.967456
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Albany_Schenectady_Troy_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:04] "GET /api/statistical-area-map/Albany-Schenectady-Troy?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282184328&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282184328 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:04] "GET /api/statistical-area-map/Albany-Schenectady-Troy?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282184328&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282184328&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282184383 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:08] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: New York-Newark-Jersey City
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'true'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'true'), ('spread_markers', 'true'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282188739'), ('force_accurate_markers', 'true'), ('force_accurate_markers', 'true'), ('no_mock_data', 'true'), ('no_mock_data', 'true'), ('marker_size', 'large'), ('marker_size', 'large'), ('marker_source', 'listing'), ('timestamp', '1746282188740')])
+INFO:__main__:Processing parameters: force_regen=True, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=True, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: New York-Newark-Jersey City with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=True, lightweight=True, ultra_lightweight=False, spread_markers=True, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_New_York_Newark_Jersey_City_lightweight_spread_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: new york-newark-jersey city
+INFO:statistical_area_zoom:Trying to match city name: new york
+INFO:statistical_area_zoom:Found fuzzy city match: New York-Newark-Jersey City, NY-NJ
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 40.735405375696146, -73.80365757525341
+INFO:statistical_area_zoom:Bounds: -75.195485, 39.475198, -71.777491, 41.527194
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_New_York_Newark_Jersey_City_lightweight_spread_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_New_York_Newark_Jersey_City_lightweight_spread_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:08] "GET /api/statistical-area-map/New%20York-Newark-Jersey%20City?force_regen=true&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=true&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282188739&force_accurate_markers=true&no_mock_data=true&marker_size=large&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&spread_markers=true&marker_size=large&force_accurate_markers=true&no_mock_data=true&timestamp=1746282188740 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:08] "GET /api/statistical-area-map/New%20York-Newark-Jersey%20City?force_regen=true&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=true&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282188739&force_accurate_markers=true&no_mock_data=true&marker_size=large&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&spread_markers=true&marker_size=large&force_accurate_markers=true&no_mock_data=true&timestamp=1746282188740&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282188800 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:16] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Buffalo-Cheektowaga-Niagara Falls
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282196086'), ('marker_source', 'listing'), ('timestamp', '1746282196086')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Buffalo-Cheektowaga-Niagara Falls with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Buffalo_Cheektowaga_Niagara_Falls_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: buffalo-cheektowaga-niagara falls
+INFO:statistical_area_zoom:Trying to match city name: buffalo
+INFO:statistical_area_zoom:Found fuzzy city match: Buffalo-Cheektowaga, NY
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 43.03773109659384, -78.77564185766042
+INFO:statistical_area_zoom:Bounds: -79.312136, 42.442386, -78.463321, 43.634742
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Buffalo_Cheektowaga_Niagara_Falls_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Buffalo_Cheektowaga_Niagara_Falls_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:16] "GET /api/statistical-area-map/Buffalo-Cheektowaga-Niagara%20Falls?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282196086&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282196086 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:16] "GET /api/statistical-area-map/Buffalo-Cheektowaga-Niagara%20Falls?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282196086&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282196086&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282196147 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:21] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Trenton
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282201918'), ('marker_source', 'listing'), ('timestamp', '1746282201918')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Trenton with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Trenton_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: trenton
+INFO:statistical_area_zoom:Trying to match city name: trenton
+INFO:statistical_area_zoom:Found fuzzy city match: Trenton-Princeton, NJ
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 40.28375727995174, -74.70240755321126
+INFO:statistical_area_zoom:Bounds: -74.942909, 40.13678, -74.481095, 40.424156
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Trenton_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Trenton_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:21] "GET /api/statistical-area-map/Trenton?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282201918&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282201918 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:21] "GET /api/statistical-area-map/Trenton?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282201918&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282201918&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282201974 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:33] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Richmond
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282213231'), ('marker_source', 'listing'), ('timestamp', '1746282213231')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Richmond with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Richmond_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: richmond
+INFO:statistical_area_zoom:Trying to match city name: richmond
+INFO:statistical_area_zoom:Found exact city match: Richmond, VA
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Attempting to fix invalid geometry...
+/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/statistical_area_zoom.py:885: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  target_area.geometry = target_area.geometry.buffer(0)
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 37.41249100537328, -77.44681471616101
+INFO:statistical_area_zoom:Bounds: -78.240597, 36.707658, -76.646794, 38.007806
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Richmond_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Richmond_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:33] "GET /api/statistical-area-map/Richmond?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282213231&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282213231 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:33] "GET /api/statistical-area-map/Richmond?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282213231&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282213231&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282213292 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:37] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Baltimore-Columbia-Towson
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282217659'), ('marker_source', 'listing'), ('timestamp', '1746282217659')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Baltimore-Columbia-Towson with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Baltimore_Columbia_Towson_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: baltimore-columbia-towson
+INFO:statistical_area_zoom:Trying to match city name: baltimore
+INFO:statistical_area_zoom:Found fuzzy city match: Baltimore-Columbia-Towson, MD
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 39.30548862978562, -76.55072995470198
+INFO:statistical_area_zoom:Bounds: -77.311536, 38.711099, -75.747761, 39.721367
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Baltimore_Columbia_Towson_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Baltimore_Columbia_Towson_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:37] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282217659&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282217659 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:37] "GET /api/statistical-area-map/Baltimore-Columbia-Towson?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282217659&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282217659&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282217715 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:43] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Virginia Beach-Norfolk-Newport News
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282223150'), ('marker_source', 'listing'), ('timestamp', '1746282223150')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Virginia Beach-Norfolk-Newport News with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Virginia_Beach_Norfolk_Newport_News_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: virginia beach-norfolk-newport news
+INFO:statistical_area_zoom:Trying to match city name: virginia beach
+INFO:statistical_area_zoom:Found fuzzy city match: Virginia Beach-Chesapeake-Norfolk, VA-NC
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 36.84114066944991, -76.3955929193083
+INFO:statistical_area_zoom:Bounds: -77.15609, 36.028834, -75.709078, 37.603174
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Virginia_Beach_Norfolk_Newport_News_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Virginia_Beach_Norfolk_Newport_News_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:43] "GET /api/statistical-area-map/Virginia%20Beach-Norfolk-Newport%20News?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282223150&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282223150 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:43] "GET /api/statistical-area-map/Virginia%20Beach-Norfolk-Newport%20News?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282223150&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282223150&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282223211 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:48] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Lancaster
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282228272'), ('marker_source', 'listing'), ('timestamp', '1746282228272')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Lancaster with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lancaster_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: lancaster
+INFO:statistical_area_zoom:Trying to match city name: lancaster
+INFO:statistical_area_zoom:Found exact city match: Lancaster, PA
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 40.04316107538227, -76.24786939104402
+INFO:statistical_area_zoom:Bounds: -76.72162, 39.721335, -75.873375, 40.315971
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lancaster_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Lancaster_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:48] "GET /api/statistical-area-map/Lancaster?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282228272&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282228272 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:48] "GET /api/statistical-area-map/Lancaster?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282228272&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282228272&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282228327 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:52] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Reading
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282232525'), ('marker_source', 'listing'), ('timestamp', '1746282232525')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Reading with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Reading_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: reading
+INFO:statistical_area_zoom:Trying to match city name: reading
+INFO:statistical_area_zoom:Found exact city match: Reading, PA
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 40.41713395017376, -75.92314161304387
+INFO:statistical_area_zoom:Bounds: -76.440181, 40.137107, -75.529694, 40.67727
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Reading_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Reading_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:52] "GET /api/statistical-area-map/Reading?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282232525&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282232525 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:52] "GET /api/statistical-area-map/Reading?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282232525&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282232525&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282232581 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:58] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Allentown-Bethlehem-Easton
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282238917'), ('marker_source', 'listing'), ('timestamp', '1746282238918')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Allentown-Bethlehem-Easton with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Allentown_Bethlehem_Easton_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: allentown-bethlehem-easton
+INFO:statistical_area_zoom:Trying to match city name: allentown
+INFO:statistical_area_zoom:Found fuzzy city match: Allentown-Bethlehem-Easton, PA-NJ
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 40.78949792208184, -75.404004878419
+INFO:statistical_area_zoom:Bounds: -75.997636, 40.418451, -74.769425, 41.13398
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Allentown_Bethlehem_Easton_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Allentown_Bethlehem_Easton_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:58] "GET /api/statistical-area-map/Allentown-Bethlehem-Easton?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282238917&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282238918 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:53:58] "GET /api/statistical-area-map/Allentown-Bethlehem-Easton?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282238917&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282238918&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282238975 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:04] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Scranton--Wilkes-Barre--Hazleton
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282244864'), ('marker_source', 'listing'), ('timestamp', '1746282244864')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Scranton--Wilkes-Barre--Hazleton with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Scranton__Wilkes_Barre__Hazleton_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: scranton--wilkes-barre--hazleton
+INFO:statistical_area_zoom:Trying to match city name: scranton
+INFO:statistical_area_zoom:Found fuzzy city match: Scranton--Wilkes-Barre, PA
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 41.32337333222318, -75.8957577581774
+INFO:statistical_area_zoom:Bounds: -76.32022, 40.902313, -75.440389, 41.647823
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Scranton__Wilkes_Barre__Hazleton_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Scranton__Wilkes_Barre__Hazleton_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:04] "GET /api/statistical-area-map/Scranton--Wilkes-Barre--Hazleton?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282244864&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282244864 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:04] "GET /api/statistical-area-map/Scranton--Wilkes-Barre--Hazleton?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282244864&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282244864&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282244925 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:13] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Asheville
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282253388'), ('marker_source', 'listing'), ('timestamp', '1746282253388')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Asheville with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Asheville_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: asheville
+INFO:statistical_area_zoom:Trying to match city name: asheville
+INFO:statistical_area_zoom:Found exact city match: Asheville, NC
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 35.616698553706755, -82.57036008209745
+INFO:statistical_area_zoom:Bounds: -82.961964, 35.144188, -82.169049, 36.065842
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Asheville_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Asheville_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:13] "GET /api/statistical-area-map/Asheville?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282253388&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282253388 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:13] "GET /api/statistical-area-map/Asheville?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282253388&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282253388&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282253447 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:18] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Greensboro-High Point
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282258372'), ('marker_source', 'listing'), ('timestamp', '1746282258372')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Greensboro-High Point with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Greensboro_High_Point_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: greensboro-high point
+INFO:statistical_area_zoom:Trying to match city name: greensboro
+INFO:statistical_area_zoom:Found fuzzy city match: Greensboro-High Point, NC
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 36.02616324298028, -79.79211759204127
+INFO:statistical_area_zoom:Bounds: -80.066842, 35.505661, -79.513638, 36.54248
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Greensboro_High_Point_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Greensboro_High_Point_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:18] "GET /api/statistical-area-map/Greensboro-High%20Point?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282258372&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282258372 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:18] "GET /api/statistical-area-map/Greensboro-High%20Point?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282258372&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282258372&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282258428 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:23] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Charlotte-Concord-Gastonia
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282263257'), ('marker_source', 'listing'), ('timestamp', '1746282263257')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Charlotte-Concord-Gastonia with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Charlotte_Concord_Gastonia_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: charlotte-concord-gastonia
+INFO:statistical_area_zoom:Trying to match city name: charlotte
+INFO:statistical_area_zoom:Found fuzzy city match: Charlottesville, VA
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 37.9498805742512, -78.59306047505684
+INFO:statistical_area_zoom:Bounds: -79.172129, 37.535642, -78.062481, 38.475527
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Charlotte_Concord_Gastonia_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Charlotte_Concord_Gastonia_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:23] "GET /api/statistical-area-map/Charlotte-Concord-Gastonia?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282263257&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282263257 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:23] "GET /api/statistical-area-map/Charlotte-Concord-Gastonia?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282263257&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282263257&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282263313 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:29] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Raleigh
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282269116'), ('marker_source', 'listing'), ('timestamp', '1746282269116')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Raleigh with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Raleigh_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: raleigh
+INFO:statistical_area_zoom:Trying to match city name: raleigh
+INFO:statistical_area_zoom:Found fuzzy city match: Raleigh-Cary, NC
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 35.75688496072231, -78.46092388719767
+INFO:statistical_area_zoom:Bounds: -78.995048, 35.254663, -78.006551, 36.266191
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Raleigh_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Raleigh_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:29] "GET /api/statistical-area-map/Raleigh?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282269116&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282269116 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:29] "GET /api/statistical-area-map/Raleigh?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282269116&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282269116&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282269179 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:33] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Winston-Salem
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282273613'), ('marker_source', 'listing'), ('timestamp', '1746282273613')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Winston-Salem with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Winston_Salem_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: winston-salem
+INFO:statistical_area_zoom:Trying to match city name: winston
+INFO:statistical_area_zoom:Found fuzzy city match: Winston-Salem, NC
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 36.0772469760978, -80.3463897965627
+INFO:statistical_area_zoom:Bounds: -80.881591, 35.504141, -80.027339, 36.550665
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Winston_Salem_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Winston_Salem_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:33] "GET /api/statistical-area-map/Winston-Salem?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282273613&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282273613 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:33] "GET /api/statistical-area-map/Winston-Salem?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282273613&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282273613&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282273671 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:37] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Map request for area: Durham-Chapel Hill
+INFO:__main__:Query parameters: ImmutableMultiDict([('force_regen', 'false'), ('use_cached', 'true'), ('detailed', 'false'), ('zoom', '10'), ('exact_boundary', 'true'), ('display_pgs', 'false'), ('display_pgs', 'false'), ('display_hhahs', 'false'), ('display_hhahs', 'false'), ('pg_count', '0'), ('pg_count', '0'), ('hhah_count', '0'), ('hhah_count', '0'), ('lightweight', 'true'), ('spread_markers', 'false'), ('clear_mock_markers', 'true'), ('clear_mock_markers', 'true'), ('use_exact_count', 'true'), ('use_exact_count', 'true'), ('provider_source', 'actual_data'), ('t', '1746282278005'), ('marker_source', 'listing'), ('timestamp', '1746282278005')])
+INFO:__main__:Processing parameters: force_regen=False, use_cached=True, detailed=False, zoom=10, exact_boundary=True, lightweight=True, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Generating map for statistical area: Durham-Chapel Hill with params: zoom=10, exact_boundary=True, detailed=False, use_cached=True, force_regen=False, lightweight=True, ultra_lightweight=False, spread_markers=False, clear_mock_markers=True, use_exact_count=True, display_pgs=False, display_hhahs=False, pg_count=0, hhah_count=0, marker_source=listing
+INFO:statistical_area_zoom:Cache file path: /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Durham_Chapel_Hill_lightweight_listing.html
+INFO:statistical_area_zoom:Loading map data...
+INFO:statistical_area_zoom:Data loaded in 0.00 seconds
+INFO:customer_data_processor:Identifying virgin and non-virgin statistical areas
+INFO:customer_data_processor:Added MSA 31080 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41700 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 26420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 35620 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 11100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17410 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 34980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 48660 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 21340 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 31180 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17820 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14500 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 39380 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 24540 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17420 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 42200 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38940 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 16980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 14460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 37980 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33100 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41860 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 38060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 12060 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 19740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40900 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 41740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 33460 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 45300 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 40140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 36740 to non-virgin areas via manual override
+INFO:customer_data_processor:Added MSA 17140 to non-virgin areas via manual override
+INFO:customer_data_processor:Added 39 non-virgin MSAs via manual overrides
+INFO:customer_data_processor:Loading PG and HHAH data from Actual_Data directory
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - East Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - Central_Details.csv'
+ERROR:customer_data_processor:Error reading /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv: [Errno 2] No such file or directory: '/home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/Actual_Data/Listing of all PG and HHAH - West_Details.csv'
+ERROR:customer_data_processor:Failed to load any detail files
+WARNING:customer_data_processor:Failed to load customer data, relying on manual overrides only
+WARNING:customer_data_processor:Only 39/393 MSAs identified as non-virgin, adding major MSAs
+INFO:customer_data_processor:Added major MSA 47900 to non-virgin areas to ensure realistic distribution
+INFO:customer_data_processor:Final count: 353 virgin MSAs and 40 non-virgin MSAs
+INFO:statistical_area_zoom:Added virgin/non-virgin status to MSA data
+INFO:statistical_area_zoom:Normalized area name: durham-chapel hill
+INFO:statistical_area_zoom:Trying to match city name: durham
+INFO:statistical_area_zoom:Found fuzzy city match: Durham-Chapel Hill, NC
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Validating geometry...
+INFO:statistical_area_zoom:Using listing as marker source - bypassing standard marker generation
+INFO:statistical_area_zoom:Final marker counts: 0 PGs and 0 HHAHs
+INFO:statistical_area_zoom:Center: 35.990759455022186, -79.10074089960963
+INFO:statistical_area_zoom:Bounds: -79.555804, 35.515039, -78.699316, 36.541975
+ERROR:statistical_area_zoom:Error adding title: cannot access local variable 'is_virgin' where it is not associated with a value
+INFO:statistical_area_zoom:Map saved to /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Durham_Chapel_Hill_lightweight_listing.html
+INFO:__main__:Map generated successfully at /home/lone/Projects/Vivnovation/Live_Project_Intern/Final_Prototype/SST_PROJECT/backend/cache/statistical_area_Durham_Chapel_Hill_lightweight_listing.html
+INFO:__main__:Request completed in 0.05 seconds
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:38] "GET /api/statistical-area-map/Durham-Chapel%20Hill?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282278005&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282278005 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 19:54:38] "GET /api/statistical-area-map/Durham-Chapel%20Hill?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282278005&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282278005&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282278062 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:05:31] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:05:31] "GET /api/statistical-area-map/Winston-Salem?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282931606&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282931607 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:05:31] "GET /api/statistical-area-map/Winston-Salem?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282931606&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282931607&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282931628 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:05:41] "GET /api/statistical-area-map/Winston-Salem?force_regen=false&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=1746282941653&hhah_count=0&lightweight=true&spread_markers=false&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282931606&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&timestamp=1746282931607&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282941654 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:06:28] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:06:28] "GET /api/statistical-area-map/New%20York-Newark-Jersey%20City?force_regen=true&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=true&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282988343&force_accurate_markers=true&no_mock_data=true&marker_size=large&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&spread_markers=true&marker_size=large&force_accurate_markers=true&no_mock_data=true&timestamp=1746282988343 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:06:28] "GET /api/statistical-area-map/New%20York-Newark-Jersey%20City?force_regen=true&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&lightweight=true&spread_markers=true&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282988343&force_accurate_markers=true&no_mock_data=true&marker_size=large&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&spread_markers=true&marker_size=large&force_accurate_markers=true&no_mock_data=true&timestamp=1746282988343&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282988371 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:06:38] "GET /api/statistical-area-map/New%20York-Newark-Jersey%20City?force_regen=true&use_cached=true&detailed=false&zoom=10&exact_boundary=true&display_pgs=false&display_hhahs=false&pg_count=1746282998399&hhah_count=0&lightweight=true&spread_markers=true&clear_mock_markers=true&use_exact_count=true&provider_source=actual_data&t=1746282988343&force_accurate_markers=true&no_mock_data=true&marker_size=large&display_pgs=false&display_hhahs=false&pg_count=0&hhah_count=0&marker_source=listing&clear_mock_markers=true&use_exact_count=true&spread_markers=true&marker_size=large&force_accurate_markers=true&no_mock_data=true&timestamp=1746282988343&_show_states=true&_show_counties=true&_show_msas=true&_t=1746282998400 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:08:07] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:08:07] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:08:07] "GET /api/map-status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:08:08] "GET /api/map?stable=true&r=map-1746283087511&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false&responsive=true&containerWidth=0&containerHeight=0&_show_states=true&_show_counties=true&_show_msas=true&_t=1746283087512 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:08:08] "GET /api/map?stable=true&r=map-1746283087511&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false&responsive=true&containerWidth=1436&containerHeight=498&_show_states=true&_show_counties=true&_show_msas=true&_t=1746283087543 HTTP/1.1" 200 -
+INFO:__main__:Request from origin: 
+INFO:__main__:Allowed origin for API endpoint: *
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:31:18] "GET /api/health HTTP/1.1" 200 -
+INFO:__main__:Request from origin: http://localhost:3000
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:31:18] "GET /api/health HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [03/May/2025 20:31:19] "GET /api/map?stable=true&r=map-1746284478896&showControls=true&alwaysShowControls=true&forceControlPosition=true&hideMSA=true&disableSearch=true&disableExport=true&hideExport=true&noExport=true&exportButton=false&responsive=true&containerWidth=0&containerHeight=0&_show_states=true&_show_counties=true&_show_msas=true&_t=1746284478897 HTTP/1.1" 200 -

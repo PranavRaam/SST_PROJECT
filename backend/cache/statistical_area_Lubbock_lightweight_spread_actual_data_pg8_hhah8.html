@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_05559bc2700b9620bc4794329674e559 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <script>
+        // Safe cross-origin communication
+        document.addEventListener('DOMContentLoaded', function() {
+            // Notify parent when map is loaded
+            setTimeout(function() {
+                try {
+                    console.log('Map loaded, sending message to parent');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({type: 'mapLoaded', status: 'success'}, '*');
+                    }
+                } catch (e) {
+                    console.error('Error in cross-origin communication:', e);
+                }
+            }, 500);
+        });
+        </script>
+        
+    
+            <div class="folium-map" id="map_05559bc2700b9620bc4794329674e559" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_05559bc2700b9620bc4794329674e559 = L.map(
+                "map_05559bc2700b9620bc4794329674e559",
+                {
+                    center: [33.465531819400034, -101.8823098890895],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_05559bc2700b9620bc4794329674e559);
+
+            
+
+        
+    
+            var tile_layer_8beeb90f9583db8d8283e6e25972b77a = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8beeb90f9583db8d8283e6e25972b77a.addTo(map_05559bc2700b9620bc4794329674e559);
+        
+    
+        function geo_json_b61f433aaeac04e3088285d339a99e99_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#312E81", "fillColor": "#4F46E5", "fillOpacity": 0.15, "opacity": 0.8, "weight": 2};
+            }
+        }
+
+        function geo_json_b61f433aaeac04e3088285d339a99e99_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_b61f433aaeac04e3088285d339a99e99 = L.geoJson(null, {
+                onEachFeature: geo_json_b61f433aaeac04e3088285d339a99e99_onEachFeature,
+            
+                style: geo_json_b61f433aaeac04e3088285d339a99e99_styler,
+            ...{
+}
+        });
+
+        function geo_json_b61f433aaeac04e3088285d339a99e99_add (data) {
+            geo_json_b61f433aaeac04e3088285d339a99e99
+                .addData(data);
+        }
+            geo_json_b61f433aaeac04e3088285d339a99e99_add({"features": [{"geometry": {"coordinates": [[[-101.038788, 33.397214], [-101.03866, 32.970225], [-102.076214, 32.959702], [-102.075929, 33.389586], [-103.056485, 33.388414], [-103.047409, 33.824674], [-101.041158, 33.833625], [-101.038788, 33.397214]]], "type": "Polygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_b61f433aaeac04e3088285d339a99e99.addTo(map_05559bc2700b9620bc4794329674e559);
+        
+    
+            var layer_control_b7f01f45227a73e19b8f0577a0b16105_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_8beeb90f9583db8d8283e6e25972b77a,
+                },
+                overlays :  {
+                    "Lubbock, TX Boundary" : geo_json_b61f433aaeac04e3088285d339a99e99,
+                },
+            };
+            let layer_control_b7f01f45227a73e19b8f0577a0b16105 = L.control.layers(
+                layer_control_b7f01f45227a73e19b8f0577a0b16105_layers.base_layers,
+                layer_control_b7f01f45227a73e19b8f0577a0b16105_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_05559bc2700b9620bc4794329674e559);
+
+        
+    
+            map_05559bc2700b9620bc4794329674e559.fitBounds(
+                [[32.959702, -103.056485], [33.833625, -101.03866]],
+                {}
+            );
+        
+</script>
+</html>

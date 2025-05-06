@@ -1,0 +1,75 @@
+{
+  "West": {
+    "Los Angeles": [
+      "HouseCall MD"
+    ],
+    "Colorado Springs": [
+      "ROCKY MOUNTAIN MEDICAL AND HEALTHCARE"
+    ],
+    "El Paso": [
+      "Los Cerros Medical LLC"
+    ],
+    "Lubbock": [
+      "Brownfield Family Physicians"
+    ],
+    "Amarillo": [
+      "Well Life Family Medicine"
+    ]
+  },
+  "Central": {
+    "San Antonio": [
+      "BSZ Medical PA",
+      "Responsive Infectious Diseases Solutions",
+      "Northeast ProHealth",
+      "Centric Physicians Group",
+      "Doctor at your service",
+      "\"WoundCentrics",
+      "LLC\"",
+      "Visiting Practitioners And Palliative Care LLC",
+      "Apple MD"
+    ],
+    "DFW": [
+      "UT Health-Geriatrics & Supportive Care Clinic",
+      "Doctors at Home - Mary Snellings MD",
+      "Morning Star Healthcare Services PA",
+      "Spectrum (Community First Primary Care)",
+      "\"Royal V.P.",
+      "LLC\"",
+      "\"CityWide Housecalls",
+      "LLC\"",
+      "Prime MD Geriatrics",
+      "Americare Medical Group"
+    ],
+    "Sherman-Denison": [
+      "Texas Infectious Disease Institute"
+    ],
+    "Wichita Falls": [
+      "Atrium HouseCall",
+      "Preferred Primary Care"
+    ],
+    "Houston-Pasadena": [
+      "Diverse Care",
+      "Boyers Family Practice"
+    ],
+    "Cleveland": [
+      "Clinic of North Texas"
+    ]
+  },
+  "East_Central": {
+    "Port St.Lucie": [
+      "MD Primary Care"
+    ],
+    "Nashville": [
+      "Iris Medical Group"
+    ],
+    "Clarksville": [
+      "Covenant Care group"
+    ],
+    "Indianapolis": [
+      "Grace at Home"
+    ],
+    "Detroit": [
+      "Avalon Physician Group"
+    ]
+  }
+}
